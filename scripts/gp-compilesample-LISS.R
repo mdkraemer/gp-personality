@@ -3,8 +3,6 @@
 #version.string R version 3.6.3 (2020-02-29)
 #nickname       Holding the Windsock        
 
-setwd("/Users/michaelkramer/Documents/Paper_Grandparenthood/LISS")
-#setwd("S:/MA/mkraemer/Paper_Grandparenthood/LISS")
 library(tidyverse)
 library(psych)
 library(foreign)
@@ -15,11 +13,11 @@ library(knitr)
 ### Background Variables datasets 2008-2019 (thanks to Ted Schwaba / Jaap Denissen for the basis of this code)
 
 #first, specify the path and the .sav extension
-path <- "/Users/michaelkramer/Documents/Paper_Grandparenthood/LISS/raw data/Background Variables"
-#path <- "S:/MA/mkraemer/Paper_Grandparenthood/LISS/raw data/Background Variables"
+path <- "data/raw/LISS/Background Variables"
 
-setwd(path)
+#setwd(path)
 files <- list.files(path=path, pattern="*.sav")
+files <- paste(path, files, sep = "/")
 
 #adds everything together
 eve.all = do.call("bind_rows", lapply(files, function(x) read.spss(x, use.value.labels=F, to.data.frame=T)))
@@ -55,22 +53,19 @@ eve.all <- eve.all %>% select(nomem_encr, nohouse_encr, year, age, female,
                               totalresidentkids, marital, ownrent, urban, 
                               nettoink, participation)
 
-setwd("/Users/michaelkramer/Documents/Paper_Grandparenthood/LISS")
-#setwd("S:/MA/mkraemer/Paper_Grandparenthood/LISS")
-
 ### Personality datasets 2008-2019 (thanks to Ted Schwaba / Jaap Denissen for this code)
-per08 <- read.spss('raw data/Personality/cp08a_1p_EN.sav', use.value.labels=F, to.data.frame=T)
-per09 <- read.spss('raw data/Personality/cp09b_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
-per10 <- read.spss('raw data/Personality/cp10c_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
-per11 <- read.spss('raw data/Personality/cp11d_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
-per12 <- read.spss('raw data/Personality/cp12e_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
-per13 <- read.spss('raw data/Personality/cp13f_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-per14 <- read.spss('raw data/Personality/cp14g_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-per15 <- read.spss('raw data/Personality/cp15h_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-#per16 <- read.spss('raw data/Personality/cp16i_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-per17 <- read.spss('raw data/Personality/cp17i_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-per18 <- read.spss('raw data/Personality/cp18j_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-per19 <- read.spss('raw data/Personality/cp19k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+per08 <- read.spss('data/raw/LISS/Personality/cp08a_1p_EN.sav', use.value.labels=F, to.data.frame=T)
+per09 <- read.spss('data/raw/LISS/Personality/cp09b_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
+per10 <- read.spss('data/raw/LISS/Personality/cp10c_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
+per11 <- read.spss('data/raw/LISS/Personality/cp11d_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
+per12 <- read.spss('data/raw/LISS/Personality/cp12e_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
+per13 <- read.spss('data/raw/LISS/Personality/cp13f_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+per14 <- read.spss('data/raw/LISS/Personality/cp14g_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+per15 <- read.spss('data/raw/LISS/Personality/cp15h_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+#per16 <- read.spss('data/raw/LISS/Personality/cp16i_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+per17 <- read.spss('data/raw/LISS/Personality/cp17i_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+per18 <- read.spss('data/raw/LISS/Personality/cp18j_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+per19 <- read.spss('data/raw/LISS/Personality/cp19k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 
 #Make the names uniform by removing the wave qualifier (e.g., "08a")
 names(per08) <- gsub("08a", "", names(per08))
@@ -243,18 +238,18 @@ per.all <- per.all %>%
          contains("swls"))
 
 ### Work and Schooling datasets 2008-2019 (thanks to Ted Schwaba / Jaap Denissen for this code)
-wed08 <- read.spss('raw data/Work and Schooling/cw08a_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
-wed09 <- read.spss('raw data/Work and Schooling/cw09b_EN_3.0p.sav', use.value.labels=F, to.data.frame=T)
-wed10 <- read.spss('raw data/Work and Schooling/cw10c_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-wed11 <- read.spss('raw data/Work and Schooling/cw11d_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-wed12 <- read.spss('raw data/Work and Schooling/cw12e_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-wed13 <- read.spss('raw data/Work and Schooling/cw13f_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-wed14 <- read.spss('raw data/Work and Schooling/cw14g_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-wed15 <- read.spss('raw data/Work and Schooling/cw15h_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-wed16 <- read.spss('raw data/Work and Schooling/cw16i_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-wed17 <- read.spss('raw data/Work and Schooling/cw17j_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-wed18 <- read.spss('raw data/Work and Schooling/cw18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-wed19 <- read.spss('raw data/Work and Schooling/cw19l_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+wed08 <- read.spss('data/raw/LISS/Work and Schooling/cw08a_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
+wed09 <- read.spss('data/raw/LISS/Work and Schooling/cw09b_EN_3.0p.sav', use.value.labels=F, to.data.frame=T)
+wed10 <- read.spss('data/raw/LISS/Work and Schooling/cw10c_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+wed11 <- read.spss('data/raw/LISS/Work and Schooling/cw11d_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+wed12 <- read.spss('data/raw/LISS/Work and Schooling/cw12e_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+wed13 <- read.spss('data/raw/LISS/Work and Schooling/cw13f_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+wed14 <- read.spss('data/raw/LISS/Work and Schooling/cw14g_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+wed15 <- read.spss('data/raw/LISS/Work and Schooling/cw15h_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+wed16 <- read.spss('data/raw/LISS/Work and Schooling/cw16i_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+wed17 <- read.spss('data/raw/LISS/Work and Schooling/cw17j_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+wed18 <- read.spss('data/raw/LISS/Work and Schooling/cw18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+wed19 <- read.spss('data/raw/LISS/Work and Schooling/cw19l_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 
 #Make the names uniform by removing the wave qualifier (e.g., "08a")
 names(wed08) <- gsub("08a", "", names(wed08))
@@ -346,18 +341,18 @@ wed.all <- wed.all %>%
          contains("work_less"), contains("informal_care"))
 
 ### Income datasets 2008-2019 
-inc08 <- read.spss('raw data/Income/ci08a_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
-inc09 <- read.spss('raw data/Income/ci09b_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
-inc10 <- read.spss('raw data/Income/ci10c_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-inc11 <- read.spss('raw data/Income/ci11d_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-inc12 <- read.spss('raw data/Income/ci12e_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
-inc13 <- read.spss('raw data/Income/ci13f_1.1p_EN.sav', use.value.labels=F, to.data.frame=T)
-inc14 <- read.spss('raw data/Income/ci14g_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
-inc15 <- read.spss('raw data/Income/ci15h_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
-inc16 <- read.spss('raw data/Income/ci16i_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
-inc17 <- read.spss('raw data/Income/ci17j_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
-inc18 <- read.spss('raw data/Income/ci18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-inc19 <- read.spss('raw data/Income/ci19l_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+inc08 <- read.spss('data/raw/LISS/Income/ci08a_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
+inc09 <- read.spss('data/raw/LISS/Income/ci09b_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
+inc10 <- read.spss('data/raw/LISS/Income/ci10c_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+inc11 <- read.spss('data/raw/LISS/Income/ci11d_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+inc12 <- read.spss('data/raw/LISS/Income/ci12e_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
+inc13 <- read.spss('data/raw/LISS/Income/ci13f_1.1p_EN.sav', use.value.labels=F, to.data.frame=T)
+inc14 <- read.spss('data/raw/LISS/Income/ci14g_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
+inc15 <- read.spss('data/raw/LISS/Income/ci15h_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
+inc16 <- read.spss('data/raw/LISS/Income/ci16i_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
+inc17 <- read.spss('data/raw/LISS/Income/ci17j_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
+inc18 <- read.spss('data/raw/LISS/Income/ci18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+inc19 <- read.spss('data/raw/LISS/Income/ci19l_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 
 #Make the names uniform by removing the wave qualifier (e.g., "08a")
 names(inc08) <- gsub("08a", "", names(inc08))
@@ -406,18 +401,18 @@ inc.all$difficultybills <- inc.all$ci292 # Were you in arrears on one or more bi
 inc.all <- select(inc.all, nomem_encr, year, incmonth, financialsit, difficultybills)
 
 ### Housing datasets 2008-2019 
-hom08 <- read.spss('raw data/Housing/cd08a_EN_1.2p.sav', use.value.labels=F, to.data.frame=T)
-hom09 <- read.spss('raw data/Housing/cd09b_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-hom10 <- read.spss('raw data/Housing/cd10c_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
-hom11 <- read.spss('raw data/Housing/cd11d_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
-hom12 <- read.spss('raw data/Housing/cd12e_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-hom13 <- read.spss('raw data/Housing/cd13f_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
-hom14 <- read.spss('raw data/Housing/cd14g_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
-hom15 <- read.spss('raw data/Housing/cd15h_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-hom16 <- read.spss('raw data/Housing/cd16i_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-hom17 <- read.spss('raw data/Housing/cd17j_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-hom18 <- read.spss('raw data/Housing/cd18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-hom19 <- read.spss('raw data/Housing/cd19l_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+hom08 <- read.spss('data/raw/LISS/Housing/cd08a_EN_1.2p.sav', use.value.labels=F, to.data.frame=T)
+hom09 <- read.spss('data/raw/LISS/Housing/cd09b_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+hom10 <- read.spss('data/raw/LISS/Housing/cd10c_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
+hom11 <- read.spss('data/raw/LISS/Housing/cd11d_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
+hom12 <- read.spss('data/raw/LISS/Housing/cd12e_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+hom13 <- read.spss('data/raw/LISS/Housing/cd13f_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
+hom14 <- read.spss('data/raw/LISS/Housing/cd14g_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
+hom15 <- read.spss('data/raw/LISS/Housing/cd15h_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+hom16 <- read.spss('data/raw/LISS/Housing/cd16i_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+hom17 <- read.spss('data/raw/LISS/Housing/cd17j_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+hom18 <- read.spss('data/raw/LISS/Housing/cd18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+hom19 <- read.spss('data/raw/LISS/Housing/cd19l_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 
 #Make the names uniform by removing the wave qualifier (e.g., "08a")
 names(hom08) <- gsub("08a", "", names(hom08))
@@ -468,18 +463,18 @@ hom.all <- select(hom.all, nomem_encr, year, hommonth, rooms, movedinyear,
                   typedwelling, secondhouse)
 
 ### Religion and Ethnicity datasets 2008-2018
-rel08 <- read.spss('raw data/Religion/cr08a_1p_EN.sav', use.value.labels=F, to.data.frame=T)
-rel09 <- read.spss('raw data/Religion/cr09b_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-rel10 <- read.spss('raw data/Religion/cr10c_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-rel11 <- read.spss('raw data/Religion/cr11d_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-rel12 <- read.spss('raw data/Religion/cr12e_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
-rel13 <- read.spss('raw data/Religion/cr13f_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
-rel14 <- read.spss('raw data/Religion/cr14g_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
-rel15 <- read.spss('raw data/Religion/cr15h_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
-rel16 <- read.spss('raw data/Religion/cr16i_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
-rel17 <- read.spss('raw data/Religion/cr17j_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
-rel18 <- read.spss('raw data/Religion/cr18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-rel19 <- read.spss('raw data/Religion/cr19l_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+rel08 <- read.spss('data/raw/LISS/Religion/cr08a_1p_EN.sav', use.value.labels=F, to.data.frame=T)
+rel09 <- read.spss('data/raw/LISS/Religion/cr09b_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+rel10 <- read.spss('data/raw/LISS/Religion/cr10c_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+rel11 <- read.spss('data/raw/LISS/Religion/cr11d_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+rel12 <- read.spss('data/raw/LISS/Religion/cr12e_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
+rel13 <- read.spss('data/raw/LISS/Religion/cr13f_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
+rel14 <- read.spss('data/raw/LISS/Religion/cr14g_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
+rel15 <- read.spss('data/raw/LISS/Religion/cr15h_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
+rel16 <- read.spss('data/raw/LISS/Religion/cr16i_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
+rel17 <- read.spss('data/raw/LISS/Religion/cr17j_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
+rel18 <- read.spss('data/raw/LISS/Religion/cr18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+rel19 <- read.spss('data/raw/LISS/Religion/cr19l_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 
 #Make the names uniform by removing the wave qualifier (e.g., "08a")
 names(rel08) <- gsub("08a", "", names(rel08))
@@ -530,17 +525,17 @@ rel.all$speakdutch <- rel.all$cr089 # At home, do you generally speak Dutch or a
 rel.all <- select(rel.all, nomem_encr, year, relmonth, religion, speakdutch)
 
 ### Family and Household datasets 2008-2019 (thanks to Ted Schwaba / Jaap Denissen for this code)
-fam08 <- read.spss('raw data/Family and Household/cf08a_2p_EN.sav', use.value.labels=F, to.data.frame=T)
-fam09 <- read.spss('raw data/Family and Household/cf09b_EN_2.2p.sav', use.value.labels=F, to.data.frame=T)
-fam10 <- read.spss('raw data/Family and Household/cf10c_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-fam11 <- read.spss('raw data/Family and Household/cf11d_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
-fam12 <- read.spss('raw data/Family and Household/cf12e_EN_2.1p.sav', use.value.labels=F, to.data.frame=T)
-fam13 <- read.spss('raw data/Family and Household/cf13f_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
-fam14 <- read.spss('raw data/Family and Household/cf14g_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
-fam15 <- read.spss('raw data/Family and Household/cf15h_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-fam16 <- read.spss('raw data/Family and Household/cf16i_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-fam17 <- read.spss('raw data/Family and Household/cf17j_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-fam18 <- read.spss('raw data/Family and Household/cf18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+fam08 <- read.spss('data/raw/LISS/Family and Household/cf08a_2p_EN.sav', use.value.labels=F, to.data.frame=T)
+fam09 <- read.spss('data/raw/LISS/Family and Household/cf09b_EN_2.2p.sav', use.value.labels=F, to.data.frame=T)
+fam10 <- read.spss('data/raw/LISS/Family and Household/cf10c_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+fam11 <- read.spss('data/raw/LISS/Family and Household/cf11d_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
+fam12 <- read.spss('data/raw/LISS/Family and Household/cf12e_EN_2.1p.sav', use.value.labels=F, to.data.frame=T)
+fam13 <- read.spss('data/raw/LISS/Family and Household/cf13f_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
+fam14 <- read.spss('data/raw/LISS/Family and Household/cf14g_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
+fam15 <- read.spss('data/raw/LISS/Family and Household/cf15h_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+fam16 <- read.spss('data/raw/LISS/Family and Household/cf16i_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+fam17 <- read.spss('data/raw/LISS/Family and Household/cf17j_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+fam18 <- read.spss('data/raw/LISS/Family and Household/cf18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 #fam19 -> not needed because matching in wave before transition # NOW AVAILABLE
 
 #Make the names uniform by removing the wave qualifier (e.g., "08a")
@@ -836,18 +831,18 @@ fam.all <- fam.all %>% select(nomem_encr, year, fammonth, currentpartner, liveto
                               nokids, secondkid, thirdkid)
 
 ### Health datasets 2007-2018
-#hel07 <- read.spss('raw data/Health/ch07a_2p_EN.sav', use.value.labels=F, to.data.frame=T)
-hel08 <- read.spss('raw data/Health/ch08b_EN_1.3p.sav', use.value.labels=F, to.data.frame=T)
-hel09 <- read.spss('raw data/Health/ch09c_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
-hel10 <- read.spss('raw data/Health/ch10d_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-hel11 <- read.spss('raw data/Health/ch11e_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-hel12 <- read.spss('raw data/Health/ch12f_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-hel13 <- read.spss('raw data/Health/ch13g_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-#hel14 <- read.spss('raw data/Health/ch14g_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-hel15 <- read.spss('raw data/Health/ch15h_EN_1.2p.sav', use.value.labels=F, to.data.frame=T)
-hel16 <- read.spss('raw data/Health/ch16i_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-hel17 <- read.spss('raw data/Health/ch17j_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-hel18 <- read.spss('raw data/Health/ch18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+#hel07 <- read.spss('data/raw/LISS/Health/ch07a_2p_EN.sav', use.value.labels=F, to.data.frame=T)
+hel08 <- read.spss('data/raw/LISS/Health/ch08b_EN_1.3p.sav', use.value.labels=F, to.data.frame=T)
+hel09 <- read.spss('data/raw/LISS/Health/ch09c_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
+hel10 <- read.spss('data/raw/LISS/Health/ch10d_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+hel11 <- read.spss('data/raw/LISS/Health/ch11e_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+hel12 <- read.spss('data/raw/LISS/Health/ch12f_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+hel13 <- read.spss('data/raw/LISS/Health/ch13g_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+#hel14 <- read.spss('data/raw/LISS/Health/ch14g_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+hel15 <- read.spss('data/raw/LISS/Health/ch15h_EN_1.2p.sav', use.value.labels=F, to.data.frame=T)
+hel16 <- read.spss('data/raw/LISS/Health/ch16i_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+hel17 <- read.spss('data/raw/LISS/Health/ch17j_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+hel18 <- read.spss('data/raw/LISS/Health/ch18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 #hel19 -> not needed because matching in wave before transition - NOW AVAILABLE
 
 #Make the names uniform by removing the wave qualifier (e.g., "08a")
@@ -1285,11 +1280,10 @@ lisslong %>% group_by(grandparent) %>% filter(transit==1 | grandparent==0) %>%
 lisslong %>% group_by(grandparent) %>% summarise(n=n(), N=n_distinct(nomem_encr))
   
 # save .rda 
-save(lisslong, file = "lisslong_cleaned.rda")
-#rm(list = ls())
+save(lisslong, file = "data/processed/LISS/lisslong_cleaned.rda")
 
 # load .rda
-load(file = "lisslong_cleaned.rda")
+load(file = "data/processed/LISS/lisslong_cleaned.rda")
 
 # filter only valid cases and create count of valid observations
 # valid = non-missing in at least one of the outcome variables
@@ -1376,11 +1370,10 @@ lisslongvalid <- lisslongvalid %>%
   mutate_at(vars(nokids, secondkid, thirdkid), funs(replace_na(., 0))) # need a version without NAs
 
 # save .rda 
-save(lisslongvalid, file = "lisslong_valid.rda")
-#rm(list = ls())
+save(lisslongvalid, file = "data/processed/LISS/lisslong_valid.rda")
 
 # load .rda
-load(file = "lisslong_valid.rda")
+load(file = "data/processed/LISS/lisslong_valid.rda")
 
 #### multiple imputations for variables needed for PSM covariates ####
 
@@ -1502,21 +1495,20 @@ lissimp_matching_4 <- left_join(lissimp_matching_4, liss_merge_gp)
 lissimp_matching_5 <- left_join(lissimp_matching_5, liss_merge_gp)
 
 # save .rda 
-save(lissimp_matching_1, file = "lissimp_matching_1.rda")
-save(lissimp_matching_2, file = "lissimp_matching_2.rda")
-save(lissimp_matching_3, file = "lissimp_matching_3.rda")
-save(lissimp_matching_4, file = "lissimp_matching_4.rda")
-save(lissimp_matching_5, file = "lissimp_matching_5.rda")
-#rm(list = ls())
+save(lissimp_matching_1, file = "data/processed/LISS/lissimp_matching_1.rda")
+save(lissimp_matching_2, file = "data/processed/LISS/lissimp_matching_2.rda")
+save(lissimp_matching_3, file = "data/processed/LISS/lissimp_matching_3.rda")
+save(lissimp_matching_4, file = "data/processed/LISS/lissimp_matching_4.rda")
+save(lissimp_matching_5, file = "data/processed/LISS/lissimp_matching_5.rda")
 
 #### PSM: datasets and final covariate preparation ####
 
 # load .rda
-load(file = "lissimp_matching_1.rda")
-load(file = "lissimp_matching_2.rda")
-load(file = "lissimp_matching_3.rda")
-load(file = "lissimp_matching_4.rda")
-load(file = "lissimp_matching_5.rda")
+load(file = "data/processed/LISS/lissimp_matching_1.rda")
+load(file = "data/processed/LISS/lissimp_matching_2.rda")
+load(file = "data/processed/LISS/lissimp_matching_3.rda")
+load(file = "data/processed/LISS/lissimp_matching_4.rda")
+load(file = "data/processed/LISS/lissimp_matching_5.rda")
 
 # recode PSM covariates
 # a lot of the variables need recoding before they can be fed into the PSM model
@@ -1860,15 +1852,15 @@ lissimp_pscore_parents_main <- lissimp_parents_ps_2_main %>%
 #                                  verygoodhealth - excellenthealth - bmi - 
 #                                  chronicdisease - heartattack - stroke - cancer - diabetes - 
 #                                  nodisease - mobility - dep") # all vars but ... # does not work for some reason
-#liss_ps_model_nonparents_2014 <- as.formula("grandparent ~ . - year - nomem_encr - female")
+#liss_ps_model_parents_2014 <- as.formula("grandparent ~ . - year - nomem_encr - female")
 
 #help1 <- NULL;
 #help2 <- NULL;
 #help3 <- NULL;
 #for (i in c(1:imp)){
-#  help1 <- paste("lissimp_nonparents_ps", i, sep="_")
-#  help2 <- paste("lissimp_nonparents_ps", i, "14", sep="_")
-#  help3 <- paste("liss_ps_logit_nonparents_m", i, "_14", sep="")
+#  help1 <- paste("lissimp_parents_ps", i, sep="_")
+#  help2 <- paste("lissimp_parents_ps", i, "14", sep="_")
+#  help3 <- paste("liss_ps_logit_parents_m", i, "_14", sep="")
 #  #save subset data (2014 separately because of missing health covariates)
 #  eval(call("<-", as.name(help2), get(help1) %>% filter(year==2014)))
 #  eval(call("<-", as.name(help2), get(help2) %>% 
@@ -1879,28 +1871,28 @@ lissimp_pscore_parents_main <- lissimp_parents_ps_2_main %>%
 #                        housekeeper, degreeother, widowed, 
 #                        difficultybills, single))))
 #  #logistic regressions
-#  eval(call("<-", as.name(help3), glm(liss_ps_model_nonparents_2014, family = binomial(link='logit'), data = get(help2))))
+#  eval(call("<-", as.name(help3), glm(liss_ps_model_parents_2014, family = binomial(link='logit'), data = get(help2))))
 #}
 
-#summary(liss_ps_logit_nonparents_m1_14)
-#summary(liss_ps_logit_nonparents_m2_14)
-#summary(liss_ps_logit_nonparents_m3_14)
-#summary(liss_ps_logit_nonparents_m4_14)
-#summary(liss_ps_logit_nonparents_m5_14)
+#summary(liss_ps_logit_parents_m1_14)
+#summary(liss_ps_logit_parents_m2_14)
+#summary(liss_ps_logit_parents_m3_14)
+#summary(liss_ps_logit_parents_m4_14)
+#summary(liss_ps_logit_parents_m5_14)
 
 #save fitted values (=propensity scores) -> proceed with one of the m=5 imputation dataset 
 #(does not matter which one - imputation was only used for PS computation - I choose m=2)
-#lissimp_nonparents_ps_2_14$pscore_m1 <- fitted(liss_ps_logit_nonparents_m1_14)
-#lissimp_nonparents_ps_2_14$pscore_m2 <- fitted(liss_ps_logit_nonparents_m2_14)
-#lissimp_nonparents_ps_2_14$pscore_m3 <- fitted(liss_ps_logit_nonparents_m3_14)
-#lissimp_nonparents_ps_2_14$pscore_m4 <- fitted(liss_ps_logit_nonparents_m4_14)
-#lissimp_nonparents_ps_2_14$pscore_m5 <- fitted(liss_ps_logit_nonparents_m5_14)
-#lissimp_pscore_nonparents_14 <- lissimp_nonparents_ps_2_14 %>% 
+#lissimp_parents_ps_2_14$pscore_m1 <- fitted(liss_ps_logit_parents_m1_14)
+#lissimp_parents_ps_2_14$pscore_m2 <- fitted(liss_ps_logit_parents_m2_14)
+#lissimp_parents_ps_2_14$pscore_m3 <- fitted(liss_ps_logit_parents_m3_14)
+#lissimp_parents_ps_2_14$pscore_m4 <- fitted(liss_ps_logit_parents_m4_14)
+#lissimp_parents_ps_2_14$pscore_m5 <- fitted(liss_ps_logit_parents_m5_14)
+#lissimp_pscore_parents_14 <- lissimp_parents_ps_2_14 %>% 
 #  mutate(pscore = (pscore_m1 + pscore_m2 + pscore_m3 + pscore_m4 + pscore_m5)/5)
 
 # bind all years back together!
-#lissimp_matching_nonparents <- bind_rows(lissimp_pscore_nonparents_main, lissimp_pscore_nonparents_14)
-lissimp_matching_nonparents <- lissimp_pscore_nonparents_main
+#lissimp_matching_parents <- bind_rows(lissimp_pscore_parents_main, lissimp_pscore_parents_14)
+lissimp_matching_parents <- lissimp_pscore_parents_main
 
 # 2) NONPARENT control group
 
@@ -2057,11 +2049,11 @@ for(num in 1:num_cases)
 # all 249 grandparents sucessfully matched!
 summary(liss_matched_parents$rank)
 #    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#   1.00    1.00    9.00   56.61  100.00  253.00
+#   1.00    1.00    9.00   70.61  124.00  327.00 
 
 summary(liss_matched_parents$ps_diff)
 #    Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-# 0.0000003 0.0004311 0.0298883 0.1316009 0.2464216 0.7027823 
+# 0.0000006 0.0002259 0.0227015 0.1162157 0.1825504 0.6875521 
 
 # create dataset for merge with controls
 liss_matched_mergecontrols_parents <- liss_matched_parents %>% rename(
@@ -2160,8 +2152,7 @@ lissanalysis_parents <- lissanalysis_parents %>% filter(time %in% c(-5:5)) %>%
   select(-match_year, -droplater, -matchvalid_controls)
 
 # save .rda 
-save(lissanalysis_parents, file = "lissanalysis_parents.rda")
-#rm(list = ls())
+save(lissanalysis_parents, file = "data/processed/LISS/lissanalysis_parents.rda")
 
 
 #### PSM: 'rollingMatch' -> (1) parent control group ####
@@ -2214,9 +2205,10 @@ final_dist_parents <- match_on_parents_ps + match_on_parents_female
 # 756960 elements in matrix -> same as in Cartesian product in DIY matching loop
 
 liss_groupmatch_parents <- groupmatch(x=final_dist_parents, 
-                                     group = lissimp_groupmatch_parents$nomem_encr, allow_duplicates = T,
+                                     group = lissimp_groupmatch_parents$nomem_encr, allow_duplicates = T, 
                                      min.controls = 0, max.controls = 1, omit.fraction = NULL, 
                                      mean.controls = NULL, tol = 0.001, data = lissimp_groupmatch_parents)
+# allowing duplicates greatly improves cov balance in our situation where we have few available controls
 
 summary(liss_groupmatch_parents) #seems to work for 1:1 matching without replacement despite the warning message!
 
@@ -2289,7 +2281,8 @@ lissanalysis_parents_groupmatch <- lissanalysis_parents_groupmatch %>% group_by(
   mutate(lastcount = max(lastcount, na.rm = T)) %>% ungroup() %>% 
   mutate(lastcount = replace(lastcount, lastcount==-Inf, NA)) # regular NA pls
 
-# finish coding 'valid' for controls
+# finish coding 'valid' for controls 
+# grouping by 'match_number' here instead of 'nomem_encr' because we allowed duplicate matches
 lissanalysis_parents_groupmatch <- lissanalysis_parents_groupmatch %>% group_by(match_number) %>% 
   mutate(helpcount = row_number()) %>% ungroup()
 lissanalysis_parents_groupmatch <- lissanalysis_parents_groupmatch %>% 
@@ -2306,6 +2299,9 @@ lissanalysis_parents_groupmatch <- lissanalysis_parents_groupmatch %>% filter(ti
 #sample comparison - different matching methods
 table(lissanalysis_parents$grandparent, lissanalysis_parents$time)
 table(lissanalysis_parents_groupmatch$grandparent, lissanalysis_parents_groupmatch$time)
+
+# save .rda 
+save(lissanalysis_parents_groupmatch, file = "data/processed/LISS/lissanalysis_parents_groupmatch.rda")
 
 
 #### PSM: identify possible matches -> (2) nonparent control group ####
@@ -2361,7 +2357,7 @@ lissimp_joined_nonparents <- lissimp_joined_nonparents %>% group_by(case_id) %>%
 
 #to help with computation time -> restrict to certain ranks (similar idea to caliper)
 #assuming that there will be no valid match according to PS with a higher rank, anyway!
-lissimp_joined_nonparents_reduced <- lissimp_joined_nonparents %>% filter(rank<=600) # 500
+lissimp_joined_nonparents_reduced <- lissimp_joined_nonparents %>% filter(rank<=600) # 500 not enough
 (num_cases <- as.vector(summary(lissimp_joined_nonparents_reduced$case_id_new)[6]))
 
 liss_matched_nonparents <- NULL;
@@ -2383,11 +2379,11 @@ for(num in 1:num_cases)
 # all 249 grandparents sucessfully matched!
 summary(liss_matched_nonparents$rank)
 #    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#   1.0    12.0   152.0   159.3   278.0   421.0 
+#   1.0    41.0   188.0   198.3   336.0   505.0 
 
 summary(liss_matched_nonparents$ps_diff)
 #    Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-# 0.0000002 0.0704950 0.3813075 0.3791133 0.6359200 0.9723908
+# .0000003 0.0696306 0.3054175 0.3436840 0.5586673 0.9735428 
 
 # create dataset for merge with controls
 liss_matched_mergecontrols_nonparents <- liss_matched_nonparents %>% rename(
@@ -2486,8 +2482,7 @@ lissanalysis_nonparents <- lissanalysis_nonparents %>% filter(time %in% c(-5:5))
   select(-match_year, -droplater, -matchvalid_controls)
 
 # save .rda 
-save(lissanalysis_nonparents, file = "lissanalysis_nonparents.rda")
-#rm(list = ls())
+save(lissanalysis_nonparents, file = "data/processed/LISS/lissanalysis_nonparents.rda")
 
 
 #### PSM: 'rollingMatch' -> (2) nonparent control group ####
@@ -2537,12 +2532,13 @@ match_on_nonparents_female <- as.matrix(exactMatch(grandparent ~ female, data=li
 
 #final input to rollingMatch is the sum of these matrices
 final_dist_nonparents <- match_on_nonparents_ps + match_on_nonparents_female
-# 756960 elements in matrix -> same as in Cartesian product in DIY matching loop
+# 1079913 elements in matrix -> same as in Cartesian product in DIY matching loop
 
 liss_groupmatch_nonparents <- groupmatch(x=final_dist_nonparents, 
-                                      group = lissimp_groupmatch_nonparents$nomem_encr, allow_duplicates = T,
+                                      group = lissimp_groupmatch_nonparents$nomem_encr, allow_duplicates = T, 
                                       min.controls = 0, max.controls = 1, omit.fraction = NULL, 
                                       mean.controls = NULL, tol = 0.001, data = lissimp_groupmatch_nonparents)
+# allowing duplicates greatly improves cov balance in our situation where we have few available controls
 
 summary(liss_groupmatch_nonparents) #seems to work for 1:1 matching without replacement despite the warning message!
 
@@ -2576,7 +2572,8 @@ liss_bal_nonparents_groupmatch <- liss_groupmatch_data_nonparents %>%
 
 liss_groupmatch_data_nonparents <- liss_groupmatch_data_nonparents %>% 
   select(nomem_encr, year, grandparent, time, valid, pscore) %>% 
-  rename(match_year = year, time_match = time, valid_match = valid)
+  rename(match_year = year, time_match = time, valid_match = valid) %>% 
+  mutate(match_number = row_number()) # if we allow duplicate matches, we need an unambiguous identifier for later
 
 # compile analysis sample with all longitudinal observations
 lissanalysis_nonparents_groupmatch <- left_join(liss_groupmatch_data_nonparents, lisslongvalid,
@@ -2608,14 +2605,15 @@ lissanalysis_nonparents_groupmatch <- lissanalysis_nonparents_groupmatch %>% fil
     time = ifelse(grandparent==0 & is.na(time) & matchtime==-3, (year - match_year) - 3, time),
     time = ifelse(grandparent==0 & is.na(time) & matchtime==-2, (year - match_year) - 2, time))
 
-lissanalysis_nonparents_groupmatch <- lissanalysis_nonparents_groupmatch %>% group_by(nomem_encr) %>% 
+lissanalysis_nonparents_groupmatch <- lissanalysis_nonparents_groupmatch %>% group_by(match_number) %>% 
   mutate(lastcount = ifelse(grandparent==0 & valid==valid_match, row_number(), NA)) %>% ungroup()
-lissanalysis_nonparents_groupmatch <- lissanalysis_nonparents_groupmatch %>% group_by(nomem_encr) %>% 
+lissanalysis_nonparents_groupmatch <- lissanalysis_nonparents_groupmatch %>% group_by(match_number) %>% 
   mutate(lastcount = max(lastcount, na.rm = T)) %>% ungroup() %>% 
   mutate(lastcount = replace(lastcount, lastcount==-Inf, NA)) # regular NA pls
 
-# finish coding 'valid' for controls
-lissanalysis_nonparents_groupmatch <- lissanalysis_nonparents_groupmatch %>% group_by(nomem_encr) %>% 
+# finish coding 'valid' for controls 
+# grouping by 'match_number' here instead of 'nomem_encr' because we allowed duplicate matches
+lissanalysis_nonparents_groupmatch <- lissanalysis_nonparents_groupmatch %>% group_by(match_number) %>% 
   mutate(helpcount = row_number()) %>% ungroup()
 lissanalysis_nonparents_groupmatch <- lissanalysis_nonparents_groupmatch %>% 
   mutate(valid = ifelse(is.na(valid) & grandparent==0, helpcount - lastcount + valid_match, valid)) %>% 
@@ -2631,6 +2629,9 @@ lissanalysis_nonparents_groupmatch <- lissanalysis_nonparents_groupmatch %>% fil
 #sample comparison - different matching methods
 table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$time)
 table(lissanalysis_nonparents_groupmatch$grandparent, lissanalysis_nonparents_groupmatch$time)
+
+# save .rda 
+save(lissanalysis_nonparents_groupmatch, file = "data/processed/LISS/lissanalysis_nonparents_groupmatch.rda")
 
 
 #### PSM: covariate balance assessment ####
@@ -2698,10 +2699,10 @@ liss_bal_nonparents_before <- liss_bal_nonparents_before %>%
          -c(paid_work, more_paid_work, financialsit, difficultybills, rooms, movedinyear, secondhouse, # these are not critical (substantively)
             speakdutch, bmi, chronicdisease, diabetes, nodisease, mobility, dep, flatapartment, 
             farmhouse, familybusiness, freelancer, housekeeper, degreeother, moderatehealth, 
-            verygoodhealth, moderatehealth, verygoodhealth),
-         -c(religion, currentpartner, livetogether, hhmembers, rental, degreehighersec,
-            degreevocational, degreecollege, degreeuniversity, divorced, widowed, single, 
-            extremelyurban, moderatelyurban, slightlyurban, noturban, logincome))
+            verygoodhealth, moderatehealth, verygoodhealth))#,
+         #-c(religion, currentpartner, livetogether, hhmembers, rental, degreehighersec,
+         #   degreevocational, degreecollege, degreeuniversity, divorced, widowed, single, 
+         #   extremelyurban, moderatelyurban, slightlyurban, noturban, logincome))
 summary(liss_bal_nonparents_before)
 
 names(liss_bal_nonparents_before) # column names must be aligned!
@@ -2772,220 +2773,3 @@ kable(liss_balance_matrix_nonparents[, 2:5], format="rst",
       col.names = c("Covariate", "Before Matching",
                     "DIY Matching Loop", "'rollingMatch'"), 
       align = "lccc", digits=2, caption = "Table 1. Covariate Balance")
-
-
-
-
-
-
-
-grand_big5 <- lissanalysis 
-grand_big5 %>% group_by(grandparent, time) %>% summarise(n = n()) %>% print(n=Inf)
-
-# Plot Big5 by time  
-big <- grand_big5 %>% 
-  select(time, extra, agree, con, neur, open) %>% 
-  rename(trait1 = extra, trait2 = agree, trait3 = con, trait4 = neur, trait5 = open) %>% 
-  pivot_longer(cols = trait1:trait5, names_to = "trait", names_prefix = "trait", 
-               values_to = "score", values_drop_na = TRUE) %>% 
-  ggplot() + aes(x=trait, y=score, fill=as.factor(time)) +
-  geom_boxplot() + xlab("Big Five Trait") + 
-  geom_vline(xintercept = c(1, 2, 3, 4, 5)) +
-  ylab("Score") + scale_y_continuous(breaks = seq(1, 5, 0.5), limits=c(1, 5)) + 
-  scale_x_discrete(breaks = c(1, 2, 3, 4, 5), 
-                   labels = c("Extraversion", "Agreeableness", "Conscientiousness", 
-                              "Neuroticism", "Openness"))
-
-grand_big5 %>% group_by(grandparent, time) %>% summarise(
-  mean_E = mean(extra, na.rm = T),
-  sd_E = sd(extra, na.rm = T),
-  mean_A = mean(agree, na.rm = T),
-  sd_A = sd(agree, na.rm = T),
-  mean_C = mean(con, na.rm = T),
-  sd_C = sd(con, na.rm = T),
-  mean_N = mean(neur, na.rm = T),
-  sd_N = sd(neur, na.rm = T),
-  mean_O = mean(open, na.rm = T),
-  sd_O = sd(open, na.rm = T)
-) %>% print(n=Inf)
-
-#visualize raw mean Big 5 trait trajectories
-E_loess <- grand %>% 
-  filter(time %in% c(-5:5)) %>% 
-  ggplot(aes(x = time, y = ext)) +
-  geom_smooth(method = loess) +
-  geom_jitter() +
-  theme_classic() +
-  #scale_y_continuous(breaks = seq(2, 4, 0.5), limits=c(2, 4)) +
-  scale_x_continuous(breaks = c(-5:5)) + 
-  geom_vline(xintercept = 0) +
-  xlab("Time") +
-  ylab("Extraversion")
-
-A_loess <- grand %>% 
-  filter(time %in% c(-5:5)) %>% 
-  ggplot(aes(x = time, y = agr)) +
-  geom_smooth(method = loess) +
-  geom_jitter() +
-  theme_classic() +
-  #scale_y_continuous(breaks = seq(2, 4, 0.5), limits=c(2, 4)) +
-  scale_x_continuous(breaks = c(-5:5)) + 
-  geom_vline(xintercept = 0) +
-  xlab("Time") +
-  ylab("Agreeableness")
-
-C_loess <- grand %>% 
-  filter(time %in% c(-5:5)) %>% 
-  ggplot(aes(x = time, y = con)) +
-  geom_smooth(method = loess) +
-  geom_jitter() +
-  theme_classic() +
-  #scale_y_continuous(breaks = seq(2, 4, 0.5), limits=c(2, 4)) +
-  scale_x_continuous(breaks = c(-5:5)) + 
-  geom_vline(xintercept = 0) +
-  xlab("Time") +
-  ylab("Conscientiousness")
-
-N_loess <- grand %>% 
-  filter(time %in% c(-5:5)) %>% 
-  ggplot(aes(x = time, y = sta)) +
-  geom_smooth(method = loess) +
-  geom_jitter() +
-  theme_classic() +
-  #scale_y_continuous(breaks = seq(2, 4, 0.5), limits=c(2, 4)) +
-  scale_x_continuous(breaks = c(-5:5)) + 
-  geom_vline(xintercept = 0) +
-  xlab("Time") +
-  ylab("Emotional Stability")
-
-O_loess <- grand %>% 
-  filter(time %in% c(-5:5)) %>% 
-  ggplot(aes(x = time, y = ope)) +
-  geom_smooth(method = loess) +
-  geom_jitter() +
-  theme_classic() +
-  #scale_y_continuous(breaks = seq(2, 4, 0.5), limits=c(2, 4)) +
-  scale_x_continuous(breaks = c(-5:5)) + 
-  xlab("Time") +
-  ylab("Openness")
-
-#well-being
-grand %>% group_by(time) %>% filter(time %in% c(-7:7)) %>% summarise(
-  mean_swl = mean(swl, na.rm = T),
-  sd_swl = sd(swl, na.rm = T),
-  mean_sat = mean(satisfaction, na.rm = T),
-  sd_sat = sd(satisfaction, na.rm = T),
-  mean_happ = mean(happiness, na.rm = T),
-  sd_happ = sd(happiness, na.rm = T),
-  mean_mood1 = mean(mood_state, na.rm = T),
-  sd_mood1 = sd(mood_state, na.rm = T),
-  mean_mood2 = mean(mood_trait, na.rm = T),
-  sd_mood2 = sd(mood_trait, na.rm = T)
-)
-
-swls_loess <- grand %>% 
-  filter(time %in% c(-9:9)) %>% 
-  ggplot(aes(x = time, y = swl)) +
-  geom_smooth(method = loess) +
-  theme_classic() +
-  scale_y_continuous(breaks = seq(4, 6, 0.5), limits=c(4, 6)) +
-  scale_x_continuous(breaks = c(-9:9)) + 
-  xlab("Time") +
-  ylab("SWLS")
-
-happ_loess <- grand %>% 
-  filter(time %in% c(-9:9)) %>% 
-  ggplot(aes(x = time, y = happiness)) +
-  geom_smooth(method = loess) +
-  theme_classic() +
-  scale_y_continuous(breaks = seq(7, 9, 0.5), limits=c(7, 9)) +
-  scale_x_continuous(breaks = c(-9:9)) + 
-  xlab("Time") +
-  ylab("Happiness")
-
-control <- grand %>% filter((age>=50 & age<=80) & grandparent==0)
-
-#visualize raw mean Big 5 trait trajectories
-E_loess_control <- control %>% 
-  ggplot(aes(x = age, y = ext)) +
-  geom_smooth(method = loess) +
-  theme_classic() +
-  #scale_y_continuous(breaks = seq(2, 4, 0.5), limits=c(2, 4)) +
-  scale_x_continuous(breaks = c(50:80)) + 
-  xlab("age") +
-  ylab("Extraversion")
-
-A_loess_control <- control %>% 
-  ggplot(aes(x = age, y = agr)) +
-  geom_smooth(method = loess) +
-  theme_classic() +
-  #scale_y_continuous(breaks = seq(2, 4, 0.5), limits=c(2, 4)) +
-  scale_x_continuous(breaks = c(50:80)) + 
-  xlab("age") +
-  ylab("Agreeableness")
-
-C_loess_control <- control %>% 
-  ggplot(aes(x = age, y = con)) +
-  geom_smooth(method = loess) +
-  theme_classic() +
-  #scale_y_continuous(breaks = seq(2, 4, 0.5), limits=c(2, 4)) +
-  scale_x_continuous(breaks = c(50:80)) + 
-  xlab("age") +
-  ylab("Conscientiousness")
-
-N_loess_control <- control %>% 
-  ggplot(aes(x = age, y = sta)) +
-  geom_smooth(method = loess) +
-  theme_classic() +
-  #scale_y_continuous(breaks = seq(2, 4, 0.5), limits=c(2, 4)) +
-  scale_x_continuous(breaks = c(50:80)) + 
-  xlab("age") +
-  ylab("Emotional Stability")
-
-O_loess_control <- control %>% 
-  ggplot(aes(x = age, y = ope)) +
-  geom_smooth(method = loess) +
-  theme_classic() +
-  #scale_y_continuous(breaks = seq(2, 4, 0.5), limits=c(2, 4)) +
-  scale_x_continuous(breaks = c(50:80)) + 
-  xlab("age") +
-  ylab("Openness")
-
-#well-being
-control %>% group_by(age) %>% summarise(
-  mean_swl = mean(swl, na.rm = T),
-  sd_swl = sd(swl, na.rm = T),
-  mean_sat = mean(satisfaction, na.rm = T),
-  sd_sat = sd(satisfaction, na.rm = T),
-  mean_happ = mean(happiness, na.rm = T),
-  sd_happ = sd(happiness, na.rm = T),
-  mean_mood1 = mean(mood_state, na.rm = T),
-  sd_mood1 = sd(mood_state, na.rm = T),
-  mean_mood2 = mean(mood_trait, na.rm = T),
-  sd_mood2 = sd(mood_trait, na.rm = T)
-)
-
-swls_loess_control <- control %>% 
-  ggplot(aes(x = age, y = swl)) +
-  geom_smooth(method = loess) +
-  theme_classic() +
-  scale_y_continuous(breaks = seq(4, 6, 0.5), limits=c(4, 6)) +
-  scale_x_continuous(breaks = c(50:80)) + 
-  xlab("age") +
-  ylab("SWLS")
-
-happ_loess_control <- control %>% 
-  ggplot(aes(x = age, y = happiness)) +
-  geom_smooth(method = loess) +
-  theme_classic() +
-  scale_y_continuous(breaks = seq(7, 9, 0.5), limits=c(7, 9)) +
-  scale_x_continuous(breaks = c(50:80)) + 
-  xlab("age") +
-  ylab("Happiness")
-
-
-#missingness in some key variables will not be imputed
-# 1. missing values in 'grandchildren' 
-# -> right-censoring non-grandparents
-
-

@@ -3,8 +3,6 @@
 #version.string R version 3.6.3 (2020-02-29)
 #nickname       Holding the Windsock    
 
-setwd("/Users/michaelkramer/Documents/Paper_Grandparenthood/HRS")
-#setwd("S:/MA/mkraemer/Paper_Grandparenthood/HRS")
 library(haven)
 library(tidyverse)
 library(psych)
@@ -13,13 +11,13 @@ library(knitr)
 #### HRS data: draw raw data, select variables ####
 
 # load raw data files (SAS format, downloaded from HRS website)
-hrsrand <- read_sas("raw data/randhrs1992_2016v2.sas7bdat")
-h06data <- read_sas("raw data/h06f3a.sas7bdat")
-h08data <- read_sas("raw data/h08f3a.sas7bdat")
-h10data <- read_sas("raw data/hd10f5e.sas7bdat")
-h12data <- read_sas("raw data/h12f2a.sas7bdat")
-h14data <- read_sas("raw data/h14f2a.sas7bdat")
-h16data <- read_sas("raw data/h16f2a.sas7bdat")
+hrsrand <- read_sas("data/raw/HRS/randhrs1992_2016v2.sas7bdat")
+h06data <- read_sas("data/raw/HRS/h06f3a.sas7bdat")
+h08data <- read_sas("data/raw/HRS/h08f3a.sas7bdat")
+h10data <- read_sas("data/raw/HRS/hd10f5e.sas7bdat")
+h12data <- read_sas("data/raw/HRS/h12f2a.sas7bdat")
+h14data <- read_sas("data/raw/HRS/h14f2a.sas7bdat")
+h16data <- read_sas("data/raw/HRS/h16f2a.sas7bdat")
 
 #from main tracker file, select variables of interest
 hrsdata <- hrsrand %>%
@@ -201,7 +199,7 @@ hrsdata[,grepl("selfratedhealth",
                                                      colnames(hrsdata))]*-1 + 6
 
 #RAND HRS Detailed Imputations File 2016 (v.2)
-hrsrand_imp <- read_sas("raw data/randhrs1992_2016v2.sas7bdat")
+hrsrand_imp <- read_sas("data/raw/HRS/randhrs1992_2016v2.sas7bdat")
 
 hrsdata_imp <- hrsrand_imp %>%
   select(
@@ -610,11 +608,11 @@ allpers$swls <- allpers%>%
 #needed for retrospective coding of grandparenthood:
 # (I put this part behind the pre-processing of the rand hrs cross-wave file 
 #  because I'd get a memory allocation error otherwise)
-h96data <- read_sas("raw data/h96f4a.sas7bdat")
-h98data <- read_sas("raw data/h98f2c.sas7bdat")
-h00data <- read_sas("raw data/h00f1c.sas7bdat")
-h02data <- read_sas("raw data/h02f2c.sas7bdat")
-h04data <- read_sas("raw data/h04f1c.sas7bdat")
+h96data <- read_sas("data/raw/HRS/h96f4a.sas7bdat")
+h98data <- read_sas("data/raw/HRS/h98f2c.sas7bdat")
+h00data <- read_sas("data/raw/HRS/h00f1c.sas7bdat")
+h02data <- read_sas("data/raw/HRS/h02f2c.sas7bdat")
+h04data <- read_sas("data/raw/HRS/h04f1c.sas7bdat")
 
 # select grandparent variables
 h96cov <- h96data %>%
@@ -902,7 +900,7 @@ h16cov <- h16data %>%
 #   kaeduc: kid years of education last reported
 #   kidid: kid identifier/hhid+lopn
 
-hrsfamk <- read_sas("raw data/randhrsfamk1992_2014v1.sas7bdat")
+hrsfamk <- read_sas("data/raw/HRS/randhrsfamk1992_2014v1.sas7bdat")
 hrsfam <- hrsfamk %>% select(HHIDPN, KIDID, KAGENDERBG, KABYEARBG, KAEDUC)
 # count observations (=kids) per HHIDPN
 hrsfam <- hrsfam %>% 
@@ -1323,11 +1321,10 @@ hrslong %>% group_by(grandparent) %>% filter(transit==1 | grandparent==0) %>%
   summarise(meanbirthyr = mean((birthyr), na.rm=T), n = n()) # N = 1786 (grandparents)
 
 # save .rda 
-save(hrslong, file = "hrslong_cleaned.rda")
-#rm(list = ls())
+save(hrslong, file = "data/processed/HRS/hrslong_cleaned.rda")
 
 # load .rda
-load(file = "hrslong_cleaned.rda")
+load(file = "data/processed/HRS/hrslong_cleaned.rda")
 
 # filter only valid cases and create count of valid observations
 # valid = non-missing in at least one of the outcome variables
@@ -1385,11 +1382,11 @@ table(hrslongvalid$grandparent, hrslongvalid$time)
 table(hrslongvalid$grandparent, hrslongvalid$valid)
 
 # save .rda 
-save(hrslongvalid, file = "hrslong_valid.rda")
+save(hrslongvalid, file = "data/processed/HRS/hrslong_valid.rda")
 #rm(list = ls())
 
 # load .rda
-load(file = "hrslong_valid.rda")
+load(file = "data/processed/HRS/hrslong_valid.rda")
 
 
 #### multiple imputations for variables needed for PSM covariates ####
@@ -1596,21 +1593,21 @@ hrsimp_matching_4 <- left_join(hrsimp_matching_4, merge_gp)
 hrsimp_matching_5 <- left_join(hrsimp_matching_5, merge_gp)
 
 # save .rda 
-save(hrsimp_matching_1, file = "hrsimp_matching_1.rda")
-save(hrsimp_matching_2, file = "hrsimp_matching_2.rda")
-save(hrsimp_matching_3, file = "hrsimp_matching_3.rda")
-save(hrsimp_matching_4, file = "hrsimp_matching_4.rda")
-save(hrsimp_matching_5, file = "hrsimp_matching_5.rda")
+save(hrsimp_matching_1, file = "data/processed/HRS/hrsimp_matching_1.rda")
+save(hrsimp_matching_2, file = "data/processed/HRS/hrsimp_matching_2.rda")
+save(hrsimp_matching_3, file = "data/processed/HRS/hrsimp_matching_3.rda")
+save(hrsimp_matching_4, file = "data/processed/HRS/hrsimp_matching_4.rda")
+save(hrsimp_matching_5, file = "data/processed/HRS/hrsimp_matching_5.rda")
 #rm(list = ls())
 
 #### PSM: final covariate preparations ####
 
 # load .rda
-load(file = "hrsimp_matching_1.rda")
-load(file = "hrsimp_matching_2.rda")
-load(file = "hrsimp_matching_3.rda")
-load(file = "hrsimp_matching_4.rda")
-load(file = "hrsimp_matching_5.rda")
+load(file = "data/processed/HRS/hrsimp_matching_1.rda")
+load(file = "data/processed/HRS/hrsimp_matching_2.rda")
+load(file = "data/processed/HRS/hrsimp_matching_3.rda")
+load(file = "data/processed/HRS/hrsimp_matching_4.rda")
+load(file = "data/processed/HRS/hrsimp_matching_5.rda")
 
 # recode PSM covariates
 # a lot of the variables need recoding before they can be fed into the PSM model
@@ -2063,8 +2060,7 @@ hrsanalysis_parents <- hrsanalysis_parents %>% filter(time %in% c(-6:6)) %>%
   select(-time_match, -match_year, -droplater)
 
 # save .rda 
-save(hrsanalysis_parents, file = "hrsanalysis_parents.rda")
-#rm(list = ls())
+save(hrsanalysis_parents, file = "data/processed/HRS/hrsanalysis_parents.rda")
 
 
 #### PSM: 'rollingMatch' -> (1) parent control group ####
@@ -2199,6 +2195,9 @@ hrsanalysis_parents_groupmatch <- hrsanalysis_parents_groupmatch %>% filter(time
 #sample comparison - different matching methods
 table(hrsanalysis_parents$grandparent, hrsanalysis_parents$time)
 table(hrsanalysis_parents_groupmatch$grandparent, hrsanalysis_parents_groupmatch$time)
+
+# save .rda 
+save(hrsanalysis_parents_groupmatch, file = "data/processed/HRS/hrsanalysis_parents_groupmatch.rda")
 
 
 #### PSM: identify possible matches -> (2) nonparent control group ####
@@ -2374,11 +2373,7 @@ hrsanalysis_nonparents <- hrsanalysis_nonparents %>% filter(time %in% c(-6:6)) %
   select(-time_match, -match_year, -droplater)
 
 # save .rda 
-save(hrsanalysis_nonparents, file = "hrsanalysis_nonparents.rda")
-#rm(list = ls())
-
-# load .rda
-load(file = "hrsanalysis_nonparents.rda")
+save(hrsanalysis_nonparents, file = "data/processed/HRS/hrsanalysis_nonparents.rda")
 
 
 #### PSM: 'rollingMatch' -> (2) nonparent control group ####
@@ -2511,6 +2506,9 @@ hrsanalysis_nonparents_groupmatch <- hrsanalysis_nonparents_groupmatch %>% filte
 table(hrsanalysis_nonparents$grandparent, hrsanalysis_nonparents$time)
 table(hrsanalysis_nonparents_groupmatch$grandparent, hrsanalysis_nonparents_groupmatch$time)
 
+# save .rda 
+save(hrsanalysis_nonparents_groupmatch, file = "data/processed/HRS/hrsanalysis_nonparents_groupmatch.rda")
+
 
 #### PSM: covariate balance assessment ####
 
@@ -2627,203 +2625,5 @@ kable(hrs_balance_matrix_nonparents[, 2:5], format="rst",
       col.names = c("Covariate", "Before Matching",
                     "DIY Matching Loop", "'rollingMatch'"), 
       align = "lccc", digits=2, caption = "Table 1. Covariate Balance")
-
-
-
-
-
-
-
-
-# keep if either of the dependent variables is non-missing 
-grand_big5 <- hrsanalysis 
-grand_big5 %>% group_by(grandparent, time) %>% summarise(n = n()) %>% print(n=Inf)
-
-# Plot Big5 by time  
-big <- grand_big5 %>% 
-  filter(time %in% c(-8:8)) %>% 
-  select(time, extra, agree, con, neur, open) %>% 
-  rename(trait1 = extra, trait2 = agree, trait3 = con, trait4 = neur, trait5 = open) %>% 
-  pivot_longer(cols = trait1:trait5, names_to = "trait", names_prefix = "trait", 
-               values_to = "score", values_drop_na = TRUE) %>% 
-  ggplot() + aes(x=trait, y=score, fill=as.factor(time)) +
-  geom_boxplot() + xlab("Big Five Trait") + 
-  geom_vline(xintercept = c(1, 2, 3, 4, 5)) +
-  ylab("Score") + scale_y_continuous(breaks = seq(1, 4, 0.5), limits=c(1, 4)) + 
-  scale_x_discrete(breaks = c(1, 2, 3, 4, 5), 
-                   labels = c("Extraversion", "Agreeableness", "Conscientiousness", 
-                              "Neuroticism", "Openness"))
-
-grand_big5 %>% group_by(grandparent, time) %>% summarise(
-  mean_E = mean(extra, na.rm = T),
-  sd_E = sd(extra, na.rm = T),
-  mean_A = mean(agree, na.rm = T),
-  sd_A = sd(agree, na.rm = T),
-  mean_C = mean(con, na.rm = T),
-  sd_C = sd(con, na.rm = T),
-  mean_N = mean(neur, na.rm = T),
-  sd_N = sd(neur, na.rm = T),
-  mean_O = mean(open, na.rm = T),
-  sd_O = sd(open, na.rm = T)
-)
-
-#visualize raw mean Big 5 trait trajectories
-E_loess <- grand_big5 %>% filter(!is.na(extra)) %>% 
-  filter(time %in% c(-6,-4,-2,0,2,4,6)) %>% 
-  ggplot(aes(x = time, y = extra)) +
-  geom_smooth(method = lm) +
-  geom_jitter() +
-  theme_classic() +
-  #scale_y_continuous(breaks = seq(2, 4, 0.5), limits=c(2, 4)) +
-  scale_x_continuous(breaks = c(-6,-4,-2,0,2,4,6)) + 
-  geom_vline(xintercept = 0) +
-  xlab("Time") +
-  ylab("Extraversion")
-
-A_loess <- grand_big5 %>% 
-  filter(time %in% c(-6,-4,-2,0,2,4,6)) %>% filter(!is.na(agree)) %>% 
-  ggplot(aes(x = time, y = agree)) +
-  geom_smooth(method = lm) +
-  geom_jitter() +
-  theme_classic() +
-  #scale_y_continuous(breaks = seq(2, 4, 0.5), limits=c(2, 4)) +
-  scale_x_continuous(breaks = c(-6,-4,-2,0,2,4,6)) + 
-  geom_vline(xintercept = 0) +
-  xlab("Time") +
-  ylab("Agreeableness")
-
-C_loess <- grand_big5 %>% filter(!is.na(con)) %>% 
-  filter(time %in% c(-6,-4,-2,0,2,4,6)) %>% 
-  ggplot(aes(x = time, y = con)) +
-  geom_smooth(method = lm) +
-  geom_jitter() +
-  theme_classic() +
-  #scale_y_continuous(breaks = seq(2, 4, 0.5), limits=c(2, 4)) +
-  scale_x_continuous(breaks = c(-6,-4,-2,0,2,4,6)) + 
-  geom_vline(xintercept = 0) +
-  xlab("Time") +
-  ylab("Conscientiousness")
-
-N_loess <- grand_big5 %>% filter(!is.na(neur)) %>% 
-  filter(time %in% c(-6,-4,-2,0,2,4,6)) %>% 
-  ggplot(aes(x = time, y = neur)) +
-  geom_smooth(method = lm) +
-  geom_jitter() +
-  theme_classic() +
-  #scale_y_continuous(breaks = seq(2, 4, 0.5), limits=c(2, 4)) +
-  scale_x_continuous(breaks = c(-6,-4,-2,0,2,4,6)) + 
-  geom_vline(xintercept = 0) +
-  xlab("Time") +
-  ylab("Emotional Stability")
-
-O_loess <- grand_big5 %>% filter(!is.na(open)) %>% 
-  filter(time %in% c(-6,-4,-2,0,2,4,6)) %>% 
-  ggplot(aes(x = time, y = open)) +
-  geom_smooth(method = lm) +
-  geom_jitter() +
-  theme_classic() +
-  #scale_y_continuous(breaks = seq(2, 4, 0.5), limits=c(2, 4)) +
-  scale_x_continuous(breaks = c(-6,-4,-2,0,2,4,6)) + 
-  xlab("Time") +
-  ylab("Openness")
-
-
-control <- grand_big5 %>% filter((age>=50 & age<=80) & grandparent==0)
-
-#visualize raw mean Big 5 trait trajectories
-E_loess_control <- control %>% filter(!is.na(extra)) %>% 
-  ggplot(aes(x = age, y = extra)) +
-  geom_smooth(method = lm) +
-  theme_classic() +
-  #scale_y_continuous(breaks = seq(2, 4, 0.5), limits=c(2, 4)) +
-  scale_x_continuous(breaks = c(50:80)) + 
-  xlab("age") +
-  ylab("Extraversion")
-
-A_loess_control <- control %>% filter(!is.na(agree)) %>% 
-  ggplot(aes(x = age, y = agree)) +
-  geom_smooth(method = lm) +
-  theme_classic() +
-  #scale_y_continuous(breaks = seq(2, 4, 0.5), limits=c(2, 4)) +
-  scale_x_continuous(breaks = c(50:80)) + 
-  xlab("age") +
-  ylab("Agreeableness")
-
-C_loess_control <- control %>% filter(!is.na(con)) %>% 
-  ggplot(aes(x = age, y = con)) +
-  geom_smooth(method = lm) +
-  theme_classic() +
-  #scale_y_continuous(breaks = seq(2, 4, 0.5), limits=c(2, 4)) +
-  scale_x_continuous(breaks = c(50:80)) + 
-  xlab("age") +
-  ylab("Conscientiousness")
-
-N_loess_control <- control %>% filter(!is.na(neur)) %>% 
-  ggplot(aes(x = age, y = neur)) +
-  geom_smooth(method = lm) +
-  theme_classic() +
-  #scale_y_continuous(breaks = seq(2, 4, 0.5), limits=c(2, 4)) +
-  scale_x_continuous(breaks = c(50:80)) + 
-  xlab("age") +
-  ylab("Emotional Stability")
-
-O_loess_control <- control %>% filter(!is.na(open)) %>% 
-  ggplot(aes(x = age, y = open)) +
-  geom_smooth(method = lm) +
-  theme_classic() +
-  #scale_y_continuous(breaks = seq(2, 4, 0.5), limits=c(2, 4)) +
-  scale_x_continuous(breaks = c(50:80)) + 
-  xlab("age") +
-  ylab("Openness")
-
-
-# keep if either of the dependent variables is non-missing 
-grand_lifesat <- hrslong %>% filter(time %in% c(-6:6) & lifesat %in% c(1:5))
-grand_lifesat %>% group_by(time) %>% filter(grandparent==1) %>% summarise(n = n()) %>% 
-  print(n=Inf)
-
-# Plot lifesat by time  
-life <- grand_lifesat %>% 
-  select(time, lifesat) %>% 
-  rename(trait1 = lifesat) %>% 
-  pivot_longer(cols = trait1, names_to = "trait", names_prefix = "trait", 
-               values_to = "score", values_drop_na = TRUE) %>% 
-  ggplot() + aes(x=trait, y=score, fill=as.factor(time)) +
-  geom_violin() + xlab("Life Satisfaction") + 
-  ylab("Score") + scale_y_continuous(breaks = seq(1, 5, 0.5), limits=c(1, 5)) + 
-  scale_x_discrete(breaks = c(1), 
-                   labels = c("Life Satisfaction"))
-
-grand_lifesat %>% group_by(time) %>% summarise(
-  mean_life = mean(lifesat, na.rm = T),
-  sd_life = sd(lifesat, na.rm = T),
-)
-
-#visualize raw mean Big 5 trait trajectories
-life_loess <- grand_lifesat %>% 
-  ggplot(aes(x = time, y = lifesat)) +
-  geom_smooth(method = lm) +
-  geom_jitter() +
-  theme_classic() +
-  #scale_y_continuous(breaks = seq(2, 4, 0.5), limits=c(2, 4)) +
-  scale_x_continuous(breaks = c(-6,-4,-2,0,2,4,6)) + 
-  geom_vline(xintercept = 0) +
-  xlab("Time") +
-  ylab("Life Satisfaction")
-
-
-control_life <- hrslong %>% filter((age>=50 & age<=80 & lifesat %in% c(1:5)) & grandparent==0)
-
-#visualize raw mean Big 5 trait trajectories
-life_control <- control_life %>% 
-  ggplot(aes(x = age, y = lifesat)) +
-  geom_smooth(method = lm) +
-  theme_classic() +
-  scale_y_continuous(breaks = seq(1, 5, 0.5), limits=c(1, 5)) +
-  scale_x_continuous(breaks = c(50:80)) + 
-  xlab("age") +
-  ylab("Life Satisfaction")
-
-
 
 
