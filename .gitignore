@@ -2,3 +2,10 @@
 .Rhistory
 .RData
 .Ruserdata
+*.sav
+*.sas7bdat
+*.dta
+# ignore raw data (always)
+/data/raw
+# ignore processed data (for now, at least)
+/data/processed
