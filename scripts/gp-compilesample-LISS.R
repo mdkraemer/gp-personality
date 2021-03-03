@@ -1569,12 +1569,13 @@ impdata <- impdata %>%
               kid3age = ifelse(thirdkid==1 & kid3byear!=0, year - kid2byear, 0), 
               kid1home = ifelse(nokids==0 & kid1home==1, 1, 0), 
               kid2home = ifelse(secondkid==1 & kid2home==1, 1, 0), 
-              kid3home = ifelse(thirdkid==1 & kid3home==1, 1, 0) 
+              kid3home = ifelse(thirdkid==1 & kid3home==1, 1, 0),
+              livedhere = ifelse(!is.na(movedinyear), year - movedinyear, NA)
   )) %>%
   map(~select(., -c(ownrent, typedwelling, employment_status, education, 
                     marital, urban, nettoink, subjhealth, kid1byear,
                     kid2byear, kid3byear, kid1gender, kid2gender,
-                    kid3gender))) %>% # these are dropped because of recoding
+                    kid3gender, movedinyear))) %>% # these are dropped because of recoding
   map(~select(., -c(inschool, nodegreeyet, voluntary, # these are dropped because they do not
                     separated, jobother)))            # apply to anyone from the GP group (all 0s)
 
@@ -1732,8 +1733,8 @@ lissimp_matching_3 %>%
 # PARENTS
 subset_parents_liss <- function(x) { 
   x %>% 
-    filter((grandparent==1 & nokids==0 & time==matchtime & droplater==F) | 
-           (grandparent==0 & nokids==0 & kid1age %in% c(15:65))) %>% 
+    filter((grandparent==1 & nokids==0 & time==matchtime & droplater==F) | # cases
+           (grandparent==0 & nokids==0 & kid1age %in% c(15:65))) %>%       # (potential) controls
     select(-c(droplater, time, valid, nokids, matchtime)) }
 
 list_subset_parents <- list(lissimp_matching_1, lissimp_matching_2, lissimp_matching_3,
@@ -1752,9 +1753,10 @@ lissimp_parents_ps_1 %>%
 # NONPARENTS
 subset_nonparents_liss <- function(x) { 
   x %>% 
-    filter((grandparent==1 & nokids==0 & time==matchtime & droplater==F) | 
-           (grandparent==0 & nokids==1)) %>% 
-    select(-c(droplater, time, valid, matchtime, nokids, contains("kid"), totalchildren)) }
+    filter((grandparent==1 & nokids==0 & time==matchtime & droplater==F) | # cases
+           (grandparent==0 & nokids==1)) %>%                               # (potential) controls
+    select(-c(droplater, time, valid, matchtime, nokids, 
+              contains("kid"), totalchildren)) } # kid variables not used here
   
 list_subset_nonparents <- list(lissimp_matching_1, lissimp_matching_2, lissimp_matching_3,
                                lissimp_matching_4, lissimp_matching_5) %>%
@@ -1780,13 +1782,13 @@ remove_infrequent_liss <- function(x) {
   x %>% 
     select(-c(retire_early, retirement, heartattack, stroke, cancer, rentfree, businessdwelling, otherdwelling, 
               jobseeker, pensioner, disability, primaryschool, poorhealth, excellenthealth),
-           -c(paid_work, more_paid_work, financialsit, difficultybills, rooms, movedinyear, secondhouse, # these are not critical (substantively)
+           -c(paid_work, more_paid_work, financialsit, difficultybills, secondhouse, # these are not critical (substantively)
               speakdutch, bmi, chronicdisease, diabetes, nodisease, mobility, dep, flatapartment, 
               farmhouse, familybusiness, freelancer, housekeeper, degreeother, moderatehealth, 
               verygoodhealth, moderatehealth, verygoodhealth)) }#,
            #-c(religion, currentpartner, livetogether, hhmembers, rental, degreehighersec,
            #   degreevocational, degreecollege, degreeuniversity, divorced, widowed, single, 
-           #   extremelyurban, moderatelyurban, slightlyurban, noturban, logincome)) }
+           #   extremelyurban, moderatelyurban, slightlyurban, noturban, logincome, livedhere, rooms)) }
 
 list_remove_infrequent_liss <- list(lissimp_parents_ps_1, lissimp_parents_ps_2, 
                                     lissimp_parents_ps_3, lissimp_parents_ps_4, 
@@ -1826,7 +1828,7 @@ for (i in c(1:imp)){
   help2 <- paste("lissimp_parents_ps", i, "main", sep="_")
   help3 <- paste("liss_ps_logit_parents_m", i, "_main", sep="")
   #save subset data (2014 separately because of missing health covariates)
-  eval(call("<-", as.name(help2), get(help1) %>% filter(year %in% c(2008:2014, 2015:2018)))) #2008:2013
+  eval(call("<-", as.name(help2), get(help1) %>% filter(year %in% c(2008:2013, 2015:2018)))) #2008:2013
   #logistic regressions
   eval(call("<-", as.name(help3), glm(liss_ps_model_parents, family = binomial(link='logit'), data = get(help2))))
 }
@@ -1852,47 +1854,47 @@ lissimp_pscore_parents_main <- lissimp_parents_ps_2_main %>%
 #                                  verygoodhealth - excellenthealth - bmi - 
 #                                  chronicdisease - heartattack - stroke - cancer - diabetes - 
 #                                  nodisease - mobility - dep") # all vars but ... # does not work for some reason
-#liss_ps_model_parents_2014 <- as.formula("grandparent ~ . - year - nomem_encr - female")
+liss_ps_model_parents_2014 <- as.formula("grandparent ~ . - year - nomem_encr - female")
 
-#help1 <- NULL;
-#help2 <- NULL;
-#help3 <- NULL;
-#for (i in c(1:imp)){
-#  help1 <- paste("lissimp_parents_ps", i, sep="_")
-#  help2 <- paste("lissimp_parents_ps", i, "14", sep="_")
-#  help3 <- paste("liss_ps_logit_parents_m", i, "_14", sep="")
-#  #save subset data (2014 separately because of missing health covariates)
-#  eval(call("<-", as.name(help2), get(help1) %>% filter(year==2014)))
-#  eval(call("<-", as.name(help2), get(help2) %>% 
-#              select(-c(moderatehealth, verygoodhealth, bmi, # health variables not assessed in 2014 
-#                        chronicdisease, diabetes, nodisease, 
-#                        mobility, dep,
-#                        more_paid_work, speakdutch, farmhouse, # these were too infrequent in 2014 (in GP group)
-#                        housekeeper, degreeother, widowed, 
-#                        difficultybills, single))))
-#  #logistic regressions
-#  eval(call("<-", as.name(help3), glm(liss_ps_model_parents_2014, family = binomial(link='logit'), data = get(help2))))
-#}
+help1 <- NULL;
+help2 <- NULL;
+help3 <- NULL;
+for (i in c(1:imp)){
+  help1 <- paste("lissimp_parents_ps", i, sep="_")
+  help2 <- paste("lissimp_parents_ps", i, "14", sep="_")
+  help3 <- paste("liss_ps_logit_parents_m", i, "_14", sep="")
+  #save subset data (2014 separately because of missing health covariates)
+  eval(call("<-", as.name(help2), get(help1) %>% filter(year==2014)))
+  eval(call("<-", as.name(help2), get(help2) %>% 
+              select(-c(moderatehealth, verygoodhealth, bmi, # health variables not assessed in 2014 
+                        chronicdisease, diabetes, nodisease, 
+                        mobility, dep,
+                        more_paid_work, speakdutch, farmhouse, # these were too infrequent in 2014 (in GP group)
+                        housekeeper, degreeother, widowed, 
+                        difficultybills, single))))
+  #logistic regressions
+  eval(call("<-", as.name(help3), glm(liss_ps_model_parents_2014, family = binomial(link='logit'), data = get(help2))))
+}
 
-#summary(liss_ps_logit_parents_m1_14)
-#summary(liss_ps_logit_parents_m2_14)
-#summary(liss_ps_logit_parents_m3_14)
-#summary(liss_ps_logit_parents_m4_14)
-#summary(liss_ps_logit_parents_m5_14)
+summary(liss_ps_logit_parents_m1_14)
+summary(liss_ps_logit_parents_m2_14)
+summary(liss_ps_logit_parents_m3_14)
+summary(liss_ps_logit_parents_m4_14)
+summary(liss_ps_logit_parents_m5_14)
 
 #save fitted values (=propensity scores) -> proceed with one of the m=5 imputation dataset 
 #(does not matter which one - imputation was only used for PS computation - I choose m=2)
-#lissimp_parents_ps_2_14$pscore_m1 <- fitted(liss_ps_logit_parents_m1_14)
-#lissimp_parents_ps_2_14$pscore_m2 <- fitted(liss_ps_logit_parents_m2_14)
-#lissimp_parents_ps_2_14$pscore_m3 <- fitted(liss_ps_logit_parents_m3_14)
-#lissimp_parents_ps_2_14$pscore_m4 <- fitted(liss_ps_logit_parents_m4_14)
-#lissimp_parents_ps_2_14$pscore_m5 <- fitted(liss_ps_logit_parents_m5_14)
-#lissimp_pscore_parents_14 <- lissimp_parents_ps_2_14 %>% 
-#  mutate(pscore = (pscore_m1 + pscore_m2 + pscore_m3 + pscore_m4 + pscore_m5)/5)
+lissimp_parents_ps_2_14$pscore_m1 <- fitted(liss_ps_logit_parents_m1_14)
+lissimp_parents_ps_2_14$pscore_m2 <- fitted(liss_ps_logit_parents_m2_14)
+lissimp_parents_ps_2_14$pscore_m3 <- fitted(liss_ps_logit_parents_m3_14)
+lissimp_parents_ps_2_14$pscore_m4 <- fitted(liss_ps_logit_parents_m4_14)
+lissimp_parents_ps_2_14$pscore_m5 <- fitted(liss_ps_logit_parents_m5_14)
+lissimp_pscore_parents_14 <- lissimp_parents_ps_2_14 %>% 
+  mutate(pscore = (pscore_m1 + pscore_m2 + pscore_m3 + pscore_m4 + pscore_m5)/5)
 
 # bind all years back together!
-#lissimp_matching_parents <- bind_rows(lissimp_pscore_parents_main, lissimp_pscore_parents_14)
-lissimp_matching_parents <- lissimp_pscore_parents_main
+lissimp_matching_parents <- bind_rows(lissimp_pscore_parents_main, lissimp_pscore_parents_14)
+#lissimp_matching_parents <- lissimp_pscore_parents_main
 
 # 2) NONPARENT control group
 
@@ -1906,7 +1908,7 @@ for (i in c(1:imp)){
   help2 <- paste("lissimp_nonparents_ps", i, "main", sep="_")
   help3 <- paste("liss_ps_logit_nonparents_m", i, "_main", sep="")
   #save subset data (2014 separately because of missing health covariates)
-  eval(call("<-", as.name(help2), get(help1) %>% filter(year %in% c(2008:2014, 2015:2018)))) #2008:2013
+  eval(call("<-", as.name(help2), get(help1) %>% filter(year %in% c(2008:2013, 2015:2018)))) #2008:2013
   #logistic regressions
   eval(call("<-", as.name(help3), glm(liss_ps_model_nonparents, family = binomial(link='logit'), data = get(help2))))
 }
@@ -1932,47 +1934,47 @@ lissimp_pscore_nonparents_main <- lissimp_nonparents_ps_2_main %>%
 #                                  verygoodhealth - excellenthealth - bmi - 
 #                                  chronicdisease - heartattack - stroke - cancer - diabetes - 
 #                                  nodisease - mobility - dep") # all vars but ... # does not work for some reason
-#liss_ps_model_nonparents_2014 <- as.formula("grandparent ~ . - year - nomem_encr - female")
+liss_ps_model_nonparents_2014 <- as.formula("grandparent ~ . - year - nomem_encr - female")
 
-#help1 <- NULL;
-#help2 <- NULL;
-#help3 <- NULL;
-#for (i in c(1:imp)){
-#  help1 <- paste("lissimp_nonparents_ps", i, sep="_")
-#  help2 <- paste("lissimp_nonparents_ps", i, "14", sep="_")
-#  help3 <- paste("liss_ps_logit_nonparents_m", i, "_14", sep="")
-#  #save subset data (2014 separately because of missing health covariates)
-#  eval(call("<-", as.name(help2), get(help1) %>% filter(year==2014)))
-#  eval(call("<-", as.name(help2), get(help2) %>% 
-#              select(-c(moderatehealth, verygoodhealth, bmi, # health variables not assessed in 2014 
-#                        chronicdisease, diabetes, nodisease, 
-#                        mobility, dep,
-#                        more_paid_work, speakdutch, farmhouse, # these were too infrequent in 2014 (in GP group)
-#                        housekeeper, degreeother, widowed, 
-#                        difficultybills, single))))
-#  #logistic regressions
-#  eval(call("<-", as.name(help3), glm(liss_ps_model_nonparents_2014, family = binomial(link='logit'), data = get(help2))))
-#}
+help1 <- NULL;
+help2 <- NULL;
+help3 <- NULL;
+for (i in c(1:imp)){
+  help1 <- paste("lissimp_nonparents_ps", i, sep="_")
+  help2 <- paste("lissimp_nonparents_ps", i, "14", sep="_")
+  help3 <- paste("liss_ps_logit_nonparents_m", i, "_14", sep="")
+  #save subset data (2014 separately because of missing health covariates)
+  eval(call("<-", as.name(help2), get(help1) %>% filter(year==2014)))
+  eval(call("<-", as.name(help2), get(help2) %>% 
+              select(-c(moderatehealth, verygoodhealth, bmi, # health variables not assessed in 2014 
+                        chronicdisease, diabetes, nodisease, 
+                        mobility, dep,
+                        more_paid_work, speakdutch, farmhouse, # these were too infrequent in 2014 (in GP group)
+                        housekeeper, degreeother, widowed, 
+                        difficultybills, single))))
+  #logistic regressions
+  eval(call("<-", as.name(help3), glm(liss_ps_model_nonparents_2014, family = binomial(link='logit'), data = get(help2))))
+}
 
-#summary(liss_ps_logit_nonparents_m1_14)
-#summary(liss_ps_logit_nonparents_m2_14)
-#summary(liss_ps_logit_nonparents_m3_14)
-#summary(liss_ps_logit_nonparents_m4_14)
-#summary(liss_ps_logit_nonparents_m5_14)
+summary(liss_ps_logit_nonparents_m1_14)
+summary(liss_ps_logit_nonparents_m2_14)
+summary(liss_ps_logit_nonparents_m3_14)
+summary(liss_ps_logit_nonparents_m4_14)
+summary(liss_ps_logit_nonparents_m5_14)
 
 #save fitted values (=propensity scores) -> proceed with one of the m=5 imputation dataset 
 #(does not matter which one - imputation was only used for PS computation - I choose m=2)
-#lissimp_nonparents_ps_2_14$pscore_m1 <- fitted(liss_ps_logit_nonparents_m1_14)
-#lissimp_nonparents_ps_2_14$pscore_m2 <- fitted(liss_ps_logit_nonparents_m2_14)
-#lissimp_nonparents_ps_2_14$pscore_m3 <- fitted(liss_ps_logit_nonparents_m3_14)
-#lissimp_nonparents_ps_2_14$pscore_m4 <- fitted(liss_ps_logit_nonparents_m4_14)
-#lissimp_nonparents_ps_2_14$pscore_m5 <- fitted(liss_ps_logit_nonparents_m5_14)
-#lissimp_pscore_nonparents_14 <- lissimp_nonparents_ps_2_14 %>% 
-#  mutate(pscore = (pscore_m1 + pscore_m2 + pscore_m3 + pscore_m4 + pscore_m5)/5)
+lissimp_nonparents_ps_2_14$pscore_m1 <- fitted(liss_ps_logit_nonparents_m1_14)
+lissimp_nonparents_ps_2_14$pscore_m2 <- fitted(liss_ps_logit_nonparents_m2_14)
+lissimp_nonparents_ps_2_14$pscore_m3 <- fitted(liss_ps_logit_nonparents_m3_14)
+lissimp_nonparents_ps_2_14$pscore_m4 <- fitted(liss_ps_logit_nonparents_m4_14)
+lissimp_nonparents_ps_2_14$pscore_m5 <- fitted(liss_ps_logit_nonparents_m5_14)
+lissimp_pscore_nonparents_14 <- lissimp_nonparents_ps_2_14 %>% 
+  mutate(pscore = (pscore_m1 + pscore_m2 + pscore_m3 + pscore_m4 + pscore_m5)/5)
 
 # bind all years back together!
-#lissimp_matching_nonparents <- bind_rows(lissimp_pscore_nonparents_main, lissimp_pscore_nonparents_14)
-lissimp_matching_nonparents <- lissimp_pscore_nonparents_main
+lissimp_matching_nonparents <- bind_rows(lissimp_pscore_nonparents_main, lissimp_pscore_nonparents_14)
+#lissimp_matching_nonparents <- lissimp_pscore_nonparents_main
 
 #### PSM: identify possible matches -> (1) parent control group ####
 
@@ -2673,15 +2675,13 @@ liss_bal_parents_before <- liss_bal_parents_before %>%
          -c(time, year, valid, droplater, matchtime, nokids),
          -c(retire_early, retirement, heartattack, stroke, cancer, rentfree, businessdwelling, otherdwelling,
             jobseeker, pensioner, disability, primaryschool, poorhealth, excellenthealth), # too infrequent, see above
-         -c(paid_work, more_paid_work, financialsit, difficultybills, rooms, movedinyear, secondhouse, # these are not critical (substantively)
+         -c(paid_work, more_paid_work, financialsit, difficultybills, secondhouse, # these are not critical (substantively)
             speakdutch, bmi, chronicdisease, diabetes, nodisease, mobility, dep, flatapartment, 
             farmhouse, familybusiness, freelancer, housekeeper, degreeother, moderatehealth, 
-            verygoodhealth, moderatehealth, verygoodhealth))#,
+            verygoodhealth, moderatehealth, verygoodhealth)) #,
          #-c(religion, currentpartner, livetogether, hhmembers, rental, degreehighersec,
          #   degreevocational, degreecollege, degreeuniversity, divorced, widowed, single, 
-         #   extremelyurban, moderatelyurban, slightlyurban, noturban, logincome))
-         #-c(kid1female, kid2female, kid3female, kid2age, kid3age, kid1home, kid2home, 
-         #   kid3home, secondkid, thirdkid))
+         #   extremelyurban, moderatelyurban, slightlyurban, noturban, logincome, livedhere, rooms))
 summary(liss_bal_parents_before)
 
 names(liss_bal_parents_before) # column names must be aligned!
@@ -2696,13 +2696,13 @@ liss_bal_nonparents_before <- liss_bal_nonparents_before %>%
          -c(time, year, valid, droplater, matchtime, contains("kid"), totalchildren),
          -c(retire_early, retirement, heartattack, stroke, cancer, rentfree, businessdwelling, otherdwelling,
             jobseeker, pensioner, disability, primaryschool, poorhealth, excellenthealth), # too infrequent, see above
-         -c(paid_work, more_paid_work, financialsit, difficultybills, rooms, movedinyear, secondhouse, # these are not critical (substantively)
+         -c(paid_work, more_paid_work, financialsit, difficultybills, secondhouse, # these are not critical (substantively)
             speakdutch, bmi, chronicdisease, diabetes, nodisease, mobility, dep, flatapartment, 
             farmhouse, familybusiness, freelancer, housekeeper, degreeother, moderatehealth, 
-            verygoodhealth, moderatehealth, verygoodhealth))#,
+            verygoodhealth, moderatehealth, verygoodhealth)) #,
          #-c(religion, currentpartner, livetogether, hhmembers, rental, degreehighersec,
          #   degreevocational, degreecollege, degreeuniversity, divorced, widowed, single, 
-         #   extremelyurban, moderatelyurban, slightlyurban, noturban, logincome))
+         #   extremelyurban, moderatelyurban, slightlyurban, noturban, logincome, livedhere, rooms))
 summary(liss_bal_nonparents_before)
 
 names(liss_bal_nonparents_before) # column names must be aligned!
