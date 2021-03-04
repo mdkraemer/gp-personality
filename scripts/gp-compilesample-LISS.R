@@ -1780,15 +1780,17 @@ table(lissimp_parents_ps_1$grandparent, lissimp_parents_ps_1$disability)
 # Therefore, I'll remove all these variables here. (see "Overview covariates.xlsx" -> Sheet "Frequencies")
 remove_infrequent_liss <- function(x) { 
   x %>% 
-    select(-c(retire_early, retirement, heartattack, stroke, cancer, rentfree, businessdwelling, otherdwelling, 
+    select(-c(retire_early, retirement, heartattack, stroke, cancer, rentfree, businessdwelling, otherdwelling, # too infrequent
               jobseeker, pensioner, disability, primaryschool, poorhealth, excellenthealth),
-           -c(paid_work, more_paid_work, financialsit, difficultybills, secondhouse, # these are not critical (substantively)
-              speakdutch, bmi, chronicdisease, diabetes, nodisease, mobility, dep, flatapartment, 
+           -c(paid_work, more_paid_work, difficultybills, secondhouse, # these are not important (substantively)
+              speakdutch, bmi, chronicdisease, diabetes, nodisease, flatapartment, 
               farmhouse, familybusiness, freelancer, housekeeper, degreeother, moderatehealth, 
-              verygoodhealth, moderatehealth, verygoodhealth)) }#,
-           #-c(religion, currentpartner, livetogether, hhmembers, rental, degreehighersec,
-           #   degreevocational, degreecollege, degreeuniversity, divorced, widowed, single, 
-           #   extremelyurban, moderatelyurban, slightlyurban, noturban, logincome, livedhere, rooms)) }
+              verygoodhealth, moderatehealth, verygoodhealth),
+           -c(currentpartner, hhmembers, divorced, widowed, single, # also not important? improve balance?
+              extremelyurban, moderatelyurban, slightlyurban, noturban)) }#,
+           #-c(religion, livetogether, rental, degreehighersec,
+           #   degreevocational, degreecollege, degreeuniversity, 
+           #   logincome, livedhere, rooms, financialsit, mobility, dep)) }
 
 list_remove_infrequent_liss <- list(lissimp_parents_ps_1, lissimp_parents_ps_2, 
                                     lissimp_parents_ps_3, lissimp_parents_ps_4, 
@@ -1866,12 +1868,12 @@ for (i in c(1:imp)){
   #save subset data (2014 separately because of missing health covariates)
   eval(call("<-", as.name(help2), get(help1) %>% filter(year==2014)))
   eval(call("<-", as.name(help2), get(help2) %>% 
-              select(-c(moderatehealth, verygoodhealth, bmi, # health variables not assessed in 2014 
-                        chronicdisease, diabetes, nodisease, 
-                        mobility, dep,
-                        more_paid_work, speakdutch, farmhouse, # these were too infrequent in 2014 (in GP group)
-                        housekeeper, degreeother, widowed, 
-                        difficultybills, single))))
+              select(-c(#moderatehealth, verygoodhealth, bmi, # health variables not assessed in 2014 
+                        #chronicdisease, diabetes, nodisease, 
+                        mobility, dep)))) #,
+                        #more_paid_work, speakdutch, farmhouse, # these were too infrequent in 2014 (in GP group)
+                        #housekeeper, degreeother, widowed, 
+                        #difficultybills, single))))
   #logistic regressions
   eval(call("<-", as.name(help3), glm(liss_ps_model_parents_2014, family = binomial(link='logit'), data = get(help2))))
 }
@@ -1946,12 +1948,12 @@ for (i in c(1:imp)){
   #save subset data (2014 separately because of missing health covariates)
   eval(call("<-", as.name(help2), get(help1) %>% filter(year==2014)))
   eval(call("<-", as.name(help2), get(help2) %>% 
-              select(-c(moderatehealth, verygoodhealth, bmi, # health variables not assessed in 2014 
-                        chronicdisease, diabetes, nodisease, 
-                        mobility, dep,
-                        more_paid_work, speakdutch, farmhouse, # these were too infrequent in 2014 (in GP group)
-                        housekeeper, degreeother, widowed, 
-                        difficultybills, single))))
+              select(-c(#moderatehealth, verygoodhealth, bmi, # health variables not assessed in 2014 
+                        #chronicdisease, diabetes, nodisease, 
+                        mobility, dep)))) #,
+                        #more_paid_work, speakdutch, farmhouse, # these were too infrequent in 2014 (in GP group)
+                        #housekeeper, degreeother, widowed, 
+                        #difficultybills, single))))
   #logistic regressions
   eval(call("<-", as.name(help3), glm(liss_ps_model_nonparents_2014, family = binomial(link='logit'), data = get(help2))))
 }
@@ -2673,15 +2675,17 @@ liss_bal_parents_before <- left_join(liss_bal_parents_before, lissimp_matching_1
 liss_bal_parents_before <- liss_bal_parents_before %>% 
   select(nomem_encr, grandparent, pscore, female, everything(), 
          -c(time, year, valid, droplater, matchtime, nokids),
-         -c(retire_early, retirement, heartattack, stroke, cancer, rentfree, businessdwelling, otherdwelling,
-            jobseeker, pensioner, disability, primaryschool, poorhealth, excellenthealth), # too infrequent, see above
-         -c(paid_work, more_paid_work, financialsit, difficultybills, secondhouse, # these are not critical (substantively)
-            speakdutch, bmi, chronicdisease, diabetes, nodisease, mobility, dep, flatapartment, 
+         -c(retire_early, retirement, heartattack, stroke, cancer, rentfree, businessdwelling, otherdwelling, # too infrequent
+            jobseeker, pensioner, disability, primaryschool, poorhealth, excellenthealth), 
+         -c(paid_work, more_paid_work, difficultybills, secondhouse, # these are not important (substantively)
+            speakdutch, bmi, chronicdisease, diabetes, nodisease, flatapartment, 
             farmhouse, familybusiness, freelancer, housekeeper, degreeother, moderatehealth, 
-            verygoodhealth, moderatehealth, verygoodhealth)) #,
-         #-c(religion, currentpartner, livetogether, hhmembers, rental, degreehighersec,
-         #   degreevocational, degreecollege, degreeuniversity, divorced, widowed, single, 
-         #   extremelyurban, moderatelyurban, slightlyurban, noturban, logincome, livedhere, rooms))
+            verygoodhealth, moderatehealth, verygoodhealth),
+         -c(currentpartner, hhmembers, divorced, widowed, single, # also not important? improve balance?
+            extremelyurban, moderatelyurban, slightlyurban, noturban)) #,
+         #-c(religion, livetogether, rental, degreehighersec,
+         #   degreevocational, degreecollege, degreeuniversity, 
+         #   logincome, livedhere, rooms, financialsit, mobility, dep))
 summary(liss_bal_parents_before)
 
 names(liss_bal_parents_before) # column names must be aligned!
@@ -2694,15 +2698,17 @@ liss_bal_nonparents_before <- left_join(liss_bal_nonparents_before, lissimp_matc
 liss_bal_nonparents_before <- liss_bal_nonparents_before %>% 
   select(nomem_encr, grandparent, pscore, female, everything(), 
          -c(time, year, valid, droplater, matchtime, contains("kid"), totalchildren),
-         -c(retire_early, retirement, heartattack, stroke, cancer, rentfree, businessdwelling, otherdwelling,
-            jobseeker, pensioner, disability, primaryschool, poorhealth, excellenthealth), # too infrequent, see above
-         -c(paid_work, more_paid_work, financialsit, difficultybills, secondhouse, # these are not critical (substantively)
-            speakdutch, bmi, chronicdisease, diabetes, nodisease, mobility, dep, flatapartment, 
+         -c(retire_early, retirement, heartattack, stroke, cancer, rentfree, businessdwelling, otherdwelling, # too infrequent
+            jobseeker, pensioner, disability, primaryschool, poorhealth, excellenthealth), 
+         -c(paid_work, more_paid_work, difficultybills, secondhouse, # these are not important (substantively)
+            speakdutch, bmi, chronicdisease, diabetes, nodisease, flatapartment, 
             farmhouse, familybusiness, freelancer, housekeeper, degreeother, moderatehealth, 
-            verygoodhealth, moderatehealth, verygoodhealth)) #,
-         #-c(religion, currentpartner, livetogether, hhmembers, rental, degreehighersec,
-         #   degreevocational, degreecollege, degreeuniversity, divorced, widowed, single, 
-         #   extremelyurban, moderatelyurban, slightlyurban, noturban, logincome, livedhere, rooms))
+            verygoodhealth, moderatehealth, verygoodhealth),
+         -c(currentpartner, hhmembers, divorced, widowed, single, # also not important? improve balance?
+            extremelyurban, moderatelyurban, slightlyurban, noturban)) #,
+         #-c(religion, livetogether, rental, degreehighersec,
+         #   degreevocational, degreecollege, degreeuniversity, 
+         #   logincome, livedhere, rooms, financialsit, mobility, dep))
 summary(liss_bal_nonparents_before)
 
 names(liss_bal_nonparents_before) # column names must be aligned!
