@@ -1850,7 +1850,10 @@ remove_infrequent_hrs <- function(x) {
            -c(hhmembers, marriagesnum, doctor, hospital, psyche, bmi, cancer, # these are not important (substantively)
               diabetes, stroke, heart, hiemployer, higovt, hispousal, hiother, 
               partnered, separated, nevermarried, ranchfarm, rentfree, mobilehome, 
-              duplexhome, apartment, homeother, housekeeper)) }#,
+              duplexhome, apartment, homeother, housekeeper, 
+              fulltime, parttime, unemployed, partlyretired, disabled, notinlaborforce,
+              unsafeneighborhood, secondhouse, selfemployed, black,
+              raceother)) }#,
 
 list_remove_infrequent_hrs <- list(hrsimp_parents_ps_1, hrsimp_parents_ps_2, 
                                     hrsimp_parents_ps_3, hrsimp_parents_ps_4, 
@@ -2583,7 +2586,7 @@ hrs_bal_nonparents <- left_join(hrs_bal_nonparents, hrsimp_nonparents_ps_1, by=c
 summary(hrs_bal_nonparents)
 
 # balance BEFORE matching
-hrs_bal_parents_before <- hrsimp_parents_ps_2 %>% # this already has the updated number of covars
+hrs_bal_parents_before <- hrsimp_parents_ps_2 %>% # this already has the correct number of covars
   mutate(pscore = (pscore_m1 + pscore_m2 + pscore_m3 + pscore_m4 + pscore_m5)/5) %>% 
   select(-starts_with("pscore_m"), -year) %>% 
   select(HHIDPN, grandparent, pscore, female, everything())
@@ -2593,7 +2596,7 @@ names(hrs_bal_parents_before) # column names must be aligned!
 names(hrs_bal_parents)
 names(hrs_bal_parents_groupmatch)
 
-hrs_bal_nonparents_before <- hrsimp_nonparents_ps_2 %>% # this already has the updated number of covars
+hrs_bal_nonparents_before <- hrsimp_nonparents_ps_2 %>% # this already has the correct number of covars
   mutate(pscore = (pscore_m1 + pscore_m2 + pscore_m3 + pscore_m4 + pscore_m5)/5) %>% 
   select(-starts_with("pscore_m"), -year) %>% 
   select(HHIDPN, grandparent, pscore, female, everything())
