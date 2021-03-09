@@ -1853,7 +1853,7 @@ remove_infrequent_hrs <- function(x) {
               duplexhome, apartment, homeother, housekeeper, 
               fulltime, parttime, unemployed, partlyretired, disabled, notinlaborforce,
               unsafeneighborhood, secondhouse, selfemployed, black,
-              raceother)) }#,
+              raceother, difficultpaybills, foodstamps)) }#,
 
 list_remove_infrequent_hrs <- list(hrsimp_parents_ps_1, hrsimp_parents_ps_2, 
                                     hrsimp_parents_ps_3, hrsimp_parents_ps_4, 
@@ -2010,11 +2010,11 @@ for(num in 1:num_cases)
 # all 712 grandparents sucessfully matched!
 summary(hrs_matched_parents$rank)
 # Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-# 1.00    1.00    2.00   35.78   32.00  287.00 
+# 1.00    1.00    1.00   27.14    6.00  266.00 
 
 summary(hrs_matched_parents$ps_diff)
 #     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-# 0.0000003 0.0001345 0.0007313 0.0601761 0.0577291 0.6369752 
+# 0.0000006 0.0001193 0.0005393 0.0446946 0.0115359 0.6287603 
 
 # create dataset for merge with controls
 hrs_matched_mergecontrols_parents <- hrs_matched_parents %>% rename(
@@ -2315,11 +2315,11 @@ for(num in 1:num_cases)
 # all 712 grandparents sucessfully matched!
 summary(hrs_matched_nonparents$rank)
 # Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-# 1.0     2.0    89.0   150.1   270.0   556.0 
+# 1.00    1.00    2.00   66.02   76.75  465.00 
 
 summary(hrs_matched_nonparents$ps_diff)
 #     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-# 0.0000039 0.0011630 0.1459282 0.2261260 0.4114583 0.8758500 
+# 0.0000006 0.0002729 0.0014144 0.0729406 0.0945240 0.6601138 
 
 # create dataset for merge with controls
 hrs_matched_mergecontrols_nonparents <- hrs_matched_nonparents %>% rename(
