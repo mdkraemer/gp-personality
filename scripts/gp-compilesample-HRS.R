@@ -1731,11 +1731,11 @@ hrsimp_matching_1 %>%
   group_by(grandparent, nokids) %>% summarise(n = n(), N = n_distinct(HHIDPN))
 hrsimp_matching_1 %>% 
   filter((grandparent==1 & nokids==0) | 
-         (grandparent==0 & nokids==0 & kid1age>=15)) %>% 
+         (grandparent==0 & nokids==0 & kid1age %in% c(15:65))) %>% 
   group_by(grandparent, nokids) %>% summarise(n = n(), N = n_distinct(HHIDPN))
 hrsimp_matching_1 %>% 
   filter((grandparent==1 & nokids==0 & valid==-1 & droplater==F) | 
-         (grandparent==0 & nokids==0 & kid1age>=15)) %>% 
+         (grandparent==0 & nokids==0 & kid1age %in% c(15:65))) %>% 
   group_by(grandparent, nokids) %>% summarise(n = n(), N = n_distinct(HHIDPN))
 
 # Compared to the (old) method that does not filter by 'nokids==0', we 
@@ -1764,7 +1764,7 @@ hrsimp_matching_1 %>%
 # parents
 hrsimp_parents_ps_1 <- hrsimp_matching_1 %>% 
   filter((grandparent==1 & nokids==0 & valid==-1 & droplater==F & !is.na(kid1age)) | 
-         (grandparent==0 & nokids==0 & kid1age>=15)) %>% 
+         (grandparent==0 & nokids==0 & kid1age %in% c(15:65))) %>% 
   select(-c(droplater, time, valid, nokids))
 # two GP observations (500298010, 500298020) have NA for kid1age
 hrslongvalid %>% filter(HHIDPN %in% c(500298010, 500298020)) %>% print(width=Inf)
@@ -1791,7 +1791,7 @@ hrsimp_nonparents_ps_1 %>%
 #same for the other imputations...
 # 2  
 hrsimp_parents_ps_2 <- hrsimp_matching_2 %>% 
-  filter((grandparent==0 & nokids==0 & kid1age>=15) | 
+  filter((grandparent==0 & nokids==0 & kid1age %in% c(15:65)) | 
          (grandparent==1 & nokids==0 & valid==-1 & droplater==F & !is.na(kid1age))) %>% 
   select(-c(droplater, time, valid, nokids))
 
@@ -1803,7 +1803,7 @@ hrsimp_nonparents_ps_2 <- hrsimp_matching_2 %>%
 
 # 3
 hrsimp_parents_ps_3 <- hrsimp_matching_3 %>% 
-  filter((grandparent==0 & nokids==0 & kid1age>=15) | 
+  filter((grandparent==0 & nokids==0 & kid1age %in% c(15:65)) | 
          (grandparent==1 & nokids==0 & valid==-1 & droplater==F & !is.na(kid1age))) %>% 
   select(-c(droplater, time, valid, nokids))
 
@@ -1815,7 +1815,7 @@ hrsimp_nonparents_ps_3 <- hrsimp_matching_3 %>%
 
 # 4
 hrsimp_parents_ps_4 <- hrsimp_matching_4 %>% 
-  filter((grandparent==0 & nokids==0 & kid1age>=15) | 
+  filter((grandparent==0 & nokids==0 & kid1age %in% c(15:65)) | 
          (grandparent==1 & nokids==0 & valid==-1 & droplater==F & !is.na(kid1age))) %>% 
   select(-c(droplater, time, valid, nokids))
 
@@ -1827,7 +1827,7 @@ hrsimp_nonparents_ps_4 <- hrsimp_matching_4 %>%
 
 # 5
 hrsimp_parents_ps_5 <- hrsimp_matching_5 %>% 
-  filter((grandparent==0 & nokids==0 & kid1age>=15) | 
+  filter((grandparent==0 & nokids==0 & kid1age %in% c(15:65)) | 
          (grandparent==1 & nokids==0 & valid==-1 & droplater==F & !is.na(kid1age))) %>% 
   select(-c(droplater, time, valid, nokids))
 
@@ -1965,7 +1965,7 @@ hrsimp_matching_parents_control <- hrsimp_matching_parents %>% filter(grandparen
 # matching the two datasets along gender of controls and cases (exact matches)
 # crossing = equivalent of STATA joinby command (Cartesian product)
 hrsimp_joined_parents <- crossing(hrsimp_matching_parents_case, hrsimp_matching_parents_control)
-# 712*3336 = 2375232
+# 712*3300 = 2349600
 # exact matching on gender
 hrsimp_joined_parents <- hrsimp_joined_parents %>% filter(female_case==female_control) %>% 
   select(-female_control) %>% 
@@ -2010,11 +2010,11 @@ for(num in 1:num_cases)
 # all 712 grandparents sucessfully matched!
 summary(hrs_matched_parents$rank)
 # Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-# 1.00    1.00    1.00   27.14    6.00  266.00 
+# 1.00    1.00    1.00   30.58    9.25  263.00 
 
 summary(hrs_matched_parents$ps_diff)
 #     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-# 0.0000006 0.0001193 0.0005393 0.0446946 0.0115359 0.6287603 
+# 0.0000006 0.0000987 0.0005402 0.0481018 0.0236664 0.5277266 
 
 # create dataset for merge with controls
 hrs_matched_mergecontrols_parents <- hrs_matched_parents %>% rename(
@@ -2146,13 +2146,13 @@ match_on_parents_female <- as.matrix(exactMatch(grandparent ~ female, data=hrsim
 
 #final input to rollingMatch is the sum of these matrices
 final_dist_parents <- match_on_parents_ps + match_on_parents_female
-# 2375232 elements in matrix -> same as in Cartesian product in DIY matching loop
+# 712*3300 = 2349600 elements in matrix -> same as in Cartesian product in DIY matching loop
 
 hrs_groupmatch_parents <- rollingMatch::groupmatch(x=final_dist_parents, 
                              group = hrsimp_groupmatch_parents$HHIDPN, allow_duplicates = T,
                              min.controls = 0, max.controls = 1, omit.fraction = NULL, 
                              mean.controls = NULL, tol = 0.001, data = hrsimp_groupmatch_parents)
-# "allow_duplicates = T" leads to better balance, with 617 controls matched to 712 cases 
+# "allow_duplicates = T" leads to better balance
 
 summary(hrs_groupmatch_parents) #seems to work for 1:1 matching without replacement despite the warning message!
 
@@ -2236,7 +2236,8 @@ table(hrsanalysis_parents_groupmatch$grandparent, hrsanalysis_parents_groupmatch
 
 # save .rda 
 save(hrsanalysis_parents_groupmatch, file = "data/processed/HRS/hrsanalysis_parents_groupmatch.rda")
-hrsanalysis_parents_groupmatch %>% group_by(grandparent) %>% summarise(N = n_distinct(HHIDPN)) # duplicates in the controls
+hrsanalysis_parents_groupmatch %>% group_by(grandparent) %>% summarise(N = n_distinct(HHIDPN))
+# duplicates in the controls, 615 controls matched to 712 cases 
 
 #### PSM: identify possible matches -> (2) nonparent control group ####
 
