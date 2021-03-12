@@ -675,7 +675,8 @@ h06cov <- h06data %>%
   select(HHIDPN, 
          KE012, KE022, KE046, KE060, KE063, KE065, KE066, KH001, KH002, KH004,
          KA099, KA100, KA501, KLB039B,
-         KZ230, KH150, KH151, KQ400, KB082, KH147, K066, KJ020, KJ021, KJ005M1) %>%
+         KZ230, KH150, KH151, KQ400, KB082, KH147, K066, KJ020, KJ021, KJ005M1,
+         KXF065_R, KA030) %>%
   mutate(HHIDPN = as.numeric(HHIDPN)) %>% 
   mutate(n_respond = rowSums(!is.na(.))) %>%
   filter(n_respond > 1) %>%
@@ -705,14 +706,17 @@ h06cov <- h06data %>%
          nroomsint_2006             = K066,    # number of rooms in housing unit
          paidwork_2006              = KJ020,   # working for pay
          selfemployed_2006          = KJ021,   # work for someone else/slf-employed
-         jobstatus_2006             = KJ005M1  # current job status- 1 -> 6=homemaker
+         jobstatus_2006             = KJ005M1,  # current job status- 1 -> 6=homemaker
+         coupleness_2006            = KXF065_R, # coupleness status - updated
+         livetogether_2006          = KA030     # couple live together
   )
 
 h08cov <- h08data %>%
   select(HHIDPN, 
          LE012, LE022, LE046, LE060, LE063, LE065, LE066, LH001, LH002, LH004,
          LA099, LA100, LA501,
-         LLB040,LZ230, LH150, LH151, LQ400, LB082, LH147, L066, LJ020, LJ021, LJ005M1) %>%
+         LLB040,LZ230, LH150, LH151, LQ400, LB082, LH147, L066, LJ020, LJ021, LJ005M1,
+         LXF065_R, LA030) %>%
   mutate(HHIDPN = as.numeric(HHIDPN)) %>% 
   mutate(n_respond = rowSums(!is.na(.))) %>%
   filter(n_respond > 1) %>%
@@ -742,14 +746,17 @@ h08cov <- h08data %>%
          nroomsint_2008             = L066,    # number of rooms in housing unit
          paidwork_2008              = LJ020,   # working for pay
          selfemployed_2008          = LJ021,   # work for someone else/slf-employed
-         jobstatus_2008             = LJ005M1  # current job status- 1 -> 6=homemaker
+         jobstatus_2008             = LJ005M1, # current job status- 1 -> 6=homemaker
+         coupleness_2008            = LXF065_R, # coupleness status - updated
+         livetogether_2008          = LA030     # couple live together
   )
 
 h10cov <- h10data %>%
   select(HHIDPN, 
          ME012, ME022, ME046, ME060, ME063, ME065, ME066, MH001, MH002, MH004,
          MA099, MA100, MA501, MLB040,
-         MZ230, MH150, MH151, MQ400, MB082, MH147, M066, MJ020, MJ021, MJ005M1) %>%
+         MZ230, MH150, MH151, MQ400, MB082, MH147, M066, MJ020, MJ021, MJ005M1,
+         MXF065_R, MA030) %>%
   mutate(HHIDPN = as.numeric(HHIDPN)) %>% 
   mutate(n_respond = rowSums(!is.na(.))) %>%
   filter(n_respond > 1) %>%
@@ -779,14 +786,17 @@ h10cov <- h10data %>%
          nroomsint_2010             = M066,    # number of rooms in housing unit
          paidwork_2010              = MJ020,   # working for pay
          selfemployed_2010          = MJ021,   # work for someone else/slf-employed
-         jobstatus_2010             = MJ005M1  # current job status- 1 -> 6=homemaker
+         jobstatus_2010             = MJ005M1, # current job status- 1 -> 6=homemaker
+         coupleness_2010            = MXF065_R, # coupleness status - updated
+         livetogether_2010          = MA030     # couple live together
   )
 
 h12cov <- h12data %>%
   select(HHIDPN,
          NE012, NE022, NE046, NE060, NE063, NE065, NE066, NH001, NH002, NH004,
          NA099, NA100, NA501, NLB040,
-         NZ230, NH150, NH151, NQ400, NB082, NH147, N066, NJ020, NJ021, NJ005M1) %>%
+         NZ230, NH150, NH151, NQ400, NB082, NH147, N066, NJ020, NJ021, NJ005M1,
+         NXF065_R, NA030) %>%
   mutate(HHIDPN = as.numeric(HHIDPN)) %>% 
   mutate(n_respond = rowSums(!is.na(.))) %>%
   filter(n_respond > 1) %>%
@@ -816,14 +826,17 @@ h12cov <- h12data %>%
          nroomsint_2012             = N066,    # number of rooms in housing unit
          paidwork_2012              = NJ020,   # working for pay 
          selfemployed_2012          = NJ021,   # work for someone else/slf-employed
-         jobstatus_2012             = NJ005M1  # current job status- 1 -> 6=homemaker
+         jobstatus_2012             = NJ005M1, # current job status- 1 -> 6=homemaker
+         coupleness_2012            = NXF065_R, # coupleness status - updated
+         livetogether_2012          = NA030     # couple live together
   )
 
 h14cov <- h14data %>%
   select(HHIDPN, 
          OE012, OE022, OE046, OE060, OE063, OE065, OE066, OH001, OH002, OH004,
          OA099, OA100, OA501, 
-         OLB035, OZ230, OH150, OH151, OQ400, OB082, OH147, O066, OJ020, OJ021, OJ005M1) %>%
+         OLB035, OZ230, OH150, OH151, OQ400, OB082, OH147, O066, OJ020, OJ021, OJ005M1,
+         OXF065_R, OA030) %>%
   mutate(HHIDPN = as.numeric(HHIDPN)) %>% 
   mutate(n_respond = rowSums(!is.na(.))) %>%
   filter(n_respond > 1) %>%
@@ -853,14 +866,17 @@ h14cov <- h14data %>%
          nroomsint_2014             = O066,    # number of rooms in housing unit
          paidwork_2014              = OJ020,   # working for pay
          selfemployed_2014          = OJ021,   # work for someone else/slf-employed
-         jobstatus_2014             = OJ005M1  # current job status- 1 -> 6=homemaker
+         jobstatus_2014             = OJ005M1, # current job status- 1 -> 6=homemaker
+         coupleness_2014            = OXF065_R, # coupleness status - updated
+         livetogether_2014          = OA030     # couple live together
   )
 
 h16cov <- h16data %>%
   select(HHIDPN, 
          PE012, PE022, PE046, PE060, PE063, PE065, PE066, PH001, PH002, PH004,
          PA099, PA100, PA501,
-         PLB035, PZ230, PH150, PH151, PQ400, PB082, PH147, P066, PJ020, PJ021, PJ005M1) %>%
+         PLB035, PZ230, PH150, PH151, PQ400, PB082, PH147, P066, PJ020, PJ021, PJ005M1,
+         PX065_R, PA030) %>%
   mutate(HHIDPN = as.numeric(HHIDPN)) %>% 
   mutate(n_respond = rowSums(!is.na(.))) %>%
   filter(n_respond > 1) %>%
@@ -890,7 +906,9 @@ h16cov <- h16data %>%
          nroomsint_2016             = P066,    # number of rooms in housing unit
          paidwork_2016              = PJ020,   # working for pay
          selfemployed_2016          = PJ021,   # work for someone else/slf-employed
-         jobstatus_2016             = PJ005M1  # current job status- 1 -> 6=homemaker
+         jobstatus_2016             = PJ005M1,  # current job status- 1 -> 6=homemaker
+         coupleness_2016            = PX065_R,  # coupleness status of individual - updated
+         livetogether_2016          = PA030     # couple live together
   )
 
 # RAND HRS Family Data 2014 - two files: one with household-level and one with 
@@ -1405,6 +1423,7 @@ hrsimplong <- hrslongvalid %>% select(HHIDPN, year,
                    secondhome, typehome, farmranch, 
                    attendreligion, nroomsself, nroomsint, 
                    paidwork, selfemployed, jobstatus, 
+                   coupleness, livetogether, 
                    starts_with("KAGENDERBG"), starts_with("KABYEARBG"), 
                    starts_with("KAEDUC"), starts_with("has_ch"), 
                    swls, agree, con, extra, neur, open)
@@ -1419,7 +1438,7 @@ summary(hrsimplong)
 hrsimplong <- hrsimplong %>% 
   mutate_at(c("children10m", "ownrent", "safetyneighborhood", "foodstamps", 
               "secondhome", "farmranch", "attendreligion", "nroomsint", 
-              "paidwork", "selfemployed", "jobstatus"), 
+              "paidwork", "selfemployed", "jobstatus", "livetogether"), 
             funs(ifelse(. %in% c(8, 9), NA, .))) %>% 
   mutate_at(c("typehome", "nroomsself", "jobstatus"), #jobstatus has both types
             funs(ifelse(. %in% c(98, 99), NA, .)))
@@ -1458,6 +1477,10 @@ hrsimplong <- hrsimplong %>% mutate(rooms = nroomsint) %>%
 # selfemployed: work for someone else/slf-employed
 hrsimplong <- hrsimplong %>% mutate(
   selfemployed = replace(selfemployed, is.na(selfemployed) & paidwork==5, 0)
+)
+# livetogether: couple live together (combined with information from 'coupleness status of individual - updated')
+hrsimplong <- hrsimplong %>% mutate(
+  livetogether = replace(livetogether, is.na(livetogether) & coupleness==6, 5)
 )
 
 # variables related to children: if a respondent has no children, we recode to 0
@@ -1679,12 +1702,13 @@ impdata <- impdata %>%
               kid3age = replace(kid3age, kid3age<0, 0), 
               kid1educ = ifelse(nokids==0, KAEDUC_1, 0), 
               kid2educ = ifelse(secondkid==1, KAEDUC_2, 0), 
-              kid3educ = ifelse(thirdkid==1, KAEDUC_3, 0) 
+              kid3educ = ifelse(thirdkid==1, KAEDUC_3, 0),
+              livetogether = ifelse(livetogether %in% c(1,3), 1, 0)
   )) %>%
   map(~select(., -c(birthyr, race, laborforce, marital, children10m, farmranch, ownrent,
               difficultybills, bornusa, safetyneighborhood, secondhome,
               hhincome, hhwealth, selfratedhealth, attendreligion, 
-              typehome, rooms, jobstatus, gender,
+              typehome, rooms, jobstatus, gender, coupleness, 
               starts_with("KA"), ))) # these are dropped because of recoding
 
 # unlist and save as original data frames
@@ -1853,7 +1877,7 @@ remove_infrequent_hrs <- function(x) {
               duplexhome, apartment, homeother, housekeeper, 
               fulltime, parttime, unemployed, partlyretired, disabled, notinlaborforce,
               unsafeneighborhood, secondhouse, selfemployed, black,
-              raceother, difficultpaybills, foodstamps)) }#,
+              raceother, difficultpaybills, foodstamps)) }#, , renter, conde, notusaborn, livetogether
 
 list_remove_infrequent_hrs <- list(hrsimp_parents_ps_1, hrsimp_parents_ps_2, 
                                     hrsimp_parents_ps_3, hrsimp_parents_ps_4, 
@@ -2010,11 +2034,11 @@ for(num in 1:num_cases)
 # all 712 grandparents sucessfully matched!
 summary(hrs_matched_parents$rank)
 # Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-# 1.00    1.00    1.00   30.58    9.25  263.00 
+# 1.00    1.00    1.00   28.17    8.00  264.00
 
 summary(hrs_matched_parents$ps_diff)
 #     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-# 0.0000006 0.0000987 0.0005402 0.0481018 0.0236664 0.5277266 
+# 0.0000006 0.0000963 0.0004960 0.0447142 0.0150051 0.5082395
 
 # create dataset for merge with controls
 hrs_matched_mergecontrols_parents <- hrs_matched_parents %>% rename(
@@ -2112,7 +2136,7 @@ save(hrsanalysis_parents, file = "data/processed/HRS/hrsanalysis_parents.rda")
 # this did not work:
 #devtools::install_github("jgellar/rollingMatch", auth_token = "506524f03641945dc771f973a3d6131ab9edad26")
 
-library(rollingMatch)
+#library(rollingMatch)
 
 table(hrsimp_matching_parents$grandparent)
 table(hrsimp_matching_parents$grandparent, hrsimp_matching_parents$year)
@@ -2136,9 +2160,10 @@ table(hrsimp_groupmatch_parents$grandparent, hrsimp_groupmatch_parents$valid)
 # to a given treated subject once.
 
 #matrix of propensity score distances (uses the same 'pscore' variable as the K&R matching loop)
-match_on_parents_ps <- as.matrix(match_on(grandparent~pscore, data=hrsimp_groupmatch_parents))
+match_on_parents_ps <- as.matrix(caliper(match_on(grandparent~pscore, data=hrsimp_groupmatch_parents), 
+                                         width=0.05))
 
-#caliper matrix to exact-match on gender
+#matrix to exact-match on gender
 match_on_parents_female <- as.matrix(exactMatch(grandparent ~ female, data=hrsimp_groupmatch_parents))
 
 #caliper matrix to match within $500 of income (also possible)
@@ -2148,8 +2173,9 @@ match_on_parents_female <- as.matrix(exactMatch(grandparent ~ female, data=hrsim
 final_dist_parents <- match_on_parents_ps + match_on_parents_female
 # 712*3300 = 2349600 elements in matrix -> same as in Cartesian product in DIY matching loop
 
-hrs_groupmatch_parents <- rollingMatch::groupmatch(x=final_dist_parents, 
-                             group = hrsimp_groupmatch_parents$HHIDPN, allow_duplicates = T,
+#hrs_groupmatch_parents <- rollingMatch::groupmatch(x=final_dist_parents, 
+hrs_groupmatch_parents <- optmatch::fullmatch(x=final_dist_parents, 
+                             #group = hrsimp_groupmatch_parents$HHIDPN, allow_duplicates = T,
                              min.controls = 0, max.controls = 1, omit.fraction = NULL, 
                              mean.controls = NULL, tol = 0.001, data = hrsimp_groupmatch_parents)
 # "allow_duplicates = T" leads to better balance
@@ -2441,9 +2467,9 @@ table(hrsimp_groupmatch_nonparents$grandparent, hrsimp_groupmatch_nonparents$val
 # to a given treated subject once.
 
 #matrix of propensity score distances (uses the same 'pscore' variable as the K&R matching loop)
-match_on_nonparents_ps <- as.matrix(match_on(grandparent~pscore, data=hrsimp_groupmatch_nonparents))
+match_on_nonparents_ps <- as.matrix(caliper(match_on(grandparent~pscore, data=hrsimp_groupmatch_nonparents), width=0.05))
 
-#caliper matrix to exact-match on gender
+#matrix to exact-match on gender
 match_on_nonparents_female <- as.matrix(exactMatch(grandparent ~ female, data=hrsimp_groupmatch_nonparents))
 
 #caliper matrix to match within $500 of income (also possible)
@@ -2453,8 +2479,9 @@ match_on_nonparents_female <- as.matrix(exactMatch(grandparent ~ female, data=hr
 final_dist_nonparents <- match_on_nonparents_ps + match_on_nonparents_female
 # 1678184 elements in matrix -> same as in Cartesian product in DIY matching loop
 
-hrs_groupmatch_nonparents <- groupmatch(x=final_dist_nonparents, 
-                                     group = hrsimp_groupmatch_nonparents$HHIDPN, allow_duplicates = T,
+#hrs_groupmatch_nonparents <- groupmatch(x=final_dist_nonparents, 
+hrs_groupmatch_nonparents <- optmatch::fullmatch(x=final_dist_nonparents, 
+                                     #group = hrsimp_groupmatch_nonparents$HHIDPN, allow_duplicates = T,
                                      min.controls = 0, max.controls = 1, omit.fraction = NULL, 
                                      mean.controls = NULL, tol = 0.001, data = hrsimp_groupmatch_nonparents)
 # "allow_duplicates = T" leads to better balance, with 520 controls matched to 712 cases 

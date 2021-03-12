@@ -1566,10 +1566,8 @@ impdata <- impdata %>%
               speakdutch = 2 - speakdutch, 
               chronicdisease = 2 - chronicdisease, 
               logincome = log(replace(nettoink, nettoink<=1, 1)), #take log of income
-              poorhealth = ifelse(subjhealth==1, 1, 0), #ref: 3 good
-              moderatehealth = ifelse(subjhealth==2, 1, 0), 
-              verygoodhealth = ifelse(subjhealth==4, 1, 0), 
-              excellenthealth = ifelse(subjhealth==5, 1, 0),
+              worsehealth = ifelse(!is.na(subjhealth), ifelse(subjhealth %in% c(1,2), 1, 0), NA), #ref: 3 good -- binning 1=poor and 2=moderate because almost no-one in the matching sample answered 1=poor
+              betterhealth = ifelse(!is.na(subjhealth), ifelse(subjhealth %in% c(4,5), 1, 0), NA), # binning 4=very good and 5=excellent because almost no-one in the matching sample answered 5=excellent
               # children variables
               kid1female = ifelse(kid1gender==2, 1, 0), # if we filter to parents, all 0s will have a male first child
               kid2female = ifelse(kid2gender==2, 1, 0), # there will be some 0s in here who do not have a 2nd child but these are captured in the model by 'secondkid' & 'thirdkid'
@@ -1791,18 +1789,17 @@ table(lissimp_parents_ps_1$grandparent, lissimp_parents_ps_1$disability)
 remove_infrequent_liss <- function(x) { 
   x %>% 
     select(-c(retire_early, retirement, heartattack, stroke, cancer, rentfree, businessdwelling, otherdwelling, # too infrequent
-              jobseeker, pensioner, disability, primaryschool, poorhealth, excellenthealth),
+              jobseeker, pensioner, disability, primaryschool),
            -c(paid_work, more_paid_work, difficultybills, secondhouse, # these are not important (substantively)
               speakdutch, bmi, chronicdisease, diabetes, nodisease, flatapartment, 
-              farmhouse, familybusiness, freelancer, housekeeper, degreeother, moderatehealth, 
-              verygoodhealth, moderatehealth, verygoodhealth),
+              farmhouse, familybusiness, freelancer, housekeeper, degreeother),
            -c(currentpartner, hhmembers, single, # also not important? improve balance?
               extremelyurban, moderatelyurban, slightlyurban, noturban,
               livedhere)) }#,
            #-c(religion, livetogether, rental, degreehighersec,
            #   degreevocational, degreecollege, degreeuniversity, 
            #   logincome, rooms, financialsit, mobility, dep,
-           #   divorced, widowed, jobhours)) }
+           #   divorced, widowed, jobhours, worsehealth, betterhealth)) }
 
 list_remove_infrequent_liss <- list(lissimp_parents_ps_1, lissimp_parents_ps_2, 
                                     lissimp_parents_ps_3, lissimp_parents_ps_4, 
@@ -1865,8 +1862,7 @@ lissimp_pscore_parents_main <- lissimp_parents_ps_2_main %>%
   mutate(pscore = (pscore_m1 + pscore_m2 + pscore_m3 + pscore_m4 + pscore_m5)/5)
 
 # 2014 
-#liss_ps_model_2014 <- as.formula("grandparent ~ . - year - nomem_encr - poorhealth - moderatehealth - 
-#                                  verygoodhealth - excellenthealth - bmi - 
+#liss_ps_model_2014 <- as.formula("grandparent ~ . - year - nomem_encr - bmi - 
 #                                  chronicdisease - heartattack - stroke - cancer - diabetes - 
 #                                  nodisease - mobility - dep") # all vars but ... # does not work for some reason
 liss_ps_model_parents_2014 <- as.formula("grandparent ~ . - year - nomem_encr - female")  # no variation in year (only 2014)
@@ -1881,9 +1877,8 @@ for (i in c(1:imp)){
   #save subset data (2014 separately because of missing health covariates)
   eval(call("<-", as.name(help2), get(help1) %>% filter(year==2014)))
   eval(call("<-", as.name(help2), get(help2) %>% 
-              select(-c(#moderatehealth, verygoodhealth, bmi, # health variables not assessed in 2014 
-                        #chronicdisease, diabetes, nodisease, 
-                        mobility, dep,
+              select(-c(#bmi, chronicdisease, diabetes, nodisease, # health variables not assessed in 2014 
+                        mobility, dep, worsehealth, betterhealth, 
                         widowed)))) # 0 widowed GPs in 2014
                         #more_paid_work, speakdutch, farmhouse, # these were too infrequent in 2014 (in GP group)
                         #housekeeper, degreeother, widowed, 
@@ -1946,8 +1941,7 @@ lissimp_pscore_nonparents_main <- lissimp_nonparents_ps_2_main %>%
   mutate(pscore = (pscore_m1 + pscore_m2 + pscore_m3 + pscore_m4 + pscore_m5)/5)
 
 # 2014 
-#liss_ps_model_2014 <- as.formula("grandparent ~ . - year - nomem_encr - poorhealth - moderatehealth - 
-#                                  verygoodhealth - excellenthealth - bmi - 
+#liss_ps_model_2014 <- as.formula("grandparent ~ . - year - nomem_encr - bmi - 
 #                                  chronicdisease - heartattack - stroke - cancer - diabetes - 
 #                                  nodisease - mobility - dep") # all vars but ... # does not work for some reason
 liss_ps_model_nonparents_2014 <- as.formula("grandparent ~ . - year - nomem_encr - female") # no variation in year (only 2014)
@@ -1962,9 +1956,8 @@ for (i in c(1:imp)){
   #save subset data (2014 separately because of missing health covariates)
   eval(call("<-", as.name(help2), get(help1) %>% filter(year==2014)))
   eval(call("<-", as.name(help2), get(help2) %>% 
-              select(-c(#moderatehealth, verygoodhealth, bmi, # health variables not assessed in 2014 
-                        #chronicdisease, diabetes, nodisease, 
-                        mobility, dep, 
+              select(-c(#bmi, chronicdisease, diabetes, nodisease, # health variables not assessed in 2014 
+                        mobility, dep, worsehealth, betterhealth, 
                         widowed)))) # no widowed GPs in 2014
                         #more_paid_work, speakdutch, farmhouse, # these were too infrequent in 2014 (in GP group)
                         #housekeeper, degreeother, widowed, 
@@ -2068,11 +2061,11 @@ for(num in 1:num_cases)
 # all 249 grandparents sucessfully matched!
 summary(liss_matched_parents$rank)
 #    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#   1.00    1.00    5.00   63.43  124.00  312.00 
+#   1.0     1.0     8.0    63.8   122.0   313.0 
 
 summary(liss_matched_parents$ps_diff)
 #    Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-# 0.0000006 0.0003157 0.0132611 0.1194570 0.2032541 0.6350644 
+# 0.0000008 0.0004178 0.0227199 0.1234831 0.2288101 0.6459782 
 
 # create dataset for merge with controls
 liss_matched_mergecontrols_parents <- liss_matched_parents %>% rename(
@@ -2187,7 +2180,7 @@ save(lissanalysis_parents, file = "data/processed/LISS/lissanalysis_parents.rda"
 # this did not work:
 #devtools::install_github("jgellar/rollingMatch", auth_token = "506524f03641945dc771f973a3d6131ab9edad26")
 
-library(rollingMatch)
+#library(rollingMatch)
 
 table(lissimp_matching_parents$grandparent)
 table(lissimp_matching_parents$grandparent, lissimp_matching_parents$year)
@@ -2211,7 +2204,8 @@ table(lissimp_groupmatch_parents$grandparent, lissimp_groupmatch_parents$valid)
 # to a given treated subject once.
 
 #matrix of propensity score distances (uses the same 'pscore' variable as the K&R matching loop)
-match_on_parents_ps <- as.matrix(match_on(grandparent~pscore, data=lissimp_groupmatch_parents))
+match_on_parents_ps <- as.matrix(caliper(match_on(grandparent~pscore, data=lissimp_groupmatch_parents), 
+                                         width=0.3))
 
 #caliper matrix to exact-match on gender
 match_on_parents_female <- as.matrix(exactMatch(grandparent ~ female, data=lissimp_groupmatch_parents))
@@ -2223,8 +2217,9 @@ match_on_parents_female <- as.matrix(exactMatch(grandparent ~ female, data=lissi
 final_dist_parents <- match_on_parents_ps + match_on_parents_female
 # 756960 elements in matrix -> same as in Cartesian product in DIY matching loop
 
-liss_groupmatch_parents <- groupmatch(x=final_dist_parents, 
-                                     group = lissimp_groupmatch_parents$nomem_encr, allow_duplicates = T, 
+#liss_groupmatch_parents <- groupmatch(x=final_dist_parents, 
+liss_groupmatch_parents <- optmatch::fullmatch(x=final_dist_parents, 
+                                     #group = lissimp_groupmatch_parents$nomem_encr, allow_duplicates = T, 
                                      min.controls = 0, max.controls = 1, omit.fraction = NULL, 
                                      mean.controls = NULL, tol = 0.001, data = lissimp_groupmatch_parents)
 # allowing duplicates greatly improves cov balance in our situation where we have few available controls
@@ -2321,6 +2316,8 @@ table(lissanalysis_parents_groupmatch$grandparent, lissanalysis_parents_groupmat
 
 # save .rda 
 save(lissanalysis_parents_groupmatch, file = "data/processed/LISS/lissanalysis_parents_groupmatch.rda")
+lissanalysis_parents_groupmatch %>% group_by(grandparent) %>% summarise(N = n_distinct(nomem_encr))
+# duplicates in the controls, controls matched to cases 
 
 
 #### PSM: identify possible matches -> (2) nonparent control group ####
@@ -2398,11 +2395,11 @@ for(num in 1:num_cases)
 # all 249 grandparents sucessfully matched!
 summary(liss_matched_nonparents$rank)
 #    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#   1.0     2.0    52.0   130.1   269.0   505.0 
+#   1.0     2.0    58.0   131.5   267.0   513.0 
 
 summary(liss_matched_nonparents$ps_diff)
 #    Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-# 0.0000002 0.0010450 0.0882766 0.1812270 0.3096813 0.8795133 
+# 0.0000046 0.0013838 0.0922953 0.1840173 0.3195640 0.8736337 
 
 # create dataset for merge with controls
 liss_matched_mergecontrols_nonparents <- liss_matched_nonparents %>% rename(
@@ -2517,7 +2514,7 @@ save(lissanalysis_nonparents, file = "data/processed/LISS/lissanalysis_nonparent
 # this did not work:
 #devtools::install_github("jgellar/rollingMatch", auth_token = "506524f03641945dc771f973a3d6131ab9edad26")
 
-library(rollingMatch)
+#library(rollingMatch)
 
 table(lissimp_matching_nonparents$grandparent)
 table(lissimp_matching_nonparents$grandparent, lissimp_matching_nonparents$year)
@@ -2541,7 +2538,8 @@ table(lissimp_groupmatch_nonparents$grandparent, lissimp_groupmatch_nonparents$v
 # to a given treated subject once.
 
 #matrix of propensity score distances (uses the same 'pscore' variable as the K&R matching loop)
-match_on_nonparents_ps <- as.matrix(match_on(grandparent~pscore, data=lissimp_groupmatch_nonparents))
+match_on_nonparents_ps <- as.matrix(caliper(match_on(grandparent~pscore, data=lissimp_groupmatch_nonparents), 
+                                            width=0.3))
 
 #caliper matrix to exact-match on gender
 match_on_nonparents_female <- as.matrix(exactMatch(grandparent ~ female, data=lissimp_groupmatch_nonparents))
@@ -2553,8 +2551,9 @@ match_on_nonparents_female <- as.matrix(exactMatch(grandparent ~ female, data=li
 final_dist_nonparents <- match_on_nonparents_ps + match_on_nonparents_female
 # 1079913 elements in matrix -> same as in Cartesian product in DIY matching loop
 
-liss_groupmatch_nonparents <- groupmatch(x=final_dist_nonparents, 
-                                      group = lissimp_groupmatch_nonparents$nomem_encr, allow_duplicates = T, 
+#liss_groupmatch_nonparents <- groupmatch(x=final_dist_nonparents, 
+liss_groupmatch_nonparents <- optmatch::fullmatch(x=final_dist_nonparents, 
+                                      #group = lissimp_groupmatch_nonparents$nomem_encr, allow_duplicates = T, 
                                       min.controls = 0, max.controls = 1, omit.fraction = NULL, 
                                       mean.controls = NULL, tol = 0.001, data = lissimp_groupmatch_nonparents)
 # allowing duplicates greatly improves cov balance in our situation where we have few available controls
@@ -2651,6 +2650,8 @@ table(lissanalysis_nonparents_groupmatch$grandparent, lissanalysis_nonparents_gr
 
 # save .rda 
 save(lissanalysis_nonparents_groupmatch, file = "data/processed/LISS/lissanalysis_nonparents_groupmatch.rda")
+lissanalysis_nonparents_groupmatch %>% group_by(grandparent) %>% summarise(N = n_distinct(nomem_encr)) 
+# duplicates in the controls
 
 
 #### PSM: covariate balance assessment ####
@@ -2691,18 +2692,17 @@ liss_bal_parents_before <- liss_bal_parents_before %>%
   select(nomem_encr, grandparent, pscore, female, everything(), 
          -c(time, valid, droplater, matchtime, nokids), # year, 
          -c(retire_early, retirement, heartattack, stroke, cancer, rentfree, businessdwelling, otherdwelling, # too infrequent
-            jobseeker, pensioner, disability, primaryschool, poorhealth, excellenthealth), 
+            jobseeker, pensioner, disability, primaryschool), 
          -c(paid_work, more_paid_work, difficultybills, secondhouse, # these are not important (substantively)
             speakdutch, bmi, chronicdisease, diabetes, nodisease, flatapartment, 
-            farmhouse, familybusiness, freelancer, housekeeper, degreeother, moderatehealth, 
-            verygoodhealth, moderatehealth, verygoodhealth),
+            farmhouse, familybusiness, freelancer, housekeeper, degreeother),
          -c(currentpartner, hhmembers, single, # also not important? improve balance?
             extremelyurban, moderatelyurban, slightlyurban, noturban,
             livedhere)) #,
          #-c(religion, livetogether, rental, degreehighersec,
          #   degreevocational, degreecollege, degreeuniversity, 
          #   logincome, rooms, financialsit, mobility, dep,
-         #   divorced, widowed, jobhours))
+         #   divorced, widowed, jobhours, worsehealth, betterhealth))
 summary(liss_bal_parents_before)
 
 names(liss_bal_parents_before) # column names must be aligned!
@@ -2716,18 +2716,17 @@ liss_bal_nonparents_before <- liss_bal_nonparents_before %>%
   select(nomem_encr, grandparent, pscore, female, everything(), 
          -c(time, valid, droplater, matchtime, contains("kid"), totalchildren), # year, 
          -c(retire_early, retirement, heartattack, stroke, cancer, rentfree, businessdwelling, otherdwelling, # too infrequent
-            jobseeker, pensioner, disability, primaryschool, poorhealth, excellenthealth), 
+            jobseeker, pensioner, disability, primaryschool), 
          -c(paid_work, more_paid_work, difficultybills, secondhouse, # these are not important (substantively)
             speakdutch, bmi, chronicdisease, diabetes, nodisease, flatapartment, 
-            farmhouse, familybusiness, freelancer, housekeeper, degreeother, moderatehealth, 
-            verygoodhealth, moderatehealth, verygoodhealth),
+            farmhouse, familybusiness, freelancer, housekeeper, degreeother),
          -c(currentpartner, hhmembers, single, # also not important? improve balance?
             extremelyurban, moderatelyurban, slightlyurban, noturban,
             livedhere)) #,
          #-c(religion, livetogether, rental, degreehighersec,
          #   degreevocational, degreecollege, degreeuniversity, 
          #   logincome, rooms, financialsit, mobility, dep,
-         #   divorced, widowed, jobhours))
+         #   divorced, widowed, jobhours, worsehealth, betterhealth))
 summary(liss_bal_nonparents_before)
 
 names(liss_bal_nonparents_before) # column names must be aligned!
