@@ -7,6 +7,7 @@ library(tidyverse)
 library(psych)
 library(foreign)
 library(knitr)
+library(optmatch)
 
 #### LISS data: draw raw data, select variables ####
 
@@ -1907,6 +1908,9 @@ lissimp_pscore_parents_14 <- lissimp_parents_ps_2_14 %>%
 lissimp_matching_parents <- bind_rows(lissimp_pscore_parents_main, lissimp_pscore_parents_14)
 #lissimp_matching_parents <- lissimp_pscore_parents_main
 
+lissimp_matching_parents <- lissimp_matching_parents %>% 
+  select(nomem_encr, year, female, grandparent, pscore) 
+
 # 2) NONPARENT control group
 
 liss_ps_model_nonparents <- as.formula("grandparent ~ . - nomem_encr - female") # all vars but ... # - year 
@@ -1986,671 +1990,255 @@ lissimp_pscore_nonparents_14 <- lissimp_nonparents_ps_2_14 %>%
 lissimp_matching_nonparents <- bind_rows(lissimp_pscore_nonparents_main, lissimp_pscore_nonparents_14)
 #lissimp_matching_nonparents <- lissimp_pscore_nonparents_main
 
-#### PSM: identify possible matches -> (1) parent control group ####
-
-# DIY matching: 2nd step -> identifying all possible PS-matches per parent matching 
-#                           exactly on gender
-lissimp_matching_parents <- lissimp_matching_parents %>% 
+lissimp_matching_nonparents <- lissimp_matching_nonparents %>% 
   select(nomem_encr, year, female, grandparent, pscore) 
-# sort by random variable in case there are ordering effects
-set.seed(123)
-rows <- sample(nrow(lissimp_matching_parents))
-lissimp_matching_parents <- lissimp_matching_parents[rows, ]
-lissimp_matching_parents <- lissimp_matching_parents %>% mutate(new_id = row_number())
-
-lissimp_matching_parents_case <- lissimp_matching_parents %>% filter(grandparent==1) %>% 
-  rename(case_id = new_id,
-         pid_case = nomem_encr,
-         pscore_case = pscore,
-         gender_case = female) %>% 
-  select(-grandparent, -year) 
-# removing 'year' here means that 'year' -> 'match_year' will refer to the controls' survey year
-# at the time of matching (see below)
-
-lissimp_matching_parents_control <- lissimp_matching_parents %>% filter(grandparent==0) %>% 
-  rename(control_id = new_id,
-         pid_control = nomem_encr,
-         pscore_control = pscore,
-         gender_control = female,
-         match_year = year) %>% 
-  select(-grandparent)
-
-#matching the two datasets along gender of controls and cases (exact matches)
-#equivalent of STATA joinby command (Cartesian product)
-lissimp_joined_parents <- crossing(lissimp_matching_parents_case, lissimp_matching_parents_control)
-#249*3040 = 756960
-lissimp_joined_parents <- lissimp_joined_parents %>% filter(gender_case==gender_control) %>% 
-  select(-gender_control) %>% 
-  rename(gender = gender_case)
-
-#### PSM: matching loop -> (1) parent control group ####
-
-# DIY matching: 3rd step -> matching the cases and controls according to the similarity of 
-#                           their propensity scores (1 to 1 matching; no duplicates)
-lissimp_joined_parents <- lissimp_joined_parents %>% mutate(ps_diff = abs(pscore_case - pscore_control))
-#no midranks or shared ranks - if PS_diff is the same it can be random which one we pick
-lissimp_joined_parents <- lissimp_joined_parents %>% group_by(pid_case) %>% 
-  mutate(rank = rank(ps_diff, ties.method = "random"))
-
-#this new numbering makes the following loop easier  
-lissimp_joined_parents <- lissimp_joined_parents %>% group_by(case_id) %>%
-  mutate(case_id_new = cur_group_id()) %>% 
-  arrange(case_id_new, rank) %>% ungroup()
-
-#to help with computation time -> restrict to certain ranks (similar idea to caliper)
-#assuming that there will be no valid match according to PS with a higher rank, anyway!
-lissimp_joined_parents_reduced <- lissimp_joined_parents %>% filter(rank<=500)
-(num_cases <- as.vector(summary(lissimp_joined_parents_reduced$case_id_new)[6]))
-
-liss_matched_parents <- NULL;
-picked <- NULL;
-for(num in 1:num_cases)
-{
-  #pick the highest rank of the (remaining) controls each case is matched with
-  picked <- lissimp_joined_parents_reduced %>% filter(case_id_new==num) %>% 
-    mutate(best = min(rank)) %>% filter(rank==best) %>% select(-best)
-  #collect valid matches throughout the loop
-  liss_matched_parents <- rbind(liss_matched_parents, picked)
-  #track pid of control matched in every iteration of the loop
-  picked <- picked %>% mutate(tracked=1) %>% select(pid_control, tracked)
-  #drop all other controls with the tracked pid in the remaining pool of available controls
-  lissimp_joined_parents_reduced <- left_join(lissimp_joined_parents_reduced, picked)
-  lissimp_joined_parents_reduced <- lissimp_joined_parents_reduced %>% 
-    filter(is.na(tracked)) %>% select(-tracked)
-}
-# all 249 grandparents sucessfully matched!
-summary(liss_matched_parents$rank)
-#    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#   1.0     1.0     8.0    63.8   122.0   313.0 
-
-summary(liss_matched_parents$ps_diff)
-#    Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-# 0.0000008 0.0004178 0.0227199 0.1234831 0.2288101 0.6459782 
-
-# create dataset for merge with controls
-liss_matched_mergecontrols_parents <- liss_matched_parents %>% rename(
-  nomem_encr = pid_control,
-  pscore = pscore_control,
-  nomem_encr_case = pid_case
-) %>% select(nomem_encr, nomem_encr_case, match_year, pscore) %>% 
-  arrange(nomem_encr)
-
-# create dataset for merge with cases
-liss_matched_mergecases_parents <- liss_matched_parents %>% rename(
-  nomem_encr = pid_case,
-  pscore = pscore_case,
-  nomem_encr_control = pid_control
-) %>% select(nomem_encr, nomem_encr_control, match_year, pscore) %>% 
-  arrange(nomem_encr)
 
 
-#### compile final analysis sample -> (1) parent control group ####
-
-lissanalysis_parents <- lisslongvalid %>% filter(!is.na(grandparent) & droplater!=T)
-
-lissanalysis_parents <- left_join(lissanalysis_parents, liss_matched_mergecases_parents, by='nomem_encr')
-lissanalysis_parents <- left_join(lissanalysis_parents, liss_matched_mergecontrols_parents, by='nomem_encr')
-
-# create dataset for merge containing information on whether a control was 
-# at time==-5, time==-4, time==-3, or time==-2 at the time of matching (counterfactual timeframe)
-time_for_controls_liss <- lisslongvalid %>% 
-  filter(grandparent==1 & nokids==0 & time==matchtime & droplater==F) %>% # this was the condition by which GP observations were chosen for matching (see above)
-  select(nomem_encr, matchtime, valid) %>% rename(
-    matchtime_controls = matchtime,
-    matchvalid_controls = valid) # same procedure for 'valid' (counts valid observations in relation to transition time point for GPs)
-table(time_for_controls_liss$matchtime_controls) # different time lags between matching and transition to GP
-table(time_for_controls_liss$matchvalid_controls) 
-# some GPs were not matched at valid==-1 because we wanted to avoid having only 1 year between matching and 
-# transition, because parents might have already been pregnant with the grandchildren at this point.
-
-# match via nomem_encr_case (which gives the ID of each control's match) in order 
-# to transfer 'matchtime' value from the cases to controls
-lissanalysis_parents <- left_join(lissanalysis_parents, 
-                                  time_for_controls_liss, by=c('nomem_encr_case'='nomem_encr')) 
-
-lissanalysis_parents <- lissanalysis_parents %>% mutate( # this just unites information from cases and controls in a single variable
-  pscore = ifelse(!is.na(pscore.x), pscore.x, pscore.y),
-  match_year = ifelse(!is.na(match_year.x), match_year.x, match_year.y),
-  nomem_encr_match = ifelse(!is.na(nomem_encr_case), nomem_encr_case, nomem_encr_control),
-  matchtime = ifelse(!is.na(matchtime), matchtime, matchtime_controls), 
-) %>% 
-  select(-c(pscore.x, pscore.y, match_year.x, match_year.y, nomem_encr_case, nomem_encr_control,
-            matchtime_controls)) %>%
-  filter(!is.na(pscore)) # only keep cases and controls
-# reminder: 'matchtime' is the original var indicating (in years) when matching occurred for grandparents-to-be
-#           in relation to the birth of their grandchild. This value was now transferred to the controls via the 
-#           var 'matchtime_controls'.
-table(lissanalysis_parents$grandparent, lissanalysis_parents$matchtime)
-table(lissanalysis_parents$grandparent, lissanalysis_parents$matchvalid_controls)
-
-# coding counterfactual timeframe for controls
-# create time variable for controls relative to the time point of matching (& 'valid' variable)
-lissanalysis_parents <- lissanalysis_parents %>% mutate(
-  time = ifelse(is.na(time) & match_year==year, matchtime, time),
-  # variable 'match_year' relates to the controls
-  valid = ifelse(is.na(valid) & match_year==year, matchvalid_controls, valid)
-)
-# reminder: 'time' counts calendar years in relation to transition to GP, 'valid' only valid assessments
-# note that we have 1:1 corresponding observations in 'time' and 'valid' between cases and controls only 
-# at the time of matching. Earlier or later observations will differ because of different patterns of
-# panel attrition and participation.
-table(lissanalysis_parents$grandparent, lissanalysis_parents$time)
-table(lissanalysis_parents$grandparent, lissanalysis_parents$valid)
-
-lissanalysis_parents <- lissanalysis_parents %>% mutate(
-  time = ifelse(is.na(time) & matchtime==-5, (year - match_year) - 5, time),
-  time = ifelse(is.na(time) & matchtime==-4, (year - match_year) - 4, time),
-  time = ifelse(is.na(time) & matchtime==-3, (year - match_year) - 3, time),
-  time = ifelse(is.na(time) & matchtime==-2, (year - match_year) - 2, time))
-
-lissanalysis_parents <- lissanalysis_parents %>% group_by(nomem_encr) %>% 
-  mutate(lastcount = ifelse(grandparent==0 & valid==matchvalid_controls, row_number(), NA)) %>% ungroup()
-lissanalysis_parents <- lissanalysis_parents %>% group_by(nomem_encr) %>% 
-  mutate(lastcount = max(lastcount, na.rm = T)) %>% ungroup() %>% 
-  mutate(lastcount = replace(lastcount, lastcount==-Inf, NA))
-
-# finish coding 'valid' for controls
-lissanalysis_parents <- lissanalysis_parents %>% group_by(nomem_encr) %>% 
-  mutate(helpcount = row_number()) %>% ungroup()
-lissanalysis_parents <- lissanalysis_parents %>% 
-  mutate(valid = ifelse(is.na(valid) & grandparent==0, helpcount - lastcount + matchvalid_controls, valid)) %>% 
-  select(-helpcount, -lastcount)
-
-table(lissanalysis_parents$grandparent, lissanalysis_parents$valid)
-table(lissanalysis_parents$grandparent, lissanalysis_parents$time) # cells earlier than '-5' too small
-# time==5 also very small....
-
-lissanalysis_parents <- lissanalysis_parents %>% filter(time %in% c(-5:5)) %>% 
-  select(-match_year, -droplater, -matchvalid_controls)
-
-# save .rda 
-save(lissanalysis_parents, file = "data/processed/LISS/lissanalysis_parents.rda")
-
-
-#### PSM: 'rollingMatch' -> (1) parent control group ####
-
-# GroupMatch package (the development version of the package is called 'rollingMatch')
-
-# build/install development version via devtools commands
-#library(devtools)
-#build("S:/MA/mkraemer/Paper_Grandparenthood/GroupMatch development version/rollingMatch")
-#build("/Users/michaelkramer/Documents/Paper_Grandparenthood/GroupMatch development version/rollingMatch")
-#install("/Users/michaelkramer/Documents/Paper_Grandparenthood/GroupMatch development version/rollingMatch")
-
-# this did not work:
-#devtools::install_github("jgellar/rollingMatch", auth_token = "506524f03641945dc771f973a3d6131ab9edad26")
-
-#library(rollingMatch)
+#### PSM: optmatch::fullmatch -> (1) parent control group ####
 
 table(lissimp_matching_parents$grandparent)
 table(lissimp_matching_parents$grandparent, lissimp_matching_parents$year)
 
 #we also need the 'time' value for grandparents (-5, -4, -3 or -2) and the 'valid' variable
-lissimp_groupmatch_parents <- left_join(lissimp_matching_parents, 
+lissimp_parents <- left_join(lissimp_matching_parents, 
                                        lissimp_matching_1, by=c("nomem_encr", "year")) %>% 
   filter(droplater==F) %>% 
   select(nomem_encr, year, female.x, grandparent.x, pscore, time, valid) %>% 
   rename(female = female.x, grandparent = grandparent.x)
 
-table(lissimp_groupmatch_parents$grandparent, lissimp_groupmatch_parents$time)
-table(lissimp_groupmatch_parents$grandparent, lissimp_groupmatch_parents$valid)
+table(lissimp_parents$grandparent, lissimp_parents$time)
+table(lissimp_parents$grandparent, lissimp_parents$valid)
 
-# Description
-# This is an adaption of fullmatch to allow for restrictions when control observations 
-# are "grouped". The motivating use case is when there are multiple observations of control 
-# data for each control subject. In this case, the grouping variable is the subject. We may 
-# want to place restrictions, for example that only one observation of a subject can be 
-# matched, or in the case of one:many matching, a given control subject can only be matched 
-# to a given treated subject once.
-
-#matrix of propensity score distances (uses the same 'pscore' variable as the K&R matching loop)
-match_on_parents_ps <- as.matrix(caliper(match_on(grandparent~pscore, data=lissimp_groupmatch_parents), 
+# matrix of propensity score distances (with caliper)
+match_on_parents_ps <- as.matrix(caliper(match_on(grandparent~pscore, data=lissimp_parents), 
                                          width=0.3))
 
-#caliper matrix to exact-match on gender
-match_on_parents_female <- as.matrix(exactMatch(grandparent ~ female, data=lissimp_groupmatch_parents))
+# matrix to exact-match on gender
+match_on_parents_female <- as.matrix(exactMatch(grandparent ~ female, data=lissimp_parents))
 
-#caliper matrix to match within $500 of income (also possible)
-#inc <-  as.matrix(caliper(match_on(treat~income), distance = "Euclidean", width = 500))
-
-#final input to rollingMatch is the sum of these matrices
+# final input to optmatch::fullmatch is the sum of these matrices
 final_dist_parents <- match_on_parents_ps + match_on_parents_female
-# 756960 elements in matrix -> same as in Cartesian product in DIY matching loop
+# 756960 elements in matrix
 
-#liss_groupmatch_parents <- groupmatch(x=final_dist_parents, 
-liss_groupmatch_parents <- optmatch::fullmatch(x=final_dist_parents, 
-                                     #group = lissimp_groupmatch_parents$nomem_encr, allow_duplicates = T, 
-                                     min.controls = 0, max.controls = 1, omit.fraction = NULL, 
-                                     mean.controls = NULL, tol = 0.001, data = lissimp_groupmatch_parents)
-# allowing duplicates greatly improves cov balance in our situation where we have few available controls
+liss_parents <- optmatch::fullmatch(
+  x=final_dist_parents, 
+  min.controls = 0.1, max.controls = 1, omit.fraction = NULL, 
+  mean.controls = NULL, tol = 0.001, data = lissimp_parents)
 
-summary(liss_groupmatch_parents) #seems to work for 1:1 matching without replacement despite the warning message!
+summary(liss_parents)
 
-#matched(liss_groupmatch_parents)
-sum(matched(liss_groupmatch_parents))
+#matched(liss_parents)
+sum(matched(liss_parents))
 
-#unmatched(liss_groupmatch_parents)
-sum(unmatched(liss_groupmatch_parents))
+#unmatched(liss_parents)
+sum(unmatched(liss_parents))
 
-#matchfailed(liss_groupmatch_parents)
-sum(matchfailed(liss_groupmatch_parents))
+#matchfailed(liss_parents)
+sum(matchfailed(liss_parents))
 
-liss_groupmatch_data_parents <- cbind(lissimp_groupmatch_parents, matches=liss_groupmatch_parents) %>% 
+liss_data_parents <- cbind(lissimp_parents, matches=liss_parents) %>% 
   filter(!is.na(matches))
-liss_groupmatch_data_parents <- liss_groupmatch_data_parents %>% group_by(matches) %>% 
+liss_data_parents <- liss_data_parents %>% group_by(matches) %>% 
   mutate(time = ifelse(is.na(time), max(time, na.rm = T), time), # same information as 'matchtime' now (but already transferred to controls, too)
          valid = ifelse(is.na(valid), max(valid, na.rm = T), valid)) %>% ungroup %>% 
   select(-matches)
 
-table(liss_groupmatch_data_parents$grandparent, liss_groupmatch_data_parents$year)
-table(liss_groupmatch_data_parents$grandparent, liss_groupmatch_data_parents$time)
-table(liss_groupmatch_data_parents$grandparent, liss_groupmatch_data_parents$valid)
-table(liss_groupmatch_data_parents$grandparent, liss_groupmatch_data_parents$female) # exact matching on gender!
+liss_data_parents %>% group_by(grandparent) %>% summarise(N=n_distinct(nomem_encr))
 
-liss_groupmatch_data_parents <- left_join(liss_groupmatch_data_parents, lissimp_parents_ps_1,
+table(liss_data_parents$grandparent, liss_data_parents$year)
+table(liss_data_parents$grandparent, liss_data_parents$time)
+table(liss_data_parents$grandparent, liss_data_parents$valid)
+table(liss_data_parents$grandparent, liss_data_parents$female)
+
+liss_data_parents <- left_join(liss_data_parents, lissimp_parents_ps_1,
                                          by = c("nomem_encr", "year", "grandparent", "female"))
 
 # for balance assessment (at the time of matching - using the variables containing imputed values)
-liss_bal_parents_groupmatch <- liss_groupmatch_data_parents %>%
+liss_bal_parents <- liss_data_parents %>%
   select(nomem_encr, grandparent, pscore, female, everything(), -time, -valid) # -year, 
 
-liss_groupmatch_data_parents <- liss_groupmatch_data_parents %>% 
+liss_data_parents <- liss_data_parents %>% 
   select(nomem_encr, year, grandparent, time, valid, pscore) %>% 
   rename(match_year = year, time_match = time, valid_match = valid) %>% 
   mutate(match_number = row_number()) # if we allow duplicate matches, we need an unambiguous identifier for later
 
 # compile analysis sample with all longitudinal observations
-lissanalysis_parents_groupmatch <- left_join(liss_groupmatch_data_parents, lisslongvalid,
+lissanalysis_parents <- left_join(liss_data_parents, lisslongvalid,
                                             by = c("nomem_encr", "grandparent"))
 
-table(lissanalysis_parents_groupmatch$grandparent, lissanalysis_parents_groupmatch$time_match) # already transferred to controls 
-table(lissanalysis_parents_groupmatch$grandparent, lissanalysis_parents_groupmatch$matchtime)
+table(lissanalysis_parents$grandparent, lissanalysis_parents$time_match) # already transferred to controls 
+table(lissanalysis_parents$grandparent, lissanalysis_parents$matchtime)
 
-lissanalysis_parents_groupmatch <- lissanalysis_parents_groupmatch %>%
-  select(-matchtime) %>% rename(matchtime = time_match) # for more consistency with the matching loop method
+lissanalysis_parents <- lissanalysis_parents %>%
+  select(-matchtime) %>% rename(matchtime = time_match) 
 
-table(lissanalysis_parents_groupmatch$grandparent, lissanalysis_parents_groupmatch$valid)
-table(lissanalysis_parents_groupmatch$grandparent, lissanalysis_parents_groupmatch$valid_match)
+table(lissanalysis_parents$grandparent, lissanalysis_parents$valid)
+table(lissanalysis_parents$grandparent, lissanalysis_parents$valid_match)
 
 # create time variable for controls relative to the time point of matching (& 'valid' variable)
-lissanalysis_parents_groupmatch <- lissanalysis_parents_groupmatch %>% mutate(
+lissanalysis_parents <- lissanalysis_parents %>% mutate(
   time = ifelse(is.na(time) & match_year==year, matchtime, time),
   # variable 'match_year' relates to the controls!
   valid = ifelse(is.na(valid) & match_year==year, valid_match, valid)
 )
 #reminder: 'time' counts calendar years in relation to transition to GP, 'valid' only valid assessments
-table(lissanalysis_parents_groupmatch$grandparent, lissanalysis_parents_groupmatch$time)
-table(lissanalysis_parents_groupmatch$grandparent, lissanalysis_parents_groupmatch$valid)
+table(lissanalysis_parents$grandparent, lissanalysis_parents$time)
+table(lissanalysis_parents$grandparent, lissanalysis_parents$valid)
 
-lissanalysis_parents_groupmatch <- lissanalysis_parents_groupmatch %>% filter(!is.na(pscore)) %>% 
+lissanalysis_parents <- lissanalysis_parents %>% filter(!is.na(pscore)) %>% 
   mutate(
     time = ifelse(grandparent==0 & is.na(time) & matchtime==-5, (year - match_year) - 5, time),
     time = ifelse(grandparent==0 & is.na(time) & matchtime==-4, (year - match_year) - 4, time),
     time = ifelse(grandparent==0 & is.na(time) & matchtime==-3, (year - match_year) - 3, time),
     time = ifelse(grandparent==0 & is.na(time) & matchtime==-2, (year - match_year) - 2, time))
 
-lissanalysis_parents_groupmatch <- lissanalysis_parents_groupmatch %>% group_by(match_number) %>% 
+lissanalysis_parents <- lissanalysis_parents %>% group_by(match_number) %>% 
   mutate(lastcount = ifelse(grandparent==0 & valid==valid_match, row_number(), NA)) %>% ungroup()
-lissanalysis_parents_groupmatch <- lissanalysis_parents_groupmatch %>% group_by(match_number) %>% 
+lissanalysis_parents <- lissanalysis_parents %>% group_by(match_number) %>% 
   mutate(lastcount = max(lastcount, na.rm = T)) %>% ungroup() %>% 
   mutate(lastcount = replace(lastcount, lastcount==-Inf, NA)) # regular NA pls
 
 # finish coding 'valid' for controls 
 # grouping by 'match_number' here instead of 'nomem_encr' because we allowed duplicate matches
-lissanalysis_parents_groupmatch <- lissanalysis_parents_groupmatch %>% group_by(match_number) %>% 
+lissanalysis_parents <- lissanalysis_parents %>% group_by(match_number) %>% 
   mutate(helpcount = row_number()) %>% ungroup()
-lissanalysis_parents_groupmatch <- lissanalysis_parents_groupmatch %>% 
+lissanalysis_parents <- lissanalysis_parents %>% 
   mutate(valid = ifelse(is.na(valid) & grandparent==0, helpcount - lastcount + valid_match, valid)) %>% 
   select(-helpcount, -lastcount)
 
-table(lissanalysis_parents_groupmatch$grandparent, lissanalysis_parents_groupmatch$time)
-table(lissanalysis_parents_groupmatch$grandparent, lissanalysis_parents_groupmatch$valid)
-table(lissanalysis_parents_groupmatch$grandparent, lissanalysis_parents_groupmatch$year)
+table(lissanalysis_parents$grandparent, lissanalysis_parents$time)
+table(lissanalysis_parents$grandparent, lissanalysis_parents$valid)
+table(lissanalysis_parents$grandparent, lissanalysis_parents$year)
 
-lissanalysis_parents_groupmatch <- lissanalysis_parents_groupmatch %>% filter(time %in% c(-5:5)) %>% 
+lissanalysis_parents <- lissanalysis_parents %>% filter(time %in% c(-5:5)) %>% 
   select(-match_year, -valid_match, -nohouse_encr, -droplater)
 
-#sample comparison - different matching methods
-table(lissanalysis_parents$grandparent, lissanalysis_parents$time)
-table(lissanalysis_parents_groupmatch$grandparent, lissanalysis_parents_groupmatch$time)
-
 # save .rda 
-save(lissanalysis_parents_groupmatch, file = "data/processed/LISS/lissanalysis_parents_groupmatch.rda")
-lissanalysis_parents_groupmatch %>% group_by(grandparent) %>% summarise(N = n_distinct(nomem_encr))
+save(lissanalysis_parents, file = "data/processed/LISS/lissanalysis_parents.rda")
+lissanalysis_parents %>% group_by(grandparent) %>% summarise(N = n_distinct(nomem_encr))
 # duplicates in the controls, controls matched to cases 
 
 
-#### PSM: identify possible matches -> (2) nonparent control group ####
-
-# DIY matching: 2nd step -> identifying all possible PS-matches per parent matching 
-#                           exactly on gender
-lissimp_matching_nonparents <- lissimp_matching_nonparents %>% 
-  select(nomem_encr, year, female, grandparent, pscore) 
-# sort by random variable in case there are ordering effects
-set.seed(123)
-rows <- sample(nrow(lissimp_matching_nonparents))
-lissimp_matching_nonparents <- lissimp_matching_nonparents[rows, ]
-lissimp_matching_nonparents <- lissimp_matching_nonparents %>% mutate(new_id = row_number())
-
-lissimp_matching_nonparents_case <- lissimp_matching_nonparents %>% filter(grandparent==1) %>% 
-  rename(case_id = new_id,
-         pid_case = nomem_encr,
-         pscore_case = pscore,
-         gender_case = female) %>% 
-  select(-grandparent, -year) 
-# removing 'year' here means that 'year' -> 'match_year' will refer to the controls' survey year
-# at the time of matching (see below)
-
-lissimp_matching_nonparents_control <- lissimp_matching_nonparents %>% filter(grandparent==0) %>% 
-  rename(control_id = new_id,
-         pid_control = nomem_encr,
-         pscore_control = pscore,
-         gender_control = female,
-         match_year = year) %>% 
-  select(-grandparent)
-
-#matching the two datasets along gender of controls and cases (exact matches)
-#equivalent of STATA joinby command (Cartesian product)
-lissimp_joined_nonparents <- crossing(lissimp_matching_nonparents_case, lissimp_matching_nonparents_control)
-#249*4337 = 1079913
-lissimp_joined_nonparents <- lissimp_joined_nonparents %>% filter(gender_case==gender_control) %>% 
-  select(-gender_control) %>% 
-  rename(gender = gender_case)
-
-#### PSM: matching loop -> (2) nonparent control group ####
-
-# DIY matching: 3rd step -> matching the cases and controls according to the similarity of 
-#                           their propensity scores (1 to 1 matching; no duplicates)
-lissimp_joined_nonparents <- lissimp_joined_nonparents %>% mutate(ps_diff = abs(pscore_case - pscore_control))
-#no midranks or shared ranks - if PS_diff is the same it can be random which one we pick
-lissimp_joined_nonparents <- lissimp_joined_nonparents %>% group_by(pid_case) %>% 
-  mutate(rank = rank(ps_diff, ties.method = "random"))
-
-#this new numbering makes the following loop easier  
-lissimp_joined_nonparents <- lissimp_joined_nonparents %>% group_by(case_id) %>%
-  mutate(case_id_new = cur_group_id()) %>% 
-  arrange(case_id_new, rank) %>% ungroup()
-
-#to help with computation time -> restrict to certain ranks (similar idea to caliper)
-#assuming that there will be no valid match according to PS with a higher rank, anyway!
-lissimp_joined_nonparents_reduced <- lissimp_joined_nonparents %>% filter(rank<=600) # 500 not enough
-(num_cases <- as.vector(summary(lissimp_joined_nonparents_reduced$case_id_new)[6]))
-
-liss_matched_nonparents <- NULL;
-picked <- NULL;
-for(num in 1:num_cases)
-{
-  #pick the highest rank of the (remaining) controls each case is matched with
-  picked <- lissimp_joined_nonparents_reduced %>% filter(case_id_new==num) %>% 
-    mutate(best = min(rank)) %>% filter(rank==best) %>% select(-best)
-  #collect valid matches throughout the loop
-  liss_matched_nonparents <- rbind(liss_matched_nonparents, picked)
-  #track pid of control matched in every iteration of the loop
-  picked <- picked %>% mutate(tracked=1) %>% select(pid_control, tracked)
-  #drop all other controls with the tracked pid in the remaining pool of available controls
-  lissimp_joined_nonparents_reduced <- left_join(lissimp_joined_nonparents_reduced, picked)
-  lissimp_joined_nonparents_reduced <- lissimp_joined_nonparents_reduced %>% 
-    filter(is.na(tracked)) %>% select(-tracked)
-}
-# all 249 grandparents sucessfully matched!
-summary(liss_matched_nonparents$rank)
-#    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#   1.0     2.0    58.0   131.5   267.0   513.0 
-
-summary(liss_matched_nonparents$ps_diff)
-#    Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-# 0.0000046 0.0013838 0.0922953 0.1840173 0.3195640 0.8736337 
-
-# create dataset for merge with controls
-liss_matched_mergecontrols_nonparents <- liss_matched_nonparents %>% rename(
-  nomem_encr = pid_control,
-  pscore = pscore_control,
-  nomem_encr_case = pid_case
-) %>% select(nomem_encr, nomem_encr_case, match_year, pscore) %>% 
-  arrange(nomem_encr)
-
-# create dataset for merge with cases
-liss_matched_mergecases_nonparents <- liss_matched_nonparents %>% rename(
-  nomem_encr = pid_case,
-  pscore = pscore_case,
-  nomem_encr_control = pid_control
-) %>% select(nomem_encr, nomem_encr_control, match_year, pscore) %>% 
-  arrange(nomem_encr)
-
-
-#### compile final analysis sample -> (2) nonparent control group ####
-
-lissanalysis_nonparents <- lisslongvalid %>% filter(!is.na(grandparent) & droplater!=T)
-
-lissanalysis_nonparents <- left_join(lissanalysis_nonparents, liss_matched_mergecases_nonparents, by='nomem_encr')
-lissanalysis_nonparents <- left_join(lissanalysis_nonparents, liss_matched_mergecontrols_nonparents, by='nomem_encr')
-
-# create dataset for merge containing information on whether a control was 
-# at time==-5, time==-4, time==-3, or time==-2 at the time of matching (counterfactual timeframe)
-time_for_controls_liss <- lisslongvalid %>% 
-  filter(grandparent==1 & nokids==0 & time==matchtime & droplater==F) %>% # this was the condition by which GP observations were chosen for matching (see above)
-  select(nomem_encr, matchtime, valid) %>% rename(
-    matchtime_controls = matchtime,
-    matchvalid_controls = valid) # same procedure for 'valid' (counts valid observations in relation to transition time point for GPs)
-table(time_for_controls_liss$matchtime_controls) # different time lags between matching and transition to GP
-table(time_for_controls_liss$matchvalid_controls) 
-# some GPs were not matched at valid==-1 because we wanted to avoid having only 1 year between matching and 
-# transition, because parents might have already been pregnant with the grandchildren at this point.
-
-# match via nomem_encr_case (which gives the ID of each control's match) in order 
-# to transfer 'matchtime' value from the cases to controls
-lissanalysis_nonparents <- left_join(lissanalysis_nonparents, 
-                                  time_for_controls_liss, by=c('nomem_encr_case'='nomem_encr')) 
-
-lissanalysis_nonparents <- lissanalysis_nonparents %>% mutate( # this just unites information from cases and controls in a single variable
-  pscore = ifelse(!is.na(pscore.x), pscore.x, pscore.y),
-  match_year = ifelse(!is.na(match_year.x), match_year.x, match_year.y),
-  nomem_encr_match = ifelse(!is.na(nomem_encr_case), nomem_encr_case, nomem_encr_control),
-  matchtime = ifelse(!is.na(matchtime), matchtime, matchtime_controls), 
-) %>% 
-  select(-c(pscore.x, pscore.y, match_year.x, match_year.y, nomem_encr_case, nomem_encr_control,
-            matchtime_controls)) %>%
-  filter(!is.na(pscore)) # only keep cases and controls
-# reminder: 'matchtime' is the original var indicating (in years) when matching occurred for grandparents-to-be
-#           in relation to the birth of their grandchild. This value was now transferred to the controls via the 
-#           var 'matchtime_controls'.
-table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$matchtime)
-table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$matchvalid_controls)
-
-# coding counterfactual timeframe for controls
-# create time variable for controls relative to the time point of matching (& 'valid' variable)
-lissanalysis_nonparents <- lissanalysis_nonparents %>% mutate(
-  time = ifelse(is.na(time) & match_year==year, matchtime, time),
-  # variable 'match_year' relates to the controls
-  valid = ifelse(is.na(valid) & match_year==year, matchvalid_controls, valid)
-)
-# reminder: 'time' counts calendar years in relation to transition to GP, 'valid' only valid assessments
-# note that we have 1:1 corresponding observations in 'time' and 'valid' between cases and controls only 
-# at the time of matching. Earlier or later observations will differ because of different patterns of
-# panel attrition and participation.
-table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$time)
-table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$valid)
-
-lissanalysis_nonparents <- lissanalysis_nonparents %>% mutate(
-  time = ifelse(is.na(time) & matchtime==-5, (year - match_year) - 5, time),
-  time = ifelse(is.na(time) & matchtime==-4, (year - match_year) - 4, time),
-  time = ifelse(is.na(time) & matchtime==-3, (year - match_year) - 3, time),
-  time = ifelse(is.na(time) & matchtime==-2, (year - match_year) - 2, time))
-
-lissanalysis_nonparents <- lissanalysis_nonparents %>% group_by(nomem_encr) %>% 
-  mutate(lastcount = ifelse(grandparent==0 & valid==matchvalid_controls, row_number(), NA)) %>% ungroup()
-lissanalysis_nonparents <- lissanalysis_nonparents %>% group_by(nomem_encr) %>% 
-  mutate(lastcount = max(lastcount, na.rm = T)) %>% ungroup() %>% 
-  mutate(lastcount = replace(lastcount, lastcount==-Inf, NA))
-
-# finish coding 'valid' for controls
-lissanalysis_nonparents <- lissanalysis_nonparents %>% group_by(nomem_encr) %>% 
-  mutate(helpcount = row_number()) %>% ungroup()
-lissanalysis_nonparents <- lissanalysis_nonparents %>% 
-  mutate(valid = ifelse(is.na(valid) & grandparent==0, helpcount - lastcount + matchvalid_controls, valid)) %>% 
-  select(-helpcount, -lastcount)
-
-table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$valid)
-table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$time) # cells earlier than '-5' too small
-# time==5 also very small....
-
-lissanalysis_nonparents <- lissanalysis_nonparents %>% filter(time %in% c(-5:5)) %>% 
-  select(-match_year, -droplater, -matchvalid_controls)
-
-# save .rda 
-save(lissanalysis_nonparents, file = "data/processed/LISS/lissanalysis_nonparents.rda")
-
-
-#### PSM: 'rollingMatch' -> (2) nonparent control group ####
-
-# GroupMatch package (the development version of the package is called 'rollingMatch')
-
-# build/install development version via devtools commands
-#library(devtools)
-#build("S:/MA/mkraemer/Paper_Grandparenthood/GroupMatch development version/rollingMatch")
-#build("/Users/michaelkramer/Documents/Paper_Grandparenthood/GroupMatch development version/rollingMatch")
-#install("/Users/michaelkramer/Documents/Paper_Grandparenthood/GroupMatch development version/rollingMatch")
-
-# this did not work:
-#devtools::install_github("jgellar/rollingMatch", auth_token = "506524f03641945dc771f973a3d6131ab9edad26")
-
-#library(rollingMatch)
+#### PSM: optmatch::fullmatch -> (2) nonparent control group ####
 
 table(lissimp_matching_nonparents$grandparent)
 table(lissimp_matching_nonparents$grandparent, lissimp_matching_nonparents$year)
 
 #we also need the 'time' value for grandparents (-5, -4, -3 or -2) and the 'valid' variable
-lissimp_groupmatch_nonparents <- left_join(lissimp_matching_nonparents, 
+lissimp_nonparents <- left_join(lissimp_matching_nonparents, 
                                         lissimp_matching_1, by=c("nomem_encr", "year")) %>% 
   filter(droplater==F) %>% 
   select(nomem_encr, year, female.x, grandparent.x, pscore, time, valid) %>% 
   rename(female = female.x, grandparent = grandparent.x)
 
-table(lissimp_groupmatch_nonparents$grandparent, lissimp_groupmatch_nonparents$time)
-table(lissimp_groupmatch_nonparents$grandparent, lissimp_groupmatch_nonparents$valid)
+table(lissimp_nonparents$grandparent, lissimp_nonparents$time)
+table(lissimp_nonparents$grandparent, lissimp_nonparents$valid)
 
-# Description
-# This is an adaption of fullmatch to allow for restrictions when control observations 
-# are "grouped". The motivating use case is when there are multiple observations of control 
-# data for each control subject. In this case, the grouping variable is the subject. We may 
-# want to place restrictions, for example that only one observation of a subject can be 
-# matched, or in the case of one:many matching, a given control subject can only be matched 
-# to a given treated subject once.
-
-#matrix of propensity score distances (uses the same 'pscore' variable as the K&R matching loop)
-match_on_nonparents_ps <- as.matrix(caliper(match_on(grandparent~pscore, data=lissimp_groupmatch_nonparents), 
+# matrix of propensity score distances (with caliper)
+match_on_nonparents_ps <- as.matrix(caliper(match_on(grandparent~pscore, data=lissimp_nonparents), 
                                             width=0.3))
 
-#caliper matrix to exact-match on gender
-match_on_nonparents_female <- as.matrix(exactMatch(grandparent ~ female, data=lissimp_groupmatch_nonparents))
+# matrix to exact-match on gender
+match_on_nonparents_female <- as.matrix(exactMatch(grandparent ~ female, data=lissimp_nonparents))
 
-#caliper matrix to match within $500 of income (also possible)
-#inc <-  as.matrix(caliper(match_on(treat~income), distance = "Euclidean", width = 500))
-
-#final input to rollingMatch is the sum of these matrices
+#final input to optmatch::fullmatch is the sum of these matrices
 final_dist_nonparents <- match_on_nonparents_ps + match_on_nonparents_female
-# 1079913 elements in matrix -> same as in Cartesian product in DIY matching loop
+# 1079913 elements in matrix
 
-#liss_groupmatch_nonparents <- groupmatch(x=final_dist_nonparents, 
-liss_groupmatch_nonparents <- optmatch::fullmatch(x=final_dist_nonparents, 
-                                      #group = lissimp_groupmatch_nonparents$nomem_encr, allow_duplicates = T, 
-                                      min.controls = 0, max.controls = 1, omit.fraction = NULL, 
-                                      mean.controls = NULL, tol = 0.001, data = lissimp_groupmatch_nonparents)
-# allowing duplicates greatly improves cov balance in our situation where we have few available controls
+liss_nonparents <- optmatch::fullmatch(
+  x=final_dist_nonparents, 
+  min.controls = 0, max.controls = 1, omit.fraction = NULL, 
+  mean.controls = NULL, tol = 0.001, data = lissimp_nonparents)
 
-summary(liss_groupmatch_nonparents) #seems to work for 1:1 matching without replacement despite the warning message!
+summary(liss_nonparents) #seems to work for 1:1 matching without replacement despite the warning message!
 
-#matched(liss_groupmatch_nonparents)
-sum(matched(liss_groupmatch_nonparents))
+#matched(liss_nonparents)
+sum(matched(liss_nonparents))
 
-#unmatched(liss_groupmatch_nonparents)
-sum(unmatched(liss_groupmatch_nonparents))
+#unmatched(liss_nonparents)
+sum(unmatched(liss_nonparents))
 
-#matchfailed(liss_groupmatch_nonparents)
-sum(matchfailed(liss_groupmatch_nonparents))
+#matchfailed(liss_nonparents)
+sum(matchfailed(liss_nonparents))
 
-liss_groupmatch_data_nonparents <- cbind(lissimp_groupmatch_nonparents, matches=liss_groupmatch_nonparents) %>% 
+liss_data_nonparents <- cbind(lissimp_nonparents, matches=liss_nonparents) %>% 
   filter(!is.na(matches))
-liss_groupmatch_data_nonparents <- liss_groupmatch_data_nonparents %>% group_by(matches) %>% 
-  mutate(time = ifelse(is.na(time), max(time, na.rm = T), time), # same information as 'matchtime' now (but already transferred to controls, too)
+liss_data_nonparents <- liss_data_nonparents %>% group_by(matches) %>% 
+  mutate(time = ifelse(is.na(time), max(time, na.rm = T), time), 
          valid = ifelse(is.na(valid), max(valid, na.rm = T), valid)) %>% ungroup %>% 
   select(-matches)
 
-table(liss_groupmatch_data_nonparents$grandparent, liss_groupmatch_data_nonparents$year)
-table(liss_groupmatch_data_nonparents$grandparent, liss_groupmatch_data_nonparents$time)
-table(liss_groupmatch_data_nonparents$grandparent, liss_groupmatch_data_nonparents$valid)
-table(liss_groupmatch_data_nonparents$grandparent, liss_groupmatch_data_nonparents$female) # exact matching on gender!
+table(liss_data_nonparents$grandparent, liss_data_nonparents$year)
+table(liss_data_nonparents$grandparent, liss_data_nonparents$time)
+table(liss_data_nonparents$grandparent, liss_data_nonparents$valid)
+table(liss_data_nonparents$grandparent, liss_data_nonparents$female)
 
-liss_groupmatch_data_nonparents <- left_join(liss_groupmatch_data_nonparents, lissimp_nonparents_ps_1,
+liss_data_nonparents <- left_join(liss_data_nonparents, lissimp_nonparents_ps_1,
                                           by = c("nomem_encr", "year", "grandparent", "female"))
 
 # for balance assessment (at the time of matching - using the variables containing imputed values)
-liss_bal_nonparents_groupmatch <- liss_groupmatch_data_nonparents %>%
+liss_bal_nonparents <- liss_data_nonparents %>%
   select(nomem_encr, grandparent, pscore, female, everything(), -time, -valid) # -year, 
 
-liss_groupmatch_data_nonparents <- liss_groupmatch_data_nonparents %>% 
+liss_data_nonparents <- liss_data_nonparents %>% 
   select(nomem_encr, year, grandparent, time, valid, pscore) %>% 
   rename(match_year = year, time_match = time, valid_match = valid) %>% 
   mutate(match_number = row_number()) # if we allow duplicate matches, we need an unambiguous identifier for later
 
 # compile analysis sample with all longitudinal observations
-lissanalysis_nonparents_groupmatch <- left_join(liss_groupmatch_data_nonparents, lisslongvalid,
+lissanalysis_nonparents <- left_join(liss_data_nonparents, lisslongvalid,
                                              by = c("nomem_encr", "grandparent"))
 
-table(lissanalysis_nonparents_groupmatch$grandparent, lissanalysis_nonparents_groupmatch$time_match) # already transferred to controls 
-table(lissanalysis_nonparents_groupmatch$grandparent, lissanalysis_nonparents_groupmatch$matchtime)
+table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$time_match) # already transferred to controls 
+table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$matchtime)
 
-lissanalysis_nonparents_groupmatch <- lissanalysis_nonparents_groupmatch %>%
-  select(-matchtime) %>% rename(matchtime = time_match) # for more consistency with the matching loop method
+lissanalysis_nonparents <- lissanalysis_nonparents %>%
+  select(-matchtime) %>% rename(matchtime = time_match)
 
-table(lissanalysis_nonparents_groupmatch$grandparent, lissanalysis_nonparents_groupmatch$valid)
-table(lissanalysis_nonparents_groupmatch$grandparent, lissanalysis_nonparents_groupmatch$valid_match)
+table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$valid)
+table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$valid_match)
 
 # create time variable for controls relative to the time point of matching (& 'valid' variable)
-lissanalysis_nonparents_groupmatch <- lissanalysis_nonparents_groupmatch %>% mutate(
+lissanalysis_nonparents <- lissanalysis_nonparents %>% mutate(
   time = ifelse(is.na(time) & match_year==year, matchtime, time),
   # variable 'match_year' relates to the controls!
   valid = ifelse(is.na(valid) & match_year==year, valid_match, valid)
 )
 #reminder: 'time' counts calendar years in relation to transition to GP, 'valid' only valid assessments
-table(lissanalysis_nonparents_groupmatch$grandparent, lissanalysis_nonparents_groupmatch$time)
-table(lissanalysis_nonparents_groupmatch$grandparent, lissanalysis_nonparents_groupmatch$valid)
+table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$time)
+table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$valid)
 
-lissanalysis_nonparents_groupmatch <- lissanalysis_nonparents_groupmatch %>% filter(!is.na(pscore)) %>% 
+lissanalysis_nonparents <- lissanalysis_nonparents %>% filter(!is.na(pscore)) %>% 
   mutate(
     time = ifelse(grandparent==0 & is.na(time) & matchtime==-5, (year - match_year) - 5, time),
     time = ifelse(grandparent==0 & is.na(time) & matchtime==-4, (year - match_year) - 4, time),
     time = ifelse(grandparent==0 & is.na(time) & matchtime==-3, (year - match_year) - 3, time),
     time = ifelse(grandparent==0 & is.na(time) & matchtime==-2, (year - match_year) - 2, time))
 
-lissanalysis_nonparents_groupmatch <- lissanalysis_nonparents_groupmatch %>% group_by(match_number) %>% 
+lissanalysis_nonparents <- lissanalysis_nonparents %>% group_by(match_number) %>% 
   mutate(lastcount = ifelse(grandparent==0 & valid==valid_match, row_number(), NA)) %>% ungroup()
-lissanalysis_nonparents_groupmatch <- lissanalysis_nonparents_groupmatch %>% group_by(match_number) %>% 
+lissanalysis_nonparents <- lissanalysis_nonparents %>% group_by(match_number) %>% 
   mutate(lastcount = max(lastcount, na.rm = T)) %>% ungroup() %>% 
   mutate(lastcount = replace(lastcount, lastcount==-Inf, NA)) # regular NA pls
 
 # finish coding 'valid' for controls 
 # grouping by 'match_number' here instead of 'nomem_encr' because we allowed duplicate matches
-lissanalysis_nonparents_groupmatch <- lissanalysis_nonparents_groupmatch %>% group_by(match_number) %>% 
+lissanalysis_nonparents <- lissanalysis_nonparents %>% group_by(match_number) %>% 
   mutate(helpcount = row_number()) %>% ungroup()
-lissanalysis_nonparents_groupmatch <- lissanalysis_nonparents_groupmatch %>% 
+lissanalysis_nonparents <- lissanalysis_nonparents %>% 
   mutate(valid = ifelse(is.na(valid) & grandparent==0, helpcount - lastcount + valid_match, valid)) %>% 
   select(-helpcount, -lastcount)
 
-table(lissanalysis_nonparents_groupmatch$grandparent, lissanalysis_nonparents_groupmatch$time)
-table(lissanalysis_nonparents_groupmatch$grandparent, lissanalysis_nonparents_groupmatch$valid)
-table(lissanalysis_nonparents_groupmatch$grandparent, lissanalysis_nonparents_groupmatch$year)
+table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$time)
+table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$valid)
+table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$year)
 
-lissanalysis_nonparents_groupmatch <- lissanalysis_nonparents_groupmatch %>% filter(time %in% c(-5:5)) %>% 
+lissanalysis_nonparents <- lissanalysis_nonparents %>% filter(time %in% c(-5:5)) %>% 
   select(-match_year, -valid_match, -nohouse_encr, -droplater)
 
-#sample comparison - different matching methods
-table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$time)
-table(lissanalysis_nonparents_groupmatch$grandparent, lissanalysis_nonparents_groupmatch$time)
-
 # save .rda 
-save(lissanalysis_nonparents_groupmatch, file = "data/processed/LISS/lissanalysis_nonparents_groupmatch.rda")
-lissanalysis_nonparents_groupmatch %>% group_by(grandparent) %>% summarise(N = n_distinct(nomem_encr)) 
+save(lissanalysis_nonparents, file = "data/processed/LISS/lissanalysis_nonparents.rda")
+lissanalysis_nonparents %>% group_by(grandparent) %>% summarise(N = n_distinct(nomem_encr)) 
 # duplicates in the controls
 
 
@@ -2667,22 +2255,6 @@ stdmeandiff <- function(var, treat, data) {
   sd_t <- eval(substitute(sd(var[treat==1], na.rm=T)), data)
   (mu_t - mu_c) / sd_t
 }
-
-# create datasets containing the PSM covariate values at the time of matching
-# balance AFTER matching
-liss_bal_parents <- lissanalysis_parents %>% filter(time==matchtime) %>%
-  select(nomem_encr, year, grandparent, pscore)
-liss_bal_parents <- left_join(liss_bal_parents, lissimp_parents_ps_1, by=c("nomem_encr", "year", "grandparent")) %>% 
-  select(nomem_encr, grandparent, pscore, female, everything()) # , -year
-#imputed values of the covariates (or should I use the ones containing missings?)
-summary(liss_bal_parents)
-
-liss_bal_nonparents <- lissanalysis_nonparents %>% filter(time==matchtime) %>% 
-  select(nomem_encr, year, grandparent, pscore)
-liss_bal_nonparents <- left_join(liss_bal_nonparents, lissimp_nonparents_ps_1, by=c("nomem_encr", "year", "grandparent")) %>% 
-  select(nomem_encr, grandparent, pscore, female, everything()) # , -year
-#imputed values of the covariates (or should I use the ones containing missings?)
-summary(liss_bal_nonparents)
 
 # balance BEFORE matching
 liss_bal_parents_before <- lissimp_matching_parents %>% 
@@ -2707,7 +2279,6 @@ summary(liss_bal_parents_before)
 
 names(liss_bal_parents_before) # column names must be aligned!
 names(liss_bal_parents)
-names(liss_bal_parents_groupmatch)
 
 liss_bal_nonparents_before <- lissimp_matching_nonparents %>% 
   select(nomem_encr, year, grandparent, pscore) # PS averaged from imp=5
@@ -2731,7 +2302,6 @@ summary(liss_bal_nonparents_before)
 
 names(liss_bal_nonparents_before) # column names must be aligned!
 names(liss_bal_nonparents)
-names(liss_bal_nonparents_groupmatch)
 
 # evaluate standardized difference in means
 # create maxtrix object with empty vectors 'stddiff'
@@ -2739,14 +2309,13 @@ names(liss_bal_nonparents_groupmatch)
 varnum_parents <-  1:(length(liss_bal_parents)-2)
 covar_parents <-  colnames(liss_bal_parents[3:paste(length(liss_bal_parents))])
 stddiff_before_parents <- numeric(length = length(liss_bal_parents_before)-2)     #before matching
-stddiff_after1_parents <- numeric(length = length(liss_bal_parents)-2)            #K&R matching loop
-stddiff_after2_parents <- numeric(length = length(liss_bal_parents_groupmatch)-2) #from 'rollingMatch' (GroupMatch) package  
+stddiff_after1_parents <- numeric(length = length(liss_bal_parents)-2)            #optmatch::fullmatch
 
 coln_parents <- c("varnum_parents", "covar_parents", "stddiff_before_parents", 
-                  "stddiff_after1_parents", "stddiff_after2_parents") # defining column names 
+                  "stddiff_after1_parents") # defining column names 
 # creating matrix 
 liss_balance_matrix_parents <- matrix(c(varnum_parents, covar_parents, stddiff_before_parents,
-                                       stddiff_after1_parents, stddiff_after2_parents), ncol = 5, 
+                                       stddiff_after1_parents), ncol = 4, 
                                      dimnames = list(varnum_parents, coln_parents))
 
 # use custom function in for-loop to fill matrix vectors 'stddiff'
@@ -2754,16 +2323,14 @@ for (i in seq_along(liss_balance_matrix_parents[varnum_parents])) {
   liss_balance_matrix_parents[[i, 3]] <- stdmeandiff(get(liss_balance_matrix_parents[[i, 2]]), 
                                                     grandparent, liss_bal_parents_before)     #before matching
   liss_balance_matrix_parents[[i, 4]] <- stdmeandiff(get(liss_balance_matrix_parents[[i, 2]]), 
-                                                    grandparent, liss_bal_parents)            #DIY matching loop
-  liss_balance_matrix_parents[[i, 5]] <- stdmeandiff(get(liss_balance_matrix_parents[[i, 2]]), 
-                                                    grandparent, liss_bal_parents_groupmatch) #from 'rollingMatch' (GroupMatch) package
+                                                    grandparent, liss_bal_parents)            #optmatch::fullmatch
 }
-liss_balance_matrix_parents[, 3:5] <- round(as.numeric(liss_balance_matrix_parents[, 3:5]), 3)
+liss_balance_matrix_parents[, 3:4] <- round(as.numeric(liss_balance_matrix_parents[, 3:4]), 3)
 
-kable(liss_balance_matrix_parents[, 2:5], format="rst", 
+kable(liss_balance_matrix_parents[, 2:4], format="rst", 
       col.names = c("Covariate", "Before Matching",
-                    "DIY Matching Loop", "'rollingMatch'"), 
-      align = "lccc", digits=2, caption = "Table 1. Covariate Balance")
+                    "After Matching"), 
+      align = "lcc", digits=2, caption = "Table 1. Covariate Balance")
 
 
 # (2) NONPARENTS
@@ -2772,14 +2339,13 @@ kable(liss_balance_matrix_parents[, 2:5], format="rst",
 varnum_nonparents <-  1:(length(liss_bal_nonparents)-2)
 covar_nonparents <-  colnames(liss_bal_nonparents[3:paste(length(liss_bal_nonparents))])
 stddiff_before_nonparents <- numeric(length = length(liss_bal_nonparents_before)-2)     #before matching
-stddiff_after1_nonparents <- numeric(length = length(liss_bal_nonparents)-2)            #K&R matching loop
-stddiff_after2_nonparents <- numeric(length = length(liss_bal_nonparents_groupmatch)-2) #from 'rollingMatch' (GroupMatch) package  
+stddiff_after1_nonparents <- numeric(length = length(liss_bal_nonparents)-2)            #optmatch::fullmatch
 
 coln_nonparents <- c("varnum_nonparents", "covar_nonparents", "stddiff_before_nonparents", 
-                     "stddiff_after1_nonparents", "stddiff_after2_nonparents") # defining column names 
+                     "stddiff_after1_nonparents") # defining column names 
 # creating matrix 
 liss_balance_matrix_nonparents <- matrix(c(varnum_nonparents, covar_nonparents, stddiff_before_nonparents,
-                                          stddiff_after1_nonparents, stddiff_after2_nonparents), ncol = 5, 
+                                          stddiff_after1_nonparents), ncol = 4, 
                                         dimnames = list(varnum_nonparents, coln_nonparents))
 
 # use custom function in for-loop to fill matrix vectors 'stddiff'
@@ -2787,13 +2353,13 @@ for (i in seq_along(liss_balance_matrix_nonparents[varnum_nonparents])) {
   liss_balance_matrix_nonparents[[i, 3]] <- stdmeandiff(get(liss_balance_matrix_nonparents[[i, 2]]), 
                                                        grandparent, liss_bal_nonparents_before)     #before matching
   liss_balance_matrix_nonparents[[i, 4]] <- stdmeandiff(get(liss_balance_matrix_nonparents[[i, 2]]), 
-                                                       grandparent, liss_bal_nonparents)            #DIY matching loop
-  liss_balance_matrix_nonparents[[i, 5]] <- stdmeandiff(get(liss_balance_matrix_nonparents[[i, 2]]), 
-                                                       grandparent, liss_bal_nonparents_groupmatch) #from 'rollingMatch' (GroupMatch) package
+                                                       grandparent, liss_bal_nonparents)            #optmatch::fullmatch
 }
-liss_balance_matrix_nonparents[, 3:5] <- round(as.numeric(liss_balance_matrix_nonparents[, 3:5]), 3)
+liss_balance_matrix_nonparents[, 3:4] <- round(as.numeric(liss_balance_matrix_nonparents[, 3:4]), 3)
 
-kable(liss_balance_matrix_nonparents[, 2:5], format="rst", 
+kable(liss_balance_matrix_nonparents[, 2:4], format="rst", 
       col.names = c("Covariate", "Before Matching",
-                    "DIY Matching Loop", "'rollingMatch'"), 
-      align = "lccc", digits=2, caption = "Table 1. Covariate Balance")
+                    "After Matching"), 
+      align = "lcc", digits=2, caption = "Table 1. Covariate Balance")
+
+

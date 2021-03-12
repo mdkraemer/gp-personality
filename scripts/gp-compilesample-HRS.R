@@ -1927,6 +1927,9 @@ hrsimp_matching_parents <- hrsimp_parents_ps_2 %>%
   mutate(pscore = (pscore_m1 + pscore_m2 + pscore_m3 + pscore_m4 + pscore_m5)/5)
 # compute mean propensity score of imp=5 imputed datasets 
 
+hrsimp_matching_parents <- hrsimp_matching_parents %>% 
+  select(HHIDPN, year, female, grandparent, pscore) 
+
 # 2) Nonparent control group
 ps_model_nonparents <- as.formula("grandparent ~ . - year - female - HHIDPN") # all vars but ...
 # have already dropped the all kid-related covariates from the nonparent samples 
@@ -1953,634 +1956,250 @@ hrsimp_matching_nonparents <- hrsimp_nonparents_ps_2 %>%
   mutate(pscore = (pscore_m1 + pscore_m2 + pscore_m3 + pscore_m4 + pscore_m5)/5)
 # compute mean propensity score of imp=5 imputed datasets 
 
+hrsimp_matching_nonparents <- hrsimp_matching_nonparents %>% 
+  select(HHIDPN, year, female, grandparent, pscore) 
+
 # to help with memory capacity issues
 rm(h96data, h98data, h00data, h02data, h04data, h06data, 
    h08data, h10data, h12data, h14data, h16data) 
 
-#### PSM: identify possible matches -> (1) parent control group ####
 
-# DIY matching: 2nd step -> identifying all possible PS-matches per grandparent  
-#                           and matching exactly on gender
-hrsimp_matching_parents <- hrsimp_matching_parents %>% 
-  select(HHIDPN, year, female, grandparent, pscore) 
-# sort by random variable in case there are ordering effects
-set.seed(123)
-rows <- sample(nrow(hrsimp_matching_parents))
-hrsimp_matching_parents <- hrsimp_matching_parents[rows, ]
-hrsimp_matching_parents <- hrsimp_matching_parents %>% mutate(new_id = row_number())
-
-hrsimp_matching_parents_case <- hrsimp_matching_parents %>% filter(grandparent==1) %>% 
-  rename(case_id = new_id,
-         pid_case = HHIDPN,
-         pscore_case = pscore,
-         female_case = female) %>% 
-  select(-grandparent, -year)
-# removing 'year' here means that 'year' -> 'match_year' will refer to the controls' survey year
-# at the time of matching (see below)
-
-hrsimp_matching_parents_control <- hrsimp_matching_parents %>% filter(grandparent==0) %>% 
-  rename(control_id = new_id,
-         pid_control = HHIDPN,
-         pscore_control = pscore,
-         female_control = female,
-         match_year = year) %>% 
-  select(-grandparent)
-
-# matching the two datasets along gender of controls and cases (exact matches)
-# crossing = equivalent of STATA joinby command (Cartesian product)
-hrsimp_joined_parents <- crossing(hrsimp_matching_parents_case, hrsimp_matching_parents_control)
-# 712*3300 = 2349600
-# exact matching on gender
-hrsimp_joined_parents <- hrsimp_joined_parents %>% filter(female_case==female_control) %>% 
-  select(-female_control) %>% 
-  rename(female = female_case)
-
-#### PSM: matching loop -> (1) parent control group ####
-
-# DIY matching: 3rd step -> matching the cases and controls according to the similarity of 
-#                           their propensity scores (1 to 1 matching; no duplicates)
-hrsimp_joined_parents <- hrsimp_joined_parents %>% 
-  mutate(ps_diff = abs(pscore_case - pscore_control))
-#no midranks or shared ranks - if PS_diff is the same it can be random which one we pick
-hrsimp_joined_parents <- hrsimp_joined_parents %>% group_by(pid_case) %>% 
-  mutate(rank = rank(ps_diff, ties.method = "random"))
-
-#this new numbering makes the following loop easier  
-hrsimp_joined_parents <- hrsimp_joined_parents %>% group_by(case_id) %>%
-  mutate(case_id_new = cur_group_id()) %>% 
-  arrange(case_id_new, rank) %>% ungroup()
-
-#to help with computation time -> restrict to certain ranks (similar idea to caliper)
-#assuming that there will be no valid match according to PS with a higher rank, anyway!
-hrsimp_joined_parents_reduced <- hrsimp_joined_parents %>% filter(rank<=400)
-(num_cases <- as.vector(summary(hrsimp_joined_parents_reduced$case_id_new)[6]))
-
-hrs_matched_parents <- NULL;
-picked <- NULL;
-for(num in 1:num_cases)
-{
-  #pick the highest rank of the (remaining) controls each case is matched with
-  picked <- hrsimp_joined_parents_reduced %>% filter(case_id_new==num) %>% 
-    mutate(best = min(rank)) %>% filter(rank==best) %>% select(-best)
-  #collect valid matches throughout the loop
-  hrs_matched_parents <- rbind(hrs_matched_parents, picked)
-  #track pid of control matched in every iteration of the loop
-  picked <- picked %>% mutate(tracked=1) %>% select(pid_control, tracked)
-  #drop all other controls with the tracked pid in the remaining pool of available controls
-  hrsimp_joined_parents_reduced <- left_join(hrsimp_joined_parents_reduced, picked)
-  hrsimp_joined_parents_reduced <- hrsimp_joined_parents_reduced %>% 
-    filter(is.na(tracked)) %>% select(-tracked)
-}
-# all 712 grandparents sucessfully matched!
-summary(hrs_matched_parents$rank)
-# Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-# 1.00    1.00    1.00   28.17    8.00  264.00
-
-summary(hrs_matched_parents$ps_diff)
-#     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-# 0.0000006 0.0000963 0.0004960 0.0447142 0.0150051 0.5082395
-
-# create dataset for merge with controls
-hrs_matched_mergecontrols_parents <- hrs_matched_parents %>% rename(
-  HHIDPN = pid_control,
-  pscore = pscore_control,
-  HHIDPN_case = pid_case
-) %>% select(HHIDPN, HHIDPN_case, match_year, pscore) %>% 
-  arrange(HHIDPN)
-
-# create dataset for merge with cases
-hrs_matched_mergecases_parents <- hrs_matched_parents %>% rename(
-  HHIDPN = pid_case,
-  pscore = pscore_case,
-  HHIDPN_control = pid_control
-) %>% select(HHIDPN, HHIDPN_control, match_year, pscore) %>% 
-  arrange(HHIDPN)
-
-#### compile final analysis samples -> (1) parent control group ####
-
-hrsanalysis_parents <- hrslongvalid %>% filter(!is.na(grandparent) & droplater!=T)
-
-hrsanalysis_parents <- left_join(hrsanalysis_parents, hrs_matched_mergecases_parents, by='HHIDPN')
-hrsanalysis_parents <- left_join(hrsanalysis_parents, hrs_matched_mergecontrols_parents, by='HHIDPN') 
-
-# create dataset for merge containing information on whether a control was 
-# at time==-4 or time==-2 at the time of matching
-# (variable 'valid' denotes valid assessment in relation to the transition to GP for the cases)
-time_for_controls_hrs <- hrslongvalid %>% 
-  filter(grandparent==1 & valid==-1 & droplater==F & !is.na(KABYEARBG_1)) %>%
-  select(HHIDPN, time) %>% rename(time_match = time)
-table(time_for_controls_hrs$time_match)
-# match via HHIDPN_case in order to transfer 'time' value from the grandparents to 
-# controls (at timepoint of matching)
-hrsanalysis_parents <- left_join(hrsanalysis_parents, 
-                                 time_for_controls_hrs, by=c('HHIDPN_case'='HHIDPN')) 
-
-hrsanalysis_parents <- hrsanalysis_parents %>% mutate(
-  pscore = ifelse(!is.na(pscore.x), pscore.x, pscore.y),
-  match_year = ifelse(!is.na(match_year.x), match_year.x, match_year.y),
-  HHIDPN_match = ifelse(!is.na(HHIDPN_case), HHIDPN_case, HHIDPN_control)
-) %>% 
-  select(-c(pscore.x, pscore.y, match_year.x, match_year.y, HHIDPN_case, HHIDPN_control)) %>% 
-  filter(!is.na(pscore)) # drop all observations from unmatched respondents
-
-# create time variable for controls relative to the time point of matching 
-hrsanalysis_parents <- hrsanalysis_parents %>% mutate(
-  time = replace(time, is.na(time) & match_year==year & time_match==-4, -4),
-  # variable 'match_year' relates to the controls!
-  valid = replace(valid, is.na(valid) & match_year==year, -1)
-)
-# reminder: 'time' counts calendar years in relation to transition to GP, 'valid' only valid assessments
-
-hrsanalysis_parents <- hrsanalysis_parents %>% 
-  mutate(time = replace(time, is.na(time) & match_year==year & time_match==-2, -2))
-
-table(hrsanalysis_parents$time, hrsanalysis_parents$grandparent)
-
-hrsanalysis_parents <- hrsanalysis_parents %>% mutate(
-  time = ifelse(is.na(time) & time_match==-4, (year - match_year) - 4, time),
-  time = ifelse(is.na(time) & time_match==-2, (year - match_year) - 2, time))
-
-hrsanalysis_parents <- hrsanalysis_parents %>% group_by(HHIDPN) %>% 
-  mutate(lastcount = ifelse(grandparent==0 & valid==-1, row_number(), NA)) %>% ungroup()
-hrsanalysis_parents <- hrsanalysis_parents %>% group_by(HHIDPN) %>% 
-  mutate(lastcount = max(lastcount, na.rm = T)) %>% ungroup() %>% 
-  mutate(lastcount = replace(lastcount, lastcount==-Inf, NA))
-
-# finish coding 'valid' for controls
-hrsanalysis_parents <- hrsanalysis_parents %>% group_by(HHIDPN) %>% 
-  mutate(helpcount = row_number()) %>% ungroup()
-hrsanalysis_parents <- hrsanalysis_parents %>% 
-  mutate(valid = ifelse(is.na(valid) & grandparent==0, helpcount - lastcount - 1, valid)) %>% 
-  select(-helpcount, -lastcount)
-
-table(hrsanalysis_parents$valid, hrsanalysis_parents$grandparent)
-table(hrsanalysis_parents$time, hrsanalysis_parents$grandparent) # cells earlier than '-6' too small
-
-hrsanalysis_parents <- hrsanalysis_parents %>% filter(time %in% c(-6:6)) %>% 
-  select(-time_match, -match_year, -droplater)
-
-# save .rda 
-save(hrsanalysis_parents, file = "data/processed/HRS/hrsanalysis_parents.rda")
-
-
-#### PSM: 'rollingMatch' -> (1) parent control group ####
-
-# GroupMatch package (the development version of the package is called 'rollingMatch')
-
-# build/install development version via devtools commands
-#library(devtools)
-#build("S:/MA/mkraemer/Paper_Grandparenthood/GroupMatch development version/rollingMatch")
-#build("/Users/michaelkramer/Documents/Paper_Grandparenthood/GroupMatch development version/rollingMatch")
-#install("/Users/michaelkramer/Documents/Paper_Grandparenthood/GroupMatch development version/rollingMatch")
-
-# this did not work:
-#devtools::install_github("jgellar/rollingMatch", auth_token = "506524f03641945dc771f973a3d6131ab9edad26")
-
-#library(rollingMatch)
+#### PSM: optmatch::fullmatch -> (1) parent control group ####
 
 table(hrsimp_matching_parents$grandparent)
 table(hrsimp_matching_parents$grandparent, hrsimp_matching_parents$year)
 
 #we also need the 'time' value for grandparents (either -4 or -2) and the 'valid' variable
-hrsimp_groupmatch_parents <- left_join(hrsimp_matching_parents, 
+hrsimp_parents <- left_join(hrsimp_matching_parents, 
                                        hrsimp_matching_1, by=c("HHIDPN", "year")) %>% 
   filter(droplater==F) %>% 
   select(HHIDPN, year, female.x, grandparent.x, pscore, time, valid) %>% 
   rename(female = female.x, grandparent = grandparent.x)
 
-table(hrsimp_groupmatch_parents$grandparent, hrsimp_groupmatch_parents$time)
-table(hrsimp_groupmatch_parents$grandparent, hrsimp_groupmatch_parents$valid)
+table(hrsimp_parents$grandparent, hrsimp_parents$time)
+table(hrsimp_parents$grandparent, hrsimp_parents$valid)
 
-# Description
-# This is an adaption of fullmatch to allow for restrictions when control observations 
-# are "grouped". The motivating use case is when there are multiple observations of control 
-# data for each control subject. In this case, the grouping variable is the subject. We may 
-# want to place restrictions, for example that only one observation of a subject can be 
-# matched, or in the case of one:many matching, a given control subject can only be matched 
-# to a given treated subject once.
-
-#matrix of propensity score distances (uses the same 'pscore' variable as the K&R matching loop)
-match_on_parents_ps <- as.matrix(caliper(match_on(grandparent~pscore, data=hrsimp_groupmatch_parents), 
+# matrix of propensity score distances (with caliper)
+match_on_parents_ps <- as.matrix(caliper(match_on(grandparent~pscore, data=hrsimp_parents), 
                                          width=0.05))
 
-#matrix to exact-match on gender
-match_on_parents_female <- as.matrix(exactMatch(grandparent ~ female, data=hrsimp_groupmatch_parents))
+# matrix to exact-match on gender
+match_on_parents_female <- as.matrix(exactMatch(grandparent ~ female, data=hrsimp_parents))
 
-#caliper matrix to match within $500 of income (also possible)
-#inc <-  as.matrix(caliper(match_on(treat~income), distance = "Euclidean", width = 500))
-
-#final input to rollingMatch is the sum of these matrices
+# final input to optmatch::fullmatch is the sum of these matrices
 final_dist_parents <- match_on_parents_ps + match_on_parents_female
-# 712*3300 = 2349600 elements in matrix -> same as in Cartesian product in DIY matching loop
+# 712*3300 = 2349600 elements in matrix
 
-#hrs_groupmatch_parents <- rollingMatch::groupmatch(x=final_dist_parents, 
-hrs_groupmatch_parents <- optmatch::fullmatch(x=final_dist_parents, 
-                             #group = hrsimp_groupmatch_parents$HHIDPN, allow_duplicates = T,
-                             min.controls = 0, max.controls = 1, omit.fraction = NULL, 
-                             mean.controls = NULL, tol = 0.001, data = hrsimp_groupmatch_parents)
-# "allow_duplicates = T" leads to better balance
+hrs_parents <- optmatch::fullmatch(
+  x=final_dist_parents, 
+  min.controls = 0, max.controls = 1, omit.fraction = NULL, 
+  mean.controls = NULL, tol = 0.001, data = hrsimp_parents)
 
-summary(hrs_groupmatch_parents) #seems to work for 1:1 matching without replacement despite the warning message!
+summary(hrs_parents)
 
-#matched(hrs_groupmatch_parents)
-sum(matched(hrs_groupmatch_parents))
+#matched(hrs_parents)
+sum(matched(hrs_parents))
 
-#unmatched(hrs_groupmatch_parents)
-sum(unmatched(hrs_groupmatch_parents))
+#unmatched(hrs_parents)
+sum(unmatched(hrs_parents))
 
-#matchfailed(hrs_groupmatch_parents)
-sum(matchfailed(hrs_groupmatch_parents))
+#matchfailed(hrs_parents)
+sum(matchfailed(hrs_parents))
 
-hrs_groupmatch_data_parents <- cbind(hrsimp_groupmatch_parents, matches=hrs_groupmatch_parents) %>% 
+hrs_data_parents <- cbind(hrsimp_parents, matches=hrs_parents) %>% 
   filter(!is.na(matches))
-hrs_groupmatch_data_parents <- hrs_groupmatch_data_parents %>% group_by(matches) %>% 
+hrs_data_parents <- hrs_data_parents %>% group_by(matches) %>% 
   mutate(time = ifelse(is.na(time), max(time, na.rm = T), time),
          valid = ifelse(is.na(valid), max(valid, na.rm = T), valid)) %>% ungroup %>% 
   select(-matches)
 
-table(hrs_groupmatch_data_parents$grandparent, hrs_groupmatch_data_parents$year)
-table(hrs_groupmatch_data_parents$grandparent, hrs_groupmatch_data_parents$time)
-table(hrs_groupmatch_data_parents$grandparent, hrs_groupmatch_data_parents$valid)
-table(hrs_groupmatch_data_parents$grandparent, hrs_groupmatch_data_parents$female) # exact matching on gender!
+table(hrs_data_parents$grandparent, hrs_data_parents$year)
+table(hrs_data_parents$grandparent, hrs_data_parents$time)
+table(hrs_data_parents$grandparent, hrs_data_parents$valid)
+table(hrs_data_parents$grandparent, hrs_data_parents$female)
 
-hrs_groupmatch_data_parents <- left_join(hrs_groupmatch_data_parents, hrsimp_parents_ps_1,
+hrs_data_parents <- left_join(hrs_data_parents, hrsimp_parents_ps_1,
                                          by = c("HHIDPN", "year", "grandparent", "female"))
 
 # for balance assessment (at the time of matching - using the variables containing imputed values)
-hrs_bal_parents_groupmatch <- hrs_groupmatch_data_parents %>%
+hrs_bal_parents <- hrs_data_parents %>%
   select(HHIDPN, grandparent, pscore, female, everything(), -time, -year, -valid)
 
-hrs_groupmatch_data_parents <- hrs_groupmatch_data_parents %>% 
+hrs_data_parents <- hrs_data_parents %>% 
   select(HHIDPN, year, grandparent, time, valid, pscore) %>% 
   rename(match_year = year, time_match = time, valid_match = valid) %>% 
   mutate(match_number = row_number()) # if we allow duplicate matches, we need an unambiguous identifier for later
 
 # compile analysis sample with all longitudinal observations
-hrsanalysis_parents_groupmatch <- left_join(hrs_groupmatch_data_parents, hrslongvalid,
+hrsanalysis_parents <- left_join(hrs_data_parents, hrslongvalid,
                                             by = c("HHIDPN", "grandparent")) %>% select(-droplater)
 
 # create time variable for controls relative to the time point of matching 
-hrsanalysis_parents_groupmatch <- hrsanalysis_parents_groupmatch %>% mutate(
+hrsanalysis_parents <- hrsanalysis_parents %>% mutate(
   time = replace(time, is.na(time) & match_year==year & time_match==-4, -4),
   # variable 'match_year' relates to the controls!
   valid = replace(valid, is.na(valid) & match_year==year, -1)
 )
-hrsanalysis_parents_groupmatch <- hrsanalysis_parents_groupmatch %>% mutate(
+hrsanalysis_parents <- hrsanalysis_parents %>% mutate(
   time = replace(time, is.na(time) & match_year==year & time_match==-2, -2)
 )
-table(hrsanalysis_parents_groupmatch$grandparent, hrsanalysis_parents_groupmatch$time)
+table(hrsanalysis_parents$grandparent, hrsanalysis_parents$time)
 
-hrsanalysis_parents_groupmatch <- hrsanalysis_parents_groupmatch %>% filter(!is.na(pscore)) %>% 
+hrsanalysis_parents <- hrsanalysis_parents %>% filter(!is.na(pscore)) %>% 
   mutate(
     time = ifelse(grandparent==0 & is.na(time) & time_match==-4, (year - match_year) - 4, time),
     time = ifelse(grandparent==0 & is.na(time) & time_match==-2, (year - match_year) - 2, time))
 
-hrsanalysis_parents_groupmatch <- hrsanalysis_parents_groupmatch %>% group_by(match_number) %>% 
+hrsanalysis_parents <- hrsanalysis_parents %>% group_by(match_number) %>% 
   mutate(lastcount = ifelse(grandparent==0 & valid==-1, row_number(), NA)) %>% ungroup()
-hrsanalysis_parents_groupmatch <- hrsanalysis_parents_groupmatch %>% group_by(match_number) %>% 
+hrsanalysis_parents <- hrsanalysis_parents %>% group_by(match_number) %>% 
   mutate(lastcount = max(lastcount, na.rm = T)) %>% ungroup() %>% 
   mutate(lastcount = replace(lastcount, lastcount==-Inf, NA)) # regular NA pls
 
 # finish coding 'valid' for controls
 # grouping by 'match_number' here instead of 'HHIDPN' because we allowed duplicate matches
-hrsanalysis_parents_groupmatch <- hrsanalysis_parents_groupmatch %>% group_by(match_number) %>% 
+hrsanalysis_parents <- hrsanalysis_parents %>% group_by(match_number) %>% 
   mutate(helpcount = row_number()) %>% ungroup()
-hrsanalysis_parents_groupmatch <- hrsanalysis_parents_groupmatch %>% 
+hrsanalysis_parents <- hrsanalysis_parents %>% 
   mutate(valid = ifelse(is.na(valid) & grandparent==0, helpcount - lastcount - 1, valid)) %>% 
   select(-helpcount, -lastcount)
 
-table(hrsanalysis_parents_groupmatch$grandparent, hrsanalysis_parents_groupmatch$time)
-table(hrsanalysis_parents_groupmatch$grandparent, hrsanalysis_parents_groupmatch$valid)
-table(hrsanalysis_parents_groupmatch$grandparent, hrsanalysis_parents_groupmatch$year)
+table(hrsanalysis_parents$grandparent, hrsanalysis_parents$time)
+table(hrsanalysis_parents$grandparent, hrsanalysis_parents$valid)
+table(hrsanalysis_parents$grandparent, hrsanalysis_parents$year)
 
-hrsanalysis_parents_groupmatch <- hrsanalysis_parents_groupmatch %>% filter(time %in% c(-6:6)) %>% 
+hrsanalysis_parents <- hrsanalysis_parents %>% filter(time %in% c(-6:6)) %>% 
   select(-time_match, -match_year, -valid_match)
 
-#sample comparison - different matching methods
-table(hrsanalysis_parents$grandparent, hrsanalysis_parents$time)
-table(hrsanalysis_parents_groupmatch$grandparent, hrsanalysis_parents_groupmatch$time)
-
 # save .rda 
-save(hrsanalysis_parents_groupmatch, file = "data/processed/HRS/hrsanalysis_parents_groupmatch.rda")
-hrsanalysis_parents_groupmatch %>% group_by(grandparent) %>% summarise(N = n_distinct(HHIDPN))
+save(hrsanalysis_parents, file = "data/processed/HRS/hrsanalysis_parents.rda")
+hrsanalysis_parents %>% group_by(grandparent) %>% summarise(N = n_distinct(HHIDPN))
 # duplicates in the controls, 615 controls matched to 712 cases 
 
-#### PSM: identify possible matches -> (2) nonparent control group ####
 
-# DIY matching: 2nd step -> identifying all possible PS-matches per grandparent  
-#                           and matching exactly on gender
-hrsimp_matching_nonparents <- hrsimp_matching_nonparents %>% 
-  select(HHIDPN, year, female, grandparent, pscore) 
-# sort by random variable in case there are ordering effects
-set.seed(123)
-rows <- sample(nrow(hrsimp_matching_nonparents))
-hrsimp_matching_nonparents <- hrsimp_matching_nonparents[rows, ]
-hrsimp_matching_nonparents <- hrsimp_matching_nonparents %>% mutate(new_id = row_number())
-
-hrsimp_matching_nonparents_case <- hrsimp_matching_nonparents %>% filter(grandparent==1) %>% 
-  rename(case_id = new_id,
-         pid_case = HHIDPN,
-         pscore_case = pscore,
-         female_case = female) %>% 
-  select(-grandparent, -year)
-# removing 'year' here means that 'year' -> 'match_year' will refer to the controls' survey year
-# at the time of matching (see below)
-
-hrsimp_matching_nonparents_control <- hrsimp_matching_nonparents %>% filter(grandparent==0) %>% 
-  rename(control_id = new_id,
-         pid_control = HHIDPN,
-         pscore_control = pscore,
-         female_control = female,
-         match_year = year) %>% 
-  select(-grandparent)
-
-# matching the two datasets along gender of controls and cases (exact matches)
-# crossing = equivalent of STATA joinby command (Cartesian product)
-hrsimp_joined_nonparents <- crossing(hrsimp_matching_nonparents_case, hrsimp_matching_nonparents_control)
-# 712*2357 = 1678184
-# exact matching on gender
-hrsimp_joined_nonparents <- hrsimp_joined_nonparents %>% filter(female_case==female_control) %>% 
-  select(-female_control) %>% 
-  rename(female = female_case)
-
-#### PSM: matching loop -> (2) nonparent control group ####
-
-# DIY matching: 3rd step -> matching the cases and controls according to the similarity of 
-#                           their propensity scores (1 to 1 matching; no duplicates)
-hrsimp_joined_nonparents <- hrsimp_joined_nonparents %>% 
-  mutate(ps_diff = abs(pscore_case - pscore_control))
-#no midranks or shared ranks - if PS_diff is the same it can be random which one we pick
-hrsimp_joined_nonparents <- hrsimp_joined_nonparents %>% group_by(pid_case) %>% 
-  mutate(rank = rank(ps_diff, ties.method = "random"))
-
-#this new numbering makes the following loop easier  
-hrsimp_joined_nonparents <- hrsimp_joined_nonparents %>% group_by(case_id) %>%
-  mutate(case_id_new = cur_group_id()) %>% 
-  arrange(case_id_new, rank) %>% ungroup()
-
-#to help with computation time -> restrict to certain ranks (similar idea to caliper)
-#assuming that there will be no valid match according to PS with a higher rank, anyway!
-hrsimp_joined_nonparents_reduced <- hrsimp_joined_nonparents %>% filter(rank<=600)
-(num_cases <- as.vector(summary(hrsimp_joined_nonparents_reduced$case_id_new)[6]))
-
-hrs_matched_nonparents <- NULL;
-picked <- NULL;
-for(num in 1:num_cases)
-{
-  #pick the highest rank of the (remaining) controls each case is matched with
-  picked <- hrsimp_joined_nonparents_reduced %>% filter(case_id_new==num) %>% 
-    mutate(best = min(rank)) %>% filter(rank==best) %>% select(-best)
-  #collect valid matches throughout the loop
-  hrs_matched_nonparents <- rbind(hrs_matched_nonparents, picked)
-  #track pid of control matched in every iteration of the loop
-  picked <- picked %>% mutate(tracked=1) %>% select(pid_control, tracked)
-  #drop all other controls with the tracked pid in the remaining pool of available controls
-  hrsimp_joined_nonparents_reduced <- left_join(hrsimp_joined_nonparents_reduced, picked)
-  hrsimp_joined_nonparents_reduced <- hrsimp_joined_nonparents_reduced %>% 
-    filter(is.na(tracked)) %>% select(-tracked)
-}
-# all 712 grandparents sucessfully matched!
-summary(hrs_matched_nonparents$rank)
-# Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-# 1.00    1.00    2.00   66.02   76.75  465.00 
-
-summary(hrs_matched_nonparents$ps_diff)
-#     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-# 0.0000006 0.0002729 0.0014144 0.0729406 0.0945240 0.6601138 
-
-# create dataset for merge with controls
-hrs_matched_mergecontrols_nonparents <- hrs_matched_nonparents %>% rename(
-  HHIDPN = pid_control,
-  pscore = pscore_control,
-  HHIDPN_case = pid_case
-) %>% select(HHIDPN, HHIDPN_case, match_year, pscore) %>% 
-  arrange(HHIDPN)
-
-# create dataset for merge with cases
-hrs_matched_mergecases_nonparents <- hrs_matched_nonparents %>% rename(
-  HHIDPN = pid_case,
-  pscore = pscore_case,
-  HHIDPN_control = pid_control
-) %>% select(HHIDPN, HHIDPN_control, match_year, pscore) %>% 
-  arrange(HHIDPN)
-
-#### compile final analysis samples -> (2) nonparent control group ####
-
-# Problem: 
-# Respondents in the nonparent control group were allowed to have missing information
-# on grandparent status if we knew that they had no children (around 10% of obs.).
-# However, this is not represented in 'hrslongvalid' where these cases still 
-# have grandparent==NA
-summary(hrslongvalid$grandparent)
-
-hrsanalysis_nonparents <- hrslongvalid %>% 
-  mutate(grandparent = replace(grandparent, totalnonresidentkids==0 & 
-                               totalresidentkids==0 & is.na(has_ch1) & 
-                               is.na(grandparent), 0)) %>% # adjusting grandparent status
-  filter(!is.na(grandparent) & droplater!=T) 
-
-hrsanalysis_nonparents <- left_join(hrsanalysis_nonparents, hrs_matched_mergecases_nonparents, by='HHIDPN')
-hrsanalysis_nonparents <- left_join(hrsanalysis_nonparents, hrs_matched_mergecontrols_nonparents, by='HHIDPN') 
-
-# create dataset for merge containing information on whether a control was 
-# at time==-4 or time==-2 at the time of matching
-# (variable 'valid' denotes valid assessment in relation to the transition to GP for the cases)
-time_for_controls_hrs <- hrslongvalid %>% 
-  filter(grandparent==1 & valid==-1 & droplater==F & !is.na(KABYEARBG_1)) %>%
-  select(HHIDPN, time) %>% rename(time_match = time)
-table(time_for_controls_hrs$time_match)
-# match via HHIDPN_case in order to transfer 'time' value from the grandparents to 
-# controls (at timepoint of matching)
-hrsanalysis_nonparents <- left_join(hrsanalysis_nonparents, time_for_controls_hrs, by=c('HHIDPN_case'='HHIDPN')) 
-
-hrsanalysis_nonparents <- hrsanalysis_nonparents %>% mutate(
-  pscore = ifelse(!is.na(pscore.x), pscore.x, pscore.y),
-  match_year = ifelse(!is.na(match_year.x), match_year.x, match_year.y),
-  HHIDPN_match = ifelse(!is.na(HHIDPN_case), HHIDPN_case, HHIDPN_control)
-) %>% 
-  select(-c(pscore.x, pscore.y, match_year.x, match_year.y, HHIDPN_case, HHIDPN_control)) %>% 
-  filter(!is.na(pscore)) # drop all observations from unmatched respondents
-
-# create time variable for controls relative to the time point of matching 
-hrsanalysis_nonparents <- hrsanalysis_nonparents %>% mutate(
-  time = replace(time, is.na(time) & match_year==year & time_match==-4, -4),
-  # variable 'match_year' relates to the controls!
-  valid = replace(valid, is.na(valid) & match_year==year, -1)
-)
-# reminder: 'time' counts calendar years in relation to transition to GP, 'valid' only valid assessments
-
-hrsanalysis_nonparents <- hrsanalysis_nonparents %>% 
-  mutate(time = replace(time, is.na(time) & match_year==year & time_match==-2, -2))
-
-table(hrsanalysis_nonparents$time, hrsanalysis_nonparents$grandparent)
-
-hrsanalysis_nonparents <- hrsanalysis_nonparents %>% mutate(
-  time = ifelse(is.na(time) & time_match==-4, (year - match_year) - 4, time),
-  time = ifelse(is.na(time) & time_match==-2, (year - match_year) - 2, time))
-
-hrsanalysis_nonparents <- hrsanalysis_nonparents %>% group_by(HHIDPN) %>% 
-  mutate(lastcount = ifelse(grandparent==0 & valid==-1, row_number(), NA)) %>% ungroup()
-hrsanalysis_nonparents <- hrsanalysis_nonparents %>% group_by(HHIDPN) %>% 
-  mutate(lastcount = max(lastcount, na.rm = T)) %>% ungroup() %>% 
-  mutate(lastcount = replace(lastcount, lastcount==-Inf, NA))
-
-# finish coding 'valid' for controls
-hrsanalysis_nonparents <- hrsanalysis_nonparents %>% group_by(HHIDPN) %>% 
-  mutate(helpcount = row_number()) %>% ungroup()
-hrsanalysis_nonparents <- hrsanalysis_nonparents %>% 
-  mutate(valid = ifelse(is.na(valid) & grandparent==0, helpcount - lastcount - 1, valid)) %>% 
-  select(-helpcount, -lastcount)
-
-table(hrsanalysis_nonparents$valid, hrsanalysis_nonparents$grandparent)
-table(hrsanalysis_nonparents$time, hrsanalysis_nonparents$grandparent) # cells earlier than '-6' too small
-
-hrsanalysis_nonparents <- hrsanalysis_nonparents %>% filter(time %in% c(-6:6)) %>% 
-  select(-time_match, -match_year, -droplater)
-
-# save .rda 
-save(hrsanalysis_nonparents, file = "data/processed/HRS/hrsanalysis_nonparents.rda")
-
-
-#### PSM: 'rollingMatch' -> (2) nonparent control group ####
-
-#library(rollingMatch) # see above for package installation
+#### PSM: optmatch::fullmatch -> (2) nonparent control group ####
 
 table(hrsimp_matching_nonparents$grandparent)
 table(hrsimp_matching_nonparents$grandparent, hrsimp_matching_nonparents$year)
 
 #we also need the 'time' value for grandparents (either -4 or -2) and the 'valid' variable
-hrsimp_groupmatch_nonparents <- left_join(hrsimp_matching_nonparents, 
+hrsimp_nonparents <- left_join(hrsimp_matching_nonparents, 
                                           hrsimp_matching_1, by=c("HHIDPN", "year")) %>% 
   filter(droplater==F) %>% 
   select(HHIDPN, year, female.x, grandparent.x, pscore, time, valid) %>% 
   rename(female = female.x, grandparent = grandparent.x)
 
-table(hrsimp_groupmatch_nonparents$grandparent, hrsimp_groupmatch_nonparents$time)
-table(hrsimp_groupmatch_nonparents$grandparent, hrsimp_groupmatch_nonparents$valid)
+table(hrsimp_nonparents$grandparent, hrsimp_nonparents$time)
+table(hrsimp_nonparents$grandparent, hrsimp_nonparents$valid)
 
-# Description
-# This is an adaption of fullmatch to allow for restrictions when control observations 
-# are "grouped". The motivating use case is when there are multiple observations of control 
-# data for each control subject. In this case, the grouping variable is the subject. We may 
-# want to place restrictions, for example that only one observation of a subject can be 
-# matched, or in the case of one:many matching, a given control subject can only be matched 
-# to a given treated subject once.
+# matrix of propensity score distances (with caliper)
+match_on_nonparents_ps <- as.matrix(caliper(match_on(grandparent~pscore, data=hrsimp_nonparents), 
+                                            width=0.05))
 
-#matrix of propensity score distances (uses the same 'pscore' variable as the K&R matching loop)
-match_on_nonparents_ps <- as.matrix(caliper(match_on(grandparent~pscore, data=hrsimp_groupmatch_nonparents), width=0.05))
+# matrix to exact-match on gender
+match_on_nonparents_female <- as.matrix(exactMatch(grandparent ~ female, data=hrsimp_nonparents))
 
-#matrix to exact-match on gender
-match_on_nonparents_female <- as.matrix(exactMatch(grandparent ~ female, data=hrsimp_groupmatch_nonparents))
-
-#caliper matrix to match within $500 of income (also possible)
-#inc <-  as.matrix(caliper(match_on(treat~income), distance = "Euclidean", width = 500))
-
-#final input to rollingMatch is the sum of these matrices
+# final input to optmatch::fullmatch is the sum of these matrices
 final_dist_nonparents <- match_on_nonparents_ps + match_on_nonparents_female
-# 1678184 elements in matrix -> same as in Cartesian product in DIY matching loop
+# 1678184 elements in matrix
 
-#hrs_groupmatch_nonparents <- groupmatch(x=final_dist_nonparents, 
-hrs_groupmatch_nonparents <- optmatch::fullmatch(x=final_dist_nonparents, 
-                                     #group = hrsimp_groupmatch_nonparents$HHIDPN, allow_duplicates = T,
-                                     min.controls = 0, max.controls = 1, omit.fraction = NULL, 
-                                     mean.controls = NULL, tol = 0.001, data = hrsimp_groupmatch_nonparents)
-# "allow_duplicates = T" leads to better balance, with 520 controls matched to 712 cases 
+hrs_nonparents <- optmatch::fullmatch(
+  x=final_dist_nonparents, 
+  min.controls = 0, max.controls = 1, omit.fraction = NULL, 
+  mean.controls = NULL, tol = 0.001, data = hrsimp_nonparents)
 
-summary(hrs_groupmatch_nonparents) #seems to work for 1:1 matching without replacement despite the warning message!
+summary(hrs_nonparents)
 
-#matched(hrs_groupmatch_nonparents)
-sum(matched(hrs_groupmatch_nonparents))
+#matched(hrs_nonparents)
+sum(matched(hrs_nonparents))
 
-#unmatched(hrs_groupmatch_nonparents)
-sum(unmatched(hrs_groupmatch_nonparents))
+#unmatched(hrs_nonparents)
+sum(unmatched(hrs_nonparents))
 
-#matchfailed(hrs_groupmatch_nonparents)
-sum(matchfailed(hrs_groupmatch_nonparents))
+#matchfailed(hrs_nonparents)
+sum(matchfailed(hrs_nonparents))
 
-hrs_groupmatch_data_nonparents <- cbind(hrsimp_groupmatch_nonparents, matches=hrs_groupmatch_nonparents) %>% 
+hrs_data_nonparents <- cbind(hrsimp_nonparents, matches=hrs_nonparents) %>% 
   filter(!is.na(matches))
-hrs_groupmatch_data_nonparents <- hrs_groupmatch_data_nonparents %>% group_by(matches) %>% 
+hrs_data_nonparents <- hrs_data_nonparents %>% group_by(matches) %>% 
   mutate(time = ifelse(is.na(time), max(time, na.rm = T), time),
          valid = ifelse(is.na(valid), max(valid, na.rm = T), valid)) %>% ungroup %>% 
   select(-matches)
 
-table(hrs_groupmatch_data_nonparents$grandparent, hrs_groupmatch_data_nonparents$year)
-table(hrs_groupmatch_data_nonparents$grandparent, hrs_groupmatch_data_nonparents$time)
-table(hrs_groupmatch_data_nonparents$grandparent, hrs_groupmatch_data_nonparents$valid)
-table(hrs_groupmatch_data_nonparents$grandparent, hrs_groupmatch_data_nonparents$female) # exact matching on gender!
+table(hrs_data_nonparents$grandparent, hrs_data_nonparents$year)
+table(hrs_data_nonparents$grandparent, hrs_data_nonparents$time)
+table(hrs_data_nonparents$grandparent, hrs_data_nonparents$valid)
+table(hrs_data_nonparents$grandparent, hrs_data_nonparents$female)
 
-hrs_groupmatch_data_nonparents <- left_join(hrs_groupmatch_data_nonparents, hrsimp_nonparents_ps_1,
+hrs_data_nonparents <- left_join(hrs_data_nonparents, hrsimp_nonparents_ps_1,
                                             by = c("HHIDPN", "year", "grandparent", "female"))
 
 # for balance assessment (at the time of matching - using the variables containing imputed values)
-hrs_bal_nonparents_groupmatch <- hrs_groupmatch_data_nonparents %>%
+hrs_bal_nonparents <- hrs_data_nonparents %>%
   select(HHIDPN, grandparent, pscore, female, everything(), -time, -year, -valid)
 
-hrs_groupmatch_data_nonparents <- hrs_groupmatch_data_nonparents %>% 
+hrs_data_nonparents <- hrs_data_nonparents %>% 
   select(HHIDPN, year, grandparent, time, valid, pscore) %>% 
   rename(match_year = year, time_match = time, valid_match = valid) %>% 
   mutate(match_number = row_number()) # if we allow duplicate matches, we need an unambiguous identifier for later
 
 # compile analysis sample with all longitudinal observations
 # same adjustment (NA -> 0) as for the other matching method (see above)
-hrsanalysis_nonparents_groupmatch <- hrslongvalid %>% 
+hrsanalysis_nonparents <- hrslongvalid %>% 
   mutate(grandparent = replace(grandparent, totalnonresidentkids==0 & 
                                  totalresidentkids==0 & is.na(has_ch1) & 
                                  is.na(grandparent), 0)) %>% # adjusting grandparent status
   filter(!is.na(grandparent) & droplater!=T) 
 
-hrsanalysis_nonparents_groupmatch <- left_join(hrs_groupmatch_data_nonparents, 
-                                               hrsanalysis_nonparents_groupmatch,
+hrsanalysis_nonparents <- left_join(hrs_data_nonparents, 
+                                               hrsanalysis_nonparents,
                                                by = c("HHIDPN", "grandparent")) %>% select(-droplater)
 
-table(hrsanalysis_nonparents_groupmatch$grandparent, hrsanalysis_nonparents_groupmatch$time_match) # already transferred to controls 
-table(hrsanalysis_nonparents_groupmatch$grandparent, hrsanalysis_nonparents_groupmatch$valid)
-table(hrsanalysis_nonparents_groupmatch$grandparent, hrsanalysis_nonparents_groupmatch$valid_match)
+table(hrsanalysis_nonparents$grandparent, hrsanalysis_nonparents$time_match) # already transferred to controls 
+table(hrsanalysis_nonparents$grandparent, hrsanalysis_nonparents$valid)
+table(hrsanalysis_nonparents$grandparent, hrsanalysis_nonparents$valid_match)
 
 # create time variable for controls relative to the time point of matching 
-hrsanalysis_nonparents_groupmatch <- hrsanalysis_nonparents_groupmatch %>% mutate(
+hrsanalysis_nonparents <- hrsanalysis_nonparents %>% mutate(
   time = replace(time, is.na(time) & match_year==year & time_match==-4, -4),
   # variable 'match_year' relates to the controls!
   valid = replace(valid, is.na(valid) & match_year==year, -1)
 )
-hrsanalysis_nonparents_groupmatch <- hrsanalysis_nonparents_groupmatch %>% mutate(
+hrsanalysis_nonparents <- hrsanalysis_nonparents %>% mutate(
   time = replace(time, is.na(time) & match_year==year & time_match==-2, -2)
 )
-table(hrsanalysis_nonparents_groupmatch$time, hrsanalysis_nonparents_groupmatch$grandparent)
+table(hrsanalysis_nonparents$time, hrsanalysis_nonparents$grandparent)
 
-hrsanalysis_nonparents_groupmatch <- hrsanalysis_nonparents_groupmatch %>% filter(!is.na(pscore)) %>% 
+hrsanalysis_nonparents <- hrsanalysis_nonparents %>% filter(!is.na(pscore)) %>% 
   mutate(
     time = ifelse(grandparent==0 & is.na(time) & time_match==-4, (year - match_year) - 4, time),
     time = ifelse(grandparent==0 & is.na(time) & time_match==-2, (year - match_year) - 2, time))
 
-hrsanalysis_nonparents_groupmatch <- hrsanalysis_nonparents_groupmatch %>% group_by(match_number) %>% 
+hrsanalysis_nonparents <- hrsanalysis_nonparents %>% group_by(match_number) %>% 
   mutate(lastcount = ifelse(grandparent==0 & valid==-1, row_number(), NA)) %>% ungroup()
-hrsanalysis_nonparents_groupmatch <- hrsanalysis_nonparents_groupmatch %>% group_by(match_number) %>% 
+hrsanalysis_nonparents <- hrsanalysis_nonparents %>% group_by(match_number) %>% 
   mutate(lastcount = max(lastcount, na.rm = T)) %>% ungroup() %>% 
   mutate(lastcount = replace(lastcount, lastcount==-Inf, NA)) # regular NA pls
 
 # finish coding 'valid' for controls
 # grouping by 'match_number' here instead of 'HHIDPN' because we allowed duplicate matches
-hrsanalysis_nonparents_groupmatch <- hrsanalysis_nonparents_groupmatch %>% group_by(match_number) %>% 
+hrsanalysis_nonparents <- hrsanalysis_nonparents %>% group_by(match_number) %>% 
   mutate(helpcount = row_number()) %>% ungroup()
-hrsanalysis_nonparents_groupmatch <- hrsanalysis_nonparents_groupmatch %>% 
+hrsanalysis_nonparents <- hrsanalysis_nonparents %>% 
   mutate(valid = ifelse(is.na(valid) & grandparent==0, helpcount - lastcount - 1, valid)) %>% 
   select(-helpcount, -lastcount)
 
-table(hrsanalysis_nonparents_groupmatch$grandparent, hrsanalysis_nonparents_groupmatch$time)
-table(hrsanalysis_nonparents_groupmatch$grandparent, hrsanalysis_nonparents_groupmatch$valid)
-table(hrsanalysis_nonparents_groupmatch$grandparent, hrsanalysis_nonparents_groupmatch$year)
+table(hrsanalysis_nonparents$grandparent, hrsanalysis_nonparents$time)
+table(hrsanalysis_nonparents$grandparent, hrsanalysis_nonparents$valid)
+table(hrsanalysis_nonparents$grandparent, hrsanalysis_nonparents$year)
 
-hrsanalysis_nonparents_groupmatch <- hrsanalysis_nonparents_groupmatch %>% filter(time %in% c(-6:6)) %>% 
+hrsanalysis_nonparents <- hrsanalysis_nonparents %>% filter(time %in% c(-6:6)) %>% 
   select(-time_match, -match_year, -valid_match)
 
-#sample comparison - different matching methods
-table(hrsanalysis_nonparents$grandparent, hrsanalysis_nonparents$time)
-table(hrsanalysis_nonparents_groupmatch$grandparent, hrsanalysis_nonparents_groupmatch$time)
-
 # save .rda 
-save(hrsanalysis_nonparents_groupmatch, file = "data/processed/HRS/hrsanalysis_nonparents_groupmatch.rda")
-hrsanalysis_nonparents_groupmatch %>% group_by(grandparent) %>% summarise(N = n_distinct(HHIDPN)) # duplicates in the controls
+save(hrsanalysis_nonparents, file = "data/processed/HRS/hrsanalysis_nonparents.rda")
+hrsanalysis_nonparents %>% group_by(grandparent) %>% summarise(N = n_distinct(HHIDPN)) 
+# duplicates in the controls
 
 
 #### PSM: covariate balance assessment ####
@@ -2597,22 +2216,6 @@ stdmeandiff <- function(var, treat, data) {
   (mu_t - mu_c) / sd_t
 }
 
-# create datasets containing the PSM covariate values at the time of matching
-# balance AFTER matching
-hrs_bal_parents <- hrsanalysis_parents %>% filter(valid==-1) %>% 
-  select(HHIDPN, year, grandparent, pscore)
-hrs_bal_parents <- left_join(hrs_bal_parents, hrsimp_parents_ps_1, by=c("HHIDPN", "year", "grandparent")) %>% 
-  select(HHIDPN, grandparent, pscore, female, everything(), -year) 
-#imputed values of the covariates (or should I use the ones containing missings?)
-summary(hrs_bal_parents)
-
-hrs_bal_nonparents <- hrsanalysis_nonparents %>% filter(valid==-1) %>% 
-  select(HHIDPN, year, grandparent, pscore)
-hrs_bal_nonparents <- left_join(hrs_bal_nonparents, hrsimp_nonparents_ps_1, by=c("HHIDPN", "year", "grandparent")) %>% 
-  select(HHIDPN, grandparent, pscore, female, everything(), -year) 
-#imputed values of the covariates (or should I use the ones containing missings?)
-summary(hrs_bal_nonparents)
-
 # balance BEFORE matching
 hrs_bal_parents_before <- hrsimp_parents_ps_2 %>% # this already has the correct number of covars
   mutate(pscore = (pscore_m1 + pscore_m2 + pscore_m3 + pscore_m4 + pscore_m5)/5) %>% 
@@ -2622,7 +2225,6 @@ summary(hrs_bal_parents_before)
 
 names(hrs_bal_parents_before) # column names must be aligned!
 names(hrs_bal_parents)
-names(hrs_bal_parents_groupmatch)
 
 hrs_bal_nonparents_before <- hrsimp_nonparents_ps_2 %>% # this already has the correct number of covars
   mutate(pscore = (pscore_m1 + pscore_m2 + pscore_m3 + pscore_m4 + pscore_m5)/5) %>% 
@@ -2632,7 +2234,6 @@ summary(hrs_bal_nonparents_before)
 
 names(hrs_bal_nonparents_before) # column names must be aligned!
 names(hrs_bal_nonparents)
-names(hrs_bal_nonparents_groupmatch)
 
 # evaluate standardized difference in means
 # create maxtrix object with empty vectors 'stddiff'
@@ -2640,14 +2241,13 @@ names(hrs_bal_nonparents_groupmatch)
 varnum_parents <-  1:(length(hrs_bal_parents)-2)
 covar_parents <-  colnames(hrs_bal_parents[3:paste(length(hrs_bal_parents))])
 stddiff_before_parents <- numeric(length = length(hrs_bal_parents_before)-2)     #before matching
-stddiff_after1_parents <- numeric(length = length(hrs_bal_parents)-2)            #K&R matching loop
-stddiff_after2_parents <- numeric(length = length(hrs_bal_parents_groupmatch)-2) #from 'rollingMatch' (GroupMatch) package  
+stddiff_after1_parents <- numeric(length = length(hrs_bal_parents)-2)            #optmatch::fullmatch
 
 coln_parents <- c("varnum_parents", "covar_parents", "stddiff_before_parents", 
-                  "stddiff_after1_parents", "stddiff_after2_parents") # defining column names 
+                  "stddiff_after1_parents") # defining column names 
 # creating matrix 
 hrs_balance_matrix_parents <- matrix(c(varnum_parents, covar_parents, stddiff_before_parents,
-                                       stddiff_after1_parents, stddiff_after2_parents), ncol = 5, 
+                                       stddiff_after1_parents), ncol = 4, 
                                        dimnames = list(varnum_parents, coln_parents))
 
 # use custom function in for-loop to fill matrix vectors 'stddiff'
@@ -2655,16 +2255,14 @@ for (i in seq_along(hrs_balance_matrix_parents[varnum_parents])) {
   hrs_balance_matrix_parents[[i, 3]] <- stdmeandiff(get(hrs_balance_matrix_parents[[i, 2]]), 
                                                     grandparent, hrs_bal_parents_before)     #before matching
   hrs_balance_matrix_parents[[i, 4]] <- stdmeandiff(get(hrs_balance_matrix_parents[[i, 2]]), 
-                                                    grandparent, hrs_bal_parents)            #DIY matching loop
-  hrs_balance_matrix_parents[[i, 5]] <- stdmeandiff(get(hrs_balance_matrix_parents[[i, 2]]), 
-                                                    grandparent, hrs_bal_parents_groupmatch) #from 'rollingMatch' (GroupMatch) package
+                                                    grandparent, hrs_bal_parents)            #optmatch::fullmatch
   }
-hrs_balance_matrix_parents[, 3:5] <- round(as.numeric(hrs_balance_matrix_parents[, 3:5]), 3)
+hrs_balance_matrix_parents[, 3:4] <- round(as.numeric(hrs_balance_matrix_parents[, 3:4]), 3)
 
-kable(hrs_balance_matrix_parents[, 2:5], format="rst", 
+kable(hrs_balance_matrix_parents[, 2:4], format="rst", 
       col.names = c("Covariate", "Before Matching",
-                    "DIY Matching Loop", "'rollingMatch'"), 
-      align = "lccc", digits=2, caption = "Table 1. Covariate Balance")
+                    "After Matching"), 
+      align = "lcc", digits=2, caption = "Table 1. Covariate Balance")
 
 
 # (2) NONPARENTS
@@ -2673,14 +2271,13 @@ kable(hrs_balance_matrix_parents[, 2:5], format="rst",
 varnum_nonparents <-  1:(length(hrs_bal_nonparents)-2)
 covar_nonparents <-  colnames(hrs_bal_nonparents[3:paste(length(hrs_bal_nonparents))])
 stddiff_before_nonparents <- numeric(length = length(hrs_bal_nonparents_before)-2)     #before matching
-stddiff_after1_nonparents <- numeric(length = length(hrs_bal_nonparents)-2)            #K&R matching loop
-stddiff_after2_nonparents <- numeric(length = length(hrs_bal_nonparents_groupmatch)-2) #from 'rollingMatch' (GroupMatch) package  
+stddiff_after1_nonparents <- numeric(length = length(hrs_bal_nonparents)-2)            #optmatch::fullmatch
 
 coln_nonparents <- c("varnum_nonparents", "covar_nonparents", "stddiff_before_nonparents", 
-                     "stddiff_after1_nonparents", "stddiff_after2_nonparents") # defining column names 
+                     "stddiff_after1_nonparents") # defining column names 
 # creating matrix 
 hrs_balance_matrix_nonparents <- matrix(c(varnum_nonparents, covar_nonparents, stddiff_before_nonparents,
-                                       stddiff_after1_nonparents, stddiff_after2_nonparents), ncol = 5, 
+                                       stddiff_after1_nonparents), ncol = 4, 
                                        dimnames = list(varnum_nonparents, coln_nonparents))
 
 # use custom function in for-loop to fill matrix vectors 'stddiff'
@@ -2688,15 +2285,13 @@ for (i in seq_along(hrs_balance_matrix_nonparents[varnum_nonparents])) {
   hrs_balance_matrix_nonparents[[i, 3]] <- stdmeandiff(get(hrs_balance_matrix_nonparents[[i, 2]]), 
                                                     grandparent, hrs_bal_nonparents_before)     #before matching
   hrs_balance_matrix_nonparents[[i, 4]] <- stdmeandiff(get(hrs_balance_matrix_nonparents[[i, 2]]), 
-                                                    grandparent, hrs_bal_nonparents)            #DIY matching loop
-  hrs_balance_matrix_nonparents[[i, 5]] <- stdmeandiff(get(hrs_balance_matrix_nonparents[[i, 2]]), 
-                                                    grandparent, hrs_bal_nonparents_groupmatch) #from 'rollingMatch' (GroupMatch) package
+                                                    grandparent, hrs_bal_nonparents)            #optmatch::fullmatch
 }
-hrs_balance_matrix_nonparents[, 3:5] <- round(as.numeric(hrs_balance_matrix_nonparents[, 3:5]), 3)
+hrs_balance_matrix_nonparents[, 3:4] <- round(as.numeric(hrs_balance_matrix_nonparents[, 3:4]), 3)
 
-kable(hrs_balance_matrix_nonparents[, 2:5], format="rst", 
+kable(hrs_balance_matrix_nonparents[, 2:4], format="rst", 
       col.names = c("Covariate", "Before Matching",
-                    "DIY Matching Loop", "'rollingMatch'"), 
-      align = "lccc", digits=2, caption = "Table 1. Covariate Balance")
+                    "After Matching"), 
+      align = "lcc", digits=2, caption = "Table 1. Covariate Balance")
 
 
