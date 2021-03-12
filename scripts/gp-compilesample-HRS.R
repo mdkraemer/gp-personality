@@ -7,6 +7,7 @@ library(haven)
 library(tidyverse)
 library(psych)
 library(knitr)
+library(optmatch)
 
 #### HRS data: draw raw data, select variables ####
 
@@ -1981,7 +1982,7 @@ table(hrsimp_parents$grandparent, hrsimp_parents$valid)
 
 # matrix of propensity score distances (with caliper)
 match_on_parents_ps <- as.matrix(caliper(match_on(grandparent~pscore, data=hrsimp_parents), 
-                                         width=0.05))
+                                         width=0.3))
 
 # matrix to exact-match on gender
 match_on_parents_female <- as.matrix(exactMatch(grandparent ~ female, data=hrsimp_parents))
@@ -2094,7 +2095,7 @@ table(hrsimp_nonparents$grandparent, hrsimp_nonparents$valid)
 
 # matrix of propensity score distances (with caliper)
 match_on_nonparents_ps <- as.matrix(caliper(match_on(grandparent~pscore, data=hrsimp_nonparents), 
-                                            width=0.05))
+                                            width=0.3))
 
 # matrix to exact-match on gender
 match_on_nonparents_female <- as.matrix(exactMatch(grandparent ~ female, data=hrsimp_nonparents))
