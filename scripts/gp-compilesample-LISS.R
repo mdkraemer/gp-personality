@@ -7,7 +7,7 @@ library(tidyverse)
 library(psych)
 library(foreign)
 library(knitr)
-library(optmatch)
+library(MatchIt)
 
 #### LISS data: draw raw data, select variables ####
 
@@ -1994,12 +1994,12 @@ lissimp_matching_nonparents <- lissimp_matching_nonparents %>%
   select(nomem_encr, year, female, grandparent, pscore) 
 
 
-#### PSM: optmatch::fullmatch -> (1) parent control group ####
+#### PSM: 'matchit' with replacement -> (1) parent control group ####
 
 table(lissimp_matching_parents$grandparent)
 table(lissimp_matching_parents$grandparent, lissimp_matching_parents$year)
 
-#we also need the 'time' value for grandparents (-5, -4, -3 or -2) and the 'valid' variable
+# we also need the 'time' value for grandparents (-5, -4, -3 or -2) and the 'valid' variable
 lissimp_parents <- left_join(lissimp_matching_parents, 
                                        lissimp_matching_1, by=c("nomem_encr", "year")) %>% 
   filter(droplater==F) %>% 
@@ -2009,41 +2009,27 @@ lissimp_parents <- left_join(lissimp_matching_parents,
 table(lissimp_parents$grandparent, lissimp_parents$time)
 table(lissimp_parents$grandparent, lissimp_parents$valid)
 
-# matrix of propensity score distances (with caliper)
-match_on_parents_ps <- as.matrix(caliper(match_on(grandparent~pscore, data=lissimp_parents), 
-                                         width=0.3))
+# perform matching on previously computed propensity score which is stored in 'pscore'
+liss_parents_matchit <- matchit(grandparent ~ pscore, data=lissimp_parents, distance="mahalanobis",
+                               replace=T, exact=c("female"), ratio=1) # exact matching on gender
+liss_parents_matchit
+summary(liss_parents_matchit) # with replacement
+liss_data_parents <- get_matches(liss_parents_matchit, data=lissimp_parents)
+str(liss_data_parents)
 
-# matrix to exact-match on gender
-match_on_parents_female <- as.matrix(exactMatch(grandparent ~ female, data=lissimp_parents))
-
-# final input to optmatch::fullmatch is the sum of these matrices
-final_dist_parents <- match_on_parents_ps + match_on_parents_female
-# 756960 elements in matrix
-
-liss_parents <- optmatch::fullmatch(
-  x=final_dist_parents, 
-  min.controls = 0.1, max.controls = 1, omit.fraction = NULL, 
-  mean.controls = NULL, tol = 0.001, data = lissimp_parents)
-
-summary(liss_parents)
-
-#matched(liss_parents)
-sum(matched(liss_parents))
-
-#unmatched(liss_parents)
-sum(unmatched(liss_parents))
-
-#matchfailed(liss_parents)
-sum(matchfailed(liss_parents))
-
-liss_data_parents <- cbind(lissimp_parents, matches=liss_parents) %>% 
-  filter(!is.na(matches))
-liss_data_parents <- liss_data_parents %>% group_by(matches) %>% 
-  mutate(time = ifelse(is.na(time), max(time, na.rm = T), time), # same information as 'matchtime' now (but already transferred to controls, too)
+liss_data_parents <- liss_data_parents %>% group_by(subclass) %>% 
+  mutate(time = ifelse(is.na(time), max(time, na.rm = T), time),
          valid = ifelse(is.na(valid), max(valid, na.rm = T), valid)) %>% ungroup %>% 
-  select(-matches)
+  ungroup() %>% select(-subclass, -weights, -id)
 
+# "with replacement" in two ways: 
+# - the same control observation appearing multiple times in the matched data 
+#   (this is because we allowed "replace=T" above)
+# - control subjects appearing multiple times in the matched data 
+#   (because there were multiple available obervations, i.e., time points, per control subject in the data)
 liss_data_parents %>% group_by(grandparent) %>% summarise(N=n_distinct(nomem_encr))
+liss_data_parents %>% group_by(grandparent) %>% summarise(N=n_distinct(nomem_encr, year)) 
+# matches number above, see  summary(liss_parents_matchit)
 
 table(liss_data_parents$grandparent, liss_data_parents$year)
 table(liss_data_parents$grandparent, liss_data_parents$time)
@@ -2110,7 +2096,8 @@ table(lissanalysis_parents$grandparent, lissanalysis_parents$time)
 table(lissanalysis_parents$grandparent, lissanalysis_parents$valid)
 table(lissanalysis_parents$grandparent, lissanalysis_parents$year)
 
-lissanalysis_parents <- lissanalysis_parents %>% filter(time %in% c(-5:5)) %>% 
+# cells at time > 4 too small
+lissanalysis_parents <- lissanalysis_parents %>% filter(time %in% c(-4:4)) %>% 
   select(-match_year, -valid_match, -nohouse_encr, -droplater)
 
 # save .rda 
@@ -2119,12 +2106,12 @@ lissanalysis_parents %>% group_by(grandparent) %>% summarise(N = n_distinct(nome
 # duplicates in the controls, controls matched to cases 
 
 
-#### PSM: optmatch::fullmatch -> (2) nonparent control group ####
+#### PSM: 'matchit' with replacement -> (2) nonparent control group ####
 
 table(lissimp_matching_nonparents$grandparent)
 table(lissimp_matching_nonparents$grandparent, lissimp_matching_nonparents$year)
 
-#we also need the 'time' value for grandparents (-5, -4, -3 or -2) and the 'valid' variable
+# we also need the 'time' value for grandparents (-5, -4, -3 or -2) and the 'valid' variable
 lissimp_nonparents <- left_join(lissimp_matching_nonparents, 
                                         lissimp_matching_1, by=c("nomem_encr", "year")) %>% 
   filter(droplater==F) %>% 
@@ -2134,39 +2121,27 @@ lissimp_nonparents <- left_join(lissimp_matching_nonparents,
 table(lissimp_nonparents$grandparent, lissimp_nonparents$time)
 table(lissimp_nonparents$grandparent, lissimp_nonparents$valid)
 
-# matrix of propensity score distances (with caliper)
-match_on_nonparents_ps <- as.matrix(caliper(match_on(grandparent~pscore, data=lissimp_nonparents), 
-                                            width=0.3))
+# perform matching on previously computed propensity score which is stored in 'pscore'
+liss_nonparents_matchit <- matchit(grandparent ~ pscore, data=lissimp_nonparents, distance="mahalanobis",
+                                  replace=T, exact=c("female"), ratio=1) # exact matching on gender
+liss_nonparents_matchit
+summary(liss_nonparents_matchit) # with replacement
+liss_data_nonparents <- get_matches(liss_nonparents_matchit, data=lissimp_nonparents)
+str(liss_data_nonparents)
 
-# matrix to exact-match on gender
-match_on_nonparents_female <- as.matrix(exactMatch(grandparent ~ female, data=lissimp_nonparents))
-
-#final input to optmatch::fullmatch is the sum of these matrices
-final_dist_nonparents <- match_on_nonparents_ps + match_on_nonparents_female
-# 1079913 elements in matrix
-
-liss_nonparents <- optmatch::fullmatch(
-  x=final_dist_nonparents, 
-  min.controls = 0, max.controls = 1, omit.fraction = NULL, 
-  mean.controls = NULL, tol = 0.001, data = lissimp_nonparents)
-
-summary(liss_nonparents) #seems to work for 1:1 matching without replacement despite the warning message!
-
-#matched(liss_nonparents)
-sum(matched(liss_nonparents))
-
-#unmatched(liss_nonparents)
-sum(unmatched(liss_nonparents))
-
-#matchfailed(liss_nonparents)
-sum(matchfailed(liss_nonparents))
-
-liss_data_nonparents <- cbind(lissimp_nonparents, matches=liss_nonparents) %>% 
-  filter(!is.na(matches))
-liss_data_nonparents <- liss_data_nonparents %>% group_by(matches) %>% 
-  mutate(time = ifelse(is.na(time), max(time, na.rm = T), time), 
+liss_data_nonparents <- liss_data_nonparents %>% group_by(subclass) %>% 
+  mutate(time = ifelse(is.na(time), max(time, na.rm = T), time),
          valid = ifelse(is.na(valid), max(valid, na.rm = T), valid)) %>% ungroup %>% 
-  select(-matches)
+  ungroup() %>% select(-subclass, -weights, -id)
+
+# "with replacement" in two ways: 
+# - the same control observation appearing multiple times in the matched data 
+#   (this is because we allowed "replace=T" above)
+# - control subjects appearing multiple times in the matched data 
+#   (because there were multiple available obervations, i.e., time points, per control subject in the data)
+liss_data_nonparents %>% group_by(grandparent) %>% summarise(N=n_distinct(nomem_encr))
+liss_data_nonparents %>% group_by(grandparent) %>% summarise(N=n_distinct(nomem_encr, year)) 
+# matches number above, see  summary(liss_parents_matchit)
 
 table(liss_data_nonparents$grandparent, liss_data_nonparents$year)
 table(liss_data_nonparents$grandparent, liss_data_nonparents$time)
@@ -2233,7 +2208,8 @@ table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$time)
 table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$valid)
 table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$year)
 
-lissanalysis_nonparents <- lissanalysis_nonparents %>% filter(time %in% c(-5:5)) %>% 
+# cells at time > 4 too small 
+lissanalysis_nonparents <- lissanalysis_nonparents %>% filter(time %in% c(-4:4)) %>% 
   select(-match_year, -valid_match, -nohouse_encr, -droplater)
 
 # save .rda 

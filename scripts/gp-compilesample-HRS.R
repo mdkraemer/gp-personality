@@ -7,7 +7,7 @@ library(haven)
 library(tidyverse)
 library(psych)
 library(knitr)
-library(optmatch)
+library(MatchIt)
 
 #### HRS data: draw raw data, select variables ####
 
@@ -1879,6 +1879,7 @@ remove_infrequent_hrs <- function(x) {
               fulltime, parttime, unemployed, partlyretired, disabled, notinlaborforce,
               unsafeneighborhood, secondhouse, selfemployed, black,
               raceother, difficultpaybills, foodstamps)) }#, , renter, conde, notusaborn, livetogether
+# swls, agree, con, extra, neur, open, interviewyear
 
 list_remove_infrequent_hrs <- list(hrsimp_parents_ps_1, hrsimp_parents_ps_2, 
                                     hrsimp_parents_ps_3, hrsimp_parents_ps_4, 
@@ -1965,7 +1966,7 @@ rm(h96data, h98data, h00data, h02data, h04data, h06data,
    h08data, h10data, h12data, h14data, h16data) 
 
 
-#### PSM: optmatch::fullmatch -> (1) parent control group ####
+#### PSM:'matchit' with replacement -> (1) parent control group ####
 
 table(hrsimp_matching_parents$grandparent)
 table(hrsimp_matching_parents$grandparent, hrsimp_matching_parents$year)
@@ -1980,39 +1981,27 @@ hrsimp_parents <- left_join(hrsimp_matching_parents,
 table(hrsimp_parents$grandparent, hrsimp_parents$time)
 table(hrsimp_parents$grandparent, hrsimp_parents$valid)
 
-# matrix of propensity score distances (with caliper)
-match_on_parents_ps <- as.matrix(caliper(match_on(grandparent~pscore, data=hrsimp_parents), 
-                                         width=0.3))
+# perform matching on previously computed propensity score which is stored in 'pscore'
+hrs_parents_matchit <- matchit(grandparent ~ pscore, data=hrsimp_parents, distance="mahalanobis",
+                               replace=T, exact=c("female"), ratio=1) # exact matching on gender
+hrs_parents_matchit
+summary(hrs_parents_matchit) # with replacement
+hrs_data_parents <- get_matches(hrs_parents_matchit, data=hrsimp_parents)
+str(hrs_data_parents)
 
-# matrix to exact-match on gender
-match_on_parents_female <- as.matrix(exactMatch(grandparent ~ female, data=hrsimp_parents))
-
-# final input to optmatch::fullmatch is the sum of these matrices
-final_dist_parents <- match_on_parents_ps + match_on_parents_female
-# 712*3300 = 2349600 elements in matrix
-
-hrs_parents <- optmatch::fullmatch(
-  x=final_dist_parents, 
-  min.controls = 0, max.controls = 1, omit.fraction = NULL, 
-  mean.controls = NULL, tol = 0.001, data = hrsimp_parents)
-
-summary(hrs_parents)
-
-#matched(hrs_parents)
-sum(matched(hrs_parents))
-
-#unmatched(hrs_parents)
-sum(unmatched(hrs_parents))
-
-#matchfailed(hrs_parents)
-sum(matchfailed(hrs_parents))
-
-hrs_data_parents <- cbind(hrsimp_parents, matches=hrs_parents) %>% 
-  filter(!is.na(matches))
-hrs_data_parents <- hrs_data_parents %>% group_by(matches) %>% 
+hrs_data_parents <- hrs_data_parents %>% group_by(subclass) %>% 
   mutate(time = ifelse(is.na(time), max(time, na.rm = T), time),
          valid = ifelse(is.na(valid), max(valid, na.rm = T), valid)) %>% ungroup %>% 
-  select(-matches)
+  ungroup() %>% select(-subclass, -weights, -id)
+
+# "with replacement" in two ways: 
+# - the same control observation appearing multiple times in the matched data 
+#   (this is because we allowed "replace=T" above)
+# - control subjects appearing multiple times in the matched data 
+#   (because there were multiple available obervations, i.e., time points, per control subject in the data)
+hrs_data_parents %>% group_by(grandparent) %>% summarise(N=n_distinct(HHIDPN))
+hrs_data_parents %>% group_by(grandparent) %>% summarise(N=n_distinct(HHIDPN, year)) 
+# matches number above, see  summary(liss_parents_matchit)
 
 table(hrs_data_parents$grandparent, hrs_data_parents$year)
 table(hrs_data_parents$grandparent, hrs_data_parents$time)
@@ -2093,39 +2082,27 @@ hrsimp_nonparents <- left_join(hrsimp_matching_nonparents,
 table(hrsimp_nonparents$grandparent, hrsimp_nonparents$time)
 table(hrsimp_nonparents$grandparent, hrsimp_nonparents$valid)
 
-# matrix of propensity score distances (with caliper)
-match_on_nonparents_ps <- as.matrix(caliper(match_on(grandparent~pscore, data=hrsimp_nonparents), 
-                                            width=0.3))
+# perform matching on previously computed propensity score which is stored in 'pscore'
+hrs_nonparents_matchit <- matchit(grandparent ~ pscore, data=hrsimp_nonparents, distance="mahalanobis",
+                               replace=T, exact=c("female"), ratio=1) # exact matching on gender
+hrs_nonparents_matchit
+summary(hrs_nonparents_matchit) # with replacement
+hrs_data_nonparents <- get_matches(hrs_nonparents_matchit, data=hrsimp_nonparents)
+str(hrs_data_nonparents)
 
-# matrix to exact-match on gender
-match_on_nonparents_female <- as.matrix(exactMatch(grandparent ~ female, data=hrsimp_nonparents))
-
-# final input to optmatch::fullmatch is the sum of these matrices
-final_dist_nonparents <- match_on_nonparents_ps + match_on_nonparents_female
-# 1678184 elements in matrix
-
-hrs_nonparents <- optmatch::fullmatch(
-  x=final_dist_nonparents, 
-  min.controls = 0, max.controls = 1, omit.fraction = NULL, 
-  mean.controls = NULL, tol = 0.001, data = hrsimp_nonparents)
-
-summary(hrs_nonparents)
-
-#matched(hrs_nonparents)
-sum(matched(hrs_nonparents))
-
-#unmatched(hrs_nonparents)
-sum(unmatched(hrs_nonparents))
-
-#matchfailed(hrs_nonparents)
-sum(matchfailed(hrs_nonparents))
-
-hrs_data_nonparents <- cbind(hrsimp_nonparents, matches=hrs_nonparents) %>% 
-  filter(!is.na(matches))
-hrs_data_nonparents <- hrs_data_nonparents %>% group_by(matches) %>% 
+hrs_data_nonparents <- hrs_data_nonparents %>% group_by(subclass) %>% 
   mutate(time = ifelse(is.na(time), max(time, na.rm = T), time),
          valid = ifelse(is.na(valid), max(valid, na.rm = T), valid)) %>% ungroup %>% 
-  select(-matches)
+  ungroup() %>% select(-subclass, -weights, -id)
+
+# "with replacement" in two ways: 
+# - the same control observation appearing multiple times in the matched data 
+#   (this is because we allowed "replace=T" above)
+# - control subjects appearing multiple times in the matched data 
+#   (because there were multiple available obervations, i.e., time points, per control subject in the data)
+hrs_data_nonparents %>% group_by(grandparent) %>% summarise(N=n_distinct(HHIDPN))
+hrs_data_nonparents %>% group_by(grandparent) %>% summarise(N=n_distinct(HHIDPN, year)) 
+# matches number above, see  summary(liss_parents_matchit)
 
 table(hrs_data_nonparents$grandparent, hrs_data_nonparents$year)
 table(hrs_data_nonparents$grandparent, hrs_data_nonparents$time)
