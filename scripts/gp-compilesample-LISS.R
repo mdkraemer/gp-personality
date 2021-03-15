@@ -1791,16 +1791,12 @@ remove_infrequent_liss <- function(x) {
   x %>% 
     select(-c(retire_early, retirement, heartattack, stroke, cancer, rentfree, businessdwelling, otherdwelling, # too infrequent
               jobseeker, pensioner, disability, primaryschool),
-           -c(paid_work, more_paid_work, difficultybills, secondhouse, # these are not important (substantively)
-              speakdutch, bmi, chronicdisease, diabetes, nodisease, flatapartment, 
+           -c(paid_work, more_paid_work, difficultybills, secondhouse, # these are not important (substantively) / or redundant
+              bmi, chronicdisease, diabetes, nodisease, flatapartment, 
               farmhouse, familybusiness, freelancer, housekeeper, degreeother),
-           -c(currentpartner, hhmembers, single, # also not important? improve balance?
+           -c(currentpartner, hhmembers, single, 
               extremelyurban, moderatelyurban, slightlyurban, noturban,
-              livedhere)) }#,
-           #-c(religion, livetogether, rental, degreehighersec,
-           #   degreevocational, degreecollege, degreeuniversity, 
-           #   logincome, rooms, financialsit, mobility, dep,
-           #   divorced, widowed, jobhours, worsehealth, betterhealth)) }
+              livedhere)) }
 
 list_remove_infrequent_liss <- list(lissimp_parents_ps_1, lissimp_parents_ps_2, 
                                     lissimp_parents_ps_3, lissimp_parents_ps_4, 
@@ -1818,8 +1814,6 @@ names(list_remove_infrequent_liss) <- c("lissimp_parents_ps_1", "lissimp_parents
                                         "lissimp_nonparents_ps_5")
 list2env(list_remove_infrequent_liss, .GlobalEnv)
 rm(list_remove_infrequent_liss)
-# Additionally, the following will be removed only for wave 2014 below:
-# more_paid_work, speakdutch, farmhouse, housekeeper, degreeother, widowed, difficultybills, single
 
 #### PSM: compute propensity scores ####
 
@@ -2238,19 +2232,15 @@ liss_bal_parents_before <- lissimp_matching_parents %>%
 liss_bal_parents_before <- left_join(liss_bal_parents_before, lissimp_matching_1)
 liss_bal_parents_before <- liss_bal_parents_before %>% 
   select(nomem_encr, grandparent, pscore, female, everything(), 
-         -c(time, valid, droplater, matchtime, nokids), # year, 
-         -c(retire_early, retirement, heartattack, stroke, cancer, rentfree, businessdwelling, otherdwelling, # too infrequent
+         -c(time, valid, droplater, matchtime, nokids),
+         -c(retire_early, retirement, heartattack, stroke, cancer, rentfree, businessdwelling, otherdwelling, # too infrequent in some cells
             jobseeker, pensioner, disability, primaryschool), 
-         -c(paid_work, more_paid_work, difficultybills, secondhouse, # these are not important (substantively)
-            speakdutch, bmi, chronicdisease, diabetes, nodisease, flatapartment, 
+         -c(paid_work, more_paid_work, difficultybills, secondhouse, # these are not important (substantively) / or redundant
+            bmi, chronicdisease, diabetes, nodisease, flatapartment, 
             farmhouse, familybusiness, freelancer, housekeeper, degreeother),
-         -c(currentpartner, hhmembers, single, # also not important? improve balance?
+         -c(currentpartner, hhmembers, single, 
             extremelyurban, moderatelyurban, slightlyurban, noturban,
-            livedhere)) #,
-         #-c(religion, livetogether, rental, degreehighersec,
-         #   degreevocational, degreecollege, degreeuniversity, 
-         #   logincome, rooms, financialsit, mobility, dep,
-         #   divorced, widowed, jobhours, worsehealth, betterhealth))
+            livedhere))
 summary(liss_bal_parents_before)
 
 names(liss_bal_parents_before) # column names must be aligned!
@@ -2261,19 +2251,15 @@ liss_bal_nonparents_before <- lissimp_matching_nonparents %>%
 liss_bal_nonparents_before <- left_join(liss_bal_nonparents_before, lissimp_matching_1)
 liss_bal_nonparents_before <- liss_bal_nonparents_before %>% 
   select(nomem_encr, grandparent, pscore, female, everything(), 
-         -c(time, valid, droplater, matchtime, contains("kid"), totalchildren), # year, 
+         -c(time, valid, droplater, matchtime, contains("kid"), totalchildren), 
          -c(retire_early, retirement, heartattack, stroke, cancer, rentfree, businessdwelling, otherdwelling, # too infrequent
             jobseeker, pensioner, disability, primaryschool), 
-         -c(paid_work, more_paid_work, difficultybills, secondhouse, # these are not important (substantively)
-            speakdutch, bmi, chronicdisease, diabetes, nodisease, flatapartment, 
+         -c(paid_work, more_paid_work, difficultybills, secondhouse, # these are not important (substantively) / or redundant
+            bmi, chronicdisease, diabetes, nodisease, flatapartment,
             farmhouse, familybusiness, freelancer, housekeeper, degreeother),
-         -c(currentpartner, hhmembers, single, # also not important? improve balance?
+         -c(currentpartner, hhmembers, single, 
             extremelyurban, moderatelyurban, slightlyurban, noturban,
-            livedhere)) #,
-         #-c(religion, livetogether, rental, degreehighersec,
-         #   degreevocational, degreecollege, degreeuniversity, 
-         #   logincome, rooms, financialsit, mobility, dep,
-         #   divorced, widowed, jobhours, worsehealth, betterhealth))
+            livedhere))
 summary(liss_bal_nonparents_before)
 
 names(liss_bal_nonparents_before) # column names must be aligned!

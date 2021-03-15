@@ -1872,14 +1872,13 @@ table(hrsimp_parents_ps_1$grandparent, hrsimp_parents_ps_1$rentother)
 remove_infrequent_hrs <- function(x) { 
   x %>% 
     select(-c(spouseabsent, rentother, homeother), # too infrequent
-           -c(hhmembers, marriagesnum, doctor, hospital, psyche, bmi, cancer, # these are not important (substantively)
+           -c(hhmembers, marriagesnum, doctor, hospital, psyche, bmi, cancer, # these are not important (substantively) / or redundant
               diabetes, stroke, heart, hiemployer, higovt, hispousal, hiother, 
               partnered, separated, nevermarried, ranchfarm, rentfree, mobilehome, 
               duplexhome, apartment, homeother, housekeeper, 
               fulltime, parttime, unemployed, partlyretired, disabled, notinlaborforce,
-              unsafeneighborhood, secondhouse, selfemployed, black,
-              raceother, difficultpaybills, foodstamps)) }#, , renter, conde, notusaborn, livetogether
-# swls, agree, con, extra, neur, open, interviewyear
+              unsafeneighborhood, secondhouse, selfemployed, # 
+              difficultpaybills, foodstamps)) }
 
 list_remove_infrequent_hrs <- list(hrsimp_parents_ps_1, hrsimp_parents_ps_2, 
                                     hrsimp_parents_ps_3, hrsimp_parents_ps_4, 
@@ -2067,7 +2066,7 @@ hrsanalysis_parents %>% group_by(grandparent) %>% summarise(N = n_distinct(HHIDP
 # duplicates in the controls, 615 controls matched to 712 cases 
 
 
-#### PSM: optmatch::fullmatch -> (2) nonparent control group ####
+#### PSM: 'matchit' with replacement -> (2) nonparent control group ####
 
 table(hrsimp_matching_nonparents$grandparent)
 table(hrsimp_matching_nonparents$grandparent, hrsimp_matching_nonparents$year)
