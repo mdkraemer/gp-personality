@@ -87,6 +87,8 @@ header-includes:
   - \captionsetup[table]{font={stretch=1.5}}
   - \captionsetup[figure]{font={stretch=1.5}}
 #  - \raggedbottom # prevents LaTeX from varying the spacing between paragraphs to minimise empty space on pages
+  - \usepackage{floatrow}
+  - \floatsetup[figure]{capposition=top}
 
 #appendix: gp-manuscript-papaja-appendix.Rmd
 
