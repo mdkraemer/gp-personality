@@ -87,8 +87,8 @@ header-includes:
   - \captionsetup[table]{font={stretch=1.5}}
   - \captionsetup[figure]{font={stretch=1.5}}
 #  - \raggedbottom # prevents LaTeX from varying the spacing between paragraphs to minimise empty space on pages
-  - \usepackage{floatrow}
-  - \floatsetup[figure]{capposition=top}
+#  - \usepackage{floatrow}  # https://github.com/crsh/papaja/issues/342
+#  - \floatsetup[figure]{capposition=top}
 
 #appendix: gp-manuscript-papaja-appendix.Rmd
 
@@ -151,11 +151,40 @@ knitr::opts_chunk$set(echo = FALSE,
 #source("DO_Wellbeing_data.R") # This executes data import & cleaning.
 
 ```
-Intro
+In view of an aging demographic and an increased share of childcare functions being fulfilled by grandparents, intergenerational relations have received heightened attention from psychological and sociological research in recent years [@bengtsonNuclearFamilyIncreasing2001].<!-- weak 1st sentence -->
+With regard to personality development, the transition to grandparenthood has been posited as an important developmental task in old age [@huttemanDevelopmentalTasksFramework2014]. However, empirical research into the psychological consequences of this transition is sparse.
+Testing hypotheses derived from social investment theory (Roberts & Wood, 2006) in a matched control-group design [see @luhmannStudyingChangesLife2014], we aim to investigate whether the transition to grandparenthood affects the Big Five personality traits and life satisfaction<!-- add a sentence on the structure of WB -->.
+
+## Personality Development in Old Age
+
+## Social Investment Theory
+
+According to social investment theory, normative life events or transitions such as entering the work force or becoming a parent lead to personality maturation through the adoption of new social roles [@robertsEvaluatingFiveFactor2005].
+These new roles encourage or compel people to act in a more agreeable, conscientious, and emotionally stable way, and are hypothesized to drive personality development[^f1].  
+
+[^f1]: However, regarding the transition to parenthood, recent evidence failed to empirically support the social investment principle [@asselmannTestingSocialInvestment2020; @vanscheppingenPersonalityTraitDevelopment2016].  
+
+## Grandparenthood
+
+While we could not find studies investigating development of the Big Five over the transition to grandparenthood, there is some (conflicting) evidence on life satisfaction: Past research on associations of grandparenthood with well-being often relied on cross-sectional designs [e.g., @mahneGrandparenthoodSubjectiveWellBeing2014; @triadoGrandparentsWhoProvide2014].
+Previous longitudinal studies utilizing panel data from the Survey of Health, Ageing and Retirement in Europe (SHARE) showed that the birth of a grandchild was followed by improvements to quality of life and life satisfaction only among women [@tanskanenTransitionGrandparenthoodSubjective2019], and only in first-time grandmothers via their daughters [@digessaBecomingGrandparentIts2019].
+Several studies emphasized that grandparents actively involved in childcare experienced larger positive effects to life satisfaction [@arpinoGrandparentingEducationSubjective2018; @danielsbackaAssociationGrandparentalInvestment2016; @danielsbackaGrandparentalChildcareHealth2019].
+However, fixed effects regression models[^f2] using SHARE data did not find any effects of first-time grandparenthood on life satisfaction regardless of grandparental investment and only minor decreases of grandmothers' depressive symptoms (Sheppard & Monden, 2019).  
+
+[^f2]: Fixed effects regression models exclusively rely on within-person variance [see @bruderlFixedEffectsPanelRegression2015; @mcneishFixedEffectsModels2019].  
+
+In a similar vein, some prospective studies reported beneficial effects of the transition to grandparenthood and of grandparental childcare investment on various health measures, especially in women  [@chungLongitudinalEffectsGrandchild2018; @condonTransitionGrandparenthoodProspective2018; @digessaHealthImpactIntensive2016; @digessaImpactCaringGrandchildren2016].
+Again, effects on self-rated health did not persevere in fixed effects analyses as reported in Ates [-@atesDoesGrandchildCare2017] who used longitudinal data from the German Aging Survey (DEAS).
 
 ## Current Study
 
-In this longitudinal study, we  
+Our study is the first to analyze personality development during the transition to grandparenthood with regards to the Big Five.<!-- restate: first to ... -->
+To address the missing and conflicting empirical evidence, we will compare the development of the Big Five personality traits and life satisfaction over the transition to grandparenthood. We adopt a prospective design that tests effects of first-time grandparents against two propensity-score-matched control groups: first, a matched control group of parents (but not grandparents) with at least their oldest child in reproductive age, and, second, a matched control group of nonparents.
+Our design addresses selection effects into grandparenthood and controls for average age-related trends in the Big Five traits and life satisfaction.
+It also enables us to report effects of the transition to grandparenthood unconfounded by instrumentation effects, which describe the tendency of reporting lower well-being scores with each repeated measurement [@bairdLifeSatisfactionLifespan2010].
+We go beyond previous studies utilizing matched control groups [@anusicDoesPersonalityModerate2014; @anusicTestingSetpointTheory2014; @yapDoesPersonalityModerate2012] in that we performed the matching at a specific time point preceding the event and not based on individual survey years.
+This design choice ensures that the variables involved in the matching procedure are not influenced by the event [@greenlandQuantifyingBiasesCausal2003; @rosenbaumConsquencesAdjustmentConcomitant1984].
+Similar approaches in the study of life events have recently been adopted by Balbo and Arpino [-@balboRoleFamilyOrientations2016], van Scheppingen and Leopold [-@vanscheppingenTrajectoriesLifeSatisfaction2020], and Krämer and Rodgers [-@kramerImpactHavingChildren2020].  
 We preregistered the following hypotheses ():  
 
 * H1  
@@ -175,13 +204,12 @@ The preregistration (and deviations from it), data, documentation of assessed va
 
 ## Analytical Strategy
 
+This design is referred to by Shadish, Cook, and Campbell [-@shadishExperimentalQuasiexperimentalDesigns2002, p.182] as an interrupted time-series with a "nonequivalent no-treatment control group".
+
 A list of all software we used is provided in the Supplemental Material.  
     
 # Results
 
-```{r Example, fig.cap="Example Caption."}
-boxplot(c(1,2,3))
-```
 
 # Discussion
 Based on  

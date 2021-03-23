@@ -144,8 +144,6 @@
 \AtBeginEnvironment{tablenotes}{\doublespacing}
 \captionsetup[table]{font={stretch=1.5}}
 \captionsetup[figure]{font={stretch=1.5}}
-\usepackage{floatrow}
-\floatsetup[figure]{capposition=top}
 \ifxetex
   % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
   \usepackage{polyglossia}
@@ -185,12 +183,31 @@ abc
 \begin{document}
 \maketitle
 
-Intro
+In view of an aging demographic and an increased share of childcare functions being fulfilled by grandparents and other family members, intergenerational relations have received increased attention from psychological and sociological research in recent years (Bengtson, 2001).
+The transition to grandparenthood has been described as an important developmental task in old age (Hutteman et al., 2014). However, empirical research into the psychological consequences of this transition is sparse.
+Testing hypotheses derived from the social investment principle (Roberts \& Wood, 2006) in a matched control-group design (see Luhmann et al., 2014), we aim to investigate whether the transition to grandparenthood impacts the Big Five personality traits and life satisfaction .
+According to social investment theory, normative life events or transitions such as entering the work force or becoming a parent lead to personality maturation through the adoption of new social roles (Roberts et al., 2005).
+These new roles encourage or compel people to act in a more agreeable, conscientious, and emotionally stable way, and are hypothesized to drive personality development\footnote{However, regarding the transition to parenthood, recent evidence failed to empirically support the social investment principle (Asselmann \& Specht, 2020; van Scheppingen et al., 2016).}.
+
+Our study is the first to analyze personality development during the transition to grandparenthood with regards to the Big Five.
+Past research on associations of grandparenthood with well-being often relied on cross-sectional designs (e.g., Mahne \& Huxhold, 2014; Triadó et al., 2014).
+Previous longitudinal studies utilizing panel data from the Survey of Health, Ageing and Retirement in Europe (SHARE) showed that the transition to grandparenthood was followed by improvements to quality of life and life satisfaction only among women (Tanskanen et al., 2019), and only in first-time grandmothers via their daughters (Di Gessa et al., 2019).
+Several studies emphasized that being actively involved in childcare as a grandparent moderated these positive effects (Arpino et al., 2018; Danielsbacka et al., n.d.; Danielsbacka \& Tanskanen, 2016).
+However, fixed effects regression models\footnote{Fixed effects regression models exclusively rely on within-person variance (see Brüderl \& Ludwig, 2015; McNeish \& Kelley, 2019).} using SHARE data did not find any effects of first-time grandparenthood on life satisfaction regardless of grandparental investment and only minor positive effects on grandmothers' depressive symptoms (Sheppard \& Monden, 2019).
+
+In a similar vein, some prospective studies reported beneficial effects of the transition to grandparenthood and of grandparental childcare investment on various health measures, especially in women (Chung \& Park, 2018; Condon et al., 2018; Di Gessa et al., 2016a, 2016b).
+Again, effects on self-rated health did not persevere in fixed effects analyses as reported in Ates (2017) who used longitudinal data from the German Aging Survey (DEAS).
 
 \hypertarget{current-study}{%
 \subsection{Current Study}\label{current-study}}
 
-In this longitudinal study, we\\
+To address this conflicting evidence, we adopt a prospective design with a propensity-score-matched control group of non-grandparents.
+This design is referred to by Shadish, Cook, and Campbell (2002, p. 182) as an interrupted time-series with a \enquote{nonequivalent no-treatment control group}.
+Our design addresses selection effects into grandparenthood and controls for average age-related trends in the Big Five traits and life satisfaction.
+It also enables us to report effects of the transition to grandparenthood unconfounded by instrumentation effects, which describe the tendency of reporting lower well-being scores with each repeated measurement (Baird et al., 2010).
+We go beyond previous studies utilizing matched control groups (Anusic et al., 2014a, 2014b; Yap et al., 2012) in that we performed the matching at a specific time point preceding the event and not based on individual survey years.
+This design choice ensures that the variables involved in the matching procedure are not influenced by the event (Greenland, 2003; Rosenbaum, 1984).
+Similar approaches in the study of life events have recently been adopted by Balbo and Arpino (2016), van Scheppingen and Leopold (2020), and Krämer and Rodgers (2020).\\
 We preregistered the following hypotheses ():
 
 \begin{itemize}
@@ -225,12 +242,6 @@ A list of all software we used is provided in the Supplemental Material.
 \hypertarget{results}{%
 \section{Results}\label{results}}
 
-\begin{figure}
-\centering
-\includegraphics{Figs/Example-1.pdf}
-\caption{\label{fig:Example}Example Caption.}
-\end{figure}
-
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
 
@@ -261,6 +272,95 @@ We thank X for valuable feedback.
 \setlength{\leftskip}{0.5in}
 
 \hypertarget{refs}{}
+\leavevmode\hypertarget{ref-anusicDoesPersonalityModerate2014}{}%
+Anusic, I., Yap, S., \& Lucas, R. E. (2014a). Does personality moderate reaction and adaptation to major life events? Analysis of life satisfaction and affect in an Australian national sample. \emph{Journal of Research in Personality}, \emph{51}, 69--77. \url{https://doi.org/10.1016/j.jrp.2014.04.009}
+
+\leavevmode\hypertarget{ref-anusicTestingSetpointTheory2014}{}%
+Anusic, I., Yap, S., \& Lucas, R. E. (2014b). Testing set-point theory in a Swiss national sample: Reaction and adaptation to major life events. \emph{Social Indicators Research}, \emph{119}(3), 1265--1288. \url{https://doi.org/10.1007/s11205-013-0541-2}
+
+\leavevmode\hypertarget{ref-arpinoGrandparentingEducationSubjective2018}{}%
+Arpino, B., Bordone, V., \& Balbo, N. (2018). Grandparenting, education and subjective well-being of older Europeans. \emph{European Journal of Ageing}, \emph{15}(3), 251--263. \url{https://doi.org/10.1007/s10433-018-0467-2}
+
+\leavevmode\hypertarget{ref-asselmannTestingSocialInvestment2020}{}%
+Asselmann, E., \& Specht, J. (2020). Testing the Social Investment Principle Around Childbirth: Little Evidence for Personality Maturation Before and After Becoming a Parent. \emph{European Journal of Personality}, \emph{n/a}(n/a). \url{https://doi.org/10.1002/per.2269}
+
+\leavevmode\hypertarget{ref-atesDoesGrandchildCare2017}{}%
+Ates, M. (2017). Does grandchild care influence grandparents' self-rated health? Evidence from a fixed effects approach. \emph{Social Science \& Medicine}, \emph{190}, 67--74. \url{https://doi.org/10.1016/j.socscimed.2017.08.021}
+
+\leavevmode\hypertarget{ref-bairdLifeSatisfactionLifespan2010}{}%
+Baird, B. M., Lucas, R. E., \& Donnellan, M. B. (2010). Life satisfaction across the lifespan: Findings from two nationally representative panel studies. \emph{Social Indicators Research}, \emph{99}(2), 183--203. \url{https://doi.org/10.1007/s11205-010-9584-9}
+
+\leavevmode\hypertarget{ref-balboRoleFamilyOrientations2016}{}%
+Balbo, N., \& Arpino, B. (2016). The role of family orientations in shaping the effect of fertility on subjective well-being: A propensity score matching approach. \emph{Demography}, \emph{53}(4), 955--978. \url{https://doi.org/10.1007/s13524-016-0480-z}
+
+\leavevmode\hypertarget{ref-bengtsonNuclearFamilyIncreasing2001}{}%
+Bengtson, V. L. (2001). Beyond the Nuclear Family: The Increasing Importance of Multigenerational Bonds. \emph{Journal of Marriage and Family}, \emph{63}(1), 1--16. \url{https://doi.org/10.1111/j.1741-3737.2001.00001.x}
+
+\leavevmode\hypertarget{ref-bruderlFixedEffectsPanelRegression2015}{}%
+Brüderl, J., \& Ludwig, V. (2015). \emph{Fixed-Effects Panel Regression} (H. Best \& C. Wolf, Eds.). SAGE.
+
+\leavevmode\hypertarget{ref-chungLongitudinalEffectsGrandchild2018}{}%
+Chung, S., \& Park, A. (2018). The longitudinal effects of grandchild care on depressive symptoms and physical health of grandmothers in South Korea: A latent growth approach. \emph{Aging \& Mental Health}, \emph{22}(12), 1556--1563. \url{https://doi.org/10.1080/13607863.2017.1376312}
+
+\leavevmode\hypertarget{ref-condonTransitionGrandparenthoodProspective2018}{}%
+Condon, J., Luszcz, M., \& McKee, I. (2018). The transition to grandparenthood: A prospective study of mental health implications. \emph{Aging \& Mental Health}, \emph{22}(3), 336--343. \url{https://doi.org/10.1080/13607863.2016.1248897}
+
+\leavevmode\hypertarget{ref-danielsbackaAssociationGrandparentalInvestment2016}{}%
+Danielsbacka, M., \& Tanskanen, A. O. (2016). The association between grandparental investment and grandparents' happiness in Finland. \emph{Personal Relationships}, \emph{23}(4), 787--800. \url{https://doi.org/10.1111/pere.12160}
+
+\leavevmode\hypertarget{ref-danielsbackaGrandparentalChildcareHealth2019}{}%
+Danielsbacka, M., Tanskanen, A. O., Coall, D. A., \& Jokela, M. (n.d.). Grandparental childcare, health and well-being in Europe: A within-individual investigation of longitudinal data. \emph{Social Science \& Medicine}, \emph{230}, 194--203. \url{https://doi.org/10.1016/j.socscimed.2019.03.031}
+
+\leavevmode\hypertarget{ref-digessaBecomingGrandparentIts2019}{}%
+Di Gessa, G., Bordone, V., \& Arpino, B. (2019). Becoming a Grandparent and Its Effect on Well-Being: The Role of Order of Transitions, Time, and Gender. \emph{The Journals of Gerontology, Series B: Psychological Sciences and Social Sciences}, Advance Online Publication. \url{https://doi.org/10.1093/geronb/gbz135}
+
+\leavevmode\hypertarget{ref-digessaHealthImpactIntensive2016}{}%
+Di Gessa, G., Glaser, K., \& Tinker, A. (2016a). The Health Impact of Intensive and Nonintensive Grandchild Care in Europe: New Evidence From SHARE. \emph{The Journals of Gerontology, Series B: Psychological Sciences and Social Sciences}, \emph{71}(5), 867--879. \url{https://doi.org/10.1093/geronb/gbv055}
+
+\leavevmode\hypertarget{ref-digessaImpactCaringGrandchildren2016}{}%
+Di Gessa, G., Glaser, K., \& Tinker, A. (2016b). The impact of caring for grandchildren on the health of grandparents in Europe: A lifecourse approach. \emph{Social Science \& Medicine}, \emph{152}, 166--175. \url{https://doi.org/10.1016/j.socscimed.2016.01.041}
+
+\leavevmode\hypertarget{ref-greenlandQuantifyingBiasesCausal2003}{}%
+Greenland, S. (2003). Quantifying biases in causal models: Classical confounding vs collider-stratification bias. \emph{Epidemiology}, \emph{14}(3), 300--306. \url{https://doi.org/10.1097/01.EDE.0000042804.12056.6C}
+
+\leavevmode\hypertarget{ref-huttemanDevelopmentalTasksFramework2014}{}%
+Hutteman, R., Hennecke, M., Orth, U., Reitz, A. K., \& Specht, J. (2014). Developmental Tasks as a Framework to Study Personality Development in Adulthood and Old Age. \emph{European Journal of Personality}, \emph{28}(3), 267--278. \url{https://doi.org/10.1002/per.1959}
+
+\leavevmode\hypertarget{ref-kramerImpactHavingChildren2020}{}%
+Krämer, M. D., \& Rodgers, J. L. (2020). The impact of having children on domain-specific life satisfaction: A quasi-experimental longitudinal investigation using the Socio-Economic Panel (SOEP) data. \emph{Journal of Personality and Social Psychology}, \emph{119}(6), 1497--1514. \url{https://doi.org/10.1037/pspp0000279}
+
+\leavevmode\hypertarget{ref-luhmannStudyingChangesLife2014}{}%
+Luhmann, M., Orth, U., Specht, J., Kandler, C., \& Lucas, R. E. (2014). Studying changes in life circumstances and personality: It's about time. \emph{European Journal of Personality}, \emph{28}(3), 256--266. \url{https://doi.org/10.1002/per.1951}
+
+\leavevmode\hypertarget{ref-mahneGrandparenthoodSubjectiveWellBeing2014}{}%
+Mahne, K., \& Huxhold, O. (2014). Grandparenthood and Subjective Well-Being: Moderating Effects of Educational Level. \emph{The Journals of Gerontology: Series B}, \emph{70}(5), 782--792. \url{https://doi.org/10.1093/geronb/gbu147}
+
+\leavevmode\hypertarget{ref-mcneishFixedEffectsModels2019}{}%
+McNeish, D., \& Kelley, K. (2019). Fixed effects models versus mixed effects models for clustered data: Reviewing the approaches, disentangling the differences, and making recommendations. \emph{Psychological Methods}, \emph{24}(1), 20--35. \url{https://doi.org/10.1037/met0000182}
+
+\leavevmode\hypertarget{ref-robertsEvaluatingFiveFactor2005}{}%
+Roberts, B. W., Wood, D., \& Smith, J. L. (2005). Evaluating Five Factor Theory and social investment perspectives on personality trait development. \emph{Journal of Research in Personality}, \emph{39}(1), 166--184. \url{https://doi.org/10.1016/j.jrp.2004.08.002}
+
+\leavevmode\hypertarget{ref-rosenbaumConsquencesAdjustmentConcomitant1984}{}%
+Rosenbaum, P. (1984). The consquences of adjustment for a concomitant variable that has been affected by the treatment. \emph{Journal of the Royal Statistical Society. Series A (General)}, \emph{147}(5), 656--666. \url{https://doi.org/10.2307/2981697}
+
+\leavevmode\hypertarget{ref-shadishExperimentalQuasiexperimentalDesigns2002}{}%
+Shadish, W. R., Cook, T. D., \& Campbell, D. T. (2002). \emph{Experimental and quasi-experimental designs for generalized causal inference}. Houghton, Mifflin and Company.
+
+\leavevmode\hypertarget{ref-tanskanenTransitionGrandparenthoodSubjective2019}{}%
+Tanskanen, A. O., Danielsbacka, M., Coall, D. A., \& Jokela, M. (2019). Transition to Grandparenthood and Subjective Well-Being in Older Europeans: A Within-Person Investigation Using Longitudinal Data. \emph{Evolutionary Psychology}, \emph{17}(3), 1474704919875948. \url{https://doi.org/10.1177/1474704919875948}
+
+\leavevmode\hypertarget{ref-triadoGrandparentsWhoProvide2014}{}%
+Triadó, C., Villar, F., Celdrán, M., \& Solé, C. (2014). Grandparents Who Provide Auxiliary Care for Their Grandchildren: Satisfaction, Difficulties, and Impact on Their Health and Well-being. \emph{Journal of Intergenerational Relationships}, \emph{12}(2), 113--127. \url{https://doi.org/10.1080/15350770.2014.901102}
+
+\leavevmode\hypertarget{ref-vanscheppingenPersonalityTraitDevelopment2016}{}%
+van Scheppingen, M. A., Jackson, J. J., Specht, J., Hutteman, R., Denissen, J. J. A., \& Bleidorn, W. (2016). Personality Trait Development During the Transition to Parenthood: A Test of Social Investment Theory. \emph{Social Psychological and Personality Science}, \emph{7}(5), 452--462. \url{https://doi.org/10.1177/1948550616630032}
+
+\leavevmode\hypertarget{ref-vanscheppingenTrajectoriesLifeSatisfaction2020}{}%
+van Scheppingen, M. A., \& Leopold, T. (2020). Trajectories of life satisfaction before, upon, and after divorce: Evidence from a new matching approach. \emph{Journal of Personality and Social Psychology}, \emph{119}(6), 1444--1458. \url{https://doi.org/10.1037/pspp0000270}
+
+\leavevmode\hypertarget{ref-yapDoesPersonalityModerate2012}{}%
+Yap, S., Anusic, I., \& Lucas, R. E. (2012). Does personality moderate reaction and adaptation to major life events? Evidence from the British Household Panel Survey. \emph{Journal of Research in Personality}, \emph{46}(5), 477--488. \url{https://doi.org/10.1016/j.jrp.2012.05.005}
 
 \endgroup
 
