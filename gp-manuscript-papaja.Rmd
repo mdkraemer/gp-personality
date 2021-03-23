@@ -1,0 +1,207 @@
+---
+title             : "The Transition to Grandparenthood and its Impact on the Big Five Personality Traits and Life Satisfaction"
+shorttitle        : "Grandparenthood, Big Five, and Life Satisfaction"
+
+
+
+author: 
+  - name          : "Michael D. Kr&auml;mer" # I've noticed that Umlaute can pose a problem when knitting on Windows 
+    affiliation   : "1,2"
+    corresponding : yes    # Define only one corresponding author
+    address       : "German Institute for Economic Research, Mohrenstr. 58, 10117 Berlin, Germany"
+    email         : "mkraemer@diw.de"
+    role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
+      - Conceptualization
+      - Data Curation
+      - Formal Analysis
+      - Methodology
+      - Visualization
+      - Writing - Original Draft Preparation
+      - Writing - Review & Editing
+  - name          : "Manon A. van Scheppingen"
+    affiliation   : "3"
+    role:
+      - Methodology
+      - Writing - Review & Editing
+  - name          : "William J. Chopik"
+    affiliation   : "4"
+    role:
+      - Methodology
+      - Writing - Review & Editing
+  - name          : "David Richter"
+    affiliation   : "1,4"
+    role:
+      - Supervision
+      - Methodology
+      - Writing - Review & Editing
+      
+affiliation:
+  - id            : "1"
+    institution   : "German Institute for Economic Research, Germany"
+  - id            : "2"
+    institution   : "International Max Planck Research School on the Life Course (LIFE), Max Planck Institute for Human Development, Germany"
+  - id            : "3"
+    institution   : "Tilburg University, Netherlands"
+  - id            : "4"
+    institution   : "Michigan State University, USA"
+  - id            : "5"
+    institution   : "Freie Universit&auml;t Berlin, Germany"
+
+note: "\\clearpage"
+
+authornote: |
+  \addORCIDlink{Michael D. Krämer}{0000-0002-9883-5676}, Socio-Economic Panel (SOEP), German Institute for Economic Research (DIW Berlin); International Max Planck Research School on the Life Course (LIFE), Max Planck Institute for Human Development  
+  Manon A. van Scheppingen, Department of Developmental Psychology, Tilburg School of Social and Behavioral Sciences, Tilburg University  
+  William J. Chopik, Department of Psychology, Michigan State University
+  David Richter, Socio-Economic Panel (SOEP), German Institute for Economic Research (DIW Berlin); Survey Research Division, Department of Education and Psychology, Freie Universit&auml;t Berlin  
+
+abstract: |
+ abc  
+
+keywords          : "grandparenthood, Big Five, life satisfaction, development, propensity score matching"
+wordcount         : "abc"
+
+bibliography      : ["references-zotero.bib", "references-r.bib"]
+
+floatsintext      : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : no
+draft             : no
+
+csl               : "apa.csl"
+documentclass     : "apa7"
+classoption       : "man, noextraspace"
+output            : papaja::apa6_pdf
+
+header-includes:
+  - \usepackage{setspace}
+  - \usepackage{amsmath}
+#  - \usepackage{float} # these two prevent some weird floating behavior of the figures
+#  - \floatplacement{figure}{H}
+  - \AtBeginEnvironment{tabular}{\singlespacing}
+  - \AtBeginEnvironment{lltable}{\singlespacing}
+  - \AtBeginEnvironment{tablenotes}{\doublespacing}
+  - \captionsetup[table]{font={stretch=1.5}}
+  - \captionsetup[figure]{font={stretch=1.5}}
+#  - \raggedbottom # prevents LaTeX from varying the spacing between paragraphs to minimise empty space on pages
+
+#appendix: gp-manuscript-papaja-appendix.Rmd
+
+---
+
+```{r setup, include = FALSE}
+library("papaja") # not on CRAN, see https://github.com/crsh/papaja
+library("citr")
+library("tidyverse")
+#library("psych") # for 'describe' demographics
+#library("GPArotation") # needed for omega function in psych
+#library("robustlmm") # for robust estimation (appendix)
+#library("lme4")
+#library("lmerTest")
+#library("interactions") # for plotting interactions
+#library("jtools") # for plot config
+#library("cowplot") # for plot grid
+#library("effects")
+#library("patchwork") # for plot grid
+#library("scales")
+#library("car")
+#library("careless") 
+#library("corrplot") # appendix
+#library("magick") # needed for figure cropping
+#library("png") # appendix: external png file
+#library("grid") # also needed for external png file because knitr::include_graphics() is buggy
+r_refs("references-r.bib")
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+
+# Set default chunk options (can be overridden in later chunks)
+knitr::opts_chunk$set(echo = FALSE, 
+                      eval = TRUE,
+                      message = FALSE, 
+                      fig.path='Figs/',
+                      fig.width = 7, 
+                      fig.height = 7,
+                      results = "hide",
+                      error = FALSE,
+                      warning = FALSE,
+                      include = TRUE,
+                      cache = FALSE)
+```
+
+```{r load data, include=FALSE}
+#setwd("")
+
+# Instead of specifying setwd() in the script, choose the working directory from the console after setting option in Rstudio:
+# Tools -> Global Options -> R Markdown -> Evaluate chunks in directory
+# The default working directory is the directory of the Rmd file (option "Document"). 
+# Change this option to the current working directory of your R console (option "Current"), and then change
+# your working directory via the console to the location where all the files are located.
+
+# If you don't see this option, then execute install.packages("rmarkdown), close RStudio, and open again.
+
+#source("DO_Wellbeing_data.R") # This executes data import & cleaning.
+
+```
+Intro
+
+## Current Study
+
+In this longitudinal study, we  
+We preregistered the following hypotheses ():  
+
+* H1  
+
+
+# Methods
+We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study.  <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
+The preregistration (and deviations from it), data, documentation of assessed variables, and R-scripts to reproduce this manuscript are available at 
+
+## Participants
+
+### Attrition Analysis
+
+## Procedure
+
+## Measures
+
+## Analytical Strategy
+
+A list of all software we used is provided in the Supplemental Material.  
+    
+# Results
+
+```{r Example, fig.cap="Example Caption."}
+boxplot(c(1,2,3))
+```
+
+# Discussion
+Based on  
+
+## Limitations
+
+Despite  
+
+## Conclusions
+Our  
+
+## Acknowledgements
+We thank X for valuable feedback.  
+
+\newpage
+
+# References
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id="refs" custom-style="Bibliography"></div>
+\endgroup
+

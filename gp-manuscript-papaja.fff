@@ -1,0 +1,7 @@
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{Figs/Example-1.pdf}
+\caption{\label{fig:Example}Example Caption.}
+\end{figure*}
