@@ -153,37 +153,102 @@ knitr::opts_chunk$set(echo = FALSE,
 ```
 In view of an aging demographic and an increased share of childcare functions being fulfilled by grandparents, intergenerational relations have received heightened attention from psychological and sociological research in recent years [@bengtsonNuclearFamilyIncreasing2001].<!-- weak 1st sentence -->
 With regard to personality development, the transition to grandparenthood has been posited as an important developmental task in old age [@huttemanDevelopmentalTasksFramework2014]. However, empirical research into the psychological consequences of this transition is sparse.
-Testing hypotheses derived from social investment theory (Roberts & Wood, 2006) in a matched control-group design [see @luhmannStudyingChangesLife2014], we aim to investigate whether the transition to grandparenthood affects the Big Five personality traits and life satisfaction<!-- add a sentence on the structure of WB -->.
+Testing hypotheses derived from social investment theory [@robertsPersonalityDevelopmentContext2006] in a matched control-group design [see @luhmannStudyingChangesLife2014], we aim to investigate whether the transition to grandparenthood affects the Big Five personality traits and life satisfaction<!-- add a sentence on the structure of WB -->.
 
-## Personality Development in Old Age
+## Personality Development in Middle and Old Adulthood
+<!-- ~30–60 years / ~60 years and older -->
+1) development in general
 
-## Social Investment Theory
+Hutteman: "As in early adulthood, mean-level changes in midlife point in the direction of greater maturity: social dominance, agreeableness, conscientiousness, and emotional stability increase in this life phase (Roberts et al., 2006)." / rank-order stability reaches its peak by ages 50 to 59 (but still not perfectly stable) / focus of developmental tasks shifts from establishing new roles to maintaing and mastering them; exception: new grandparent role; 
+- old age: mean-level change in conscientiousness [@robertsPatternsMeanlevelChange2006]; rank-order stability similar to midlife; panel studies -> "longitudinally, older adults increased in emotional stability but showed comparably strong decreases in the other four traits of the Big Five" (not consistent with personality maturation); in old-old age "when losses start to outnumber gains in most life domains" [@huttemanDevelopmentalTasksFramework2014] Big Five traits tend to decline (mean-level)
 
-According to social investment theory, normative life events or transitions such as entering the work force or becoming a parent lead to personality maturation through the adoption of new social roles [@robertsEvaluatingFiveFactor2005].
-These new roles encourage or compel people to act in a more agreeable, conscientious, and emotionally stable way, and are hypothesized to drive personality development[^f1].  
+- [@spechtWhatDrivesAdult2014]: paradoxical theory of personality coherence [@caspiWhenIndividualDifferences1993] -> personality change happens when inidividuals experience new and demanding environments (where pre-existing behavior is no longer adaptive) in which clear information about appropriate/adaptive behavior is available (-> normative role transitions) / no change (existing individual differences are accentuated) if no such information is available in new environments
 
-[^f1]: However, regarding the transition to parenthood, recent evidence failed to empirically support the social investment principle [@asselmannTestingSocialInvestment2020; @vanscheppingenPersonalityTraitDevelopment2016].  
+- [@spechtWhatDrivesAdult2014] / [@spechtPersonalityDevelopmentAdulthood2017]: neo-socioanalytic theory [@robertsPersonalityDevelopmentContext2006] -> personality is plastic (subject to change) throughout the life span, and changes through the adoption of new social roles -> social investment principle as a driving factor of personality change (investment in normative/age-graded social roles); personality stability is a results of consistent social roles (role continuity principle); "experiences often deepen the personality traits that led to them in the first place"
+Mean-level change [@robertsPatternsMeanlevelChange2006], see also [@spechtPersonalityDevelopmentAdulthood2017]:
+- ES: increased until middle adulthood (from 18 to 40 years and from 50 to 60 years) then stable
+- C:  increased in young and middle adulthood (22 to 50 years)
+- A:  also increases (evidence from panel studies, e.g., [@spechtStabilityChangePersonality2011]; [@lucasPersonalityDevelopmentLife2011])
+--> known as personality maturation / the maturity principle [@robertsPersonalityDevelopmentContext2006] because "increases in these traits seem to be functional for mastering developmental tasks important in executing adult responsibilities"
+- O:  "curvilinear pattern, with increases in emerging adulthood (from 18 to 22years) and decreases in older adulthood (from 60 to 70 years and stability in the period in between)"
+- E:  "Social vitality slightly increased in emerging adulthood (from 18 to 22 years) and slightly decreased later on (from 22 to 30 and from 60 to 70 years with periods of stability in between)"
+--> in summary: "strongest age trends occur before the age of 30 years and after the age of 60 years"
+
+Rank-order stability [@robertsRankorderConsistencyPersonality2000]: increasing stability peaking at age 50; decreases in stability after age 50? [@ardeltStillStableAll2000; @spechtStabilityChangePersonality2011; [@lucasPersonalityDevelopmentLife2011]; some support for inverted U-shape
+according to neo-socioanalytic theory, "individual differences in personality development should occur if individuals differ in the extents of their investment in social roles or in the social roles in which they invest"
+
+
+2) development through life events / experiences / developmental tasks -> GP
+
+
+[@spechtWhatDrivesAdult2014]: "age-graded social roles are associated with normative development in the direction of personality maturation" 
+retirement reverses this to some degree, la dolce vita effect [@marshMeasurementInvarianceBigfive2013] -> second principle relevant for our samples
+
+after period of stability in middle adulthood, development more prominent, again, in old age. what drives this process? Unclear, gap in research on old age. Life experiences do play a role as shown for the effects of retirement: [@bleidornRetirementAssociatedChange2018; @schwabaPersonalityTraitDevelopment2019]
+
+individual differences in personality change according to the degree of social investment: test of mediator time spent with grandchild
+
+-- general 
+
+grounded in the theoretical notion of a lifelong process of personality development [@baltesLifeSpanTheory2006]
+- lifespan view: interest in a) commonalities across people in how personality develops, b) interinidividual differences in personality development, and c) intraindividual variability (plasticity)
+- "When asking about stability or change of personality traits, this implies three questions rather than one, that is, stability or change of (1) mean levels within a group of individuals, (2) inter-individual differences between individuals (variance), and (3) of the structural interrelationships of dimensions of personality (covariances)"
+- possible to study personality trait development across adulthood and old age because of high structural invariance of the constructs (not so much with childhood/adolescence; Tackett et al., 2012)
+- "peak of personality consistency at age 50 to 60 contradicts earlier arguments that the consistency of personality traits should plateau after age 30" (rank-order stability) [@robertsRankorderConsistencyPersonality2000]
+- grandparenthood represents normative age-grade influences of the environment (normative events and transitions that are associated with specific age phases) - similar to developmental tasks [@huttemanDevelopmentalTasksFramework2014]
+
+*theoretical perspectives*
+- [@huttemanDevelopmentalTasksFramework2014]: source of personality development -> ongoing process of transactions with the environment [fits both lifespan theory and dynamic interactionism; @baltesLifeSpanTheory2006; @fraleyPatternsContinuityDynamic2005]; developmental task = life event but follow a normative sequence over the life span; "degree to which people succeed to accomplish developmental tasks is associated with the degree of personality maturation"; from the normativeness of developmental taks follows that they are subject to societal expectations and values (which differ across historical time and different cultures); 
+- maturity principle of personality development [@robertsPersonalityDevelopmentContext2006] -> related to social investment principle (establishing new "social roles come along with strong social expectations that motivate people to develop towards greater maturity")
+
+- [@spechtWhatDrivesAdult2014]: neo-socioanalytic theory [@robertsPersonalityDevelopmentContext2006] offers most comprehensive framework for adult personality development (high degree of empirical support); 
+
+
+- [@kandlerPatternsSourcesPersonality2015a]: twins; review -> panel study results much more heterogeneous regarding personality development in older adulthood; "reverse trends in old age may not contradict the maturity principle, per se, because they may reflect normative adaptations to possible or anticipated deterioration of health status and cognitive functionality (Baltes, 1997)"; "The increasing variance in individual change in later adulthood may not be surprising, because people differ in the beginning and the strength of deterioration of health status and cognitive functionality in old age" -> different life styles; midlife stability through stable roles disintegrates (dependent on certain life experiences, e.g., retirement, divorce, bereavement); 
+--> "individual environmental factors were the primary source of personality change in old age providing support for the plasticity principle of personality development (Roberts et al., 2008)"
+
+- [@mcadamsPersonalityDevelopmentContinuity2009]: personality maturation "reflects the developing adult's increasing investment in normative social roles related to family, work, and civic involvement" (Roberts); 
+
+
+- correlated change [@allemandLongtermCorrelatedChange2008]
+- High rank-order stability; almost no mean-level change [@mottusPersonalityTraitsOld2012]
+- mean-level change across the life-course [@robertsPatternsMeanlevelChange2006]; development not "set in plaster" by age 30; generally small effects but still meaningful (because personality associated with so many outcomes)
+
+
+consequences / related changes
+- physical health and cognitive performance [@muellerPersonalityDevelopmentOld2016]
+- physical activity [@stephanPhysicalActivityPersonality2014] 
+
+## Social Investment Principle
+
+According to the social investment principle, normative life events or transitions such as entering the work force or becoming a parent lead to personality maturation through the adoption of new social roles [@robertsEvaluatingFiveFactor2005].
+These new roles encourage or compel people to act in a more agreeable, conscientious, and emotionally stable way, and are hypothesized to drive personality development. However, regarding the transition to parenthood, recent evidence failed to empirically support the social investment principle [@asselmannTestingSocialInvestment2020; @vanscheppingenPersonalityTraitDevelopment2016].  
 
 ## Grandparenthood
 
-While we could not find studies investigating development of the Big Five over the transition to grandparenthood, there is some (conflicting) evidence on life satisfaction: Past research on associations of grandparenthood with well-being often relied on cross-sectional designs [e.g., @mahneGrandparenthoodSubjectiveWellBeing2014; @triadoGrandparentsWhoProvide2014].
+general life event categorization, see [@luhmannDimensionalTaxonomyPerceived2020]
+
+as compared to parenthood (ambivalent), the transition to grandparenthood might be seen as positive because the grandparent role (usually) does not demand dealing with the daily stressors of childcare [@huttemanDevelopmentalTasksFramework2014]
+
+[@spechtWhatDrivesAdult2014]: "societal changes have resulted in shifts in timings of normative developmental tasks" -> GP transition later as in the past, but also higher life expectancy
+
+While we could not find prior studies investigating development of the Big Five over the transition to grandparenthood, there is some (conflicting) evidence on life satisfaction: Past research on associations of grandparenthood with well-being often relied on cross-sectional designs [e.g., @mahneGrandparenthoodSubjectiveWellBeing2014; @triadoGrandparentsWhoProvide2014].
 Previous longitudinal studies utilizing panel data from the Survey of Health, Ageing and Retirement in Europe (SHARE) showed that the birth of a grandchild was followed by improvements to quality of life and life satisfaction only among women [@tanskanenTransitionGrandparenthoodSubjective2019], and only in first-time grandmothers via their daughters [@digessaBecomingGrandparentIts2019].
 Several studies emphasized that grandparents actively involved in childcare experienced larger positive effects to life satisfaction [@arpinoGrandparentingEducationSubjective2018; @danielsbackaAssociationGrandparentalInvestment2016; @danielsbackaGrandparentalChildcareHealth2019].
-However, fixed effects regression models[^f2] using SHARE data did not find any effects of first-time grandparenthood on life satisfaction regardless of grandparental investment and only minor decreases of grandmothers' depressive symptoms (Sheppard & Monden, 2019).  
-
-[^f2]: Fixed effects regression models exclusively rely on within-person variance [see @bruderlFixedEffectsPanelRegression2015; @mcneishFixedEffectsModels2019].  
-
+However, fixed effects regression models[^f2] using SHARE data did not find any effects of first-time grandparenthood on life satisfaction regardless of grandparental investment and only minor decreases of grandmothers' depressive symptoms (Sheppard & Monden, 2019).
 In a similar vein, some prospective studies reported beneficial effects of the transition to grandparenthood and of grandparental childcare investment on various health measures, especially in women  [@chungLongitudinalEffectsGrandchild2018; @condonTransitionGrandparenthoodProspective2018; @digessaHealthImpactIntensive2016; @digessaImpactCaringGrandchildren2016].
 Again, effects on self-rated health did not persevere in fixed effects analyses as reported in Ates [-@atesDoesGrandchildCare2017] who used longitudinal data from the German Aging Survey (DEAS).
+
+[^f2]: Fixed effects regression models exclusively rely on within-person variance [see @bruderlFixedEffectsPanelRegression2015; @mcneishFixedEffectsModels2019].  
 
 ## Current Study
 
 Our study is the first to analyze personality development during the transition to grandparenthood with regards to the Big Five.<!-- restate: first to ... -->
-To address the missing and conflicting empirical evidence, we will compare the development of the Big Five personality traits and life satisfaction over the transition to grandparenthood. We adopt a prospective design that tests effects of first-time grandparents against two propensity-score-matched control groups: first, a matched control group of parents (but not grandparents) with at least their oldest child in reproductive age, and, second, a matched control group of nonparents.
-Our design addresses selection effects into grandparenthood and controls for average age-related trends in the Big Five traits and life satisfaction.
-It also enables us to report effects of the transition to grandparenthood unconfounded by instrumentation effects, which describe the tendency of reporting lower well-being scores with each repeated measurement [@bairdLifeSatisfactionLifespan2010].
-We go beyond previous studies utilizing matched control groups [@anusicDoesPersonalityModerate2014; @anusicTestingSetpointTheory2014; @yapDoesPersonalityModerate2012] in that we performed the matching at a specific time point preceding the event and not based on individual survey years.
-This design choice ensures that the variables involved in the matching procedure are not influenced by the event [@greenlandQuantifyingBiasesCausal2003; @rosenbaumConsquencesAdjustmentConcomitant1984].
+To address the missing and conflicting empirical evidence, we will compare development over the transition to grandparenthood with that of matched control groups that do not experience this transition during the study period. We adopt a prospective design that tests effects of first-time grandparents against two propensity-score-matched control groups: first, a matched control group of parents (but not grandparents) with at least their oldest child in reproductive age, and, second, a matched control group of nonparents.
+This allows us to disentangle potential effects attributable to becoming a grandparent from effects attributable to being a parent, thus, addressing selection effects into grandparenthood and confounding more comprehensively than previous research.
+Our design also controls for average age-related trends in the Big Five traits and life satisfaction and enables us to report effects of the transition to grandparenthood unconfounded by instrumentation effects, which describe the tendency of reporting lower well-being scores with each repeated measurement [@bairdLifeSatisfactionLifespan2010].
+We go beyond previous studies utilizing matched control groups [@anusicDoesPersonalityModerate2014; @anusicTestingSetpointTheory2014; @yapDoesPersonalityModerate2012] in that we performed the matching at a specific time point preceding the transition to grandparenthood and not based on individual survey years.
+This design choice ensures that the covariates involved in the matching procedure are not influenced by the event [@greenlandQuantifyingBiasesCausal2003; @rosenbaumConsquencesAdjustmentConcomitant1984; @vanderweeleOutcomeWideLongitudinalDesigns2020].
 Similar approaches in the study of life events have recently been adopted by Balbo and Arpino [-@balboRoleFamilyOrientations2016], van Scheppingen and Leopold [-@vanscheppingenTrajectoriesLifeSatisfaction2020], and Krämer and Rodgers [-@kramerImpactHavingChildren2020].  
 We preregistered the following hypotheses ():  
 
@@ -191,8 +256,7 @@ We preregistered the following hypotheses ():
 
 
 # Methods
-We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study.  <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
-The preregistration (and deviations from it), data, documentation of assessed variables, and R-scripts to reproduce this manuscript are available at 
+<!--We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study.  <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
 
 ## Participants
 
@@ -204,7 +268,15 @@ The preregistration (and deviations from it), data, documentation of assessed va
 
 ## Analytical Strategy
 
+
 This design is referred to by Shadish, Cook, and Campbell [-@shadishExperimentalQuasiexperimentalDesigns2002, p.182] as an interrupted time-series with a "nonequivalent no-treatment control group".
+
+include pre-treatment outcome variables as PSM covariates? Right now, I am including them as covariates, too. This is often recommended in the literature [@cookHowMuchBias2020; @hallbergPretestMeasuresStudy2018; @steinerImportanceCovariateSelection2010; @vanderweeleOutcomeWideLongitudinalDesigns2020] and I think it makes sense when addressing selection effects.
+
+However, viewing this from a structural causal modeling perspective [see @elwertEndogenousSelectionBias2014; @rohrerThinkingClearlyCorrelations2018], we want to avoid pitfalls such as conditioning on a pre-treatment collider and blocking causal paths (overcontrol bias). VanderWeele et al. [-@vanderweeleOutcomeWideLongitudinalDesigns2020; -@vanderweelePrinciplesConfounderSelection2019] also recommend not to control for colliders and propose a "disjunctive cause criterion" to select covariates.
+
+use linear piecewise regression coefficients in multilevel regression models [@hoffmanLongitudinalAnalysisModeling2015] to analyze mean-level changes. Such piecewise growth-curve models have been used in similar analysis contexts [e.g., @bleidornRetirementAssociatedChange2018; @schwabaPersonalityTraitDevelopment2019; @vanscheppingenTrajectoriesLifeSatisfaction2020]. For this article, I want to focus on mean-level changes, but we can additionally analyze rank-order stability over the transition to grandparenthood as well as interindividual differences in intraindindivual changes 
+Jaap Denissen modeled interindividual differences in personality trait change as variance in the slopes. Further, he modeled “more sudden shifts in rank-order trait differences” as the comparison of the test-retest correlations of the event and the control group [@denissenTransactionsLifeEvents2019]
 
 A list of all software we used is provided in the Supplemental Material.  
     
@@ -213,6 +285,11 @@ A list of all software we used is provided in the Supplemental Material.
 
 # Discussion
 Based on  
+
+- personality maturation cross-culturally: [@bleidornPersonalityMaturationWorld2013]
+
+- facets / nuances [@mottusDevelopmentDetailsAge2021]
+
 
 ## Limitations
 
