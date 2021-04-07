@@ -1093,7 +1093,7 @@ liss_grand_wide %>%
          grandchildren_2014 %in% c(0, NA) & grandchildren_2015 %in% c(0, NA) & 
          grandchildren_2016 %in% c(0, NA) & grandchildren_2017 %in% c(0, NA) & 
          grandchildren_2018 %in% c(0, NA) & grandchildren_2019 %in% c(0, NA)) %>% 
-  group_by(sum_transit) %>% summarise(n()) # N=13385
+  group_by(sum_transit) %>% summarise(n()) # N=12879
 
 #code variable to denote eligiblity
 liss_grand_wide <- liss_grand_wide %>% 
