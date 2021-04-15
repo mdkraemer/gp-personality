@@ -25,7 +25,7 @@ eve.all = do.call("bind_rows", lapply(files, function(x) read.spss(x, use.value.
 length(unique(eve.all$nomem_encr))
 
 #turn waves into months and years
-eve.all$year <- as.numeric(substr(eve.all$wave, 1, 4))
+eve.all$year <- as.numeric(substr(eve.all$wave,1,4))
 eve.all$month <- as.numeric(substr(eve.all$wave, 5,6))
 eve.all$timeline <- (eve.all$year-2007)*12 + eve.all$month
  
@@ -67,6 +67,7 @@ per15 <- read.spss('data/raw/LISS/Personality/cp15h_EN_1.0p.sav', use.value.labe
 per17 <- read.spss('data/raw/LISS/Personality/cp17i_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 per18 <- read.spss('data/raw/LISS/Personality/cp18j_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 per19 <- read.spss('data/raw/LISS/Personality/cp19k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+per20 <- read.spss('data/raw/LISS/Personality/cp20l_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 
 #Make the names uniform by removing the wave qualifier (e.g., "08a")
 names(per08) <- gsub("08a", "", names(per08))
@@ -81,6 +82,7 @@ names(per15) <- gsub("15h", "", names(per15))
 names(per17) <- gsub("17i", "", names(per17))
 names(per18) <- gsub("18j", "", names(per18))
 names(per19) <- gsub("19k", "", names(per19))
+names(per20) <- gsub("20l", "", names(per20))
 
 # cp190 "Starting time questionnaire" is factor in some waves and numerical in others
 # cp192 "End time questionnaire" --> remove both variables!
@@ -88,23 +90,23 @@ remove_timevar <- function(x) {
   x %>%       
     select(-c(cp190, cp192))
 }
-listper <- list(per08, per09, per10, per11, per12, per13, per14, per15, per17, per18, per19) %>%
+listper <- list(per08, per09, per10, per11, per12, per13, per14, per15, per17, per18, per19, per20) %>%
   lapply(remove_timevar)
 names(listper) <- c("per08", "per09", "per10", "per11", "per12", "per13", "per14", 
-                    "per15", "per17", "per18", "per19")
+                    "per15", "per17", "per18", "per19", "per20")
 list2env(listper, .GlobalEnv)
 
 #Merge them all together
 per.all <- bind_rows(per08, per09, per10, per11, per12, per13, 
-                     per14, per15, per17, per18, per19)
+                     per14, per15, per17, per18, per19, per20)
 length(unique(per.all$nomem_encr))
 
 rm(per08, per09, per10, per11, per12, per13, 
-   per14, per15, per17, per18, per19)
+   per14, per15, per17, per18, per19, per20)
 
 #Rename "c_m" into "wave"
 names(per.all)[3] <- c("wave")
-per.all$year <- as.numeric(substr(per.all$wave, 1, 4))
+per.all$year <- as.numeric(substr(per.all$wave,1,4))
 per.all$permonth <- as.numeric(substr(per.all$wave,5,6))
 per.all$pertimeline <- (per.all$year-2007)*12 + per.all$permonth
 
@@ -250,7 +252,8 @@ wed15 <- read.spss('data/raw/LISS/Work and Schooling/cw15h_EN_1.0p.sav', use.val
 wed16 <- read.spss('data/raw/LISS/Work and Schooling/cw16i_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 wed17 <- read.spss('data/raw/LISS/Work and Schooling/cw17j_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 wed18 <- read.spss('data/raw/LISS/Work and Schooling/cw18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-wed19 <- read.spss('data/raw/LISS/Work and Schooling/cw19l_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+wed19 <- read.spss('data/raw/LISS/Work and Schooling/cw19l_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
+#wed20 not available yet
 
 #Make the names uniform by removing the wave qualifier (e.g., "08a")
 names(wed08) <- gsub("08a", "", names(wed08))
@@ -354,7 +357,8 @@ inc15 <- read.spss('data/raw/LISS/Income/ci15h_EN_2.0p.sav', use.value.labels=F,
 inc16 <- read.spss('data/raw/LISS/Income/ci16i_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
 inc17 <- read.spss('data/raw/LISS/Income/ci17j_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
 inc18 <- read.spss('data/raw/LISS/Income/ci18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-inc19 <- read.spss('data/raw/LISS/Income/ci19l_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+inc19 <- read.spss('data/raw/LISS/Income/ci19l_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
+inc20 <- read.spss('data/raw/LISS/Income/ci20m_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 
 #Make the names uniform by removing the wave qualifier (e.g., "08a")
 names(inc08) <- gsub("08a", "", names(inc08))
@@ -369,6 +373,7 @@ names(inc16) <- gsub("16i", "", names(inc16))
 names(inc17) <- gsub("17j", "", names(inc17))
 names(inc18) <- gsub("18k", "", names(inc18))
 names(inc19) <- gsub("19l", "", names(inc19))
+names(inc20) <- gsub("20m", "", names(inc20))
 
 # ci319 "Starting time questionnaire" is factor in some waves and numerical in others
 # ci321 "End time questionnaire" 
@@ -377,18 +382,18 @@ remove_timevar <- function(x) {
   x %>%       
     select(-c(ci319, ci321))
 }
-listinc <- list(inc08, inc09, inc10, inc11, inc12, inc13, inc14, inc15, inc16, inc17, inc18, inc19) %>%
+listinc <- list(inc08, inc09, inc10, inc11, inc12, inc13, inc14, inc15, inc16, inc17, inc18, inc19, inc20) %>%
   lapply(remove_timevar)
 names(listinc) <- c("inc08", "inc09", "inc10", "inc11", "inc12", "inc13", "inc14", 
-                    "inc15", "inc16", "inc17", "inc18", "inc19")
+                    "inc15", "inc16", "inc17", "inc18", "inc19", "inc20")
 list2env(listinc, .GlobalEnv)
 
 #Merge them all together
 inc.all <- bind_rows(inc08, inc09, inc10, inc11, inc12, inc13, inc14, inc15, 
-                     inc16, inc17, inc18, inc19)
+                     inc16, inc17, inc18, inc19, inc20)
 
 rm(inc08, inc09, inc10, inc11, inc12, inc13, inc14, inc15, 
-   inc16, inc17, inc18, inc19)
+   inc16, inc17, inc18, inc19, inc20)
 
 #Rename "c_m" into "wave" to be consistent with "eve.all"
 names(inc.all)[3] <- c("wave")
@@ -414,7 +419,8 @@ hom15 <- read.spss('data/raw/LISS/Housing/cd15h_EN_1.0p.sav', use.value.labels=F
 hom16 <- read.spss('data/raw/LISS/Housing/cd16i_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 hom17 <- read.spss('data/raw/LISS/Housing/cd17j_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 hom18 <- read.spss('data/raw/LISS/Housing/cd18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-hom19 <- read.spss('data/raw/LISS/Housing/cd19l_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+hom19 <- read.spss('data/raw/LISS/Housing/cd19l_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
+hom20 <- read.spss('data/raw/LISS/Housing/cd20m_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 
 #Make the names uniform by removing the wave qualifier (e.g., "08a")
 names(hom08) <- gsub("08a", "", names(hom08))
@@ -429,6 +435,7 @@ names(hom16) <- gsub("16i", "", names(hom16))
 names(hom17) <- gsub("17j", "", names(hom17))
 names(hom18) <- gsub("18k", "", names(hom18))
 names(hom19) <- gsub("19l", "", names(hom19))
+names(hom20) <- gsub("20m", "", names(hom20))
 
 # cd079 "Starting time questionnaire" is factor in some waves and numerical in others
 # cd081 "End time questionnaire" 
@@ -437,18 +444,18 @@ remove_timevar <- function(x) {
   x %>%       
     select(-c(cd079, cd081))
 }
-listhom <- list(hom08, hom09, hom10, hom11, hom12, hom13, hom14, hom15, hom16, hom17, hom18, hom19) %>%
+listhom <- list(hom08, hom09, hom10, hom11, hom12, hom13, hom14, hom15, hom16, hom17, hom18, hom19, hom20) %>%
   lapply(remove_timevar)
 names(listhom) <- c("hom08", "hom09", "hom10", "hom11", "hom12", "hom13", "hom14", 
-                    "hom15", "hom16", "hom17", "hom18", "hom19")
+                    "hom15", "hom16", "hom17", "hom18", "hom19", "hom20")
 list2env(listhom, .GlobalEnv)
 
 #Merge them all together
 hom.all <- bind_rows(hom08, hom09, hom10, hom11, hom12, hom13, hom14, hom15, 
-                     hom16, hom17, hom18, hom19)
+                     hom16, hom17, hom18, hom19, hom20)
 
 rm(hom08, hom09, hom10, hom11, hom12, hom13, hom14, hom15, 
-   hom16, hom17, hom18, hom19)
+   hom16, hom17, hom18, hom19, hom20)
 
 #Rename "c_m" into "wave" to be consistent with "eve.all"
 names(hom.all)[3] <- c("wave")
@@ -476,7 +483,8 @@ rel15 <- read.spss('data/raw/LISS/Religion/cr15h_1.0p_EN.sav', use.value.labels=
 rel16 <- read.spss('data/raw/LISS/Religion/cr16i_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
 rel17 <- read.spss('data/raw/LISS/Religion/cr17j_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
 rel18 <- read.spss('data/raw/LISS/Religion/cr18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-rel19 <- read.spss('data/raw/LISS/Religion/cr19l_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+rel19 <- read.spss('data/raw/LISS/Religion/cr19l_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
+rel20 <- read.spss('data/raw/LISS/Religion/cr20m_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
 
 #Make the names uniform by removing the wave qualifier (e.g., "08a")
 names(rel08) <- gsub("08a", "", names(rel08))
@@ -491,6 +499,7 @@ names(rel16) <- gsub("16i", "", names(rel16))
 names(rel17) <- gsub("17j", "", names(rel17))
 names(rel18) <- gsub("18k", "", names(rel18))
 names(rel19) <- gsub("19l", "", names(rel19))
+names(rel20) <- gsub("20m", "", names(rel20))
 
 # cr117 "Starting time questionnaire" is factor in some waves and numerical in others
 # cr119 "End time questionnaire" 
@@ -499,18 +508,18 @@ remove_timevar <- function(x) {
   x %>%       
     select(-c(cr117, cr119))
 }
-listrel <- list(rel08, rel09, rel10, rel11, rel12, rel13, rel14, rel15, rel16, rel17, rel18, rel19) %>%
+listrel <- list(rel08, rel09, rel10, rel11, rel12, rel13, rel14, rel15, rel16, rel17, rel18, rel19, rel20) %>%
   lapply(remove_timevar)
 names(listrel) <- c("rel08", "rel09", "rel10", "rel11", "rel12", "rel13", "rel14", 
-                    "rel15", "rel16", "rel17", "rel18", "rel19")
+                    "rel15", "rel16", "rel17", "rel18", "rel19", "rel20")
 list2env(listrel, .GlobalEnv)
 
 #Merge them all together
 rel.all <- bind_rows(rel08, rel09, rel10, rel11, rel12, rel13, rel14, rel15, 
-                     rel16, rel17, rel18, rel19)
+                     rel16, rel17, rel18, rel19, rel20)
 
 rm(rel08, rel09, rel10, rel11, rel12, rel13, rel14, rel15, 
-   rel16, rel17, rel18, rel19)
+   rel16, rel17, rel18, rel19, rel20)
 
 #Rename "c_m" into "wave" to be consistent with "eve.all"
 names(rel.all)[3] <- c("wave")
@@ -520,7 +529,7 @@ rel.all$relmonth <- as.numeric(substr(rel.all$wave,5,6))
 
 rel.all$religion <- rel.all$cr012 # Do you consider yourself a member of a certain religion or church community? 
 rel.all$religion2 <- rel.all$cr143 # Do you see yourself as belonging to a church community or religious group?
-rel.all <- rel.all %>% mutate(religion = ifelse(year==2019, religion2, religion))
+rel.all <- rel.all %>% mutate(religion = ifelse(year %in% c(2019,2020), religion2, religion))
 
 rel.all$speakdutch <- rel.all$cr089 # At home, do you generally speak Dutch or another language?
 
@@ -538,7 +547,8 @@ fam15 <- read.spss('data/raw/LISS/Family and Household/cf15h_EN_1.0p.sav', use.v
 fam16 <- read.spss('data/raw/LISS/Family and Household/cf16i_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 fam17 <- read.spss('data/raw/LISS/Family and Household/cf17j_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 fam18 <- read.spss('data/raw/LISS/Family and Household/cf18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-#fam19 -> not needed because matching in wave before transition # NOW AVAILABLE
+fam19 <- read.spss('data/raw/LISS/Family and Household/cf19l_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+#fam20 -> not available yet
 
 #Make the names uniform by removing the wave qualifier (e.g., "08a")
 names(fam08) <- gsub("08a", "", names(fam08))
@@ -552,6 +562,7 @@ names(fam15) <- gsub("15h", "", names(fam15))
 names(fam16) <- gsub("16i", "", names(fam16))
 names(fam17) <- gsub("17j", "", names(fam17))
 names(fam18) <- gsub("18k", "", names(fam18))
+names(fam19) <- gsub("19l", "", names(fam19))
 
 # cf394 "Starting time questionnaire" is factor in some waves and numerical in others
 # cf396 "End time questionnaire" 
@@ -560,16 +571,16 @@ remove_timevar <- function(x) {
   x %>%       
     select(-c(cf394, cf396))
 }
-listfam <- list(fam08, fam09, fam10, fam11, fam12, fam13, fam14, fam15, fam16, fam17, fam18) %>%
+listfam <- list(fam08, fam09, fam10, fam11, fam12, fam13, fam14, fam15, fam16, fam17, fam18, fam19) %>%
   lapply(remove_timevar)
 names(listfam) <- c("fam08", "fam09", "fam10", "fam11", "fam12", "fam13", "fam14", 
-                    "fam15", "fam16", "fam17", "fam18")
+                    "fam15", "fam16", "fam17", "fam18", "fam19")
 list2env(listfam, .GlobalEnv)
 
 #Merge them all together
-fam.all <- bind_rows(fam08, fam09, fam10, fam11, fam12, fam13, fam14, fam15, fam16, fam17, fam18)
+fam.all <- bind_rows(fam08, fam09, fam10, fam11, fam12, fam13, fam14, fam15, fam16, fam17, fam18, fam19)
 
-rm(fam08, fam09, fam10, fam11, fam12, fam13, fam14, fam15, fam16, fam17, fam18)
+rm(fam08, fam09, fam10, fam11, fam12, fam13, fam14, fam15, fam16, fam17, fam18, fam19)
 
 #Rename "c_m" into "wave" to be consistent with "eve.all"
 names(fam.all)[3] <- c("wave")
@@ -703,7 +714,7 @@ summary(fam.reshape) # 43167 person-years
 fam.all <- left_join(fam.all, fam.reshape)
 summary(fam.all$sumdec) # 43167 
 
-# create longitudinal variables for 2008-2018
+# create longitudinal variables for 2008-2019
 
 fam.all <- fam.all %>% 
   mutate(children = ifelse(year %in% c(2008:2014), 2-childrenold, 2-childrennew), # children dummy (1=yes)
@@ -723,9 +734,9 @@ fam.all <- fam.all %>%
 # birth year children 1-3 (only LIVING children)
 # from 2008-2014: cf037, cf038, cf039 -> included deceased children -> corrected versions in kidyearold_
 # from 2015-2018: cf456, cf457, cf458 -> renamed to kidyearnew_
-fam.all <- fam.all %>% mutate(kid1byear = ifelse(year %in% c(2015:2018), kidyearnew_1, kidyearold_1),
-                              kid2byear = ifelse(year %in% c(2015:2018), kidyearnew_2, kidyearold_2),
-                              kid3byear = ifelse(year %in% c(2015:2018), kidyearnew_3, kidyearold_3))
+fam.all <- fam.all %>% mutate(kid1byear = ifelse(year %in% c(2015:2019), kidyearnew_1, kidyearold_1),
+                              kid2byear = ifelse(year %in% c(2015:2019), kidyearnew_2, kidyearold_2),
+                              kid3byear = ifelse(year %in% c(2015:2019), kidyearnew_3, kidyearold_3))
 
 fam.all %>% filter(!is.na(kid1byear) & !is.na(kid2byear)) %>% 
   mutate(diff = kid2byear-kid1byear) %>% group_by(diff) %>% 
@@ -739,16 +750,16 @@ fam.all %>% filter(!is.na(kid1byear) & !is.na(kid2byear)) %>%
 # However, values from 2008-2014 were corrected above by removing deceased children. Although
 # gender (& living-at-home) was never asked regarding deceased children, the positioning was wrong
 # which created (incorrect) missing values.
-fam.all <- fam.all %>% mutate(kid1gender = ifelse(year %in% c(2015:2018), cf068, kidgender_1),
-                              kid2gender = ifelse(year %in% c(2015:2018), cf069, kidgender_2),
-                              kid3gender = ifelse(year %in% c(2015:2018), cf070, kidgender_3))
+fam.all <- fam.all %>% mutate(kid1gender = ifelse(year %in% c(2015:2019), cf068, kidgender_1),
+                              kid2gender = ifelse(year %in% c(2015:2019), cf069, kidgender_2),
+                              kid3gender = ifelse(year %in% c(2015:2019), cf070, kidgender_3))
 
 # living at home children 1-3  (1=living at home, 2=living independently)
 # from 2008-2018 cf083, cf084, cf085
 # --> see above
-fam.all <- fam.all %>% mutate(kid1home = ifelse(year %in% c(2015:2018), cf083, kidhome_1),
-                              kid2home = ifelse(year %in% c(2015:2018), cf084, kidhome_2),
-                              kid3home = ifelse(year %in% c(2015:2018), cf085, kidhome_3))
+fam.all <- fam.all %>% mutate(kid1home = ifelse(year %in% c(2015:2019), cf083, kidhome_1),
+                              kid2home = ifelse(year %in% c(2015:2019), cf084, kidhome_2),
+                              kid3home = ifelse(year %in% c(2015:2019), cf085, kidhome_3))
 
 fam.all %>% filter(is.na(totalchildren)) %>%
   select(nomem_encr, year, children, totalchildren, 
@@ -775,7 +786,7 @@ fam.all <- fam.all %>% mutate(
 )
 
 fam.all %>% filter(totalchildren>=1) %>% group_by(kid1byear) %>% summarise(n=n()) %>% print(n=Inf)
-# 279 NAs in kid1byear
+# 319 NAs in kid1byear
 fam.all %>% filter(totalchildren>=1 & is.na(kid1byear)) %>%
   select(nomem_encr, year, totalchildren, 
          contains(c("kid1", "kid2", "kid3"))) %>% print(n=100)
@@ -845,7 +856,8 @@ hel15 <- read.spss('data/raw/LISS/Health/ch15h_EN_1.2p.sav', use.value.labels=F,
 hel16 <- read.spss('data/raw/LISS/Health/ch16i_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 hel17 <- read.spss('data/raw/LISS/Health/ch17j_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 hel18 <- read.spss('data/raw/LISS/Health/ch18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-#hel19 -> not needed because matching in wave before transition - NOW AVAILABLE
+hel19 <- read.spss('data/raw/LISS/Health/ch19l_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+hel20 <- read.spss('data/raw/LISS/Health/ch20m_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 
 #Make the names uniform by removing the wave qualifier (e.g., "08a")
 #names(hel07) <- gsub("07a", "", names(hel07))
@@ -860,6 +872,8 @@ names(hel15) <- gsub("15h", "", names(hel15))
 names(hel16) <- gsub("16i", "", names(hel16))
 names(hel17) <- gsub("17j", "", names(hel17))
 names(hel18) <- gsub("18k", "", names(hel18))
+names(hel19) <- gsub("19l", "", names(hel19))
+names(hel20) <- gsub("20m", "", names(hel20))
 
 # ch256 "Starting time questionnaire" is factor in some waves and numerical in others
 # ch258 "End time questionnaire" 
@@ -868,18 +882,18 @@ remove_timevar <- function(x) {
   x %>%       
     select(-c(ch256, ch258))
 }
-listhel <- list(hel08, hel09, hel10, hel11, hel12, hel13, hel15, hel16, hel17, hel18) %>%
+listhel <- list(hel08, hel09, hel10, hel11, hel12, hel13, hel15, hel16, hel17, hel18, hel19, hel20) %>%
   lapply(remove_timevar)
 names(listhel) <- c("hel08", "hel09", "hel10", "hel11", "hel12", "hel13", 
-                    "hel15", "hel16", "hel17", "hel18")
+                    "hel15", "hel16", "hel17", "hel18", "hel19", "hel20")
 list2env(listhel, .GlobalEnv)
 
 #Merge them all together
 hel.all <- bind_rows(hel08, hel09, hel10, hel11, hel12, 
-                     hel13, hel15, hel16, hel17, hel18)
+                     hel13, hel15, hel16, hel17, hel18, hel19, hel20)
 
 rm(hel08, hel09, hel10, hel11, hel12, 
-   hel13, hel15, hel16, hel17, hel18)
+   hel13, hel15, hel16, hel17, hel18, hel19, hel20)
 
 #remove list objects, too
 rm(listper, listwed, listinc, listrel, listhom, listfam, listhel)
@@ -1361,7 +1375,7 @@ lisslongvalid <- lisslongvalid %>%
   mutate(help = ifelse(grandparent==1, ifelse(valid==0 & !is.na(matchtime), 0, 1), NA)) %>% 
   group_by(nomem_encr) %>% mutate(droplater = min(help, na.rm = T)==1) %>% 
   ungroup() %>% select(-help)
-# after imputations: drop 333 obs. (83 resp.) 
+# after imputations: drop 362 obs. (82 resp.) 
 # -> no pre-treatment assessment earlier than time==-1 / no post-treatment assessment
 lisslongvalid %>% group_by(grandparent, droplater) %>% summarise(n = n(), N=n_distinct(nomem_encr))
 
@@ -1423,7 +1437,7 @@ imp <- 5 # Number of multiple imputations
 # not in 2016: swls, agree, con, extra, neur, open 
 # -> Won't include 2016
 
-# seperate imputations for each wave - 2019 not needed because we always match in pre-treat wave
+# seperate imputations for each wave - 2019/2020 not needed because we always match in pre-treat wave
 help1 <- NULL;
 help2 <- NULL;
 help3 <- NULL;
@@ -1609,15 +1623,10 @@ for (i in seq_along(impdata)){
 # valid post-treatment assessment is available. To aid this, we have already coded the 
 # timing variable 'valid' (and the variable 'droplater').
 
-# We will perform 2 x 2 matchings: 
+# We will perform 2 matchings: 
 # 1) Grandparents-to-be matched with parents (but not grandparents) with at 
-#    least one child in reproductive age (>=15) via 'GroupMatch' R package
-#    aka 'rollingMatch' package
-# 2) Grandparents-to-be matched with parents (but not grandparents) with at 
-#    least one child in reproductive age (>=15) via matching loop from K&R (2020)
-# 3) Grandparents-to-be matched with nonparents via 'GroupMatch' R package
-#    aka 'rollingMatch' package
-# 4) Grandparents-to-be matched with nonparents via matching loop from K&R (2020)
+#    least one child in reproductive age (>=15) via 'MatchIt' R package
+# 2) Grandparents-to-be matched with nonparents via 'MatchIt' R package
 
 # We need to subset two datasets:
 # 1) Grandparents-to-be (single observation at their last valid assessment before
@@ -2271,7 +2280,7 @@ names(liss_bal_nonparents)
 varnum_parents <-  1:(length(liss_bal_parents)-2)
 covar_parents <-  colnames(liss_bal_parents[3:paste(length(liss_bal_parents))])
 stddiff_before_parents <- numeric(length = length(liss_bal_parents_before)-2)     #before matching
-stddiff_after1_parents <- numeric(length = length(liss_bal_parents)-2)            #optmatch::fullmatch
+stddiff_after1_parents <- numeric(length = length(liss_bal_parents)-2)            #after matching
 
 coln_parents <- c("varnum_parents", "covar_parents", "stddiff_before_parents", 
                   "stddiff_after1_parents") # defining column names 
@@ -2285,7 +2294,7 @@ for (i in seq_along(liss_balance_matrix_parents[varnum_parents])) {
   liss_balance_matrix_parents[[i, 3]] <- stdmeandiff(get(liss_balance_matrix_parents[[i, 2]]), 
                                                     grandparent, liss_bal_parents_before)     #before matching
   liss_balance_matrix_parents[[i, 4]] <- stdmeandiff(get(liss_balance_matrix_parents[[i, 2]]), 
-                                                    grandparent, liss_bal_parents)            #optmatch::fullmatch
+                                                    grandparent, liss_bal_parents)            #after matching
 }
 liss_balance_matrix_parents[, 3:4] <- round(as.numeric(liss_balance_matrix_parents[, 3:4]), 3)
 
@@ -2301,7 +2310,7 @@ kable(liss_balance_matrix_parents[, 2:4], format="rst",
 varnum_nonparents <-  1:(length(liss_bal_nonparents)-2)
 covar_nonparents <-  colnames(liss_bal_nonparents[3:paste(length(liss_bal_nonparents))])
 stddiff_before_nonparents <- numeric(length = length(liss_bal_nonparents_before)-2)     #before matching
-stddiff_after1_nonparents <- numeric(length = length(liss_bal_nonparents)-2)            #optmatch::fullmatch
+stddiff_after1_nonparents <- numeric(length = length(liss_bal_nonparents)-2)            #after matching
 
 coln_nonparents <- c("varnum_nonparents", "covar_nonparents", "stddiff_before_nonparents", 
                      "stddiff_after1_nonparents") # defining column names 
@@ -2315,7 +2324,7 @@ for (i in seq_along(liss_balance_matrix_nonparents[varnum_nonparents])) {
   liss_balance_matrix_nonparents[[i, 3]] <- stdmeandiff(get(liss_balance_matrix_nonparents[[i, 2]]), 
                                                        grandparent, liss_bal_nonparents_before)     #before matching
   liss_balance_matrix_nonparents[[i, 4]] <- stdmeandiff(get(liss_balance_matrix_nonparents[[i, 2]]), 
-                                                       grandparent, liss_bal_nonparents)            #optmatch::fullmatch
+                                                       grandparent, liss_bal_nonparents)            #after matching
 }
 liss_balance_matrix_nonparents[, 3:4] <- round(as.numeric(liss_balance_matrix_nonparents[, 3:4]), 3)
 

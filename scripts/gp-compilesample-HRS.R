@@ -494,8 +494,6 @@ h14pers <- h14data %>%
          swls4_2014 = OLB002D,
          swls5_2014 = OLB002E)
 
-#colnames(h16data) <- toupper(colnames(h16data))
-
 h16pers <- h16data %>%
   select_if(grepl("\\bHHIDPN\\b",colnames(.)) | grepl("PLB031",colnames(.)) | grepl("PLB002",colnames(.))) %>%
   mutate(n_respond = rowSums(!is.na(.))) %>%
@@ -533,7 +531,6 @@ h16pers <- h16data %>%
          swls4_2016 = PLB002D,    # have important things in life
          swls5_2016 = PLB002E)    # change nothing if lived life over
 
-
 # merge together
 
 allpers <- h06pers %>%
@@ -554,6 +551,11 @@ allpers <- h06pers %>%
   #group_by(HHIDPN) %>%
   #filter(row_number() == 1) %>%
   #ungroup()
+
+# reverse-code big five items - so that higher scores mean higher trait level (for better comparability with LISS)
+allpers <- allpers %>% 
+  mutate_at(vars(starts_with(c("extra", "agree", "neur", "con", "open"))), 
+            funs(dplyr::recode(., `1`=4L, `2`=3L, `3`=2L, `4`=1L)))
 
 #calculate alphas
 alpha.extra <- allpers %>%
@@ -1359,7 +1361,7 @@ hrs_last_time_point <- hrslongvalid %>% filter(time<0) %>% group_by(HHIDPN) %>%
 table(hrs_last_time_point$last)
 # N = 967 grandparents (with a valid pre-transition assessment)
 # -10  -8  -6  -4  -2 
-#   2  11  18 367 569    --> we will later only use -4 and -2 as matching time points 
+#   2  11  18 367 569    --> we will later only use -4 and -2 as matching time points, i.e., 936 GPs
 hrslongvalid <- left_join(hrslongvalid, hrs_last_time_point) %>% arrange(HHIDPN, year)
 
 # N = 1577 grandparents (in total)
@@ -1730,15 +1732,10 @@ for (i in seq_along(impdata)){
 # Option 2)  time==-4   --> In this case, the first (valid) assessment is at time==0.
 # --> We will use 'valid' variable we coded earlier.
 
-# We will perform 2 x 2 matchings: 
+# We will perform 2 matchings: 
 # 1) Grandparents-to-be matched with parents (but not grandparents) with at 
-#    least one child in reproductive age (>=15) via 'GroupMatch' R package
-#    aka 'rollingMatch' package
-# 2) Grandparents-to-be matched with parents (but not grandparents) with at 
-#    least one child in reproductive age (>=15) via matching loop from K&R (2020)
-# 3) Grandparents-to-be matched with nonparents via 'GroupMatch' R package
-#    aka 'rollingMatch' package
-# 4) Grandparents-to-be matched with nonparents via matching loop from K&R (2020)
+#    least one child in reproductive age (>=15) via 'MatchIt' R package
+# 2) Grandparents-to-be matched with nonparents via 'MatchIt' R package
 
 # We need to subset two datasets:
 # 1) Grandparents-to-be (single observation at their last valid assessment before
@@ -1965,7 +1962,7 @@ rm(h96data, h98data, h00data, h02data, h04data, h06data,
    h08data, h10data, h12data, h14data, h16data) 
 
 
-#### PSM:'matchit' with replacement -> (1) parent control group ####
+#### PSM: 'matchit' with replacement -> (1) parent control group ####
 
 table(hrsimp_matching_parents$grandparent)
 table(hrsimp_matching_parents$grandparent, hrsimp_matching_parents$year)
@@ -2000,7 +1997,7 @@ hrs_data_parents <- hrs_data_parents %>% group_by(subclass) %>%
 #   (because there were multiple available obervations, i.e., time points, per control subject in the data)
 hrs_data_parents %>% group_by(grandparent) %>% summarise(N=n_distinct(HHIDPN))
 hrs_data_parents %>% group_by(grandparent) %>% summarise(N=n_distinct(HHIDPN, year)) 
-# matches number above, see  summary(liss_parents_matchit)
+# matches number above, see  summary(hrs_parents_matchit)
 
 table(hrs_data_parents$grandparent, hrs_data_parents$year)
 table(hrs_data_parents$grandparent, hrs_data_parents$time)
@@ -2063,7 +2060,7 @@ hrsanalysis_parents <- hrsanalysis_parents %>% filter(time %in% c(-6:6)) %>%
 # save .rda 
 save(hrsanalysis_parents, file = "data/processed/HRS/hrsanalysis_parents.rda")
 hrsanalysis_parents %>% group_by(grandparent) %>% summarise(N = n_distinct(HHIDPN))
-# duplicates in the controls, 615 controls matched to 712 cases 
+# duplicates in the controls, 442 controls matched to 712 cases 
 
 
 #### PSM: 'matchit' with replacement -> (2) nonparent control group ####
@@ -2101,7 +2098,7 @@ hrs_data_nonparents <- hrs_data_nonparents %>% group_by(subclass) %>%
 #   (because there were multiple available obervations, i.e., time points, per control subject in the data)
 hrs_data_nonparents %>% group_by(grandparent) %>% summarise(N=n_distinct(HHIDPN))
 hrs_data_nonparents %>% group_by(grandparent) %>% summarise(N=n_distinct(HHIDPN, year)) 
-# matches number above, see  summary(liss_parents_matchit)
+# matches number above, see  summary(hrs_nonparents_matchit)
 
 table(hrs_data_nonparents$grandparent, hrs_data_nonparents$year)
 table(hrs_data_nonparents$grandparent, hrs_data_nonparents$time)
@@ -2218,7 +2215,7 @@ names(hrs_bal_nonparents)
 varnum_parents <-  1:(length(hrs_bal_parents)-2)
 covar_parents <-  colnames(hrs_bal_parents[3:paste(length(hrs_bal_parents))])
 stddiff_before_parents <- numeric(length = length(hrs_bal_parents_before)-2)     #before matching
-stddiff_after1_parents <- numeric(length = length(hrs_bal_parents)-2)            #optmatch::fullmatch
+stddiff_after1_parents <- numeric(length = length(hrs_bal_parents)-2)            #after matching
 
 coln_parents <- c("varnum_parents", "covar_parents", "stddiff_before_parents", 
                   "stddiff_after1_parents") # defining column names 
@@ -2232,7 +2229,7 @@ for (i in seq_along(hrs_balance_matrix_parents[varnum_parents])) {
   hrs_balance_matrix_parents[[i, 3]] <- stdmeandiff(get(hrs_balance_matrix_parents[[i, 2]]), 
                                                     grandparent, hrs_bal_parents_before)     #before matching
   hrs_balance_matrix_parents[[i, 4]] <- stdmeandiff(get(hrs_balance_matrix_parents[[i, 2]]), 
-                                                    grandparent, hrs_bal_parents)            #optmatch::fullmatch
+                                                    grandparent, hrs_bal_parents)            #after matching
   }
 hrs_balance_matrix_parents[, 3:4] <- round(as.numeric(hrs_balance_matrix_parents[, 3:4]), 3)
 
@@ -2248,7 +2245,7 @@ kable(hrs_balance_matrix_parents[, 2:4], format="rst",
 varnum_nonparents <-  1:(length(hrs_bal_nonparents)-2)
 covar_nonparents <-  colnames(hrs_bal_nonparents[3:paste(length(hrs_bal_nonparents))])
 stddiff_before_nonparents <- numeric(length = length(hrs_bal_nonparents_before)-2)     #before matching
-stddiff_after1_nonparents <- numeric(length = length(hrs_bal_nonparents)-2)            #optmatch::fullmatch
+stddiff_after1_nonparents <- numeric(length = length(hrs_bal_nonparents)-2)            #after matching
 
 coln_nonparents <- c("varnum_nonparents", "covar_nonparents", "stddiff_before_nonparents", 
                      "stddiff_after1_nonparents") # defining column names 
@@ -2262,7 +2259,7 @@ for (i in seq_along(hrs_balance_matrix_nonparents[varnum_nonparents])) {
   hrs_balance_matrix_nonparents[[i, 3]] <- stdmeandiff(get(hrs_balance_matrix_nonparents[[i, 2]]), 
                                                     grandparent, hrs_bal_nonparents_before)     #before matching
   hrs_balance_matrix_nonparents[[i, 4]] <- stdmeandiff(get(hrs_balance_matrix_nonparents[[i, 2]]), 
-                                                    grandparent, hrs_bal_nonparents)            #optmatch::fullmatch
+                                                    grandparent, hrs_bal_nonparents)            #after matching
 }
 hrs_balance_matrix_nonparents[, 3:4] <- round(as.numeric(hrs_balance_matrix_nonparents[, 3:4]), 3)
 
