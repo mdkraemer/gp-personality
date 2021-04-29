@@ -1,8 +1,5 @@
 ### Transition to Grandparenthood Paper - HRS Sample ###
 
-#version.string R version 3.6.3 (2020-02-29)
-#nickname       Holding the Windsock    
-
 library(haven)
 library(tidyverse)
 library(psych)
@@ -12,13 +9,8 @@ library(MatchIt)
 #### HRS data: draw raw data, select variables ####
 
 # load raw data files (SAS format, downloaded from HRS website)
-hrsrand <- read_sas("data/raw/HRS/randhrs1992_2016v2.sas7bdat")
-h06data <- read_sas("data/raw/HRS/h06f3a.sas7bdat")
-h08data <- read_sas("data/raw/HRS/h08f3a.sas7bdat")
-h10data <- read_sas("data/raw/HRS/hd10f5e.sas7bdat")
-h12data <- read_sas("data/raw/HRS/h12f2a.sas7bdat")
-h14data <- read_sas("data/raw/HRS/h14f2a.sas7bdat")
-h16data <- read_sas("data/raw/HRS/h16f2a.sas7bdat")
+hrsrand <- read_sas("data/raw/HRS/randhrs1992_2018v1.sas7bdat")
+# loading other files later (all at once create memory issues)
 
 #from main tracker file, select variables of interest
 hrsdata <- hrsrand %>%
@@ -60,9 +52,6 @@ hrsdata <- hrsrand %>%
   select(-starts_with("RE"), -ends_with("INLBRF"), -ends_with("PMBMI")) %>% 
   rename(R1MOBILA = R1MOBILW)
 
-#save working memory by removing RAND file
-rm(hrsrand)
-
 #rename columns in RAND file
 colnames(hrsdata) <- gsub("^RA","",colnames(hrsdata)) # ^ means "begins with"
 colnames(hrsdata)[colnames(hrsdata) == "BYEAR"] <- "birthyr"
@@ -79,6 +68,8 @@ colnames(hrsdata) <- gsub("^RH","R",colnames(hrsdata))
 ahead <- subset(hrsdata, HACOHORT %in% c(0,1))
 hrsdata <- subset(hrsdata, !(HACOHORT %in% c(0,1)))
 
+colnames(hrsdata) <- ifelse(grepl("R14",colnames(hrsdata)),
+                            gsub("R14","", paste(colnames(hrsdata),"_2018",sep="")), colnames(hrsdata))
 colnames(hrsdata) <- ifelse(grepl("R13",colnames(hrsdata)),
                             gsub("R13","", paste(colnames(hrsdata),"_2016",sep="")), colnames(hrsdata))
 colnames(hrsdata) <- ifelse(grepl("R12",colnames(hrsdata)),
@@ -117,6 +108,9 @@ colnames(hrsdata) <- ifelse(grepl("R1",colnames(hrsdata)),
                             gsub("R1","", paste(colnames(hrsdata),"_1992",sep="")),
                             colnames(hrsdata))
 
+colnames(ahead) <- ifelse(grepl("R14",colnames(ahead)),
+                          gsub("R14","", paste(colnames(ahead),"_2018",sep="")),
+                          colnames(ahead))
 colnames(ahead) <- ifelse(grepl("R13",colnames(ahead)),
                           gsub("R13","", paste(colnames(ahead),"_2016",sep="")),
                           colnames(ahead))
@@ -199,10 +193,9 @@ hrsdata[,grepl("selfratedhealth",
                colnames(hrsdata))] <- hrsdata[,grepl("selfratedhealth",
                                                      colnames(hrsdata))]*-1 + 6
 
-#RAND HRS Detailed Imputations File 2016 (v.2)
-hrsrand_imp <- read_sas("data/raw/HRS/randhrs1992_2016v2.sas7bdat")
-
-hrsdata_imp <- hrsrand_imp %>%
+#RAND HRS Detailed Imputations File 2016 (v.2) -> I'll just take the imputations contained in the 
+#regular longitudinal file instead (however, the following is based on households not on respondents as above)
+hrsdata_imp <- hrsrand %>%
   select(
     HHIDPN, HHID, PN,
     matches("^H.*ITOT$"), # Total household income (Respondent & spouse)
@@ -214,6 +207,8 @@ hrsdata_imp <- left_join(hrsdata_imp, hrs_cohortinfo)
 ahead_imp <- subset(hrsdata_imp, HACOHORT %in% c(0,1))
 hrsdata_imp <- subset(hrsdata_imp, !(HACOHORT %in% c(0,1)))
 
+colnames(hrsdata_imp) <- ifelse(grepl("H14",colnames(hrsdata_imp)),
+                            gsub("H14","", paste(colnames(hrsdata_imp),"_2018",sep="")), colnames(hrsdata_imp))
 colnames(hrsdata_imp) <- ifelse(grepl("H13",colnames(hrsdata_imp)),
                             gsub("H13","", paste(colnames(hrsdata_imp),"_2016",sep="")), colnames(hrsdata_imp))
 colnames(hrsdata_imp) <- ifelse(grepl("H12",colnames(hrsdata_imp)),
@@ -252,6 +247,9 @@ colnames(hrsdata_imp) <- ifelse(grepl("H1",colnames(hrsdata_imp)),
                             gsub("H1","", paste(colnames(hrsdata_imp),"_1992",sep="")),
                             colnames(hrsdata_imp))
 
+colnames(ahead_imp) <- ifelse(grepl("H14",colnames(ahead_imp)),
+                          gsub("H14","", paste(colnames(ahead_imp),"_2018",sep="")),
+                          colnames(ahead_imp))
 colnames(ahead_imp) <- ifelse(grepl("H13",colnames(ahead_imp)),
                           gsub("H13","", paste(colnames(ahead_imp),"_2016",sep="")),
                           colnames(ahead_imp))
@@ -295,11 +293,20 @@ hrsdata_imp <- merge(hrsdata_imp, ahead_imp, all.x=T, all.y=T)
 rm(ahead_imp)
 
 #save working memory by removing RAND file
-rm(hrsrand_imp)
+rm(hrsrand)
 rm(hrs_cohortinfo)
 
 colnames(hrsdata_imp) <- gsub("ATOTB","hhwealth",colnames(hrsdata_imp))
 colnames(hrsdata_imp) <- gsub("ITOT","hhincome",colnames(hrsdata_imp))
+
+# load RAND fat files
+h06data <- read_sas("data/raw/HRS/h06f3a.sas7bdat")
+h08data <- read_sas("data/raw/HRS/h08f3a.sas7bdat")
+h10data <- read_sas("data/raw/HRS/hd10f5e.sas7bdat")
+h12data <- read_sas("data/raw/HRS/h12f2a.sas7bdat")
+h14data <- read_sas("data/raw/HRS/h14f2a.sas7bdat")
+h16data <- read_sas("data/raw/HRS/h16f2a.sas7bdat")
+h18data <- read_sas("data/raw/HRS/h18e1a.sas7bdat")
 
 #subset leave-behind questionnaires so only personality items remain (and SWLS items)
 h06pers <- h06data %>%
@@ -531,6 +538,43 @@ h16pers <- h16data %>%
          swls4_2016 = PLB002D,    # have important things in life
          swls5_2016 = PLB002E)    # change nothing if lived life over
 
+h18pers <- h18data %>%
+  select_if(grepl("\\bHHIDPN\\b",colnames(.)) | grepl("QLB031",colnames(.)) | grepl("QLB002",colnames(.))) %>%
+  mutate(n_respond = rowSums(!is.na(.))) %>%
+  filter(n_respond > 1) %>%
+  select(-n_respond, -QLB031C, -QLB031R, -QLB031X, -QLB031Z_1, -QLB031Z_6) %>%
+  rename(extra1_2018 = QLB031A,   # outgoing
+         extra2_2018 = QLB031F,   # friendly
+         extra3_2018 = QLB031J,   # lively
+         extra4_2018 = QLB031U,   # active
+         extra5_2018 = QLB031Z_2, # talkative
+         agree1_2018 = QLB031B,   # helpful
+         agree2_2018 = QLB031G,   # warm
+         agree3_2018 = QLB031K,   # caring
+         agree4_2018 = QLB031P,   # softhearted
+         agree5_2018 = QLB031Y,   # sympathetic
+         neur1_2018 = QLB031D,    # moody
+         neur2_2018 = QLB031H,    # worrying
+         neur3_2018 = QLB031L,    # nervous
+         neur4_2018 = QLB031Q,    # calm
+         con1_2018 = QLB031E,     # organized
+         con2_2018 = QLB031I,     # responsible
+         con3_2018 = QLB031N,     # hardworking
+         con4_2018 = QLB031V,     # careless
+         con5_2018 = QLB031Z_5,   # thorough
+         open1_2018 = QLB031M,    # creative
+         open2_2018 = QLB031O,    # imaginative
+         open3_2018 = QLB031S,    # intelligent
+         open4_2018 = QLB031T,    # curious
+         open5_2018 = QLB031W,    # broadminded
+         open6_2018 = QLB031Z_3,  # sophisticated
+         open7_2018 = QLB031Z_4,  # adventurous
+         swls1_2018 = QLB002A,    # life is close to ideal
+         swls2_2018 = QLB002B,    # conditions of life are excellent
+         swls3_2018 = QLB002C,    # satisfied with life
+         swls4_2018 = QLB002D,    # have important things in life
+         swls5_2018 = QLB002E)    # change nothing if lived life over
+
 # merge together
 
 allpers <- h06pers %>%
@@ -539,6 +583,7 @@ allpers <- h06pers %>%
   full_join(h12pers) %>%
   full_join(h14pers) %>%  
   full_join(h16pers) %>%
+  full_join(h18pers) %>%
   # arrange in long-form
   gather(key="key", value="value", which(grepl("_", names(.)))) %>%
   # removing missing years for each participant
@@ -914,6 +959,46 @@ h16cov <- h16data %>%
          livetogether_2016          = PA030     # couple live together
   )
 
+h18cov <- h18data %>%
+  select(HHIDPN, 
+         QE012, QE022, QE046, QE060, QE063, QE065, QE066, QH001, QH002, QH004,
+         QA099, QA100, QA501,
+         QLB035, QZ230, QH150, QH151, QQ400, QB082, QH147, Q066, QJ020, QJ021, QJ005M1,
+         QX065_R, QA030) %>%
+  mutate(HHIDPN = as.numeric(HHIDPN)) %>% 
+  mutate(n_respond = rowSums(!is.na(.))) %>%
+  filter(n_respond > 1) %>%
+  select(-n_respond) %>%
+  rename(#information on grandchildren:
+    newgrandkids_2018          = QE022,   # new grandchildren
+    totalgrandkids_2018        = QE046,   # grandchildren total
+    grandkids100h_2018         = QE060,   # care of grandkids- 100 or more hours
+    hoursgrandkids_2018        = QE063,   # r care for grandchild- # hours
+    minhoursgrandkids_2018     = QE065,   # r care for grandchild- min hours
+    maxhoursgrandkids_2018     = QE066,   # r care for grandchild- max hours
+    #variables for PSM covariates:
+    children10m_2018           = QE012,   # children live within 10 miles
+    farmranch_2018             = QH001,   # live farm or ranch
+    typehome_2018              = QH002,   # type home
+    ownrent_2018               = QH004,   # own-rent home
+    totalresidentkids_2018     = QA099,   # number of resident children						
+    totalnonresidentkids_2018  = QA100,   # count of nonresident kids						
+    interviewyear_2018         = QA501,   # date	of	interview	-	year		
+    difficultybills_2018       = QLB035,  # difficulty	paying	bills			
+    bornusa_2018               = QZ230,   # r	us born					
+    safetyneighborhood_2018    = QH150,   # safety neighborhood						
+    secondhome_2018            = QH151,   # own second home						
+    foodstamps_2018            = QQ400,   # hh	food	stamps	since	last	iw	
+    attendreligion_2018        = QB082,   # how often attend religious serv
+    nroomsself_2018            = QH147,   # number of rooms
+    nroomsint_2018             = Q066,    # number of rooms in housing unit
+    paidwork_2018              = QJ020,   # working for pay
+    selfemployed_2018          = QJ021,   # work for someone else/slf-employed
+    jobstatus_2018             = QJ005M1,  # current job status- 1 -> 6=homemaker
+    coupleness_2018            = QX065_R,  # coupleness status of individual - updated
+    livetogether_2018          = QA030     # couple live together
+  )
+
 # RAND HRS Family Data 2014 - two files: one with household-level and one with 
 # child-level information -> we need child-level information! -> variables:
 #   kagenderbg: gender (best guess)
@@ -957,6 +1042,7 @@ allcov <- h96cov %>%
   full_join(h12cov) %>%
   full_join(h14cov) %>%  
   full_join(h16cov) %>%
+  full_join(h18cov) %>%
   # arrange in long-form
   gather(key="key", value="value", which(grepl("_", names(.)))) %>%
   # removing missing years for each participant
@@ -1002,6 +1088,10 @@ hrslong <- hrslong %>%
 hrslong <- hrslong %>% 
   mutate( # see codebook: "Assumed to be zero"
     totalgrandkids = replace(totalgrandkids, totalgrandkids %in% c(95, 995), 0))
+
+# weird decrease in valid values in 'totalgrandkids' in 2018
+# not relevant for now (2014 is the last year where we match) but will be if I later add more waves
+hrslong %>% filter(is.na(totalgrandkids)) %>% group_by(year) %>% summarise(n=n())
 
 # keep those with valid information on grandchildren
 grand <- hrslong %>% 
@@ -1060,7 +1150,10 @@ grand_wide <- grand_wide %>% mutate(
   transit2014 = ifelse(is.na(grandchildren_2012) | is.na(grandchildren_2014), 0,
                        ifelse(grandchildren_2012==0 & grandchildren_2014==1, 1, 0)),
   transit2016 = ifelse(is.na(grandchildren_2014) | is.na(grandchildren_2016), 0,
-                       ifelse(grandchildren_2014==0 & grandchildren_2016==1, 1, 0)))
+                       ifelse(grandchildren_2014==0 & grandchildren_2016==1, 1, 0)),
+  transit2018 = ifelse(is.na(grandchildren_2016) | is.na(grandchildren_2018), 0,
+                       ifelse(grandchildren_2016==0 & grandchildren_2018==1, 1, 0)))
+
 
 # second step: code all the 1 to 0 transitions (inconsistent longitudinal data)
 grand_wide <- grand_wide %>% mutate(
@@ -1083,7 +1176,9 @@ grand_wide <- grand_wide %>% mutate(
   goback2014 = ifelse(is.na(grandchildren_2012) | is.na(grandchildren_2014), 0,
                       ifelse(grandchildren_2012==1 & grandchildren_2014==0, 1, 0)),
   goback2016 = ifelse(is.na(grandchildren_2014) | is.na(grandchildren_2016), 0,
-                      ifelse(grandchildren_2014==1 & grandchildren_2016==0, 1, 0)))
+                      ifelse(grandchildren_2014==1 & grandchildren_2016==0, 1, 0)),
+  goback2018 = ifelse(is.na(grandchildren_2016) | is.na(grandchildren_2018), 0,
+                      ifelse(grandchildren_2016==1 & grandchildren_2018==0, 1, 0)))
 
 # third step: count both per person
 grand_wide <- grand_wide %>% 
@@ -1093,7 +1188,7 @@ grand_wide <- grand_wide %>%
 
 # identify eligible grandparents (to-be): respondents with exactly 1 transition to 
 # grandparenthood and no subsequent transitions back
-grand_wide %>% filter(sum_transit==1) %>% group_by(sum_goback) %>% summarise(n()) # N=3091
+grand_wide %>% filter(sum_transit==1) %>% group_by(sum_goback) %>% summarise(n()) # N=3383
 
 # identify eligible non-grandparents: respondents starting out with no grandchildren 
 # with 0 transitions throughout the observation period
@@ -1103,8 +1198,9 @@ grand_wide %>%
          grandchildren_2002 %in% c(0, NA) & grandchildren_2004 %in% c(0, NA) & 
          grandchildren_2006 %in% c(0, NA) & grandchildren_2008 %in% c(0, NA) & 
          grandchildren_2010 %in% c(0, NA) & grandchildren_2012 %in% c(0, NA) &
-         grandchildren_2014 %in% c(0, NA) & grandchildren_2016 %in% c(0, NA)) %>% 
-  group_by(sum_transit) %>% summarise(n()) # N=8387
+         grandchildren_2014 %in% c(0, NA) & grandchildren_2016 %in% c(0, NA) & 
+         grandchildren_2018 %in% c(0, NA)) %>% 
+  group_by(sum_transit) %>% summarise(n()) # N=8123
 
 #code variable to denote eligiblity
 grand_wide <- grand_wide %>% 
@@ -1115,7 +1211,8 @@ grand_wide <- grand_wide %>%
        grandchildren_2002 %in% c(0, NA) & grandchildren_2004 %in% c(0, NA) & 
        grandchildren_2006 %in% c(0, NA) & grandchildren_2008 %in% c(0, NA) & 
        grandchildren_2010 %in% c(0, NA) & grandchildren_2012 %in% c(0, NA) &
-       grandchildren_2014 %in% c(0, NA) & grandchildren_2016 %in% c(0, NA)),
+       grandchildren_2014 %in% c(0, NA) & grandchildren_2016 %in% c(0, NA) &
+       grandchildren_2018 %in% c(0, NA)),
       0, NA))
   )
 table(grand_wide$grandparent)
@@ -1145,7 +1242,9 @@ grand_wide <- grand_wide %>% mutate(
   goback2014 = replace(goback2014, grandchildren_2010==1 & is.na(grandchildren_2012) &
                          grandchildren_2014==0, 1),
   goback2016 = replace(goback2016, grandchildren_2012==1 & is.na(grandchildren_2014) &
-                         grandchildren_2016==0, 1))
+                         grandchildren_2016==0, 1),
+  goback2018 = replace(goback2018, grandchildren_2014==1 & is.na(grandchildren_2016) &
+                         grandchildren_2018==0, 1))
 
 #recode for 2-wave-gap
 grand_wide <- grand_wide %>% mutate(
@@ -1164,7 +1263,9 @@ grand_wide <- grand_wide %>% mutate(
   goback2014 = replace(goback2014, grandchildren_2008==1 & is.na(grandchildren_2010) &
                          is.na(grandchildren_2012) & grandchildren_2014==0, 1),
   goback2016 = replace(goback2016, grandchildren_2010==1 & is.na(grandchildren_2012) &
-                         is.na(grandchildren_2014) & grandchildren_2016==0, 1))
+                         is.na(grandchildren_2014) & grandchildren_2016==0, 1),
+  goback2018 = replace(goback2018, grandchildren_2012==1 & is.na(grandchildren_2014) &
+                         is.na(grandchildren_2016) & grandchildren_2018==0, 1))
 
 #recode for 3-wave-gap
 grand_wide <- grand_wide %>% mutate(
@@ -1181,7 +1282,9 @@ grand_wide <- grand_wide %>% mutate(
   goback2014 = replace(goback2014, grandchildren_2006==1 & is.na(grandchildren_2008) & is.na(grandchildren_2010) &
                          is.na(grandchildren_2012) & grandchildren_2014==0, 1),
   goback2016 = replace(goback2016, grandchildren_2008==1 & is.na(grandchildren_2010) & is.na(grandchildren_2012) &
-                         is.na(grandchildren_2014) & grandchildren_2016==0, 1))
+                         is.na(grandchildren_2014) & grandchildren_2016==0, 1),
+  goback2018 = replace(goback2018, grandchildren_2010==1 & is.na(grandchildren_2012) & is.na(grandchildren_2014) &
+                         is.na(grandchildren_2016) & grandchildren_2018==0, 1))
 # 2 cases with 3-wave-gap: 14427010 47148011
 
 #recode for 4-wave-gap
@@ -1197,7 +1300,9 @@ grand_wide <- grand_wide %>% mutate(
   goback2014 = replace(goback2014, grandchildren_2004==1 & is.na(grandchildren_2006) & is.na(grandchildren_2008) & is.na(grandchildren_2010) &
                          is.na(grandchildren_2012) & grandchildren_2014==0, 1),
   goback2016 = replace(goback2016, grandchildren_2006==1 & is.na(grandchildren_2008) & is.na(grandchildren_2010) & is.na(grandchildren_2012) &
-                         is.na(grandchildren_2014) & grandchildren_2016==0, 1))
+                         is.na(grandchildren_2014) & grandchildren_2016==0, 1),
+  goback2018 = replace(goback2018, grandchildren_2008==1 & is.na(grandchildren_2010) & is.na(grandchildren_2012) & is.na(grandchildren_2014) &
+                         is.na(grandchildren_2016) & grandchildren_2018==0, 1))
 # 2 cases with 4-wave-gap: 16959010 35950030
 
 #recode for 5-wave-gap
@@ -1211,7 +1316,9 @@ grand_wide <- grand_wide %>% mutate(
   goback2014 = replace(goback2014, grandchildren_2002==1 & is.na(grandchildren_2004) & is.na(grandchildren_2006) & is.na(grandchildren_2008) & is.na(grandchildren_2010) &
                          is.na(grandchildren_2012) & grandchildren_2014==0, 1),
   goback2016 = replace(goback2016, grandchildren_2004==1 & is.na(grandchildren_2006) & is.na(grandchildren_2008) & is.na(grandchildren_2010) & is.na(grandchildren_2012) &
-                         is.na(grandchildren_2014) & grandchildren_2016==0, 1))
+                         is.na(grandchildren_2014) & grandchildren_2016==0, 1),
+  goback2018 = replace(goback2018, grandchildren_2006==1 & is.na(grandchildren_2008) & is.na(grandchildren_2010) & is.na(grandchildren_2012) & is.na(grandchildren_2014) &
+                         is.na(grandchildren_2016) & grandchildren_2018==0, 1))
 # 1 case with 5-wave-gap: 65978040
 
 #recode for 6-wave-gap
@@ -1223,7 +1330,9 @@ grand_wide <- grand_wide %>% mutate(
   goback2014 = replace(goback2014, grandchildren_2000==1 & is.na(grandchildren_2002) & is.na(grandchildren_2004) & is.na(grandchildren_2006) & is.na(grandchildren_2008) & is.na(grandchildren_2010) &
                          is.na(grandchildren_2012) & grandchildren_2014==0, 1),
   goback2016 = replace(goback2016, grandchildren_2002==1 & is.na(grandchildren_2004) & is.na(grandchildren_2006) & is.na(grandchildren_2008) & is.na(grandchildren_2010) & is.na(grandchildren_2012) &
-                         is.na(grandchildren_2014) & grandchildren_2016==0, 1))
+                         is.na(grandchildren_2014) & grandchildren_2016==0, 1),
+  goback2018 = replace(goback2018, grandchildren_2004==1 & is.na(grandchildren_2006) & is.na(grandchildren_2008) & is.na(grandchildren_2010) & is.na(grandchildren_2012) & is.na(grandchildren_2014) &
+                         is.na(grandchildren_2016) & grandchildren_2018==0, 1))
 # 0 cases with 6-wave-gap
 
 #recode for 7-wave-gap
@@ -1233,7 +1342,9 @@ grand_wide <- grand_wide %>% mutate(
   goback2014 = replace(goback2014, grandchildren_1998==1 & is.na(grandchildren_2000) & is.na(grandchildren_2002) & is.na(grandchildren_2004) & is.na(grandchildren_2006) & is.na(grandchildren_2008) & is.na(grandchildren_2010) &
                          is.na(grandchildren_2012) & grandchildren_2014==0, 1),
   goback2016 = replace(goback2016, grandchildren_2000==1 & is.na(grandchildren_2002) & is.na(grandchildren_2004) & is.na(grandchildren_2006) & is.na(grandchildren_2008) & is.na(grandchildren_2010) & is.na(grandchildren_2012) &
-                         is.na(grandchildren_2014) & grandchildren_2016==0, 1))
+                         is.na(grandchildren_2014) & grandchildren_2016==0, 1),
+  goback2018 = replace(goback2018, grandchildren_2002==1 & is.na(grandchildren_2004) & is.na(grandchildren_2006) & is.na(grandchildren_2008) & is.na(grandchildren_2010) & is.na(grandchildren_2012) & is.na(grandchildren_2014) &
+                         is.na(grandchildren_2016) & grandchildren_2018==0, 1))
 # 0 cases with 7-wave-gap
 
 #update count
@@ -1245,19 +1356,24 @@ grand_wide %>% filter(grandparent==1 & sum_goback>=1) %>%
   select(HHIDPN, starts_with("grandchildren")) %>% print(width=Inf)
 # 52884020 118444010 118444011 500330020 523882020 920378010 -> 6 cases where NAs obscured 
 # inconsistent longitudinal data 
-# 109 cases in total
+# 101 cases in total
 
 grand_wide <- grand_wide %>% 
   mutate(grandparent = replace(grandparent, grandparent==1 & sum_goback>=1, NA))
 
-table(grand_wide$grandparent) # check count: N=2982
+table(grand_wide$grandparent) # check count: N=3272
 
-#keep analysis sample 2006-2016
+# build a data frame that I can later import into the .Rmd file in order to report the sample size flow
+hrs_sampleflow_gp <- data.frame(step = numeric(0), grandparents = numeric(0))
+hrs_sampleflow_gp[nrow(hrs_sampleflow_gp)+1, ] <- c(1, table(grand_wide$grandparent)[2]) # add step 1
+
+#keep analysis sample 2006-2018
 grand_wide <- grand_wide %>% select(-num_range("grandchildren_", 1996:2004), 
                                     -num_range("transit", 1996:2004),
                                     -num_range("goback", 1996:2004))
 grand_wide <- grand_wide %>% filter((transit2006==1 | transit2008==1 | transit2010==1 | 
-                                     transit2012==1 | transit2014==1 | transit2016==1) |
+                                     transit2012==1 | transit2014==1 | transit2016==1 | 
+                                     transit2018==1) |
                                      grandparent==0)
   
   
@@ -1283,7 +1399,7 @@ grand_transits <- grand_wide %>%
                values_drop_na = T) %>% 
   mutate(year = as.numeric(year))
 
-# restrict hrs-long data to 2006-2016 where personality data is available 
+# restrict hrs-long data to 2006-2018 where personality data is available 
 hrslong <- hrslong %>% filter(year>2004)
 
 # merge transition to grandparenthood info
@@ -1339,7 +1455,7 @@ hrslong %>% group_by(time) %>% filter(grandparent==1) %>% summarise(n = n()) %>%
 
 options(pillar.sigfig = 5)
 hrslong %>% group_by(grandparent) %>% filter(transit==1 | grandparent==0) %>% 
-  summarise(meanbirthyr = mean((birthyr), na.rm=T), n = n()) # N = 1786 (grandparents)
+  summarise(meanbirthyr = mean((birthyr), na.rm=T), n = n()) # N = 2069 (grandparents)
 
 # save .rda 
 save(hrslong, file = "data/processed/HRS/hrslong_cleaned.rda")
@@ -1359,14 +1475,27 @@ hrslongvalid %>% group_by(time) %>% filter(grandparent==1) %>% summarise(n = n()
 hrs_last_time_point <- hrslongvalid %>% filter(time<0) %>% group_by(HHIDPN) %>% 
   slice(which.max(time)) %>% select(HHIDPN, time) %>% rename(last = time)
 table(hrs_last_time_point$last)
-# N = 967 grandparents (with a valid pre-transition assessment)
-# -10  -8  -6  -4  -2 
-#   2  11  18 367 569    --> we will later only use -4 and -2 as matching time points, i.e., 936 GPs
+# N = 1146 grandparents (with a valid pre-transition assessment)
+# -12 -10  -8  -6  -4  -2 
+#   2   2  16  32 445 649    --> we will later only use -4 and -2 as matching time points, i.e., 1094 GPs
 hrslongvalid <- left_join(hrslongvalid, hrs_last_time_point) %>% arrange(HHIDPN, year)
 
-# N = 1577 grandparents (in total)
+# For now, unfortunately, we can not include grandparents with transityear==2018 who have their last valid
+# pre-transition assessment at last==-2, i.e. in 2016. This is because the RAND Family Data file has only
+# been released up to wave 2014 so far and variables from this file are essential for matching.
+hrslongvalid %>% filter(transityear==2018 & last==-2) %>% group_by(year) %>% summarize(n=n())
+
+hrslongvalid <- hrslongvalid %>% filter(transityear %in% c(NA, 2006:2016) | 
+                                         (transityear==2018 & last %in% c(NA, -12:-4)))
+  
+# N = 1702 grandparents (in total)
 hrslongvalid %>% group_by(grandparent) %>% summarise(ndist = n_distinct(HHIDPN))
-# N = 340 grandparents (with a valid pre-transition assessment AND a t=0 post-treatment assessment)
+
+# build a data frame that I can later import into the .Rmd file in order to report the sample size flow
+hrs_sampleflow_gp[nrow(hrs_sampleflow_gp)+1, ] <- 
+  c(2, (hrslongvalid %>% group_by(grandparent) %>% summarise(ndist = n_distinct(HHIDPN)))[2,2]) # add step 2
+
+# N = 400 grandparents (with a valid pre-transition assessment AND a t=0 post-treatment assessment)
 hrslongvalid %>% filter(transit==1 & !is.na(last)) %>% summarise(ndist = n_distinct(HHIDPN))
 # however, there are additional grandparents with valid pre- and post-transition assessments 
 # (just not at t=0, but later)
@@ -1390,14 +1519,17 @@ hrslongvalid <- hrslongvalid %>%
 hrslongvalid %>% select(HHIDPN, year, time, valid, last, grandparent) %>% 
   filter(grandparent==1) %>% print(n=50)
 table(hrslongvalid$valid, hrslongvalid$last)
-(N_GP_hrs <- pull(hrslongvalid %>% filter(valid==0 & last %in% c(-4, -2)) %>% 
-                    summarise(n = n()))) # for papaja (?)
+
+# build a data frame that I can later import into the .Rmd file in order to report the sample size flow
+hrs_sampleflow_gp[nrow(hrs_sampleflow_gp)+1, ] <- 
+  c(3, pull(hrslongvalid %>% filter(valid==0 & last %in% c(-4, -2)) %>% summarise(n = n()))) # add step 3
+save(hrs_sampleflow_gp, file = "data/processed/HRS/hrs_sampleflow_gp.rda") # not finished yet
 
 # restrict sample to those with at least 1 valid pre- and 1 valid post-treatment assessment
 # AND also with -4 or -2 as their last time point before the transition to GP
 hrslongvalid <- hrslongvalid %>% group_by(HHIDPN) %>% 
   mutate(droplater = max(valid==0 & last %in% c(-4, -2, NA), na.rm = T)==0) %>% ungroup() 
-# after imputations: drop 407 obs. (246 resp.) -> no post-treatment assessment
+# after imputations: drop 286 obs. (200 resp.) -> no post-treatment assessment
 
 table(hrslongvalid$grandparent, hrslongvalid$time)
 table(hrslongvalid$grandparent, hrslongvalid$valid)
@@ -1501,7 +1633,7 @@ hrsimplong %>% mutate(
   childless = ifelse(totalnonresidentkids==0 & totalresidentkids==0, 1, 0)) %>%
   group_by(has_ch1, childless) %>% summarise(n = n(), dis = n_distinct(HHIDPN))
 # part of the problem might be that 2016 is not covered in HRS Family Data 
-hrsimplong %>% filter(year!=2016) %>% mutate(
+hrsimplong %>% filter(year!=2016 & year!=2018) %>% mutate(
   childless = ifelse(totalnonresidentkids==0 & totalresidentkids==0, 1, 0)) %>%
   group_by(has_ch1, childless) %>% summarise(n = n(), dis = n_distinct(HHIDPN))
 
@@ -1761,7 +1893,7 @@ hrsimp_matching_1 %>%
   group_by(grandparent, nokids) %>% summarise(n = n(), N = n_distinct(HHIDPN))
 
 # Compared to the (old) method that does not filter by 'nokids==0', we 
-# drop 7 grandparents (these are not contained in RAND HRS Family data and
+# drop 10 grandparents (these are not contained in RAND HRS Family data and
 # have 0 kids according to 'totalresidentkids' & 'totalnonresidentkids'):
 hrsimp_matching_1 %>% filter(grandparent==1 & nokids==1 & valid==-1 & droplater==F)
 
@@ -1772,14 +1904,14 @@ hrsimp_matching_1 %>%
   filter((grandparent==1 & nokids==0 & valid==-1 & droplater==F) | # GP group is the same!
          (grandparent==0 & nokids==1)) %>% 
   group_by(grandparent, nokids) %>% summarise(n = n(), N = n_distinct(HHIDPN))
-# Control group is very small here - might not work for matching!
+# Control group is relatively small here
 # Alternatively, we could rely on just the 'nokids' information and infer
 # that these respondents do not have grandkids.
 hrsimp_matching_1 %>% 
   filter((grandparent==1 & nokids==0 & valid==-1 & droplater==F) | # GP group is the same!
          (grandparent %in% c(0, NA) & nokids==1)) %>% 
   group_by(grandparent, nokids) %>% summarise(n = n(), N = n_distinct(HHIDPN))
-# This way, we would gain 248 observations (N=216).
+# This way, we would gain 418 observations (N=350).
 
 # subsetting imputed datasets:
 
@@ -1796,6 +1928,20 @@ hrslongvalid %>% filter(HHIDPN %in% c(500298010, 500298020)) %>% print(width=Inf
 hrsimp_parents_ps_1 %>% 
   group_by(grandparent) %>% summarise(n = n(), N = n_distinct(HHIDPN))
 
+# build a data frame that I can later import into the .Rmd file in order to report the sample size flow
+load(file = "data/processed/HRS/hrs_sampleflow_gp.rda")
+if(nrow(hrs_sampleflow_gp)==3){ # added this condition in case I only execute the later parts of the script
+  hrs_sampleflow_gp[nrow(hrs_sampleflow_gp)+1, ] <- 
+    c(4, (hrsimp_parents_ps_1 %>% group_by(grandparent) %>% summarise(n = n(), N = n_distinct(HHIDPN)))[2,3]) # add step 4
+}
+save(hrs_sampleflow_gp, file = "data/processed/HRS/hrs_sampleflow_gp.rda") # save for later import
+
+# another one for the non-grandparent control subjects
+hrs_sampleflow_nongp <- data.frame(group = numeric(0), obs = numeric(0), n = numeric(0))
+hrs_sampleflow_nongp[nrow(hrs_sampleflow_nongp)+1, ] <- 
+  c(1, (hrsimp_parents_ps_1 %>% group_by(grandparent) %>% 
+          summarise(n = n(), N = n_distinct(HHIDPN)))[1, c(2,3)]) # add parent control group
+
 # nonparents
 hrsimp_nonparents_ps_1 <- hrsimp_matching_1 %>% 
   filter((grandparent==1 & nokids==0 & valid==-1 & droplater==F & !is.na(kid1age)) | 
@@ -1809,6 +1955,12 @@ hrsimp_nonparents_ps_1 <- hrsimp_matching_1 %>%
 hrsimp_nonparents_ps_1 %>% 
   group_by(grandparent) %>% summarise(n = n(), N = n_distinct(HHIDPN))
 
+# for the non-grandparent control subjects
+hrs_sampleflow_nongp[nrow(hrs_sampleflow_nongp)+1, ] <- 
+  c(2, (hrsimp_nonparents_ps_1 %>% group_by(grandparent) %>% 
+          summarise(n = n(), N = n_distinct(HHIDPN)))[1, c(2,3)]) # add nonparent control group
+hrs_sampleflow_nongp$group <- factor(c("parents", "nonparents")) 
+save(hrs_sampleflow_nongp, file = "data/processed/HRS/hrs_sampleflow_nongp.rda") # save for later import
 
 #same for the other imputations...
 # 2  
@@ -1999,6 +2151,13 @@ hrs_data_parents %>% group_by(grandparent) %>% summarise(N=n_distinct(HHIDPN))
 hrs_data_parents %>% group_by(grandparent) %>% summarise(N=n_distinct(HHIDPN, year)) 
 # matches number above, see  summary(hrs_parents_matchit)
 
+# build a data.frame for import of these numbers to .Rmd (papaja)
+hrs_replacement_controls <- data.frame(group = numeric(0), obs = numeric(0), n = numeric(0))
+hrs_replacement_controls[nrow(hrs_replacement_controls)+1, ] <- 
+  c(1,
+    (hrs_data_parents %>% group_by(grandparent) %>% summarise(N=n_distinct(HHIDPN, year)))[1,2],
+    (hrs_data_parents %>% group_by(grandparent) %>% summarise(N=n_distinct(HHIDPN)))[1,2]) # add parent control group
+
 table(hrs_data_parents$grandparent, hrs_data_parents$year)
 table(hrs_data_parents$grandparent, hrs_data_parents$time)
 table(hrs_data_parents$grandparent, hrs_data_parents$valid)
@@ -2099,6 +2258,14 @@ hrs_data_nonparents <- hrs_data_nonparents %>% group_by(subclass) %>%
 hrs_data_nonparents %>% group_by(grandparent) %>% summarise(N=n_distinct(HHIDPN))
 hrs_data_nonparents %>% group_by(grandparent) %>% summarise(N=n_distinct(HHIDPN, year)) 
 # matches number above, see  summary(hrs_nonparents_matchit)
+
+# build a data.frame for import of these numbers to .Rmd (papaja)
+hrs_replacement_controls[nrow(hrs_replacement_controls)+1, ] <- 
+  c(2,
+    (hrs_data_nonparents %>% group_by(grandparent) %>% summarise(N=n_distinct(HHIDPN, year)))[1,2],
+    (hrs_data_nonparents %>% group_by(grandparent) %>% summarise(N=n_distinct(HHIDPN)))[1,2]) # add nonparent control group
+hrs_replacement_controls$group <- factor(c("parents", "nonparents")) 
+save(hrs_replacement_controls, file = "data/processed/HRS/hrs_replacement_controls.rda") # save for later import
 
 table(hrs_data_nonparents$grandparent, hrs_data_nonparents$year)
 table(hrs_data_nonparents$grandparent, hrs_data_nonparents$time)

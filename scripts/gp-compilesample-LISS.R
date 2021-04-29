@@ -1,8 +1,5 @@
 ### Transition to Grandparenthood Paper - LISS Sample ###
 
-#version.string R version 3.6.3 (2020-02-29)
-#nickname       Holding the Windsock        
-
 library(tidyverse)
 library(psych)
 library(foreign)
@@ -1227,6 +1224,10 @@ liss_grand_wide <- liss_grand_wide %>%
          
 table(liss_grand_wide$grandparent) # check count: N=337
 
+# build a data frame that I can later import into the .Rmd file in order to report the sample size flow
+liss_sampleflow_gp <- data.frame(step = numeric(0), grandparents = numeric(0))
+liss_sampleflow_gp[nrow(liss_sampleflow_gp)+1, ] <- c(1, table(liss_grand_wide$grandparent)[2]) # add step 1
+
 # drop non-grandparents where more than half of years are missing
 # -> these will not be very useful for matching
 liss_grand_wide <- liss_grand_wide %>% 
@@ -1339,6 +1340,11 @@ lisslongvalid <- left_join(lisslongvalid, liss_last_time_point) %>% arrange(nome
 # N = 335 grandparents (in total) - 65 with no valid assessment at least 2 years before 
 # transition to GP -> 270
 lisslongvalid %>% group_by(grandparent, matchtime) %>% summarise(n = n(), ndist = n_distinct(nomem_encr))
+
+# build a data frame that I can later import into the .Rmd file in order to report the sample size flow
+liss_sampleflow_gp[nrow(liss_sampleflow_gp)+1, ] <- 
+  c(2, (lisslongvalid %>% group_by(grandparent) %>% summarise(ndist = n_distinct(nomem_encr)))[2,2]) # add step 2
+
 # Of these 270, all at least appear in Family and Household data
 lisslongvalid %>% filter(validfam==1) %>% group_by(grandparent, matchtime) %>% 
   summarise(n = n(), ndist = n_distinct(nomem_encr))
@@ -1366,8 +1372,11 @@ rm(lisslongvalid_neg, lisslongvalid_pos)
 lisslongvalid %>% select(nomem_encr, year, time, valid, matchtime, grandparent, transit, transityear) %>% 
   filter(grandparent==1) %>% print(n=50)
 table(lisslongvalid$valid, lisslongvalid$matchtime)
-(N_GP_liss <- pull(lisslongvalid %>% filter(valid==0 & matchtime %in% c(-5:-2)) %>% 
-                   summarise(n = n()))) 
+
+# build a data frame that I can later import into the .Rmd file in order to report the sample size flow
+liss_sampleflow_gp[nrow(liss_sampleflow_gp)+1, ] <- 
+  c(3, pull(lisslongvalid %>% filter(valid==0 & matchtime %in% c(-5:-2)) %>% summarise(n = n()))) # add step 3
+save(liss_sampleflow_gp, file = "data/processed/LISS/liss_sampleflow_gp.rda") # not finished yet
 
 # Restrict sample to those with at least 1 valid pre- and 1 valid post-treatment assessment
 # -> ALSO, pre-treatment assessment has to be at time==-2 (or earlier)
@@ -1767,6 +1776,19 @@ rm(list_subset_parents)
 lissimp_parents_ps_1 %>% 
   group_by(grandparent) %>% summarise(n = n(), N = n_distinct(nomem_encr))
 
+# build a data frame that I can later import into the .Rmd file in order to report the sample size flow
+load(file = "data/processed/LISS/liss_sampleflow_gp.rda")
+if(nrow(liss_sampleflow_gp)==3){ # added this condition in case I only execute the later parts of the script
+  liss_sampleflow_gp[nrow(liss_sampleflow_gp)+1, ] <- 
+    c(4, (lissimp_parents_ps_1 %>% group_by(grandparent) %>% summarise(n = n(), N = n_distinct(nomem_encr)))[2,3]) # add step 4
+}
+save(liss_sampleflow_gp, file = "data/processed/LISS/liss_sampleflow_gp.rda") # save for later import
+
+# another one for the non-grandparent control subjects
+liss_sampleflow_nongp <- data.frame(group = numeric(0), obs = numeric(0), n = numeric(0))
+liss_sampleflow_nongp[nrow(liss_sampleflow_nongp)+1, ] <- 
+  c(1, (lissimp_parents_ps_1 %>% group_by(grandparent) %>% 
+          summarise(n = n(), N = n_distinct(nomem_encr)))[1, c(2,3)]) # add parent control group
 
 # NONPARENTS
 subset_nonparents_liss <- function(x) { 
@@ -1789,6 +1811,12 @@ rm(list_subset_nonparents)
 lissimp_nonparents_ps_1 %>% 
   group_by(grandparent) %>% summarise(n = n(), N = n_distinct(nomem_encr))
 
+# for the non-grandparent control subjects
+liss_sampleflow_nongp[nrow(liss_sampleflow_nongp)+1, ] <- 
+  c(2, (lissimp_nonparents_ps_1 %>% group_by(grandparent) %>% 
+          summarise(n = n(), N = n_distinct(nomem_encr)))[1, c(2,3)]) # add nonparent control group
+liss_sampleflow_nongp$group <- factor(c("parents", "nonparents")) 
+save(liss_sampleflow_nongp, file = "data/processed/LISS/liss_sampleflow_nongp.rda") # save for later import
 
 # Sadly, some dummy covariates I picked have a very one-sided distribution in the (smaller) GP group where 
 # some variables have 0 (or only 1, 2, or 3) cases in one group. Example:
@@ -2034,6 +2062,13 @@ liss_data_parents %>% group_by(grandparent) %>% summarise(N=n_distinct(nomem_enc
 liss_data_parents %>% group_by(grandparent) %>% summarise(N=n_distinct(nomem_encr, year)) 
 # matches number above, see  summary(liss_parents_matchit)
 
+# build a data.frame for import of these numbers to .Rmd (papaja)
+liss_replacement_controls <- data.frame(group = numeric(0), obs = numeric(0), n = numeric(0))
+liss_replacement_controls[nrow(liss_replacement_controls)+1, ] <- 
+  c(1,
+    (liss_data_parents %>% group_by(grandparent) %>% summarise(N=n_distinct(nomem_encr, year)))[1,2],
+    (liss_data_parents %>% group_by(grandparent) %>% summarise(N=n_distinct(nomem_encr)))[1,2]) # add parent control group
+
 table(liss_data_parents$grandparent, liss_data_parents$year)
 table(liss_data_parents$grandparent, liss_data_parents$time)
 table(liss_data_parents$grandparent, liss_data_parents$valid)
@@ -2099,8 +2134,8 @@ table(lissanalysis_parents$grandparent, lissanalysis_parents$time)
 table(lissanalysis_parents$grandparent, lissanalysis_parents$valid)
 table(lissanalysis_parents$grandparent, lissanalysis_parents$year)
 
-# cells at time > 4 too small
-lissanalysis_parents <- lissanalysis_parents %>% filter(time %in% c(-4:4)) %>% 
+# cells at time > 6 too small
+lissanalysis_parents <- lissanalysis_parents %>% filter(time %in% c(-6:6)) %>% 
   select(-match_year, -valid_match, -nohouse_encr, -droplater)
 
 # save .rda 
@@ -2145,6 +2180,14 @@ liss_data_nonparents <- liss_data_nonparents %>% group_by(subclass) %>%
 liss_data_nonparents %>% group_by(grandparent) %>% summarise(N=n_distinct(nomem_encr))
 liss_data_nonparents %>% group_by(grandparent) %>% summarise(N=n_distinct(nomem_encr, year)) 
 # matches number above, see  summary(liss_parents_matchit)
+
+# build a data.frame for import of these numbers to .Rmd (papaja)
+liss_replacement_controls[nrow(liss_replacement_controls)+1, ] <- 
+  c(2,
+    (liss_data_nonparents %>% group_by(grandparent) %>% summarise(N=n_distinct(nomem_encr, year)))[1,2],
+    (liss_data_nonparents %>% group_by(grandparent) %>% summarise(N=n_distinct(nomem_encr)))[1,2]) # add nonparent control group
+liss_replacement_controls$group <- factor(c("parents", "nonparents")) 
+save(liss_replacement_controls, file = "data/processed/LISS/liss_replacement_controls.rda") # save for later import
 
 table(liss_data_nonparents$grandparent, liss_data_nonparents$year)
 table(liss_data_nonparents$grandparent, liss_data_nonparents$time)
@@ -2211,8 +2254,8 @@ table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$time)
 table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$valid)
 table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$year)
 
-# cells at time > 4 too small 
-lissanalysis_nonparents <- lissanalysis_nonparents %>% filter(time %in% c(-4:4)) %>% 
+# cells at time > 6 too small 
+lissanalysis_nonparents <- lissanalysis_nonparents %>% filter(time %in% c(-6:6)) %>% 
   select(-match_year, -valid_match, -nohouse_encr, -droplater)
 
 # save .rda 
