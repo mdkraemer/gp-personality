@@ -2214,7 +2214,7 @@ table(hrsanalysis_parents$grandparent, hrsanalysis_parents$valid)
 table(hrsanalysis_parents$grandparent, hrsanalysis_parents$year)
 
 hrsanalysis_parents <- hrsanalysis_parents %>% filter(time %in% c(-6:6)) %>% 
-  select(-time_match, -match_year, -valid_match)
+  select(-match_year, -valid_match)
 
 # save .rda 
 save(hrsanalysis_parents, file = "data/processed/HRS/hrsanalysis_parents.rda")
@@ -2335,7 +2335,7 @@ table(hrsanalysis_nonparents$grandparent, hrsanalysis_nonparents$valid)
 table(hrsanalysis_nonparents$grandparent, hrsanalysis_nonparents$year)
 
 hrsanalysis_nonparents <- hrsanalysis_nonparents %>% filter(time %in% c(-6:6)) %>% 
-  select(-time_match, -match_year, -valid_match)
+  select(-match_year, -valid_match)
 
 # save .rda 
 save(hrsanalysis_nonparents, file = "data/processed/HRS/hrsanalysis_nonparents.rda")
@@ -2398,12 +2398,12 @@ for (i in seq_along(hrs_balance_matrix_parents[varnum_parents])) {
   hrs_balance_matrix_parents[[i, 4]] <- stdmeandiff(get(hrs_balance_matrix_parents[[i, 2]]), 
                                                     grandparent, hrs_bal_parents)            #after matching
   }
-hrs_balance_matrix_parents[, 3:4] <- round(as.numeric(hrs_balance_matrix_parents[, 3:4]), 3)
+#hrs_balance_matrix_parents[, 3:4] <- round(as.numeric(hrs_balance_matrix_parents[, 3:4]), 3)
 
-kable(hrs_balance_matrix_parents[, 2:4], format="rst", 
-      col.names = c("Covariate", "Before Matching",
-                    "After Matching"), 
-      align = "lcc", digits=2, caption = "Table 1. Covariate Balance")
+#kable(hrs_balance_matrix_parents[, 2:4], format="rst", 
+#      col.names = c("Covariate", "Before Matching",
+#                    "After Matching"), 
+#      align = "lcc", digits=2, caption = "Table 1. Covariate Balance")
 
 
 # (2) NONPARENTS
@@ -2428,11 +2428,28 @@ for (i in seq_along(hrs_balance_matrix_nonparents[varnum_nonparents])) {
   hrs_balance_matrix_nonparents[[i, 4]] <- stdmeandiff(get(hrs_balance_matrix_nonparents[[i, 2]]), 
                                                     grandparent, hrs_bal_nonparents)            #after matching
 }
-hrs_balance_matrix_nonparents[, 3:4] <- round(as.numeric(hrs_balance_matrix_nonparents[, 3:4]), 3)
+#hrs_balance_matrix_nonparents[, 3:4] <- round(as.numeric(hrs_balance_matrix_nonparents[, 3:4]), 3)
 
-kable(hrs_balance_matrix_nonparents[, 2:4], format="rst", 
-      col.names = c("Covariate", "Before Matching",
-                    "After Matching"), 
-      align = "lcc", digits=2, caption = "Table 1. Covariate Balance")
+#kable(hrs_balance_matrix_nonparents[, 2:4], format="rst", 
+#      col.names = c("Covariate", "Before Matching",
+#                    "After Matching"), 
+#      align = "lcc", digits=2, caption = "Table 1. Covariate Balance")
 
+# build a common data.frame for later import into .Rmd (papaja)
+hrs_balance_parents_df <- as.data.frame(hrs_balance_matrix_parents)[2:4]
+hrs_balance_nonparents_df <- as.data.frame(hrs_balance_matrix_nonparents)[2:4]
+colnames(hrs_balance_parents_df)[1] <- "Covariate"
+colnames(hrs_balance_nonparents_df)[1] <- "Covariate"
+hrs_balance_df <- full_join(hrs_balance_parents_df, hrs_balance_nonparents_df)
+hrs_balance_df <- hrs_balance_df %>% mutate_at(vars(-Covariate), funs(as.numeric))
+# draw information from excel sheet 'gp-covariates-overview.xlsx' (& correct order of covariates)
+covar_info <- read_excel("gp-covariates-overview.xlsx", sheet = 1, range = "B4:D62",
+                         col_names = c("Description", "Raw variable", "Covariate")) %>% 
+  filter(!is.na(Description))
+
+hrs_balance_df <- left_join(covar_info,
+                            hrs_balance_df,
+                            by = "Covariate") %>% # sets correct order
+  select(Covariate, everything())
+save(hrs_balance_df, file = "data/processed/HRS/hrs_balance_df.rda")
 
