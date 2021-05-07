@@ -9,35 +9,99 @@
 **Supplemental Tables**  
 
 
-(ref:piecewise-coding-scheme-cap) Coding scheme for the piecewise regression coefficients used to model the developmental trajectories around the transition to grandparenthood
+```{r draw-longitudinal-obs-info, include=FALSE}
+# show overview of sample size over time in the final analysis samples
+hrsanalysis_parents <- hrsanalysis_parents %>% mutate(female = gender - 1)
+hrsanalysis_nonparents <- hrsanalysis_nonparents %>% mutate(female = gender - 1)
 
-(ref:piecewise-coding-scheme-note) $time=0$ marks the first year where the transition to grandparenthood has been reported.  
+sample_time_draw <- function(x) { 
+  x %>% 
+    group_by(grandparent, time) %>% summarise(n=n(), f = mean(female)*100) %>%
+    mutate(f = format(round(f, digits=2), nsmall = 2)) %>% # fix at 2 decimal places
+    pivot_wider(names_from = time, values_from = -c(time, grandparent)) %>% 
+    mutate_if(is.numeric, as.character) %>% # transform num to chr
+    pivot_longer(cols = -grandparent, names_to = c("var", ".value"), names_pattern = "(.)_(.*)") }
+  
+list_sample_time <- list(lissanalysis_parents, lissanalysis_nonparents, 
+                         hrsanalysis_parents, hrsanalysis_nonparents) %>%
+  lapply(sample_time_draw)
+names(list_sample_time) <- c("sample_time_liss_p", "sample_time_liss_np", 
+                             "sample_time_hrs_p", "sample_time_hrs_np")
+list2env(list_sample_time, .GlobalEnv)
+rm(list_sample_time)
 
-```{r piecewise-coding-scheme, results="asis"}
+# we need grandparent obs only once per sample
+sample_time_liss_p <- sample_time_liss_p %>% arrange(desc(grandparent))
+sample_time_liss_np <- sample_time_liss_np %>% filter(grandparent==0)
+sample_time_hrs_p <- sample_time_hrs_p %>% arrange(desc(grandparent))
+sample_time_hrs_np <- sample_time_hrs_np %>% filter(grandparent==0)
+```
+
+(ref:piecewise-coding-scheme-cap) Longitudinal sample size in the analysis samples and coding scheme for the piecewise regression coefficients
+
+(ref:piecewise-coding-scheme-note) obs. = observations. $time=0$ marks the first year where the transition to grandparenthood has been reported. The number of participants is $N_{LISS}=$ 250 and $N_{HRS}=$ 846. 
+
+```{r piecewise-coding-scheme, results="asis", warning=FALSE, message=FALSE}
+sample_time_liss <- as.data.frame(rbind(sample_time_liss_p, sample_time_liss_np))
+sample_time_liss <- sample_time_liss[,-c(1,2)]
+sample_time_hrs <- as.data.frame(rbind(sample_time_hrs_p, sample_time_hrs_np))
+sample_time_hrs <- sample_time_hrs[,-c(1,2)]
+sample_time_hrs <- sample_time_hrs %>% add_column(`-5` = "", `-3` = "", `-1` = "", 
+                                                  `1` = "", `3` = "", `5` = "", )
+
 # Visualize the coding scheme for the piecewise regression coefficients
-coding_scheme <- rbind(c(0, 1, 2, 3, 4, 5, 5, 5, 5, 5, 5, 5, 5),
-                       c(0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7),
-                       c(0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1))
-rownames(coding_scheme) <- c("Before-slope", "After-slope", "Jump")
+coding_scheme_liss <- rbind(c("0", "1", "2", "3", "4", "5", "5", "5", "5", "5", "5", "5", "5"),
+                       c("0", "0", "0", "0", "0", "0", "1", "2", "3", "4", "5", "6", "7"),
+                       c("0", "0", "0", "0", "0", "0", "1", "1", "1", "1", "1", "1", "1"))
+colnames(coding_scheme_liss) <- c("-6", "-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3", "4", "5", "6")
+
+coding_scheme_hrs <- rbind(c("0", "", "1", "", "2", "", "2", "", "2", "", "2", "", "2"),
+                           c("0", "", "0", "", "0", "", "1", "", "2", "", "3", "", "4"),
+                           c("0", "", "0", "", "0", "", "1", "", "1", "", "1", "", "1"))
+colnames(coding_scheme_hrs) <- c("-6", "-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3", "4", "5", "6")
+
+# combine both
+sample_time_and_coding <- rbind(sample_time_liss, coding_scheme_liss,
+                                sample_time_hrs, coding_scheme_hrs)
+
+# no duplicate rownames allowed :(
+rownames(sample_time_and_coding) <- c("Grandparents: obs. \\textcolor{white}{L}",
+                          "Grandparents: \\% women \\textcolor{white}{L}", 
+                          "Parent controls: obs. \\textcolor{white}{L}", 
+                          "Parent controls: \\% women \\textcolor{white}{L}", 
+                          "Nonparent controls: obs. \\textcolor{white}{L}", 
+                          "Nonparent controls: \\% women \\textcolor{white}{L}", 
+                          "Before-slope \\textcolor{white}{L}", "After-slope \\textcolor{white}{L}",
+                          "Jump \\textcolor{white}{L}", 
+                          "Grandparents: obs. \\textcolor{white}{H}",
+                          "Grandparents: \\% women \\textcolor{white}{H}", 
+                          "Parent controls: obs. \\textcolor{white}{H}", 
+                          "Parent controls: \\% women \\textcolor{white}{H}", 
+                          "Nonparent controls: obs. \\textcolor{white}{H}", 
+                          "Nonparent controls: \\% women \\textcolor{white}{H}",
+                          "Before-slope \\textcolor{white}{H}", "After-slope \\textcolor{white}{H}",
+                          "Jump \\textcolor{white}{H}")
 
 apa_table(
-  coding_scheme
+  sample_time_and_coding
   , caption = "(ref:piecewise-coding-scheme-cap)"
   , note = "(ref:piecewise-coding-scheme-note)"
   , align = c("l", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c")
-  , col.names = c("Coefficient", "-6", "-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3", "4", "5", "6")
+  , col.names = c("", "-6", "-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3", "4", "5", "6")
   , col_spanners = list("Pre-transition years" = c(2,7), "Post-transition years" = c(8,14))
+  , stub_indents = list("LISS: Analysis samples" = 1:6, "LISS: Coding scheme" = 7:9, 
+                        "HRS: Analysis samples" = 10:15, "HRS: Coding scheme" = 16:18)
   , format.args = list(gt1 = c(T, T, T, T, T, T, T, T, T, T, T, T, T, T),
                        digits = c(0,0,0,0,0,0,0,0,0,0,0,0,0),
                        zero = c(T, T, T, T, T, T, T, T, T, T, T, T, T, T))
-  , escape = T
-  , landscape = F
+  , escape = F
+  , landscape = T
   , placement = "ht"
-  #, font_size = "footnotesize"
+  , font_size = "small"
 )
 ```
 
-(ref:stddiffmeans-balance-liss-cap) Standardized Difference in Means for Covariates Used in Propensity Score Matching and the Propensity Score in the LISS 
+(ref:stddiffmeans-balance-liss-cap) Standardized Difference in Means for Covariates Used in Propensity Score Matching and the Propensity Score in the LISS panel 
 
 (ref:stddiffmeans-balance-note) PSM = propensity score matching, ref. = reference category, f. = female, m. = male, NA = covariate not used in this sample. The standardized difference in means between the grandparent and the two control groups (parent and nonparent) was computed by $(\bar{x}_{gp}-\bar{x}_{c})/ (\hat\sigma_{gp})$. A rule of thumb says that this measure should ideally be below $.25$ [@stuartMatchingMethodsCausal2010].  
 
