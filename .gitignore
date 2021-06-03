@@ -9,3 +9,5 @@
 /data/raw
 # ignore processed data (for now, at least)
 /data/processed
+# ignore feedback folder
+/feedback
