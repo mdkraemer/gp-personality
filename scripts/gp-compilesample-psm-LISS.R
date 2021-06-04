@@ -5,6 +5,7 @@
 
 library(tidyverse)
 library(MatchIt)
+library(readxl)
 
 load(file = "data/processed/LISS/lisslong_cleaned.rda")
 load(file = "data/processed/LISS/lisslong_valid.rda")
@@ -136,9 +137,10 @@ lissimp_matching_1 %>%
 
 # Compared to the (old) method that does not filter by 'nokids==0', we 
 # drop 3 grandparents 
-lissimp_matching_1 %>% filter(grandparent==1 & nokids==1 & valid==-1 & droplater==F) %>% print(width=Inf)
+lissimp_matching_1 %>% filter(grandparent==1 & nokids==1 & valid==-1 & droplater==F) %>% 
+  as_tibble() %>% print(width=Inf)
 # 890490, 808758, 815246
-lisslongvalid %>% filter(nomem_encr %in% c(890490, 808758, 815246)) %>% print(width=Inf)
+lisslongvalid %>% filter(nomem_encr %in% c(890490, 808758, 815246)) %>% as_tibble() %>% print(width=Inf)
 # totalresidentkids==0, totalchildren is 0 or NA (except for 890490 in 2017) - I'd say we drop them
 
 # 2)
@@ -153,7 +155,8 @@ lissimp_matching_1 %>%
 # one more correction: 
 # we also want to use 'kid1age' as a covariate (must not have NAs)
 lissimp_matching_1 %>% 
-  filter(grandparent==1 & nokids==0 & time==matchtime & droplater==F & is.na(kid1age)) %>% print(width=Inf)
+  filter(grandparent==1 & nokids==0 & time==matchtime & droplater==F & is.na(kid1age))
+
 # 7 GP observations have NA for kid1age (842779, 807870, 872305, 811608, 839028, 841723, 851635) 
 lisslongvalid %>% 
   filter(nomem_encr %in% c(842779, 807870, 872305, 811608, 839028, 841723, 851635)) %>% 
@@ -166,7 +169,7 @@ lissimp_matching_1 %>%
   filter(nomem_encr %in% c(842779, 807870, 872305, 811608, 839028, 841723, 851635)) %>% 
   arrange(nomem_encr, year) %>% 
   select(nomem_encr, year, time,  contains("kid"), currentpartner, livetogether, 
-         totalchildren, -totalresidentkids) %>% print(width=Inf)
+         totalchildren, -totalresidentkids) %>% as_tibble() %>% print(width=Inf)
 
 # I have literally searched multiple hours for a more elegant way to code this & failed...
 # tried: across() / mutate_at() / lag() / lead() / fill()
@@ -227,7 +230,7 @@ lissimp_matching_3 %>%
   filter(nomem_encr %in% c(842779, 807870, 872305, 811608, 839028, 841723, 851635)) %>% 
   arrange(nomem_encr, year) %>% 
   select(nomem_encr, year, time,  contains("kid"), currentpartner, livetogether, 
-         totalchildren, -totalresidentkids) %>% print(width=Inf)
+         totalchildren, -totalresidentkids) %>% as_tibble() %>% print(width=Inf)
 
 # subsetting imputed datasets:
 
@@ -516,7 +519,7 @@ table(lissimp_parents$grandparent, lissimp_parents$valid)
 
 # perform matching on previously computed propensity score which is stored in 'pscore'
 liss_parents_matchit <- matchit(grandparent ~ pscore, data=lissimp_parents, distance="mahalanobis",
-                               replace=T, exact=c("female"), ratio=1) # exact matching on gender
+                               replace=T, exact=c("female"), ratio=4) # exact matching on gender
 liss_parents_matchit
 summary(liss_parents_matchit) # with replacement
 liss_data_parents <- get_matches(liss_parents_matchit, data=lissimp_parents)
@@ -635,7 +638,7 @@ table(lissimp_nonparents$grandparent, lissimp_nonparents$valid)
 
 # perform matching on previously computed propensity score which is stored in 'pscore'
 liss_nonparents_matchit <- matchit(grandparent ~ pscore, data=lissimp_nonparents, distance="mahalanobis",
-                                  replace=T, exact=c("female"), ratio=1) # exact matching on gender
+                                  replace=T, exact=c("female"), ratio=4) # exact matching on gender
 liss_nonparents_matchit
 summary(liss_nonparents_matchit) # with replacement
 liss_data_nonparents <- get_matches(liss_nonparents_matchit, data=lissimp_nonparents)

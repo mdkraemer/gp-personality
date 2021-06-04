@@ -5,6 +5,7 @@
 
 library(tidyverse)
 library(MatchIt)
+library(readxl)
 
 # load .rda
 load(file = "data/processed/HRS/hrslong_cleaned.rda")
@@ -383,7 +384,7 @@ table(hrsimp_parents$grandparent, hrsimp_parents$valid)
 
 # perform matching on previously computed propensity score which is stored in 'pscore'
 hrs_parents_matchit <- matchit(grandparent ~ pscore, data=hrsimp_parents, distance="mahalanobis",
-                               replace=T, exact=c("female"), ratio=1) # exact matching on gender
+                               replace=T, exact=c("female"), ratio=4) # exact matching on gender
 hrs_parents_matchit
 summary(hrs_parents_matchit) # with replacement
 hrs_data_parents <- get_matches(hrs_parents_matchit, data=hrsimp_parents)
@@ -491,7 +492,7 @@ table(hrsimp_nonparents$grandparent, hrsimp_nonparents$valid)
 
 # perform matching on previously computed propensity score which is stored in 'pscore'
 hrs_nonparents_matchit <- matchit(grandparent ~ pscore, data=hrsimp_nonparents, distance="mahalanobis",
-                               replace=T, exact=c("female"), ratio=1) # exact matching on gender
+                               replace=T, exact=c("female"), ratio=4) # exact matching on gender
 hrs_nonparents_matchit
 summary(hrs_nonparents_matchit) # with replacement
 hrs_data_nonparents <- get_matches(hrs_nonparents_matchit, data=hrsimp_nonparents)
