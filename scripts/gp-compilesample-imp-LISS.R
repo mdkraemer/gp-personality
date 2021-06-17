@@ -4,6 +4,8 @@ library(tidyverse)
 library(psych)
 library(foreign)
 
+set.seed(3000)
+
 #### LISS data: draw raw data, select variables ####
 
 ### Background Variables datasets 2008-2019 (thanks to Ted Schwaba / Jaap Denissen for the basis of this code)

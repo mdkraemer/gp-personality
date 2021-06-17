@@ -4,6 +4,8 @@ library(haven)
 library(tidyverse)
 library(psych)
 
+set.seed(3000)
+
 #### HRS data: draw raw data, select variables ####
 
 # load raw data files (SAS format, downloaded from HRS website)

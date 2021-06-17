@@ -7,6 +7,7 @@ library(tidyverse)
 library(MatchIt)
 library(readxl)
 
+# load .rda
 load(file = "data/processed/LISS/lisslong_cleaned.rda")
 load(file = "data/processed/LISS/lisslong_valid.rda")
 

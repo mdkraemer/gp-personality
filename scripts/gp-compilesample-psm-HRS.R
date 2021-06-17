@@ -472,7 +472,7 @@ hrsanalysis_parents <- hrsanalysis_parents %>% filter(time %in% c(-6:6)) %>%
 # save .rda 
 save(hrsanalysis_parents, file = "data/processed/HRS/hrsanalysis_parents.rda")
 hrsanalysis_parents %>% group_by(grandparent) %>% summarise(N = n_distinct(HHIDPN))
-# duplicates in the controls, 442 controls matched to 712 cases 
+# duplicates in the controls
 
 
 #### PSM: 'matchit' with replacement -> (2) nonparent control group ####

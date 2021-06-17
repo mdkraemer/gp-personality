@@ -39,7 +39,7 @@ sample_time_hrs_np <- sample_time_hrs_np %>% filter(grandparent==0)
 
 (ref:piecewise-coding-scheme-cap) Longitudinal sample size in the analysis samples and coding scheme for the piecewise regression coefficients
 
-(ref:piecewise-coding-scheme-note) obs. = observations. $time=0$ marks the first year where the transition to grandparenthood has been reported. The number of participants is $N_{LISS}=$ 250 and $N_{HRS}=$ 846. 
+(ref:piecewise-coding-scheme-note) obs. = observations. $time=0$ marks the first year where the transition to grandparenthood has been reported. The number of grandparent participants is $N_{LISS}=$ 250 and $N_{HRS}=$ 846. 
 
 ```{r piecewise-coding-scheme, results="asis", warning=FALSE, message=FALSE}
 sample_time_liss <- as.data.frame(rbind(sample_time_liss_p, sample_time_liss_np))
@@ -103,7 +103,7 @@ apa_table(
 
 (ref:stddiffmeans-balance-liss-cap) Standardized Difference in Means for Covariates Used in Propensity Score Matching and the Propensity Score in the LISS panel 
 
-(ref:stddiffmeans-balance-note) PSM = propensity score matching, ref. = reference category, f. = female, m. = male, NA = covariate not used in this sample. The standardized difference in means between the grandparent and the two control groups (parent and nonparent) was computed by $(\bar{x}_{gp}-\bar{x}_{c})/ (\hat\sigma_{gp})$. A rule of thumb says that this measure should ideally be below $.25$ [@stuartMatchingMethodsCausal2010].  
+(ref:stddiffmeans-balance-note) PSM = propensity score matching, ref. = reference category, f. = female, m. = male, NA = covariate not used in this sample. The standardized difference in means between the grandparent and the two control groups (parent and nonparent) was computed by $(\bar{x}_{gp}-\bar{x}_{c})/ (\hat\sigma_{gp})$. Rules of thumb say that this measure should ideally be below $.25$ [@stuartMatchingMethodsCausal2010] or below $.10$ [@austinIntroductionPropensityScore2011].  
 
 ```{r stddiffmeans-balance-liss, results="asis"}
 # Standardized differences between means
