@@ -302,7 +302,7 @@ Estimating propensity scores requires complete covariate data. Therefore, before
 \subsubsection{Propensity Score Matching}\label{propensity-score-matching}}
 
 Propensity score matching was performed in a grandparent's survey year which preceded the year when the transition was first reported by at least two years (aside from that choosing the smallest available gap between matching and transition). This served the purpose to ensure that the covariates used for matching were not affected by the event itself or its anticipation (i.e., when one's child was already pregnant with their first child; Greenland, 2003; Rosenbaum, 1984; VanderWeele et al., 2020). Propensity score matching was performed using the \emph{MatchIt} R package (Ho et al., 2011) with exact matching on gender combined with Mahalanobis distance matching on the propensity score. In total, four matchings were performed; two per sample (LISS; HRS) and two per control group (parents but not grandparents; nonparents). We matched 1:4 with replacement because of the relatively small pools of available non-grandparent controls. This meant that each grandparent was matched with four control observations in each matching procedure, and that control observations were allowed to be used multiple times for matching (i.e., duplicated in the analysis samples\footnote{In the LISS data, 250 grandparent observations were matched with 1000 control observations (matching with replacement); these control observations corresponded to 523 unique person-year observations stemming from 270 unique participants for the parent control group, and to 464 unique person-year observations stemming from 189 unique participants for the nonparent control group. In the HRS data, 846 grandparent observations were matched with 3384 control observations (matching with replacement); these control observations corresponded to 1393 unique person-year observations stemming from 982 unique participants for the parent control group, and to 1008 unique person-year observations stemming from 704 unique participants for the nonparent control group.}). We did not specify a caliper because our goal was to find matches for all grandparents, and because we achieved satisfactory covariate balance this way.\\
-We evaluated the matching procedure in terms of covariate balance and, graphically, in terms of overlap of the distributions of the propensity scores and (non-categorical) covariates (Stuart, 2010). Covariate balance as indicated by the standardized difference in means between the grandparent and the controls after matching was satisfactory (see Tables \ref{tab:stddiffmeans-balance-liss} \& \ref{tab:stddiffmeans-balance-hrs}) lying below 0.25 as recommended in the literature (Stuart, 2010). Graphically, differences between the distributions of the propensity score and the covariates were also small and indicated no missing overlap (see Fig. SX).\\
+We evaluated the matching procedure in terms of covariate balance and, graphically, in terms of overlap of the distributions of the propensity scores and (non-categorical) covariates (Stuart, 2010). Covariate balance as indicated by the standardized difference in means between the grandparent and the controls after matching was satisfactory (see Tables \ref{tab:stddiffmeans-balance-liss} \& \ref{tab:stddiffmeans-balance-hrs}) lying below 0.25 as recommended in the literature (Stuart, 2010), and below 0.10 with few exceptions (Austin, 2011). Graphically, differences between the distributions of the propensity score and the covariates were also small and indicated no missing overlap (see Fig. SX).\\
 After matching, each matched control observation received the same value as their matched grandparent in the \emph{time} variable describing the temporal relation to treatment, and the control subject's other longitudinal observations were centered around this matched observation. Thereby, we coded a counterfactual transition time frame for each control subject. Due to left- and right-censored longitudinal data (i.e., panel entry or attrition), we restricted the final analysis samples to six years before and six years after the transition as shown in Table \ref{tab:piecewise-coding-scheme}. We analyzed unbalanced panel data where not every participant provided all person-year observations. The final LISS analysis samples, thus, contained 250 grandparents with 1368 longitudinal observations, matched with 1000 control subjects with either 5167 (parent control group) or 5340 longitudinal observations (nonparent control group). The final HRS analysis samples contained 846 grandparents with 2262 longitudinal observations, matched with 3384 control subjects with either 8257 (parent control group) or 8167 longitudinal observations (nonparent control group; see Table \ref{tab:piecewise-coding-scheme}. In the HRS, there were a few additional missing values in the outcomes ranging from 18 to 105 longitudinal observations which will be listwise deleted in the respective analyses.
 
 \hypertarget{analytical-strategy}{%
@@ -422,6 +422,9 @@ Ates, M. (2017). Does grandchild care influence grandparents' self-rated health?
 
 \leavevmode\hypertarget{ref-R-papaja}{}%
 Aust, F., \& Barth, M. (2020). \emph{papaja: Prepare reproducible APA journal articles with R Markdown}. \url{https://github.com/crsh/papaja}
+
+\leavevmode\hypertarget{ref-austinIntroductionPropensityScore2011}{}%
+Austin, P. C. (2011). An introduction to propensity score methods for reducing the effects of confounding in observational studies. \emph{Multivariate Behavioral Research}, \emph{46}(3), 399--424. \url{https://doi.org/10.1080/00273171.2011.568786}
 
 \leavevmode\hypertarget{ref-austinDoublePropensityscoreAdjustment2017}{}%
 Austin, P. C. (2017). Double propensity-score adjustment: A solution to design bias or bias due to incomplete matching. \emph{Statistical Methods in Medical Research}, \emph{26}(1), 201--222. \url{https://doi.org/10.1177/0962280214543508}
@@ -945,9 +948,9 @@ HRS: Coding scheme &  &  &  &  &  &  &  &  &  &  &  &  & \\
 reference category, f.~= female, m. = male, NA = covariate not used in
 this sample. The standardized difference in means between the
 grandparent and the two control groups (parent and nonparent) was
-computed by \((\bar{x}_{gp}-\bar{x}_{c})/ (\hat\sigma_{gp})\). A rule of
-thumb says that this measure should ideally be below \(.25\) (Stuart,
-2010).}
+computed by \((\bar{x}_{gp}-\bar{x}_{c})/ (\hat\sigma_{gp})\). Rules of
+thumb say that this measure should ideally be below \(.25\) (Stuart,
+2010) or below \(.10\) (Austin, 2011).}
 \end{TableNotes}
 
 \footnotesize{
@@ -1031,9 +1034,9 @@ year & Year of assessment & wave & -0.23 & -0.07 & 0.08 & -0.06\\
 reference category, f.~= female, m. = male, NA = covariate not used in
 this sample. The standardized difference in means between the
 grandparent and the two control groups (parent and nonparent) was
-computed by \((\bar{x}_{gp}-\bar{x}_{c})/ (\hat\sigma_{gp})\). A rule of
-thumb says that this measure should ideally be below \(.25\) (Stuart,
-2010).}
+computed by \((\bar{x}_{gp}-\bar{x}_{c})/ (\hat\sigma_{gp})\). Rules of
+thumb say that this measure should ideally be below \(.25\) (Stuart,
+2010) or below \(.10\) (Austin, 2011).}
 \end{TableNotes}
 
 \footnotesize{
@@ -1133,7 +1136,7 @@ We used R (Version 4.0.4; R Core Team, 2021) and the R-packages
 1.0.2; Wickham, François, et al., 2020), \emph{effects} (Version 4.2.0;
 Fox \& Weisberg, 2018; Fox, 2003; Fox \& Hong, 2009), \emph{forcats}
 (Version 0.5.0; Wickham, 2020a), \emph{foreign} (Version 0.8.81; R Core
-Team, 2020), \emph{ggplot2} (Version 3.3.3; Wickham, 2016),
+Team, 2020), \emph{ggplot2} (Version 3.3.4; Wickham, 2016),
 \emph{GPArotation} (Version 2014.11.1; Bernaards \& I.Jennrich, 2005),
 \emph{interactions} (Version 1.1.3; Long, 2019), \emph{jtools} (Version
 2.1.1; Long, 2020), \emph{knitr} (Version 1.30; Xie, 2015), \emph{lme4}
@@ -1147,7 +1150,7 @@ Revelle, 2020), \emph{purrr} (Version 0.3.4; Henry \& Wickham, 2020),
 \emph{readr} (Version 1.4.0; Wickham \& Hester, 2020), \emph{robustlmm}
 (Version 2.3; Koller, 2016), \emph{scales} (Version 1.1.1; Wickham \&
 Seidel, 2020), \emph{stringr} (Version 1.4.0; Wickham, 2019),
-\emph{tibble} (Version 3.0.4; Müller \& Wickham, 2020), \emph{tidyr}
+\emph{tibble} (Version 3.1.2; Müller \& Wickham, 2020), \emph{tidyr}
 (Version 1.1.2; Wickham, 2020b), \emph{tidyverse} (Version 1.3.0;
 Wickham, Averick, et al., 2019), and \emph{tinylabels} (Version 0.1.0;
 Barth, 2020) for data wrangling, analyses, and plots.\\
@@ -1170,34 +1173,34 @@ methods base
 
 other attached packages: {[}1{]} forcats\_0.5.0 stringr\_1.4.0
 dplyr\_1.0.2 purrr\_0.3.4\\
-{[}5{]} readr\_1.4.0 tidyr\_1.1.2 tibble\_3.0.4 ggplot2\_3.3.3\\
+{[}5{]} readr\_1.4.0 tidyr\_1.1.2 tibble\_3.1.2 ggplot2\_3.3.4\\
 {[}9{]} tidyverse\_1.3.0 citr\_0.3.2 papaja\_0.1.0.9997
 tinylabels\_0.1.0
 
 loaded via a namespace (and not attached): {[}1{]} Rcpp\_1.0.6
 lattice\_0.20-41 lubridate\_1.7.9.2\\
 {[}4{]} psych\_2.0.9 assertthat\_0.2.1 digest\_0.6.27\\
-{[}7{]} mime\_0.9 R6\_2.5.0 cellranger\_1.1.0\\
-{[}10{]} backports\_1.2.0 reprex\_0.3.0 evaluate\_0.14\\
-{[}13{]} httr\_1.4.2 pillar\_1.4.7 rlang\_0.4.9\\
-{[}16{]} readxl\_1.3.1 rstudioapi\_0.13 miniUI\_0.1.1.1\\
-{[}19{]} blob\_1.2.1 rmarkdown\_2.5 munsell\_0.5.0\\
-{[}22{]} shiny\_1.5.0 broom\_0.7.6 GPArotation\_2014.11-1 {[}25{]}
-compiler\_4.0.4 httpuv\_1.5.4 modelr\_0.1.8\\
-{[}28{]} xfun\_0.19 pkgconfig\_2.0.3 base64enc\_0.1-3\\
-{[}31{]} mnormt\_2.0.2 tmvnsim\_1.0-2 htmltools\_0.5.0\\
-{[}34{]} tidyselect\_1.1.0 bookdown\_0.21 fansi\_0.4.1\\
-{[}37{]} withr\_2.3.0 crayon\_1.3.4 dbplyr\_1.4.4\\
-{[}40{]} later\_1.1.0.1 grid\_4.0.4 nlme\_3.1-152\\
-{[}43{]} jsonlite\_1.7.1 xtable\_1.8-4 gtable\_0.3.0\\
-{[}46{]} lifecycle\_0.2.0 DBI\_1.1.0 magrittr\_2.0.1\\
-{[}49{]} scales\_1.1.1 cli\_2.2.0 stringi\_1.5.3\\
-{[}52{]} fs\_1.5.0 promises\_1.1.1 xml2\_1.3.2\\
-{[}55{]} ellipsis\_0.3.1 generics\_0.1.0 vctrs\_0.3.5\\
-{[}58{]} tools\_4.0.4 glue\_1.4.2 hms\_0.5.3\\
-{[}61{]} parallel\_4.0.4 fastmap\_1.0.1 yaml\_2.2.1\\
-{[}64{]} colorspace\_2.0-0 rvest\_0.3.6 knitr\_1.30\\
-{[}67{]} haven\_2.3.1
+{[}7{]} utf8\_1.2.1 mime\_0.9 R6\_2.5.0\\
+{[}10{]} cellranger\_1.1.0 backports\_1.2.1 reprex\_0.3.0\\
+{[}13{]} evaluate\_0.14 httr\_1.4.2 pillar\_1.6.1\\
+{[}16{]} rlang\_0.4.11 readxl\_1.3.1 rstudioapi\_0.13\\
+{[}19{]} miniUI\_0.1.1.1 blob\_1.2.1 rmarkdown\_2.5\\
+{[}22{]} munsell\_0.5.0 shiny\_1.5.0 broom\_0.7.6\\
+{[}25{]} GPArotation\_2014.11-1 compiler\_4.0.4 httpuv\_1.5.4\\
+{[}28{]} modelr\_0.1.8 xfun\_0.19 pkgconfig\_2.0.3\\
+{[}31{]} base64enc\_0.1-3 mnormt\_2.0.2 tmvnsim\_1.0-2\\
+{[}34{]} htmltools\_0.5.0 tidyselect\_1.1.0 bookdown\_0.21\\
+{[}37{]} fansi\_0.5.0 withr\_2.4.2 crayon\_1.4.1\\
+{[}40{]} dbplyr\_1.4.4 later\_1.1.0.1 grid\_4.0.4\\
+{[}43{]} nlme\_3.1-152 jsonlite\_1.7.2 xtable\_1.8-4\\
+{[}46{]} gtable\_0.3.0 lifecycle\_1.0.0 DBI\_1.1.0\\
+{[}49{]} magrittr\_2.0.1 scales\_1.1.1 cli\_2.5.0\\
+{[}52{]} stringi\_1.5.3 fs\_1.5.0 promises\_1.1.1\\
+{[}55{]} xml2\_1.3.2 ellipsis\_0.3.2 generics\_0.1.0\\
+{[}58{]} vctrs\_0.3.8 tools\_4.0.4 glue\_1.4.2\\
+{[}61{]} hms\_0.5.3 parallel\_4.0.4 fastmap\_1.0.1\\
+{[}64{]} yaml\_2.2.1 colorspace\_2.0-1 rvest\_0.3.6\\
+{[}67{]} knitr\_1.30 haven\_2.3.1
 
 \newpage
 
@@ -1215,6 +1218,12 @@ citations}. \url{https://github.com/crsh/citr}
 \leavevmode\hypertarget{ref-R-papaja}{}%
 Aust, F., \& Barth, M. (2020). \emph{papaja: Prepare reproducible APA
 journal articles with R Markdown}. \url{https://github.com/crsh/papaja}
+
+\leavevmode\hypertarget{ref-austinIntroductionPropensityScore2011}{}%
+Austin, P. C. (2011). An introduction to propensity score methods for
+reducing the effects of confounding in observational studies.
+\emph{Multivariate Behavioral Research}, \emph{46}(3), 399--424.
+\url{https://doi.org/10.1080/00273171.2011.568786}
 
 \leavevmode\hypertarget{ref-R-tinylabels}{}%
 Barth, M. (2020). \emph{Tinylabels: Lightweight variable labels}.
