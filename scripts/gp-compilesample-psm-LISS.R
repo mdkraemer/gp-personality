@@ -614,7 +614,7 @@ table(lissanalysis_parents$grandparent, lissanalysis_parents$year)
 
 # cells at time > 6 too small
 lissanalysis_parents <- lissanalysis_parents %>% filter(time %in% c(-6:6)) %>% 
-  select(-match_year, -valid_match, -nohouse_encr, -droplater)
+  select(-match_year, -valid_match, -droplater)
 
 # save .rda 
 save(lissanalysis_parents, file = "data/processed/LISS/lissanalysis_parents.rda")
@@ -734,7 +734,7 @@ table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$year)
 
 # cells at time > 6 too small 
 lissanalysis_nonparents <- lissanalysis_nonparents %>% filter(time %in% c(-6:6)) %>% 
-  select(-match_year, -valid_match, -nohouse_encr, -droplater)
+  select(-match_year, -valid_match, -droplater)
 
 # save .rda 
 save(lissanalysis_nonparents, file = "data/processed/LISS/lissanalysis_nonparents.rda")

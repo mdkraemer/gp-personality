@@ -8,6 +8,70 @@
 \noindent
 **Supplemental Tables**  
 
+```{r icc-table, results="asis"}
+# ICCs = proportion of the total variation explained by the respective blocking factor
+# https://stats.stackexchange.com/questions/18088/intraclass-correlation-icc-for-an-interaction
+outcomes <- c("agree", "con", "extra", "neur", "open", "swls")
+datasets <- c("lissanalysis_parents", "lissanalysis_nonparents", 
+              "hrsanalysis_parents", "hrsanalysis_nonparents")
+icc_list <- as.data.frame(rbind(icc_liss_parents_pid = rep(NA, 6), icc_liss_parents_hid = rep(NA, 6), 
+                                icc_liss_parents_pidhid = rep(NA, 6), icc_liss_nonparents_pid = rep(NA, 6),
+                                icc_liss_nonparents_hid = rep(NA, 6), 
+                                icc_liss_nonparents_pidhid = rep(NA, 6), icc_hrs_parents_pid = rep(NA, 6), 
+                                icc_hrs_parents_hid = rep(NA, 6), icc_hrs_parents_pidhid = rep(NA, 6), 
+                                icc_hrs_nonparents_pid = rep(NA, 6), icc_hrs_nonparents_hid = rep(NA, 6),
+                                icc_hrs_nonparents_pidhid = rep(NA, 6)))
+colnames(icc_list) <- outcomes
+
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  for (j in 1:length(datasets)){
+    dataset = datasets[j]
+    pos = seq(from = 1, to = 10, by = 3)[j]
+    model <- lme4::lmer(get(outcome) ~ 1 + (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+    var <- as.data.frame(summary(model)$varcor)
+    icc_pid <- var[1,4] / (var[1,4] + var[2,4] + var[3,4])
+    icc_hid <- var[2,4] / (var[1,4] + var[2,4] + var[3,4])
+    icc_pidhid <- (var[1,4] + var[2,4]) / (var[1,4] + var[2,4] + var[3,4])
+    icc_list[pos, i] <- icc_pid # rows = datasets, columns = outcomes
+    icc_list[pos + 1, i] <- icc_hid
+    icc_list[pos + 2, i] <- icc_pidhid
+  }
+}
+# singular fir for two models where the icc_hid is estimated too close to zero
+# For these models, the icc_pid is the same compared to the model with only 
+# the (1 | pid) random effect (which fits without trouble)
+
+rownames(icc_list) <- c("$ICC_{pid}$ \\textcolor{white}{LP}", "$ICC_{hid}$ \\textcolor{white}{LP}", 
+                        "$ICC_{pid/hid}$ \\textcolor{white}{LP}", 
+                        "$ICC_{pid}$ \\textcolor{white}{LN}", "$ICC_{hid}$ \\textcolor{white}{LN}", 
+                        "$ICC_{pid/hid}$ \\textcolor{white}{LN}", 
+                        "$ICC_{pid}$ \\textcolor{white}{HP}", "$ICC_{hid}$ \\textcolor{white}{HP}", 
+                        "$ICC_{pid/hid}$ \\textcolor{white}{HP}", 
+                        "$ICC_{pid}$ \\textcolor{white}{HN}", "$ICC_{hid}$ \\textcolor{white}{HN}", 
+                        "$ICC_{pid/hid}$ \\textcolor{white}{HN}")
+colnames(icc_list) <- c("\\textcolor{white}{xxx}A\\textcolor{white}{xxx}",
+                        "\\textcolor{white}{xxx}C\\textcolor{white}{xxx}",
+                        "\\textcolor{white}{xxx}E\\textcolor{white}{xxx}",
+                        "\\textcolor{white}{xxx}N\\textcolor{white}{xxx}",
+                        "\\textcolor{white}{xxx}O\\textcolor{white}{xxx}", 
+                        "\\textcolor{white}{xxx}LS\\textcolor{white}{xxx}") # added some whitespace to adjust table width
+
+apa_table(
+  icc_list
+  , caption = "Intra-Class Correlations"
+  , note = "A = agreeableness, C = conscientiousness, E = extraversion, N = neuroticism, O = openness, LS = life satisfaction. Intra-class correlations are the proportion of total variation that is explained by the respective blocking factor. $ICC_{pid}$ is the proportion of total variance explained by nesting in respondents which corresponds to the correlation between two randomly selected observations from the same respondent. $ICC_{hid}$ is the proportion of total variance explained by nesting in households which corresponds to the correlation between two randomly selected observations from the same household. $ICC_{pid/hid}$ is the proportion of total variance explained by nesting in respondents and in households which corresponds to the correlation between two randomly selected observations from the same respondent and the same household." 
+  , align = c("l", "c", "c", "c", "c", "c", "c")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
+                       digits = c(2,2,2,2,2,2,2),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE))
+  , stub_indents = list("LISS: Parent controls" = 1:3, "LISS: Nonparent controls" = 4:6,
+                        "HRS: Parent controls" = 7:9, "HRS: Nonparent controls" = 10:12)
+  , escape = F
+  , landscape = F
+  , placement = "h"
+)
+```
 
 ```{r draw-longitudinal-obs-info, include=FALSE}
 # show overview of sample size over time in the final analysis samples
@@ -47,7 +111,7 @@ sample_time_liss <- sample_time_liss[,-c(1,2)]
 sample_time_hrs <- as.data.frame(rbind(sample_time_hrs_p, sample_time_hrs_np))
 sample_time_hrs <- sample_time_hrs[,-c(1,2)]
 sample_time_hrs <- sample_time_hrs %>% add_column(`-5` = "", `-3` = "", `-1` = "", 
-                                                  `1` = "", `3` = "", `5` = "", )
+                                                  `1` = "", `3` = "", `5` = "")
 
 # Visualize the coding scheme for the piecewise regression coefficients
 coding_scheme_liss <- rbind(c("0", "1", "2", "3", "4", "5", "5", "5", "5", "5", "5", "5", "5"),
@@ -91,6 +155,183 @@ apa_table(
   , col_spanners = list("Pre-transition years" = c(2,7), "Post-transition years" = c(8,14))
   , stub_indents = list("LISS: Analysis samples" = 1:6, "LISS: Coding scheme" = 7:9, 
                         "HRS: Analysis samples" = 10:15, "HRS: Coding scheme" = 16:18)
+  , format.args = list(gt1 = c(T, T, T, T, T, T, T, T, T, T, T, T, T, T),
+                       digits = c(0,0,0,0,0,0,0,0,0,0,0,0,0),
+                       zero = c(T, T, T, T, T, T, T, T, T, T, T, T, T, T))
+  , escape = F
+  , landscape = T
+  , placement = "ht"
+  , font_size = "small"
+)
+```
+
+```{r draw-descriptives, include=FALSE}
+descriptives_draw <- function(x) { 
+  x %>% 
+  group_by(grandparent, time) %>% summarize(a.M = mean(agree, na.rm = T), 
+                                            a.SD = sd(agree, na.rm = T),
+                                            c.M = mean(con, na.rm = T), 
+                                            c.SD = sd(con, na.rm = T),
+                                            e.M = mean(extra, na.rm = T), 
+                                            e.SD = sd(extra, na.rm = T),
+                                            n.M = mean(neur, na.rm = T), 
+                                            n.SD = sd(neur, na.rm = T),
+                                            o.M = mean(open, na.rm = T), 
+                                            o.SD = sd(open, na.rm = T),
+                                            l.M = mean(swls, na.rm = T), 
+                                            l.SD = sd(swls, na.rm = T)) %>%
+  ungroup() %>% 
+  mutate_at(.vars = vars(-c(grandparent, time)), 
+            ~format(round(., digits=2), nsmall = 2)) %>% # fix at 2 decimal places
+  pivot_wider(names_from = time, values_from = -c(time, grandparent)) %>% 
+  mutate_if(is.numeric, as.character) %>% # transform num to chr
+  mutate_at(.vars = vars(contains("SD")), 
+            ~paste0("(", ., ")")) %>% # add parantheses for SD
+  pivot_longer(cols = -grandparent, names_to = c("var", ".value"), names_pattern = "(.*)_(.*)") }
+
+list_descriptives <- list(lissanalysis_parents, lissanalysis_nonparents, 
+                         hrsanalysis_parents, hrsanalysis_nonparents) %>%
+  lapply(descriptives_draw)
+names(list_descriptives) <- c("descriptives_liss_p", "descriptives_liss_np", 
+                             "descriptives_hrs_p", "descriptives_hrs_np")
+list2env(list_descriptives, .GlobalEnv)
+rm(list_descriptives)
+
+# we need grandparent obs only once per sample
+descriptives_liss_p <- descriptives_liss_p %>% arrange(desc(grandparent))
+descriptives_liss_np <- descriptives_liss_np %>% filter(grandparent==0)
+descriptives_hrs_p <- descriptives_hrs_p %>% arrange(desc(grandparent))
+descriptives_hrs_np <- descriptives_hrs_np %>% filter(grandparent==0)
+
+descriptives_liss <- as.data.frame(rbind(descriptives_liss_p, descriptives_liss_np))
+descriptives_liss <- descriptives_liss %>% 
+  slice(1:2, 13:14, 25:26, 3:4, 15:16, 27:28, 5:6, 17:18, 29:30, 7:8, 19:20, 31:32, 
+        9:10, 21:22, 33:34, 11:12, 23:24, 35:36)
+descriptives_liss <- descriptives_liss[,-c(1,2)]
+descriptives_hrs <- as.data.frame(rbind(descriptives_hrs_p, descriptives_hrs_np))
+descriptives_hrs <- descriptives_hrs %>% 
+  slice(1:2, 13:14, 25:26, 3:4, 15:16, 27:28, 5:6, 17:18, 29:30, 7:8, 19:20, 31:32, 
+        9:10, 21:22, 33:34, 11:12, 23:24, 35:36)
+descriptives_hrs <- descriptives_hrs[,-c(1,2)]
+descriptives_hrs <- descriptives_hrs %>% add_column(`-5` = "", `-3` = "", `-1` = "", 
+                                                  `1` = "", `3` = "", `5` = "") %>% 
+  select(`-6`, `-5`, `-4`, `-3`, `-2`, `-1`, `0`, `1`, `2`, `3`, `4`, `5`, `6`)
+```
+
+(ref:descriptives-liss-cap) Mean and Standard Deviation of the Big Five and Life Satisfaction over Time in the LISS Panel
+
+(ref:descriptives-note) Standard deviation shown in brackets; $time=0$ marks the first year where the transition to grandparenthood has been reported.
+
+```{r descriptives-liss, results="asis", warning=FALSE, message=FALSE}
+# no duplicate rownames allowed :(
+rownames(descriptives_liss) <- c("Grandparents \\textcolor{white}{A}",
+                          "\\textcolor{white}{Ag}", 
+                          "Parent controls \\textcolor{white}{A}", 
+                          "\\textcolor{white}{Ap}", 
+                          "Nonparent controls \\textcolor{white}{A}", 
+                          "\\textcolor{white}{An}", 
+                          "Grandparents \\textcolor{white}{C}",
+                          "\\textcolor{white}{Cg}", 
+                          "Parent controls \\textcolor{white}{C}", 
+                          "\\textcolor{white}{Cp}", 
+                          "Nonparent controls \\textcolor{white}{C}", 
+                          "\\textcolor{white}{Cn}", 
+                          "Grandparents \\textcolor{white}{E}",
+                          "\\textcolor{white}{Eg}", 
+                          "Parent controls \\textcolor{white}{E}", 
+                          "\\textcolor{white}{Ep}", 
+                          "Nonparent controls \\textcolor{white}{E}", 
+                          "\\textcolor{white}{En}", 
+                          "Grandparents \\textcolor{white}{N}",
+                          "\\textcolor{white}{Ng}", 
+                          "Parent controls \\textcolor{white}{N}", 
+                          "\\textcolor{white}{Np}", 
+                          "Nonparent controls \\textcolor{white}{N}", 
+                          "\\textcolor{white}{Nn}", 
+                          "Grandparents \\textcolor{white}{O}",
+                          "\\textcolor{white}{Og}", 
+                          "Parent controls \\textcolor{white}{O}", 
+                          "\\textcolor{white}{Op}", 
+                          "Nonparent controls \\textcolor{white}{O}", 
+                          "\\textcolor{white}{On}", 
+                          "Grandparents \\textcolor{white}{L}",
+                          "\\textcolor{white}{Lg}", 
+                          "Parent controls \\textcolor{white}{L}", 
+                          "\\textcolor{white}{Lp}", 
+                          "Nonparent controls \\textcolor{white}{L}", 
+                          "\\textcolor{white}{Ln}")
+
+apa_table(
+  descriptives_liss
+  , caption = "(ref:descriptives-liss-cap)"
+  , note = "(ref:descriptives-note)"
+  , align = c("l", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c")
+  , col.names = c("", "-6", "-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3", "4", "5", "6")
+  , col_spanners = list("Pre-transition years" = c(2,7), "Post-transition years" = c(8,14))
+  , stub_indents = list("Agreeableness" = 1:6, "Conscientiousness" = 7:12, 
+                        "Extraversion" = 13:18, "Neuroticism" = 19:24,
+                        "Openness" = 25:30, "Life satisfaction" = 31:36)
+  , format.args = list(gt1 = c(T, T, T, T, T, T, T, T, T, T, T, T, T, T),
+                       digits = c(0,0,0,0,0,0,0,0,0,0,0,0,0),
+                       zero = c(T, T, T, T, T, T, T, T, T, T, T, T, T, T))
+  , escape = F
+  , landscape = T
+  , placement = "ht"
+  , font_size = "small"
+)
+```
+
+(ref:descriptives-hrs-cap) Mean and Standard Deviation of the Big Five and Life Satisfaction over Time in the HRS
+
+```{r descriptives-hrs, results="asis", warning=FALSE, message=FALSE}
+# no duplicate rownames allowed :(
+rownames(descriptives_hrs) <- c("Grandparents \\textcolor{white}{A}",
+                          "\\textcolor{white}{Ag}", 
+                          "Parent controls \\textcolor{white}{A}", 
+                          "\\textcolor{white}{Ap}", 
+                          "Nonparent controls \\textcolor{white}{A}", 
+                          "\\textcolor{white}{An}", 
+                          "Grandparents \\textcolor{white}{C}",
+                          "\\textcolor{white}{Cg}", 
+                          "Parent controls \\textcolor{white}{C}", 
+                          "\\textcolor{white}{Cp}", 
+                          "Nonparent controls \\textcolor{white}{C}", 
+                          "\\textcolor{white}{Cn}", 
+                          "Grandparents \\textcolor{white}{E}",
+                          "\\textcolor{white}{Eg}", 
+                          "Parent controls \\textcolor{white}{E}", 
+                          "\\textcolor{white}{Ep}", 
+                          "Nonparent controls \\textcolor{white}{E}", 
+                          "\\textcolor{white}{En}", 
+                          "Grandparents \\textcolor{white}{N}",
+                          "\\textcolor{white}{Ng}", 
+                          "Parent controls \\textcolor{white}{N}", 
+                          "\\textcolor{white}{Np}", 
+                          "Nonparent controls \\textcolor{white}{N}", 
+                          "\\textcolor{white}{Nn}", 
+                          "Grandparents \\textcolor{white}{O}",
+                          "\\textcolor{white}{Og}", 
+                          "Parent controls \\textcolor{white}{O}", 
+                          "\\textcolor{white}{Op}", 
+                          "Nonparent controls \\textcolor{white}{O}", 
+                          "\\textcolor{white}{On}", 
+                          "Grandparents \\textcolor{white}{L}",
+                          "\\textcolor{white}{Lg}", 
+                          "Parent controls \\textcolor{white}{L}", 
+                          "\\textcolor{white}{Lp}", 
+                          "Nonparent controls \\textcolor{white}{L}", 
+                          "\\textcolor{white}{Ln}")
+
+apa_table(
+  descriptives_hrs
+  , caption = "(ref:descriptives-hrs-cap)"
+  , note = "(ref:descriptives-note)"
+  , align = c("l", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c")
+  , col.names = c("", "-6", "-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3", "4", "5", "6")
+  , col_spanners = list("Pre-transition years" = c(2,7), "Post-transition years" = c(8,14))
+  , stub_indents = list("Agreeableness" = 1:6, "Conscientiousness" = 7:12, 
+                        "Extraversion" = 13:18, "Neuroticism" = 19:24,
+                        "Openness" = 25:30, "Life satisfaction" = 31:36)
   , format.args = list(gt1 = c(T, T, T, T, T, T, T, T, T, T, T, T, T, T),
                        digits = c(0,0,0,0,0,0,0,0,0,0,0,0,0),
                        zero = c(T, T, T, T, T, T, T, T, T, T, T, T, T, T))

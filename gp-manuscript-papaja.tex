@@ -309,13 +309,139 @@ After matching, each matched control observation received the same value as thei
 \subsection{Analytical Strategy}\label{analytical-strategy}}
 
 We used R (Version 4.0.4; R Core Team, 2021) and the R-packages \emph{lme4} (Version 1.1.26; Bates et al., 2015), and \emph{lmerTest} (Version 3.1.3; Kuznetsova et al., 2017) for multilevel modeling, as well as \emph{tidyverse} (Wickham et al., 2019) for data wrangling, and \emph{papaja} (Aust \& Barth, 2020) for reproducible manuscript production. Additional modeling details and a list of all software we used is provided in the Supplemental Material. In line with Benjamin et al.~(2018), we set the \(\alpha\)-level for all confirmatory analyses to \(.005\).\\
-Our design can be referred to as an interrupted time-series with a \enquote{nonequivalent no-treatment control group} (Shadish et al., 2002, p. 182) where treatment, that is, the transition to grandparenthood, is not deliberately manipulated. First, to analyze mean-level changes, we used linear piecewise regression coefficients in multilevel regression models with person-year observations nested within participants and households (Hoffman, 2015). To model change over time in relation to the birth of the first grandchild, we coded three piecewise regression coefficients: a \emph{before-slope} representing linear change in the years leading up to the transition to grandparenthood, an \emph{after-slope} representing linear change in the years after the transition, and a \emph{jump} coefficient shifting the intercept directly after the transition was first reported, thus representing sudden changes that go beyond changes already modeled by the \emph{after-slope} (see Table \ref{tab:piecewise-coding-scheme} for the coding scheme of these coefficients; Hoffman, 2015). Other studies of personality development have recently adopted similar piecewise growth-curve models (e.g., Bleidorn \& Schwaba, 2018; Krämer \& Rodgers, 2020; Schwaba \& Bleidorn, 2019; van Scheppingen \& Leopold, 2020).\\
+Our design can be referred to as an interrupted time-series with a \enquote{nonequivalent no-treatment control group} (Shadish et al., 2002, p. 182) where treatment, that is, the transition to grandparenthood, is not deliberately manipulated. First, to analyze mean-level changes, we used linear piecewise regression coefficients in multilevel regression models with person-year observations nested within participants and households (Hoffman, 2015). To model change over time in relation to the birth of the first grandchild, we coded three piecewise regression coefficients: a \emph{before-slope} representing linear change in the years leading up to the transition to grandparenthood, an \emph{after-slope} representing linear change in the years after the transition, and a \emph{shift} coefficient shifting the intercept directly after the transition was first reported, thus representing sudden changes that go beyond changes already modeled by the \emph{after-slope} (see Table \ref{tab:piecewise-coding-scheme} for the coding scheme of these coefficients; Hoffman, 2015). Other studies of personality development have recently adopted similar piecewise growth-curve models (e.g., Bleidorn \& Schwaba, 2018; Krämer \& Rodgers, 2020; Schwaba \& Bleidorn, 2019; van Scheppingen \& Leopold, 2020).\\
 All effects of the transition to grandparenthood on the Big Five and life satisfaction were modeled as deviations from patterns in the matched control groups by interacting the three piecewise coefficients with the binary treatment variable (0 = \emph{control}, 1 = \emph{grandparent}). In additional models, we interacted these coefficients with the binary moderator variables resulting in two- or three-way interactions. To test differences in the growth parameters between two groups in cases where these differences were represented by multiple fixed-effects coefficients, we defined linear contrasts using the \emph{linearHypothesis} command from the \emph{car} R package (Fox \& Weisberg, 2019). All models of mean-level changes were estimated using maximum likelihood and included random intercepts but no random slopes of the piecewise regression coefficients. We included the propensity score as a level-2 covariate for a double-robust approach (Austin, 2017).\\
-Second, to assess interindividual differences in intraindividual change in the Big Five and life satisfaction we added random slopes to the models assessing mean-level changes (see Denissen et al., 2019 for a similar approach). In other words, we allowed for differences between individuals in their trajectories of change to be modeled, that is, differences in the \emph{before-slope}, \emph{after-slope}, and \emph{jump} coefficients. Because multiple simultaneous random slopes are often not computationally feasible, we added random slopes one at a time and used likelihood ratio test to determine whether the addition of the respective random slope led to a significant improvement in model fit. We plotted distributions of random slopes (for a similar approach, see Denissen et al., 2019; Doré \& Bolger, 2018). To statistically test differences in the random slope variance between the grandparent group and each control group, we respecified the multilevel models as heterogeneous variance models using the \emph{nlme} R package (Pinheiro et al., 2021), which allows for separate random slope variances to be estimated in the grandparent group and the control group within the same model. Model fit of these heterogeneous variance models was compared to the corresponding models with a homogeneous (single) random slope variance via likelihood ratio tests. This was also done separately for the parent and nonparent control groups.\\
+Second, to assess interindividual differences in intraindividual change in the Big Five and life satisfaction we added random slopes to the models assessing mean-level changes (see Denissen et al., 2019 for a similar approach). In other words, we allowed for differences between individuals in their trajectories of change to be modeled, that is, differences in the \emph{before-slope}, \emph{after-slope}, and \emph{shift} coefficients. Because multiple simultaneous random slopes are often not computationally feasible, we added random slopes one at a time and used likelihood ratio test to determine whether the addition of the respective random slope led to a significant improvement in model fit. We plotted distributions of random slopes (for a similar approach, see Denissen et al., 2019; Doré \& Bolger, 2018). To statistically test differences in the random slope variance between the grandparent group and each control group, we respecified the multilevel models as heterogeneous variance models using the \emph{nlme} R package (Pinheiro et al., 2021), which allows for separate random slope variances to be estimated in the grandparent group and the control group within the same model. Model fit of these heterogeneous variance models was compared to the corresponding models with a homogeneous (single) random slope variance via likelihood ratio tests. This was also done separately for the parent and nonparent control groups.\\
 Third, to examine rank-order stability in the Big Five and life satisfaction over the transition to grandparenthood, we computed the test-retest correlation of measurements prior to the transition to grandparenthood (at the time of matching) with the first available measurement after the transition. To test the difference in test-retest stability between grandparents and either of the control groups, we then entered the pre-treatment measure as well as the treatment variable (0 = \emph{control}, 1 = \emph{grandparent}) and their interaction into multiple regression models predicting the Big Five and life satisfaction. These interactions test for significant differences in the test-retest stability between those who experienced the transition to grandparenthood and those who did not (for a similar approach, see Denissen et al., 2019; McCrae, 1993).
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS panel, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.01.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-swls-tab}Fixed Effects of Life Satisfaction Over the Transition to Grandparenthood.}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-swls-tab} continued}}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endhead
+LISS panel (M1a, M1b) &  &  &  &  &  &  &  & \\
+\ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 5.11 & [4.99, 5.23] & 85.63 & < .001 & 5.13 & [4.99, 5.27] & 72.47 & < .001\\
+\ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{L} & 0.07 & [-0.10, 0.24] & 0.78 & .433 & 0.01 & [-0.15, 0.17] & 0.17 & .863\\
+\ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & -0.01 & [-0.02, 0.01] & -1.06 & .288 & 0.02 & [0.00, 0.03] & 2.18 & .029\\
+\ \ \ After-slope, $\hat{\gamma}_{20}$ \textcolor{white}{L} & 0.01 & [0.00, 0.02] & 2.13 & .033 & -0.01 & [-0.02, 0.01] & -0.93 & .351\\
+\ \ \ Shift, $\hat{\gamma}_{30}$ \textcolor{white}{L} & 0.02 & [-0.04, 0.08] & 0.72 & .470 & -0.11 & [-0.17, -0.05] & -3.42 & .001\\
+\ \ \ Grandparent, $\hat{\gamma}_{01}$ \textcolor{white}{L} & 0.07 & [-0.11, 0.25] & 0.73 & .464 & 0.07 & [-0.13, 0.26] & 0.66 & .510\\
+\ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{L} & 0.02 & [-0.01, 0.04] & 1.03 & .301 & -0.01 & [-0.04, 0.02] & -0.47 & .637\\
+\ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{L} & -0.02 & [-0.05, 0.00] & -1.78 & .075 & 0.00 & [-0.03, 0.02] & -0.33 & .741\\
+\ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{L} & 0.05 & [-0.08, 0.18] & 0.79 & .428 & 0.18 & [0.04, 0.32] & 2.57 & .010\\
+HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
+\ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{H} & 4.81 & [4.69, 4.92] & 82.17 & < .001 & 4.58 & [4.45, 4.72] & 66.89 & < .001\\
+\ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{H} & 0.40 & [0.19, 0.61] & 3.78 & < .001 & 0.33 & [0.11, 0.54] & 3.01 & .003\\
+\ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{H} & -0.03 & [-0.07, 0.01] & -1.53 & .125 & 0.05 & [0.01, 0.08] & 2.50 & .013\\
+\ \ \ After-slope, $\hat{\gamma}_{20}$ \textcolor{white}{H} & 0.01 & [-0.01, 0.04] & 0.83 & .405 & 0.04 & [0.01, 0.06] & 3.14 & .002\\
+\ \ \ Shift, $\hat{\gamma}_{30}$ \textcolor{white}{H} & 0.02 & [-0.05, 0.10] & 0.58 & .564 & -0.05 & [-0.12, 0.02] & -1.50 & .135\\
+\ \ \ Grandparent, $\hat{\gamma}_{01}$ \textcolor{white}{H} & -0.02 & [-0.21, 0.16] & -0.24 & .812 & 0.20 & [0.00, 0.39] & 1.98 & .048\\
+\ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{H} & 0.12 & [0.03, 0.21] & 2.58 & .010 & 0.05 & [-0.04, 0.13] & 1.06 & .290\\
+\ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{H} & 0.03 & [-0.02, 0.09] & 1.17 & .241 & 0.01 & [-0.05, 0.06] & 0.31 & .753\\
+\ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{H} & -0.08 & [-0.24, 0.09] & -0.93 & .351 & -0.01 & [-0.17, 0.15] & -0.13 & .897\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS panel, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.01, \(R^2_{M2b} =\) 0.01.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-swls-gender-tab}Fixed Effects of Life Satisfaction Over the Transition to Grandparenthood Moderated by Gender.}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-swls-gender-tab} continued}}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endhead
+LISS panel (M1a, M1b) &  &  &  &  &  &  &  & \\
+\ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 5.05 & [4.89, 5.21] & 61.49 & < .001 & 5.05 & [4.86, 5.24] & 51.98 & < .001\\
+\ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{L} & 0.06 & [-0.11, 0.23] & 0.70 & .485 & 0.01 & [-0.15, 0.17] & 0.17 & .866\\
+\ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & -0.01 & [-0.03, 0.01] & -1.13 & .258 & 0.02 & [0.00, 0.05] & 2.28 & .023\\
+\ \ \ After-slope, $\hat{\gamma}_{20}$ \textcolor{white}{L} & 0.01 & [0.00, 0.03] & 1.55 & .122 & -0.03 & [-0.04, -0.01] & -2.76 & .006\\
+\ \ \ Shift, $\hat{\gamma}_{30}$ \textcolor{white}{L} & 0.10 & [0.01, 0.18] & 2.25 & .025 & 0.00 & [-0.09, 0.09] & -0.01 & .988\\
+\ \ \ Grandparent, $\hat{\gamma}_{01}$ \textcolor{white}{L} & 0.21 & [-0.04, 0.46] & 1.67 & .096 & 0.23 & [-0.04, 0.50] & 1.65 & .099\\
+\ \ \ Female, $\hat{\gamma}_{02}$ \textcolor{white}{L} & 0.12 & [-0.08, 0.32] & 1.18 & .239 & 0.16 & [-0.08, 0.40] & 1.28 & .203\\
+\ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{L} & 0.00 & [-0.04, 0.04] & 0.10 & .922 & -0.03 & [-0.08, 0.01] & -1.38 & .168\\
+\ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{L} & -0.03 & [-0.07, 0.01] & -1.62 & .104 & 0.01 & [-0.03, 0.05] & 0.36 & .718\\
+\ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{L} & 0.01 & [-0.18, 0.20] & 0.10 & .919 & 0.11 & [-0.10, 0.31] & 1.03 & .303\\
+\ \ \ Before-slope * Female, $\hat{\gamma}_{12}$ \textcolor{white}{L} & 0.01 & [-0.02, 0.03] & 0.55 & .581 & -0.02 & [-0.04, 0.01] & -1.10 & .273\\
+\ \ \ After-slope * Female, $\hat{\gamma}_{22}$ \textcolor{white}{L} & 0.00 & [-0.02, 0.02] & -0.11 & .913 & 0.04 & [0.01, 0.06] & 2.95 & .003\\
+\ \ \ Shift * Female, $\hat{\gamma}_{32}$ \textcolor{white}{L} & -0.14 & [-0.26, -0.02] & -2.37 & .018 & -0.21 & [-0.33, -0.08] & -3.28 & .001\\
+\ \ \ Grandparent * Female, $\hat{\gamma}_{03}$ \textcolor{white}{L} & -0.27 & [-0.59, 0.05] & -1.67 & .097 & -0.31 & [-0.66, 0.05] & -1.71 & .088\\
+\ \ \ Before-slope * Grandparent * Female, $\hat{\gamma}_{13}$ \textcolor{white}{L} & 0.03 & [-0.03, 0.08] & 0.87 & .385 & 0.05 & [-0.02, 0.11] & 1.48 & .138\\
+\ \ \ After-slope * Grandparent * Female, $\hat{\gamma}_{23}$ \textcolor{white}{L} & 0.01 & [-0.04, 0.07] & 0.51 & .607 & -0.03 & [-0.08, 0.03] & -0.90 & .369\\
+\ \ \ Shift * Grandparent * Female, $\hat{\gamma}_{33}$ \textcolor{white}{L} & 0.08 & [-0.17, 0.34] & 0.63 & .530 & 0.15 & [-0.13, 0.43] & 1.07 & .283\\
+HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
+\ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{H} & 4.67 & [4.52, 4.82] & 60.70 & < .001 & 4.54 & [4.37, 4.71] & 52.50 & < .001\\
+\ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{H} & 0.41 & [0.20, 0.62] & 3.84 & < .001 & 0.30 & [0.08, 0.51] & 2.71 & .007\\
+\ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{H} & 0.01 & [-0.04, 0.07] & 0.49 & .625 & 0.05 & [-0.01, 0.10] & 1.61 & .107\\
+\ \ \ After-slope, $\hat{\gamma}_{20}$ \textcolor{white}{H} & 0.00 & [-0.04, 0.04] & 0.09 & .931 & 0.02 & [-0.01, 0.06] & 1.31 & .190\\
+\ \ \ Shift, $\hat{\gamma}_{30}$ \textcolor{white}{H} & 0.07 & [-0.04, 0.18] & 1.23 & .220 & -0.16 & [-0.27, -0.05] & -2.91 & .004\\
+\ \ \ Grandparent, $\hat{\gamma}_{01}$ \textcolor{white}{H} & 0.11 & [-0.15, 0.37] & 0.81 & .419 & 0.25 & [-0.02, 0.51] & 1.82 & .070\\
+\ \ \ Female, $\hat{\gamma}_{02}$ \textcolor{white}{H} & 0.24 & [0.07, 0.41] & 2.75 & .006 & 0.10 & [-0.10, 0.29] & 0.98 & .329\\
+\ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{H} & 0.00 & [-0.13, 0.14] & 0.03 & .978 & -0.02 & [-0.15, 0.11] & -0.33 & .745\\
+\ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{H} & 0.04 & [-0.04, 0.13] & 1.05 & .294 & 0.03 & [-0.05, 0.10] & 0.62 & .536\\
+\ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{H} & -0.08 & [-0.33, 0.16] & -0.65 & .514 & 0.14 & [-0.10, 0.37] & 1.16 & .246\\
+\ \ \ Before-slope * Female, $\hat{\gamma}_{12}$ \textcolor{white}{H} & -0.08 & [-0.16, 0.00] & -2.08 & .037 & 0.01 & [-0.07, 0.08] & 0.14 & .887\\
+\ \ \ After-slope * Female, $\hat{\gamma}_{22}$ \textcolor{white}{H} & 0.02 & [-0.03, 0.07] & 0.64 & .525 & 0.02 & [-0.03, 0.07] & 0.84 & .399\\
+\ \ \ Shift * Female, $\hat{\gamma}_{32}$ \textcolor{white}{H} & -0.09 & [-0.24, 0.06] & -1.14 & .254 & 0.19 & [0.05, 0.33] & 2.59 & .010\\
+\ \ \ Grandparent * Female, $\hat{\gamma}_{03}$ \textcolor{white}{H} & -0.23 & [-0.55, 0.09] & -1.42 & .156 & -0.08 & [-0.40, 0.25] & -0.47 & .637\\
+\ \ \ Before-slope * Grandparent * Female, $\hat{\gamma}_{13}$ \textcolor{white}{H} & 0.21 & [0.03, 0.39] & 2.28 & .023 & 0.11 & [-0.05, 0.28] & 1.34 & .181\\
+\ \ \ After-slope * Grandparent * Female, $\hat{\gamma}_{23}$ \textcolor{white}{H} & -0.02 & [-0.13, 0.09] & -0.37 & .714 & -0.03 & [-0.13, 0.08] & -0.50 & .615\\
+\ \ \ Shift * Grandparent * Female, $\hat{\gamma}_{33}$ \textcolor{white}{H} & 0.01 & [-0.32, 0.34] & 0.06 & .954 & -0.26 & [-0.57, 0.05] & -1.63 & .103\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
@@ -861,6 +987,46 @@ Yap, S., Anusic, I., \& Lucas, R. E. (2012). Does personality moderate reaction 
 
 \noindent \textbf{Supplemental Tables}
 
+\begin{table}[h]
+
+\begin{center}
+\begin{threeparttable}
+
+\caption{\label{tab:icc-table}Intra-Class Correlations}
+
+\begin{tabular}{lcccccc}
+\toprule
+& \multicolumn{1}{c}{\textcolor{white}{xxx}A\textcolor{white}{xxx}} & \multicolumn{1}{c}{\textcolor{white}{xxx}C\textcolor{white}{xxx}} & \multicolumn{1}{c}{\textcolor{white}{xxx}E\textcolor{white}{xxx}} & \multicolumn{1}{c}{\textcolor{white}{xxx}N\textcolor{white}{xxx}} & \multicolumn{1}{c}{\textcolor{white}{xxx}O\textcolor{white}{xxx}} & \multicolumn{1}{c}{\textcolor{white}{xxx}LS\textcolor{white}{xxx}}\\
+\midrule
+LISS: Parent controls &  &  &  &  &  & \\
+\ \ \ $ICC_{pid}$ \textcolor{white}{LP} & 0.74 & 0.77 & 0.81 & 0.71 & 0.78 & 0.35\\
+\ \ \ $ICC_{hid}$ \textcolor{white}{LP} & 0.05 & 0.01 & 0.02 & 0.07 & 0.00 & 0.37\\
+\ \ \ $ICC_{pid/hid}$ \textcolor{white}{LP} & 0.79 & 0.78 & 0.83 & 0.78 & 0.78 & 0.71\\
+LISS: Nonparent controls &  &  &  &  &  & \\
+\ \ \ $ICC_{pid}$ \textcolor{white}{LN} & 0.76 & 0.76 & 0.64 & 0.67 & 0.79 & 0.32\\
+\ \ \ $ICC_{hid}$ \textcolor{white}{LN} & 0.00 & 0.00 & 0.22 & 0.10 & 0.02 & 0.36\\
+\ \ \ $ICC_{pid/hid}$ \textcolor{white}{LN} & 0.76 & 0.77 & 0.85 & 0.77 & 0.81 & 0.67\\
+HRS: Parent controls &  &  &  &  &  & \\
+\ \ \ $ICC_{pid}$ \textcolor{white}{HP} & 0.76 & 0.69 & 0.79 & 0.73 & 0.57 & 0.31\\
+\ \ \ $ICC_{hid}$ \textcolor{white}{HP} & 0.00 & 0.07 & 0.00 & 0.01 & 0.21 & 0.35\\
+\ \ \ $ICC_{pid/hid}$ \textcolor{white}{HP} & 0.76 & 0.76 & 0.79 & 0.74 & 0.78 & 0.67\\
+HRS: Nonparent controls &  &  &  &  &  & \\
+\ \ \ $ICC_{pid}$ \textcolor{white}{HN} & 0.71 & 0.73 & 0.77 & 0.76 & 0.59 & 0.33\\
+\ \ \ $ICC_{hid}$ \textcolor{white}{HN} & 0.07 & 0.06 & 0.04 & 0.00 & 0.23 & 0.38\\
+\ \ \ $ICC_{pid/hid}$ \textcolor{white}{HN} & 0.78 & 0.79 & 0.80 & 0.76 & 0.82 & 0.71\\
+\bottomrule
+\addlinespace
+\end{tabular}
+
+\begin{tablenotes}[para]
+\normalsize{\textit{Note.} A = agreeableness, C = conscientiousness, E = extraversion, N = neuroticism, O = openness, LS = life satisfaction. Intra-class correlations are the proportion of total variation that is explained by the respective blocking factor. $ICC_{pid}$ is the proportion of total variance explained by nesting in respondents which corresponds to the correlation between two randomly selected observations from the same respondent. $ICC_{hid}$ is the proportion of total variance explained by nesting in households which corresponds to the correlation between two randomly selected observations from the same household. $ICC_{pid/hid}$ is the proportion of total variance explained by nesting in respondents and in households which corresponds to the correlation between two randomly selected observations from the same respondent and the same household.}
+\end{tablenotes}
+
+\end{threeparttable}
+\end{center}
+
+\end{table}
+
 
 
 
@@ -920,6 +1086,170 @@ HRS: Coding scheme &  &  &  &  &  &  &  &  &  &  &  &  & \\
 \ \ \ Before-slope \textcolor{white}{H} & 0 &  & 1 &  & 2 &  & 2 &  & 2 &  & 2 &  & 2\\
 \ \ \ After-slope \textcolor{white}{H} & 0 &  & 0 &  & 0 &  & 1 &  & 2 &  & 3 &  & 4\\
 \ \ \ Jump \textcolor{white}{H} & 0 &  & 0 &  & 0 &  & 1 &  & 1 &  & 1 &  & 1\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Standard deviation shown in brackets; \(time=0\)
+marks the first year where the transition to grandparenthood has been
+reported.}
+\end{TableNotes}
+
+\small{
+
+\begin{longtable}{lccccccccccccc}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:descriptives-liss}Mean and Standard Deviation of the Big Five
+and Life Satisfaction over Time in the LISS Panel}\\
+\toprule
+& \multicolumn{6}{c}{Pre-transition years} & \multicolumn{7}{c}{Post-transition years} \\
+\cmidrule(r){2-7} \cmidrule(r){8-14}
+& -6 & -5 & -4 & -3 & -2 & -1 & 0 & 1 & 2 & 3 & 4 & 5 & 6\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:descriptives-liss} continued}}\\
+\toprule
+& \multicolumn{6}{c}{Pre-transition years} & \multicolumn{7}{c}{Post-transition years} \\
+\cmidrule(r){2-7} \cmidrule(r){8-14}
+& -6 & -5 & -4 & -3 & -2 & -1 & 0 & 1 & 2 & 3 & 4 & 5 & 6\\
+\midrule
+\endhead
+Agreeableness &  &  &  &  &  &  &  &  &  &  &  &  & \\
+\ \ \ Grandparents \textcolor{white}{A} & 3.85 & 3.87 & 3.93 & 3.87 & 3.90 & 3.93 & 3.87 & 3.92 & 3.91 & 3.91 & 3.89 & 4.01 & 3.98\\
+\ \ \ \textcolor{white}{Ag} & (0.52) & (0.50) & (0.46) & (0.49) & (0.54) & (0.47) & (0.49) & (0.52) & (0.52) & (0.51) & (0.52) & (0.49) & (0.37)\\
+\ \ \ Parent controls \textcolor{white}{A} & 3.93 & 3.89 & 3.90 & 3.87 & 3.91 & 3.95 & 3.91 & 3.89 & 3.90 & 3.92 & 3.86 & 3.86 & 3.81\\
+\ \ \ \textcolor{white}{Ap} & (0.52) & (0.51) & (0.47) & (0.50) & (0.48) & (0.48) & (0.47) & (0.51) & (0.53) & (0.48) & (0.50) & (0.43) & (0.43)\\
+\ \ \ Nonparent controls \textcolor{white}{A} & 3.95 & 3.94 & 3.98 & 3.98 & 3.94 & 3.91 & 3.94 & 3.95 & 3.94 & 3.94 & 3.92 & 3.92 & 3.88\\
+\ \ \ \textcolor{white}{An} & (0.47) & (0.50) & (0.45) & (0.50) & (0.49) & (0.47) & (0.44) & (0.45) & (0.46) & (0.47) & (0.41) & (0.44) & (0.42)\\
+Conscientiousness &  &  &  &  &  &  &  &  &  &  &  &  & \\
+\ \ \ Grandparents \textcolor{white}{C} & 3.76 & 3.84 & 3.74 & 3.75 & 3.77 & 3.79 & 3.77 & 3.78 & 3.75 & 3.79 & 3.84 & 3.74 & 3.76\\
+\ \ \ \textcolor{white}{Cg} & (0.50) & (0.45) & (0.49) & (0.46) & (0.53) & (0.48) & (0.49) & (0.51) & (0.49) & (0.51) & (0.44) & (0.48) & (0.43)\\
+\ \ \ Parent controls \textcolor{white}{C} & 3.80 & 3.78 & 3.80 & 3.77 & 3.79 & 3.83 & 3.82 & 3.79 & 3.80 & 3.79 & 3.78 & 3.76 & 3.77\\
+\ \ \ \textcolor{white}{Cp} & (0.52) & (0.50) & (0.52) & (0.49) & (0.49) & (0.50) & (0.49) & (0.47) & (0.47) & (0.46) & (0.43) & (0.44) & (0.45)\\
+\ \ \ Nonparent controls \textcolor{white}{C} & 3.77 & 3.79 & 3.76 & 3.80 & 3.74 & 3.75 & 3.77 & 3.72 & 3.82 & 3.81 & 3.78 & 3.84 & 3.80\\
+\ \ \ \textcolor{white}{Cn} & (0.53) & (0.50) & (0.51) & (0.50) & (0.51) & (0.53) & (0.50) & (0.50) & (0.50) & (0.51) & (0.48) & (0.46) & (0.50)\\
+Extraversion &  &  &  &  &  &  &  &  &  &  &  &  & \\
+\ \ \ Grandparents \textcolor{white}{E} & 3.23 & 3.20 & 3.31 & 3.32 & 3.28 & 3.30 & 3.19 & 3.24 & 3.22 & 3.19 & 3.33 & 3.34 & 3.19\\
+\ \ \ \textcolor{white}{Eg} & (0.66) & (0.74) & (0.54) & (0.58) & (0.64) & (0.57) & (0.61) & (0.69) & (0.65) & (0.60) & (0.60) & (0.58) & (0.55)\\
+\ \ \ Parent controls \textcolor{white}{E} & 3.32 & 3.30 & 3.28 & 3.27 & 3.26 & 3.30 & 3.25 & 3.20 & 3.22 & 3.28 & 3.19 & 3.19 & 3.14\\
+\ \ \ \textcolor{white}{Ep} & (0.58) & (0.59) & (0.58) & (0.59) & (0.59) & (0.59) & (0.64) & (0.62) & (0.59) & (0.61) & (0.58) & (0.53) & (0.56)\\
+\ \ \ Nonparent controls \textcolor{white}{E} & 3.31 & 3.27 & 3.21 & 3.32 & 3.32 & 3.28 & 3.30 & 3.27 & 3.31 & 3.31 & 3.28 & 3.13 & 3.26\\
+\ \ \ \textcolor{white}{En} & (0.74) & (0.70) & (0.79) & (0.75) & (0.69) & (0.70) & (0.72) & (0.73) & (0.77) & (0.78) & (0.73) & (0.75) & (0.74)\\
+Neuroticism &  &  &  &  &  &  &  &  &  &  &  &  & \\
+\ \ \ Grandparents \textcolor{white}{N} & 2.39 & 2.31 & 2.33 & 2.41 & 2.45 & 2.47 & 2.30 & 2.39 & 2.30 & 2.36 & 2.33 & 2.44 & 2.53\\
+\ \ \ \textcolor{white}{Ng} & (0.71) & (0.64) & (0.60) & (0.64) & (0.65) & (0.71) & (0.67) & (0.76) & (0.68) & (0.66) & (0.67) & (0.80) & (0.67)\\
+\ \ \ Parent controls \textcolor{white}{N} & 2.43 & 2.42 & 2.42 & 2.38 & 2.40 & 2.37 & 2.35 & 2.35 & 2.30 & 2.28 & 2.35 & 2.31 & 2.33\\
+\ \ \ \textcolor{white}{Np} & (0.59) & (0.63) & (0.56) & (0.58) & (0.58) & (0.60) & (0.63) & (0.65) & (0.56) & (0.56) & (0.60) & (0.55) & (0.56)\\
+\ \ \ Nonparent controls \textcolor{white}{N} & 2.41 & 2.44 & 2.47 & 2.36 & 2.43 & 2.37 & 2.33 & 2.37 & 2.34 & 2.33 & 2.35 & 2.48 & 2.35\\
+\ \ \ \textcolor{white}{Nn} & (0.64) & (0.63) & (0.69) & (0.70) & (0.69) & (0.63) & (0.69) & (0.71) & (0.74) & (0.68) & (0.70) & (0.82) & (0.83)\\
+Openness &  &  &  &  &  &  &  &  &  &  &  &  & \\
+\ \ \ Grandparents \textcolor{white}{O} & 3.43 & 3.50 & 3.54 & 3.49 & 3.49 & 3.50 & 3.48 & 3.48 & 3.50 & 3.45 & 3.50 & 3.43 & 3.36\\
+\ \ \ \textcolor{white}{Og} & (0.51) & (0.50) & (0.49) & (0.45) & (0.49) & (0.50) & (0.48) & (0.54) & (0.43) & (0.46) & (0.50) & (0.53) & (0.56)\\
+\ \ \ Parent controls \textcolor{white}{O} & 3.53 & 3.46 & 3.43 & 3.48 & 3.48 & 3.48 & 3.50 & 3.49 & 3.44 & 3.51 & 3.42 & 3.37 & 3.42\\
+\ \ \ \textcolor{white}{Op} & (0.52) & (0.52) & (0.50) & (0.53) & (0.51) & (0.51) & (0.52) & (0.50) & (0.48) & (0.48) & (0.49) & (0.48) & (0.42)\\
+\ \ \ Nonparent controls \textcolor{white}{O} & 3.53 & 3.57 & 3.53 & 3.58 & 3.52 & 3.51 & 3.52 & 3.55 & 3.54 & 3.59 & 3.53 & 3.51 & 3.51\\
+\ \ \ \textcolor{white}{On} & (0.52) & (0.51) & (0.51) & (0.52) & (0.52) & (0.51) & (0.51) & (0.51) & (0.52) & (0.51) & (0.50) & (0.47) & (0.53)\\
+Life satisfaction &  &  &  &  &  &  &  &  &  &  &  &  & \\
+\ \ \ Grandparents \textcolor{white}{L} & 5.18 & 5.29 & 5.23 & 5.16 & 5.28 & 5.24 & 5.31 & 5.24 & 5.37 & 5.38 & 5.39 & 5.25 & 5.15\\
+\ \ \ \textcolor{white}{Lg} & (1.06) & (0.93) & (1.13) & (0.95) & (0.93) & (1.10) & (0.93) & (1.03) & (1.09) & (0.90) & (1.10) & (1.10) & (1.00)\\
+\ \ \ Parent controls \textcolor{white}{L} & 5.21 & 5.30 & 5.26 & 5.23 & 5.28 & 5.29 & 5.36 & 5.25 & 5.26 & 5.45 & 5.33 & 5.40 & 5.41\\
+\ \ \ \textcolor{white}{Lp} & (1.11) & (1.03) & (1.01) & (0.97) & (1.01) & (1.07) & (0.99) & (1.03) & (1.04) & (0.93) & (1.04) & (1.05) & (1.05)\\
+\ \ \ Nonparent controls \textcolor{white}{L} & 5.27 & 5.19 & 5.10 & 5.21 & 5.26 & 5.18 & 5.24 & 5.09 & 5.10 & 5.07 & 5.23 & 4.98 & 5.19\\
+\ \ \ \textcolor{white}{Ln} & (0.92) & (0.87) & (0.90) & (0.92) & (0.95) & (0.90) & (0.96) & (1.04) & (1.12) & (1.13) & (1.08) & (1.30) & (1.18)\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Standard deviation shown in brackets; \(time=0\)
+marks the first year where the transition to grandparenthood has been
+reported.}
+\end{TableNotes}
+
+\small{
+
+\begin{longtable}{lccccccccccccc}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:descriptives-hrs}Mean and Standard Deviation of the Big Five
+and Life Satisfaction over Time in the HRS}\\
+\toprule
+& \multicolumn{6}{c}{Pre-transition years} & \multicolumn{7}{c}{Post-transition years} \\
+\cmidrule(r){2-7} \cmidrule(r){8-14}
+& -6 & -5 & -4 & -3 & -2 & -1 & 0 & 1 & 2 & 3 & 4 & 5 & 6\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:descriptives-hrs} continued}}\\
+\toprule
+& \multicolumn{6}{c}{Pre-transition years} & \multicolumn{7}{c}{Post-transition years} \\
+\cmidrule(r){2-7} \cmidrule(r){8-14}
+& -6 & -5 & -4 & -3 & -2 & -1 & 0 & 1 & 2 & 3 & 4 & 5 & 6\\
+\midrule
+\endhead
+Agreeableness &  &  &  &  &  &  &  &  &  &  &  &  & \\
+\ \ \ Grandparents \textcolor{white}{A} & 3.46 &  & 3.51 &  & 3.51 &  & 3.52 &  & 3.52 &  & 3.50 &  & 3.56\\
+\ \ \ \textcolor{white}{Ag} & (0.47) &  & (0.48) &  & (0.49) &  & (0.49) &  & (0.48) &  & (0.53) &  & (0.44)\\
+\ \ \ Parent controls \textcolor{white}{A} & 3.50 &  & 3.48 &  & 3.50 &  & 3.49 &  & 3.49 &  & 3.44 &  & 3.47\\
+\ \ \ \textcolor{white}{Ap} & (0.48) &  & (0.49) &  & (0.46) &  & (0.50) &  & (0.48) &  & (0.52) &  & (0.51)\\
+\ \ \ Nonparent controls \textcolor{white}{A} & 3.50 &  & 3.50 &  & 3.50 &  & 3.52 &  & 3.52 &  & 3.44 &  & 3.48\\
+\ \ \ \textcolor{white}{An} & (0.50) &  & (0.50) &  & (0.51) &  & (0.50) &  & (0.50) &  & (0.53) &  & (0.53)\\
+Conscientiousness &  &  &  &  &  &  &  &  &  &  &  &  & \\
+\ \ \ Grandparents \textcolor{white}{C} & 3.47 &  & 3.46 &  & 3.47 &  & 3.46 &  & 3.45 &  & 3.44 &  & 3.49\\
+\ \ \ \textcolor{white}{Cg} & (0.46) &  & (0.45) &  & (0.44) &  & (0.45) &  & (0.44) &  & (0.43) &  & (0.44)\\
+\ \ \ Parent controls \textcolor{white}{C} & 3.45 &  & 3.45 &  & 3.45 &  & 3.47 &  & 3.46 &  & 3.43 &  & 3.44\\
+\ \ \ \textcolor{white}{Cp} & (0.45) &  & (0.45) &  & (0.45) &  & (0.45) &  & (0.46) &  & (0.50) &  & (0.50)\\
+\ \ \ Nonparent controls \textcolor{white}{C} & 3.50 &  & 3.48 &  & 3.49 &  & 3.50 &  & 3.48 &  & 3.46 &  & 3.49\\
+\ \ \ \textcolor{white}{Cn} & (0.44) &  & (0.44) &  & (0.44) &  & (0.42) &  & (0.45) &  & (0.45) &  & (0.43)\\
+Extraversion &  &  &  &  &  &  &  &  &  &  &  &  & \\
+\ \ \ Grandparents \textcolor{white}{E} & 3.15 &  & 3.22 &  & 3.20 &  & 3.21 &  & 3.19 &  & 3.22 &  & 3.22\\
+\ \ \ \textcolor{white}{Eg} & (0.56) &  & (0.56) &  & (0.54) &  & (0.56) &  & (0.58) &  & (0.59) &  & (0.58)\\
+\ \ \ Parent controls \textcolor{white}{E} & 3.20 &  & 3.18 &  & 3.19 &  & 3.21 &  & 3.21 &  & 3.17 &  & 3.19\\
+\ \ \ \textcolor{white}{Ep} & (0.51) &  & (0.56) &  & (0.54) &  & (0.54) &  & (0.54) &  & (0.55) &  & (0.56)\\
+\ \ \ Nonparent controls \textcolor{white}{E} & 3.19 &  & 3.20 &  & 3.20 &  & 3.23 &  & 3.22 &  & 3.23 &  & 3.24\\
+\ \ \ \textcolor{white}{En} & (0.55) &  & (0.54) &  & (0.56) &  & (0.54) &  & (0.54) &  & (0.56) &  & (0.57)\\
+Neuroticism &  &  &  &  &  &  &  &  &  &  &  &  & \\
+\ \ \ Grandparents \textcolor{white}{N} & 2.00 &  & 1.97 &  & 2.06 &  & 1.91 &  & 1.96 &  & 1.91 &  & 1.91\\
+\ \ \ \textcolor{white}{Ng} & (0.56) &  & (0.63) &  & (0.62) &  & (0.60) &  & (0.58) &  & (0.59) &  & (0.61)\\
+\ \ \ Parent controls \textcolor{white}{N} & 2.01 &  & 2.05 &  & 2.01 &  & 2.03 &  & 2.00 &  & 2.01 &  & 1.95\\
+\ \ \ \textcolor{white}{Np} & (0.59) &  & (0.60) &  & (0.59) &  & (0.61) &  & (0.61) &  & (0.61) &  & (0.60)\\
+\ \ \ Nonparent controls \textcolor{white}{N} & 2.05 &  & 2.00 &  & 2.02 &  & 1.92 &  & 1.97 &  & 1.84 &  & 1.90\\
+\ \ \ \textcolor{white}{Nn} & (0.56) &  & (0.58) &  & (0.60) &  & (0.57) &  & (0.59) &  & (0.55) &  & (0.58)\\
+Openness &  &  &  &  &  &  &  &  &  &  &  &  & \\
+\ \ \ Grandparents \textcolor{white}{O} & 3.00 &  & 3.02 &  & 3.04 &  & 3.01 &  & 3.00 &  & 2.96 &  & 3.04\\
+\ \ \ \textcolor{white}{Og} & (0.51) &  & (0.53) &  & (0.51) &  & (0.52) &  & (0.52) &  & (0.59) &  & (0.51)\\
+\ \ \ Parent controls \textcolor{white}{O} & 3.03 &  & 3.00 &  & 2.98 &  & 3.03 &  & 3.00 &  & 2.96 &  & 2.96\\
+\ \ \ \textcolor{white}{Op} & (0.51) &  & (0.56) &  & (0.54) &  & (0.54) &  & (0.52) &  & (0.58) &  & (0.56)\\
+\ \ \ Nonparent controls \textcolor{white}{O} & 3.06 &  & 3.05 &  & 3.05 &  & 3.07 &  & 3.06 &  & 3.02 &  & 3.04\\
+\ \ \ \textcolor{white}{On} & (0.54) &  & (0.53) &  & (0.55) &  & (0.54) &  & (0.55) &  & (0.57) &  & (0.57)\\
+Life satisfaction &  &  &  &  &  &  &  &  &  &  &  &  & \\
+\ \ \ Grandparents \textcolor{white}{L} & 5.14 &  & 5.08 &  & 5.15 &  & 5.17 &  & 5.16 &  & 5.29 &  & 5.28\\
+\ \ \ \textcolor{white}{Lg} & (1.44) &  & (1.45) &  & (1.46) &  & (1.40) &  & (1.44) &  & (1.38) &  & (1.50)\\
+\ \ \ Parent controls \textcolor{white}{L} & 5.14 &  & 4.98 &  & 5.01 &  & 5.11 &  & 5.10 &  & 5.06 &  & 5.12\\
+\ \ \ \textcolor{white}{Lp} & (1.52) &  & (1.57) &  & (1.57) &  & (1.52) &  & (1.53) &  & (1.47) &  & (1.47)\\
+\ \ \ Nonparent controls \textcolor{white}{L} & 5.10 &  & 5.14 &  & 5.09 &  & 5.26 &  & 5.21 &  & 5.40 &  & 5.40\\
+\ \ \ \textcolor{white}{Ln} & (1.49) &  & (1.50) &  & (1.52) &  & (1.44) &  & (1.51) &  & (1.30) &  & (1.36)\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -1171,36 +1501,40 @@ en\_US.UTF-8/en\_US.UTF-8/en\_US.UTF-8/C/en\_US.UTF-8/en\_US.UTF-8
 attached base packages: {[}1{]} stats graphics grDevices utils datasets
 methods base
 
-other attached packages: {[}1{]} forcats\_0.5.0 stringr\_1.4.0
-dplyr\_1.0.2 purrr\_0.3.4\\
-{[}5{]} readr\_1.4.0 tidyr\_1.1.2 tibble\_3.1.2 ggplot2\_3.3.4\\
-{[}9{]} tidyverse\_1.3.0 citr\_0.3.2 papaja\_0.1.0.9997
-tinylabels\_0.1.0
+other attached packages: {[}1{]} lmerTest\_3.1-3 lme4\_1.1-26
+Matrix\_1.3-2\\
+{[}4{]} GPArotation\_2014.11-1 psych\_2.0.9 forcats\_0.5.0\\
+{[}7{]} stringr\_1.4.0 dplyr\_1.0.2 purrr\_0.3.4\\
+{[}10{]} readr\_1.4.0 tidyr\_1.1.2 tibble\_3.1.2\\
+{[}13{]} ggplot2\_3.3.4 tidyverse\_1.3.0 citr\_0.3.2\\
+{[}16{]} papaja\_0.1.0.9997 tinylabels\_0.1.0
 
-loaded via a namespace (and not attached): {[}1{]} Rcpp\_1.0.6
-lattice\_0.20-41 lubridate\_1.7.9.2\\
-{[}4{]} psych\_2.0.9 assertthat\_0.2.1 digest\_0.6.27\\
-{[}7{]} utf8\_1.2.1 mime\_0.9 R6\_2.5.0\\
-{[}10{]} cellranger\_1.1.0 backports\_1.2.1 reprex\_0.3.0\\
-{[}13{]} evaluate\_0.14 httr\_1.4.2 pillar\_1.6.1\\
-{[}16{]} rlang\_0.4.11 readxl\_1.3.1 rstudioapi\_0.13\\
-{[}19{]} miniUI\_0.1.1.1 blob\_1.2.1 rmarkdown\_2.5\\
-{[}22{]} munsell\_0.5.0 shiny\_1.5.0 broom\_0.7.6\\
-{[}25{]} GPArotation\_2014.11-1 compiler\_4.0.4 httpuv\_1.5.4\\
-{[}28{]} modelr\_0.1.8 xfun\_0.19 pkgconfig\_2.0.3\\
-{[}31{]} base64enc\_0.1-3 mnormt\_2.0.2 tmvnsim\_1.0-2\\
-{[}34{]} htmltools\_0.5.0 tidyselect\_1.1.0 bookdown\_0.21\\
-{[}37{]} fansi\_0.5.0 withr\_2.4.2 crayon\_1.4.1\\
-{[}40{]} dbplyr\_1.4.4 later\_1.1.0.1 grid\_4.0.4\\
-{[}43{]} nlme\_3.1-152 jsonlite\_1.7.2 xtable\_1.8-4\\
-{[}46{]} gtable\_0.3.0 lifecycle\_1.0.0 DBI\_1.1.0\\
-{[}49{]} magrittr\_2.0.1 scales\_1.1.1 cli\_2.5.0\\
-{[}52{]} stringi\_1.5.3 fs\_1.5.0 promises\_1.1.1\\
-{[}55{]} xml2\_1.3.2 ellipsis\_0.3.2 generics\_0.1.0\\
-{[}58{]} vctrs\_0.3.8 tools\_4.0.4 glue\_1.4.2\\
-{[}61{]} hms\_0.5.3 parallel\_4.0.4 fastmap\_1.0.1\\
-{[}64{]} yaml\_2.2.1 colorspace\_2.0-1 rvest\_0.3.6\\
-{[}67{]} knitr\_1.30 haven\_2.3.1
+loaded via a namespace (and not attached): {[}1{]} nlme\_3.1-152
+fs\_1.5.0 lubridate\_1.7.9.2\\
+{[}4{]} httr\_1.4.2 numDeriv\_2016.8-1.1 tools\_4.0.4\\
+{[}7{]} backports\_1.2.1 utf8\_1.2.1 R6\_2.5.0\\
+{[}10{]} DBI\_1.1.0 colorspace\_2.0-1 withr\_2.4.2\\
+{[}13{]} tidyselect\_1.1.0 mnormt\_2.0.2 compiler\_4.0.4\\
+{[}16{]} cli\_2.5.0 rvest\_0.3.6 xml2\_1.3.2\\
+{[}19{]} bookdown\_0.21 scales\_1.1.1 digest\_0.6.27\\
+{[}22{]} minqa\_1.2.4 rmarkdown\_2.5 base64enc\_0.1-3\\
+{[}25{]} pkgconfig\_2.0.3 htmltools\_0.5.0 dbplyr\_1.4.4\\
+{[}28{]} fastmap\_1.0.1 rlang\_0.4.11 readxl\_1.3.1\\
+{[}31{]} rstudioapi\_0.13 shiny\_1.5.0 generics\_0.1.0\\
+{[}34{]} jsonlite\_1.7.2 magrittr\_2.0.1 Rcpp\_1.0.6\\
+{[}37{]} munsell\_0.5.0 fansi\_0.5.0 lifecycle\_1.0.0\\
+{[}40{]} stringi\_1.5.3 yaml\_2.2.1 MASS\_7.3-53\\
+{[}43{]} grid\_4.0.4 blob\_1.2.1 parallel\_4.0.4\\
+{[}46{]} promises\_1.1.1 crayon\_1.4.1 miniUI\_0.1.1.1\\
+{[}49{]} lattice\_0.20-41 haven\_2.3.1 splines\_4.0.4\\
+{[}52{]} hms\_0.5.3 tmvnsim\_1.0-2 knitr\_1.30\\
+{[}55{]} pillar\_1.6.1 boot\_1.3-26 reprex\_0.3.0\\
+{[}58{]} glue\_1.4.2 evaluate\_0.14 modelr\_0.1.8\\
+{[}61{]} vctrs\_0.3.8 nloptr\_1.2.2.2 httpuv\_1.5.4\\
+{[}64{]} cellranger\_1.1.0 gtable\_0.3.0 assertthat\_0.2.1\\
+{[}67{]} xfun\_0.19 mime\_0.9 xtable\_1.8-4\\
+{[}70{]} broom\_0.7.6 later\_1.1.0.1 statmod\_1.4.35\\
+{[}73{]} ellipsis\_0.3.2
 
 \newpage
 

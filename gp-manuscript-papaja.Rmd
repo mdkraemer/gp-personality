@@ -98,11 +98,11 @@ appendix: gp-manuscript-papaja-appendix.Rmd
 library("papaja") # not on CRAN, see https://github.com/crsh/papaja
 library("citr")
 library("tidyverse")
-#library("psych") # for 'describe' demographics
-#library("GPArotation") # needed for omega function in psych
+library("psych") # for 'describe' demographics
+library("GPArotation") # needed for omega function in psych
 #library("robustlmm") # for robust estimation (appendix)
-#library("lme4")
-#library("lmerTest")
+library("lme4")
+library("lmerTest")
 #library("interactions") # for plotting interactions
 #library("jtools") # for plot config
 #library("cowplot") # for plot grid
@@ -456,13 +456,318 @@ After matching, each matched control observation received the same value as thei
 ## Analytical Strategy
 
 We used `r cite_r("references-r.bib", pkgs = c("lme4", "lmerTest"), withhold = FALSE)` for multilevel modeling, as well as *tidyverse* [@tidyverse2019] for data wrangling, and *papaja* [@R-papaja] for reproducible manuscript production. Additional modeling details and a list of all software we used is provided in the Supplemental Material. In line with Benjamin et al. [-@benjaminRedefineStatisticalSignificance2018], we set the $\alpha$-level for all confirmatory analyses to $.005$.  
-Our design can be referred to as an interrupted time-series with a "nonequivalent no-treatment control group" [@shadishExperimentalQuasiexperimentalDesigns2002, p. 182] where treatment, that is, the transition to grandparenthood, is not deliberately manipulated. First, to analyze mean-level changes, we used linear piecewise regression coefficients in multilevel regression models with person-year observations nested within participants and households [@hoffmanLongitudinalAnalysisModeling2015]. To model change over time in relation to the birth of the first grandchild, we coded three piecewise regression coefficients: a *before-slope* representing linear change in the years leading up to the transition to grandparenthood, an *after-slope* representing linear change in the years after the transition, and a *jump* coefficient shifting the intercept directly after the transition was first reported, thus representing sudden changes that go beyond changes already modeled by the *after-slope* [see Table \@ref(tab:piecewise-coding-scheme) for the coding scheme of these coefficients; @hoffmanLongitudinalAnalysisModeling2015]. Other studies of personality development have recently adopted similar piecewise growth-curve models [e.g., @bleidornRetirementAssociatedChange2018; @schwabaPersonalityTraitDevelopment2019; @vanscheppingenTrajectoriesLifeSatisfaction2020; @kramerImpactHavingChildren2020].  
+Our design can be referred to as an interrupted time-series with a "nonequivalent no-treatment control group" [@shadishExperimentalQuasiexperimentalDesigns2002, p. 182] where treatment, that is, the transition to grandparenthood, is not deliberately manipulated. First, to analyze mean-level changes, we used linear piecewise regression coefficients in multilevel regression models with person-year observations nested within participants and households [@hoffmanLongitudinalAnalysisModeling2015]. To model change over time in relation to the birth of the first grandchild, we coded three piecewise regression coefficients: a *before-slope* representing linear change in the years leading up to the transition to grandparenthood, an *after-slope* representing linear change in the years after the transition, and a *shift* coefficient shifting the intercept directly after the transition was first reported, thus representing sudden changes that go beyond changes already modeled by the *after-slope* [see Table \@ref(tab:piecewise-coding-scheme) for the coding scheme of these coefficients; @hoffmanLongitudinalAnalysisModeling2015]. Other studies of personality development have recently adopted similar piecewise growth-curve models [e.g., @bleidornRetirementAssociatedChange2018; @schwabaPersonalityTraitDevelopment2019; @vanscheppingenTrajectoriesLifeSatisfaction2020; @kramerImpactHavingChildren2020].  
 All effects of the transition to grandparenthood on the Big Five and life satisfaction were modeled as deviations from patterns in the matched control groups by interacting the three piecewise coefficients with the binary treatment variable (0 = *control*, 1 = *grandparent*). In additional models, we interacted these coefficients with the binary moderator variables resulting in two- or three-way interactions. To test differences in the growth parameters between two groups in cases where these differences were represented by multiple fixed-effects coefficients, we defined linear contrasts using the *linearHypothesis* command from the *car* R package [@car2019]. All models of mean-level changes were estimated using maximum likelihood and included random intercepts but no random slopes of the piecewise regression coefficients. We included the propensity score as a level-2 covariate for a double-robust approach [@austinDoublePropensityscoreAdjustment2017].  
-Second, to assess interindividual differences in intraindividual change in the Big Five and life satisfaction we added random slopes to the models assessing mean-level changes [see @denissenTransactionsLifeEvents2019 for a similar approach]. In other words, we allowed for differences between individuals in their trajectories of change to be modeled, that is, differences in the *before-slope*, *after-slope*, and *jump* coefficients. Because multiple simultaneous random slopes are often not computationally feasible, we added random slopes one at a time and used likelihood ratio test to determine whether the addition of the respective random slope led to a significant improvement in model fit. We plotted distributions of random slopes [for a similar approach, see @denissenTransactionsLifeEvents2019; @dorePopulationIndividuallevelChanges2018]. To statistically test differences in the random slope variance between the grandparent group and each control group, we respecified the multilevel models as heterogeneous variance models using the *nlme* R package [@R-nlme], which allows for separate random slope variances to be estimated in the grandparent group and the control group within the same model. Model fit of these heterogeneous variance models was compared to the corresponding models with a homogeneous (single) random slope variance via likelihood ratio tests. This was also done separately for the parent and nonparent control groups.  
+Second, to assess interindividual differences in intraindividual change in the Big Five and life satisfaction we added random slopes to the models assessing mean-level changes [see @denissenTransactionsLifeEvents2019 for a similar approach]. In other words, we allowed for differences between individuals in their trajectories of change to be modeled, that is, differences in the *before-slope*, *after-slope*, and *shift* coefficients. Because multiple simultaneous random slopes are often not computationally feasible, we added random slopes one at a time and used likelihood ratio test to determine whether the addition of the respective random slope led to a significant improvement in model fit. We plotted distributions of random slopes [for a similar approach, see @denissenTransactionsLifeEvents2019; @dorePopulationIndividuallevelChanges2018]. To statistically test differences in the random slope variance between the grandparent group and each control group, we respecified the multilevel models as heterogeneous variance models using the *nlme* R package [@R-nlme], which allows for separate random slope variances to be estimated in the grandparent group and the control group within the same model. Model fit of these heterogeneous variance models was compared to the corresponding models with a homogeneous (single) random slope variance via likelihood ratio tests. This was also done separately for the parent and nonparent control groups.  
 Third, to examine rank-order stability in the Big Five and life satisfaction over the transition to grandparenthood, we computed the test-retest correlation of measurements prior to the transition to grandparenthood (at the time of matching) with the first available measurement after the transition. To test the difference in test-retest stability between grandparents and either of the control groups, we then entered the pre-treatment measure as well as the treatment variable (0 = *control*, 1 = *grandparent*) and their interaction into multiple regression models predicting the Big Five and life satisfaction. These interactions test for significant differences in the test-retest stability between those who experienced the transition to grandparenthood and those who did not [for a similar approach, see @denissenTransactionsLifeEvents2019; @mccraeModeratedAnalysesLongitudinal1993].  
 
 # Results
 
+```{r coding-variables, results="asis"}
+# code piecewise regression coefficients (see Table S1)
+lissanalysis_parents <- lissanalysis_parents %>% mutate(
+  before = ifelse(time<0, time + 6, 5), 
+  after = ifelse(time<0, 0, time + 1), 
+  shift = ifelse(time<0, 0, 1)
+)
+lissanalysis_nonparents <- lissanalysis_nonparents %>% mutate(
+  before = ifelse(time<0, time + 6, 5), 
+  after = ifelse(time<0, 0, time + 1), 
+  shift = ifelse(time<0, 0, 1)
+)
+hrsanalysis_parents <- hrsanalysis_parents %>% mutate(
+  before = ifelse(time>=-2, 2, ifelse(time==-6, 0, 1)), 
+  after = ifelse(time<0, 0, ifelse(time==2, 2, ifelse(time==4, 3, ifelse(time==6, 4, 1)))), 
+  shift = ifelse(time<0, 0, 1)
+)
+hrsanalysis_nonparents <- hrsanalysis_nonparents %>% mutate(
+  before = ifelse(time>=-2, 2, ifelse(time==-6, 0, 1)), 
+  after = ifelse(time<0, 0, ifelse(time==2, 2, ifelse(time==4, 3, ifelse(time==6, 4, 1)))), 
+  shift = ifelse(time<0, 0, 1)
+)
+# create hid for HRS (remove last three digits)
+hrsanalysis_parents$hid <- as.numeric(gsub('.{3}$', '', hrsanalysis_parents$HHIDPN))
+hrsanalysis_nonparents$hid <- as.numeric(gsub('.{3}$', '', hrsanalysis_nonparents$HHIDPN))
+
+# harmonize variable names
+hrsanalysis_parents <- hrsanalysis_parents %>% mutate(female = gender - 1) %>% 
+  rename(pid = HHIDPN)
+hrsanalysis_nonparents <- hrsanalysis_nonparents %>% mutate(female = gender - 1) %>% 
+  rename(pid = HHIDPN)
+lissanalysis_parents <- lissanalysis_parents %>% rename(pid = nomem_encr, hid = nohouse_encr)
+lissanalysis_nonparents <- lissanalysis_nonparents %>% rename(pid = nomem_encr, hid = nohouse_encr)
+```
+
+```{r H1-run-models, include=FALSE}
+# This chunk runs 4*4=16 models, 4 four each ...
+# Results tables are created in following chunks.
+
+# H1: models for mean-level changes
+
+outcomes <- c("agree", "con", "extra", "neur", "open", "swls")
+datasets <- c("lissanalysis_parents", "lissanalysis_nonparents", 
+              "hrsanalysis_parents", "hrsanalysis_nonparents")
+mod_summaries <- list()
+mod_summaries_test <- list()
+mod_summaries_gender <- list()
+mod_summaries_gender_test <- list()
+
+# run models in a loop (save in list object)
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  print(outcome)
+  pos = seq(from = 0, to = 24, by = 4)[i]
+  for (j in 1:length(datasets)){
+    dataset = datasets[j]
+    print(dataset)
+    # basic models
+    model_1 <- lme4::lmer(get(outcome) ~ 1 + pscore + before + after + shift + grandparent + 
+                            grandparent:before + grandparent:after + grandparent:shift + 
+                            (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+    model_2 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + before + after + shift + grandparent + 
+                                grandparent:before + grandparent:after + grandparent:shift + 
+                                (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+    mod_summaries[[pos + j]] <- model_1
+    names(mod_summaries)[[pos + j]] <- paste0(outcome, "_", dataset)
+    mod_summaries_test[[pos + j]] <- model_2
+    names(mod_summaries_test)[[pos + j]] <- paste0(outcome, "_", dataset)
+    # moderation by gender models
+    model_3 <- lme4::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
+                            grandparent:before + grandparent:after + grandparent:shift)*female + 
+                            (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+    model_4 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
+                                grandparent:before + grandparent:after + grandparent:shift)*female + 
+                                (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+    mod_summaries_gender[[pos + j]] <- model_3
+    names(mod_summaries_gender)[[pos + j]] <- paste0(outcome, "_", dataset)
+    mod_summaries_gender_test[[pos + j]] <- model_4
+    names(mod_summaries_gender_test)[[pos + j]] <- paste0(outcome, "_", dataset)
+    # R^2
+    pred <- cbind(subset(get(dataset), !is.na(get(outcome)), select = c(pid, time, get(outcome))), 
+                  pred_outcome = predict(model_1, re.form=NA)) # model predicted outcome values (basic)
+    r2 <- cor(pred[outcomes[i]], pred$pred_outcome)^2
+    r2_name <- paste0("r2_", outcome, "_", dataset)
+    eval(call("<-", as.name(r2_name), r2))
+    pred_gender <- cbind(subset(get(dataset), !is.na(get(outcome)), select = c(pid, time, get(outcome))), 
+                         pred_outcome = predict(model_3, re.form=NA)) # model outcome values (gender)
+    r2_gender <- cor(pred_gender[outcomes[i]], pred_gender$pred_outcome)^2
+    r2_gender_name <- paste0("r2_", outcome, "_", dataset, "_gender")
+    eval(call("<-", as.name(r2_gender_name), r2_gender))
+  }
+}
+
+datasets_short <- c("liss_parents", "liss_nonparents", "hrs_parents", "hrs_nonparents")
+# coefs: the way they are named in the 'papaja' objects
+coefs <- c("Intercept", "pscore", "before", "after", "shift", "grandparent", 
+           "before_grandparent", "after_grandparent", "shift_grandparent") 
+gammas <- c("gamma}_{00", "gamma}_{02", "gamma}_{10", "gamma}_{20", "gamma}_{30", "gamma}_{01", 
+            "gamma}_{11", "gamma}_{21", "gamma}_{31")
+coefs_gender <- c("Intercept", "pscore", "before", "after", "shift", "grandparent", 
+                  "female", "before_grandparent", "after_grandparent", "shift_grandparent",
+                  "before_female", "after_female", "shift_female", "grandparent_female", 
+                  "before_grandparent_female", "after_grandparent_female", "shift_grandparent_female")
+gammas_gender <- c("gamma}_{00", "gamma}_{04", "gamma}_{10", "gamma}_{20", "gamma}_{30", "gamma}_{01", 
+                   "gamma}_{02", "gamma}_{11", "gamma}_{21", "gamma}_{31",
+                   "gamma}_{12", "gamma}_{22", "gamma}_{32", "gamma}_{03", 
+                   "gamma}_{13", "gamma}_{23", "gamma}_{33")
+
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  pos = seq(from = 0, to = 24, by = 4)[i]
+  for (j in 1:length(datasets_short)){
+    ### basic models
+    dataset = datasets_short[j]
+    obj = apa_print(mod_summaries[[pos + j]]) # unfold list objects (lme4)
+    obj_test = mod_summaries_test[[pos + j]] # unfold list objects (lmerTest)
+    # reformatting: change beta^hat to gamma^hat (plus subscripts)
+    for (k in 1:length(coefs)){ 
+      coef <- coefs[k] # 9 coefficients for each model (object)
+      gamma <- gammas[k]
+      obj$estimate[coef] <- lapply(obj$estimate[coef], gsub, pattern="beta", replacement=gamma)
+      obj$full_result[coef] <- lapply(obj$full_result[coef], gsub, pattern="beta", replacement=gamma)
+    }
+    obj_name <- paste0(outcome, "_", dataset, "_summary")
+    eval(call("<-", as.name(obj_name), obj)) # save lme4 model
+    obj_name_test <- paste0(outcome, "_", dataset, "_test")
+    eval(call("<-", as.name(obj_name_test), obj_test)) # save lmerTest model
+    # for better formatting in text: p-values
+    obj_p <- as.data.frame(summary(mod_summaries_test[[pos + j]])$coefficients) %>% # unfold list
+      rownames_to_column() %>% select(rowname, "Pr(>|t|)") %>% rename(p = "Pr(>|t|)") %>% 
+      mutate(p = scales::pvalue(p, prefix = c("$p$ < ", "$p$ = ", "$p$ > "))) %>% column_to_rownames()
+    obj_p["p"] <- # remove "0" from the chr's 
+      lapply(obj_p["p"], gsub, pattern="0\\.", replacement="\\.")
+    obj_name_p <- paste0(outcome, "_", dataset, "_p")
+    eval(call("<-", as.name(obj_name_p), obj_p)) # save objects
+    ### moderation by gender models
+    obj_gender = apa_print(mod_summaries_gender[[pos + j]]) # unfold list objects
+    obj_gender_test = mod_summaries_gender_test[[pos + j]] # unfold list objects (lmerTest)
+    # reformatting: change beta^hat to gamma^hat (plus subscripts)
+    for (k in 1:length(coefs_gender)){ 
+      coef <- coefs_gender[k] # 17 coefficients for each model (object)
+      gamma <- gammas_gender[k]
+      obj_gender$estimate[coef] <- lapply(obj_gender$estimate[coef], gsub, pattern="beta", replacement=gamma)
+      obj_gender$full_result[coef] <- lapply(obj_gender$full_result[coef], gsub, pattern="beta", replacement=gamma)
+    }
+    obj_gender_name <- paste0(outcome, "_", dataset, "_gender_summary")
+    eval(call("<-", as.name(obj_gender_name), obj_gender)) # save object
+    obj_gender_test_name <- paste0(outcome, "_", dataset, "_gender_test")
+    eval(call("<-", as.name(obj_gender_test_name), obj_gender_test)) # save object
+    # for better formatting in text: p-values
+    obj_gender_p <- as.data.frame(summary(mod_summaries_gender_test[[pos + j]])$coefficients) %>% # unfold list
+      rownames_to_column() %>% select(rowname, "Pr(>|t|)") %>% rename(p = "Pr(>|t|)") %>% 
+      mutate(p = scales::pvalue(p, prefix = c("$p$ < ", "$p$ = ", "$p$ > "))) %>% column_to_rownames()
+    obj_gender_p["p"] <- # remove "0" from the chr's 
+      lapply(obj_gender_p["p"], gsub, pattern="0\\.", replacement="\\.")
+    obj_gender_name_p <- paste0(outcome, "_", dataset, "_gender_p")
+    eval(call("<-", as.name(obj_gender_name_p), obj_gender_p)) # save objects  
+    }
+}
+
+# remove list objects from environment
+rm(mod_summaries, mod_summaries_test, mod_summaries_gender, mod_summaries_gender_test)
+```
+
+(ref:H1-swls-tab-cap) Fixed Effects of Life Satisfaction Over the Transition to Grandparenthood.
+(ref:H1-swls-tab-note) Two models were computed for each of the two samples (LISS panel, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. $R^2_{M1a} =$ `r printnum(r2_swls_lissanalysis_parents)`, $R^2_{M1b} =$ `r printnum(r2_swls_lissanalysis_nonparents)`, $R^2_{M2a} =$ `r printnum(r2_swls_hrsanalysis_parents)`, $R^2_{M2b} =$ `r printnum(r2_swls_hrsanalysis_nonparents)`.
+
+```{r H1-swls-tab, results="asis"}
+swls_liss_df <- 
+  cbind(printnum(swls_liss_parents_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(swls_liss_parents_test)$coefficients[, 5], # parents: p-value
+        printnum(swls_liss_nonparents_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(swls_liss_nonparents_test)$coefficients[, 5])  # nonparents: p-value
+
+swls_hrs_df <- 
+  cbind(printnum(swls_hrs_parents_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(swls_hrs_parents_test)$coefficients[, 5], # parents: p-value
+        printnum(swls_hrs_nonparents_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(swls_hrs_nonparents_test)$coefficients[, 5])  # nonparents: p-value
+
+# make one large table
+colnames(swls_liss_df)[c(4,8)] <- c("p", "p")
+colnames(swls_hrs_df)[c(4,8)] <- c("p", "p")
+swls_df <- rbind(swls_liss_df, swls_hrs_df)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_swls_df <- c("Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{L}", 
+                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{L}", 
+                      "Before-slope, $\\hat{\\gamma}_{10}$ \\textcolor{white}{L}", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{L}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{L}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$ \\textcolor{white}{L}", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{L}", 
+                      "Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{H}", 
+                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{H}", 
+                      "Before-slope, $\\hat{\\gamma}_{10}$ \\textcolor{white}{H}", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{H}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{H}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{H}", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{H}")
+rownames(swls_df) <- rownames_swls_df
+
+apa_table(
+  swls_df
+  , caption = "(ref:H1-swls-tab-cap)"
+  , note = "(ref:H1-swls-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  #, stub_indents = list("Fixed effects" = 1:12)
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , stub_indents = list("LISS panel (M1a, M1b)" = 1:9, "HRS (M2a, M2b)" = 10:18)
+  , placement = "H"
+)
+```
+
+(ref:H1-swls-gender-tab-cap) Fixed Effects of Life Satisfaction Over the Transition to Grandparenthood Moderated by Gender.
+(ref:H1-swls-gender-tab-note) Two models were computed for each of the two samples (LISS panel, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. $R^2_{M1a} =$ `r printnum(r2_swls_lissanalysis_parents_gender)`, $R^2_{M1b} =$ `r printnum(r2_swls_lissanalysis_nonparents_gender)`, $R^2_{M2a} =$ `r printnum(r2_swls_hrsanalysis_parents_gender)`, $R^2_{M2b} =$ `r printnum(r2_swls_hrsanalysis_nonparents_gender)`.
+
+```{r H1-swls-gender-tab, results="asis"}
+swls_gender_liss_df <- 
+  cbind(printnum(swls_liss_parents_gender_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(swls_liss_parents_gender_test)$coefficients[, 5], # parents: p-value
+        printnum(swls_liss_nonparents_gender_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(swls_liss_nonparents_gender_test)$coefficients[, 5])  # nonparents: p-value
+
+swls_gender_hrs_df <- 
+  cbind(printnum(swls_hrs_parents_gender_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(swls_hrs_parents_gender_test)$coefficients[, 5], # parents: p-value
+        printnum(swls_hrs_nonparents_gender_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(swls_hrs_nonparents_gender_test)$coefficients[, 5])  # nonparents: p-value
+
+# make one large table
+colnames(swls_gender_liss_df)[c(4,8)] <- c("p", "p")
+colnames(swls_gender_hrs_df)[c(4,8)] <- c("p", "p")
+swls_gender_df <- rbind(swls_gender_liss_df, swls_gender_hrs_df)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_swls_gender_df <- c("Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{L}", # LISS
+                      "Propensity score, $\\hat{\\gamma}_{04}$ \\textcolor{white}{L}", 
+                      "Before-slope, $\\hat{\\gamma}_{10}$ \\textcolor{white}{L}", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{L}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{L}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{L}", 
+                      "Female, $\\hat{\\gamma}_{02}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$ \\textcolor{white}{L}", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{L}",
+                      "Before-slope * Female, $\\hat{\\gamma}_{12}$ \\textcolor{white}{L}", 
+                      "After-slope * Female, $\\hat{\\gamma}_{22}$ \\textcolor{white}{L}", 
+                      "Shift * Female, $\\hat{\\gamma}_{32}$ \\textcolor{white}{L}",
+                      "Grandparent * Female, $\\hat{\\gamma}_{03}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent * Female, $\\hat{\\gamma}_{13}$ \\textcolor{white}{L}", 
+                      "After-slope * Grandparent * Female, $\\hat{\\gamma}_{23}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent * Female, $\\hat{\\gamma}_{33}$ \\textcolor{white}{L}",
+                      "Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{H}", # HRS
+                      "Propensity score, $\\hat{\\gamma}_{04}$ \\textcolor{white}{H}", 
+                      "Before-slope, $\\hat{\\gamma}_{10}$ \\textcolor{white}{H}", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{H}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{H}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{H}", 
+                      "Female, $\\hat{\\gamma}_{02}$ \\textcolor{white}{H}", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{H}",
+                      "Before-slope * Female, $\\hat{\\gamma}_{12}$ \\textcolor{white}{H}", 
+                      "After-slope * Female, $\\hat{\\gamma}_{22}$ \\textcolor{white}{H}", 
+                      "Shift * Female, $\\hat{\\gamma}_{32}$ \\textcolor{white}{H}",
+                      "Grandparent * Female, $\\hat{\\gamma}_{03}$ \\textcolor{white}{H}", 
+                      "Before-slope * Grandparent * Female, $\\hat{\\gamma}_{13}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent * Female, $\\hat{\\gamma}_{23}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent * Female, $\\hat{\\gamma}_{33}$ \\textcolor{white}{H}")
+rownames(swls_gender_df) <- rownames_swls_gender_df
+
+apa_table(
+  swls_gender_df
+  , caption = "(ref:H1-swls-gender-tab-cap)"
+  , note = "(ref:H1-swls-gender-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  #, stub_indents = list("Fixed effects" = 1:12)
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , stub_indents = list("LISS panel (M1a, M1b)" = 1:17, "HRS (M2a, M2b)" = 18:34)
+  , placement = "H"
+)
+```
 
 # Discussion
 Based on  
