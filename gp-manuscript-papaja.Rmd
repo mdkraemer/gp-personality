@@ -108,7 +108,7 @@ library("lmerTest")
 library("cowplot") # for plot grid
 #library("effects")
 #library("patchwork") # for plot grid
-#library("scales")
+library("scales")
 #library("car")
 #library("careless") 
 #library("corrplot") # appendix

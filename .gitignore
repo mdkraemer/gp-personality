@@ -11,7 +11,7 @@
 /data/processed
 # ignore feedback folder
 /feedback
-playground.R
+#playground.R
 # ignore folder for cached computations
 /gp-manuscript-papaja_cache
 # ignore automatically generated figs
