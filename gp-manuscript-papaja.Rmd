@@ -499,15 +499,53 @@ lissanalysis_nonparents <- lissanalysis_nonparents %>% rename(pid = nomem_encr, 
 ```
 
 ```{r H1-run-models, include=FALSE, cache = TRUE}
-# This chunk runs 4*4=16 models, 4 four each ...
+# This chunk runs all the models related to H1.
 # Results tables are created in following chunks.
 
-# H1: models for mean-level changes
+# run ICC models first (final 'icc_list' is also used in appendix for Table)
 
+# ICCs = proportion of the total variation explained by the respective blocking factor
+# https://stats.stackexchange.com/questions/18088/intraclass-correlation-icc-for-an-interaction
 outcomes <- c("agree", "con", "extra", "neur", "open", "swls")
 datasets <- c("lissanalysis_parents", "lissanalysis_nonparents", 
               "hrsanalysis_parents", "hrsanalysis_nonparents")
-mod_summaries <- list()
+icc_list <- as.data.frame(rbind(icc_liss_parents_pid = rep(NA, 6), icc_liss_parents_hid = rep(NA, 6), 
+                                icc_liss_parents_pidhid = rep(NA, 6), 
+                                icc_liss_nonparents_pid = rep(NA, 6),
+                                icc_liss_nonparents_hid = rep(NA, 6), 
+                                icc_liss_nonparents_pidhid = rep(NA, 6), 
+                                icc_hrs_parents_pid = rep(NA, 6), 
+                                icc_hrs_parents_hid = rep(NA, 6), icc_hrs_parents_pidhid = rep(NA, 6), 
+                                icc_hrs_nonparents_pid = rep(NA, 6), 
+                                icc_hrs_nonparents_hid = rep(NA, 6),
+                                icc_hrs_nonparents_pidhid = rep(NA, 6)))
+colnames(icc_list) <- outcomes
+
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  for (j in 1:length(datasets)){
+    dataset = datasets[j]
+    pos = seq(from = 1, to = 10, by = 3)[j]
+    model <- lme4::lmer(get(outcome) ~ 1 + (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+    var <- as.data.frame(summary(model)$varcor)
+    icc_pid <- var[1,4] / (var[1,4] + var[2,4] + var[3,4])
+    icc_hid <- var[2,4] / (var[1,4] + var[2,4] + var[3,4])
+    icc_pidhid <- (var[1,4] + var[2,4]) / (var[1,4] + var[2,4] + var[3,4])
+    icc_list[pos, i] <- icc_pid # rows = datasets, columns = outcomes
+    icc_list[pos + 1, i] <- icc_hid
+    icc_list[pos + 2, i] <- icc_pidhid
+  }
+}
+# singular fir for two models where the icc_hid is estimated too close to zero
+# For these models, the icc_pid is the same compared to the model with only 
+# the (1 | pid) random effect (which fits without trouble)
+# Plus, a few additional models with icc_hid below 0.05 (close to zero)
+
+# H1: models for mean-level changes
+
+hid_icc_tbl <- c("icc_liss_parents_hid", "icc_liss_nonparents_hid",
+                 "icc_hrs_parents_hid", "icc_hrs_nonparents_hid") # see table 'icc_list'
+mod_summaries <- list() # create empty list objects that later contain the models
 mod_summaries_test <- list()
 mod_summaries_gender <- list()
 mod_summaries_gender_test <- list()
@@ -515,29 +553,45 @@ mod_summaries_gender_test <- list()
 # run models in a loop (save in list object)
 for (i in 1:length(outcomes)){
   outcome = outcomes[i]
-  print(outcome)
   pos = seq(from = 0, to = 24, by = 4)[i]
   for (j in 1:length(datasets)){
     dataset = datasets[j]
-    print(dataset)
     # basic models
-    model_1 <- lme4::lmer(get(outcome) ~ 1 + pscore + before + after + shift + grandparent + 
-                            grandparent:before + grandparent:after + grandparent:shift + 
-                            (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
-    model_2 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + before + after + shift + grandparent + 
-                                grandparent:before + grandparent:after + grandparent:shift + 
-                                (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+    if (icc_list[hid_icc_tbl[j], outcome] < 0.05){ # nesting in hid leads to singular fit for some models
+      model_1 <- lme4::lmer(get(outcome) ~ 1 + pscore + before + after + shift + grandparent + 
+                              grandparent:before + grandparent:after + grandparent:shift + 
+                              (1 | pid), REML = FALSE, data = get(dataset))
+      model_2 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + before + after + shift + grandparent + 
+                                  grandparent:before + grandparent:after + grandparent:shift + 
+                                  (1 | pid), REML = FALSE, data = get(dataset))
+    } else { # cross-nesting in pid & hid for all other models
+      model_1 <- lme4::lmer(get(outcome) ~ 1 + pscore + before + after + shift + grandparent + 
+                              grandparent:before + grandparent:after + grandparent:shift + 
+                              (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+      model_2 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + before + after + shift + grandparent + 
+                                  grandparent:before + grandparent:after + grandparent:shift + 
+                                  (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+    }      
     mod_summaries[[pos + j]] <- model_1
     names(mod_summaries)[[pos + j]] <- paste0(outcome, "_", dataset)
     mod_summaries_test[[pos + j]] <- model_2
     names(mod_summaries_test)[[pos + j]] <- paste0(outcome, "_", dataset)
     # moderation by gender models
-    model_3 <- lme4::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
-                            grandparent:before + grandparent:after + grandparent:shift)*female + 
-                            (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
-    model_4 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
-                                grandparent:before + grandparent:after + grandparent:shift)*female + 
-                                (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+    if (icc_list[hid_icc_tbl[j], outcome] < 0.05){ # nesting in hid leads to singular fit for some models
+      model_3 <- lme4::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
+                              grandparent:before + grandparent:after + grandparent:shift)*female + 
+                              (1 | pid), REML = FALSE, data = get(dataset))
+      model_4 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
+                                  grandparent:before + grandparent:after + grandparent:shift)*female + 
+                                  (1 | pid), REML = FALSE, data = get(dataset))
+    } else { # cross-nesting in pid & hid for all other models
+      model_3 <- lme4::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
+                              grandparent:before + grandparent:after + grandparent:shift)*female + 
+                              (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+      model_4 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
+                                  grandparent:before + grandparent:after + grandparent:shift)*female + 
+                                  (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+    }      
     mod_summaries_gender[[pos + j]] <- model_3
     names(mod_summaries_gender)[[pos + j]] <- paste0(outcome, "_", dataset)
     mod_summaries_gender_test[[pos + j]] <- model_4
