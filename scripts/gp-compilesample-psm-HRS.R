@@ -393,7 +393,7 @@ str(hrs_data_parents)
 hrs_data_parents <- hrs_data_parents %>% group_by(subclass) %>% 
   mutate(time = ifelse(is.na(time), max(time, na.rm = T), time),
          valid = ifelse(is.na(valid), max(valid, na.rm = T), valid)) %>% ungroup %>% 
-  ungroup() %>% select(-subclass, -weights, -id)
+  ungroup() %>% select(-weights, -id) # -subclass,  -- need subclass later for recoding of moderator care
 
 # "with replacement" in two ways: 
 # - the same control observation appearing multiple times in the matched data 
@@ -421,10 +421,10 @@ hrs_data_parents <- left_join(hrs_data_parents, hrsimp_parents_ps_1,
 
 # for balance assessment (at the time of matching - using the variables containing imputed values)
 hrs_bal_parents <- hrs_data_parents %>%
-  select(HHIDPN, grandparent, pscore, female, everything(), -time, -year, -valid)
+  select(HHIDPN, grandparent, pscore, female, everything(), -time, -year, -valid, -subclass)
 
 hrs_data_parents <- hrs_data_parents %>% 
-  select(HHIDPN, year, grandparent, time, valid, pscore) %>% 
+  select(HHIDPN, year, grandparent, time, valid, pscore, subclass) %>% 
   rename(match_year = year, time_match = time, valid_match = valid) %>% 
   mutate(match_number = row_number()) # if we allow duplicate matches, we need an unambiguous identifier for later
 
@@ -501,7 +501,7 @@ str(hrs_data_nonparents)
 hrs_data_nonparents <- hrs_data_nonparents %>% group_by(subclass) %>% 
   mutate(time = ifelse(is.na(time), max(time, na.rm = T), time),
          valid = ifelse(is.na(valid), max(valid, na.rm = T), valid)) %>% ungroup %>% 
-  ungroup() %>% select(-subclass, -weights, -id)
+  ungroup() %>% select(-weights, -id) # -subclass,  -- need subclass later for recoding of moderator care
 
 # "with replacement" in two ways: 
 # - the same control observation appearing multiple times in the matched data 
@@ -530,10 +530,10 @@ hrs_data_nonparents <- left_join(hrs_data_nonparents, hrsimp_nonparents_ps_1,
 
 # for balance assessment (at the time of matching - using the variables containing imputed values)
 hrs_bal_nonparents <- hrs_data_nonparents %>%
-  select(HHIDPN, grandparent, pscore, female, everything(), -time, -year, -valid)
+  select(HHIDPN, grandparent, pscore, female, everything(), -time, -year, -valid, -subclass)
 
 hrs_data_nonparents <- hrs_data_nonparents %>% 
-  select(HHIDPN, year, grandparent, time, valid, pscore) %>% 
+  select(HHIDPN, year, grandparent, time, valid, pscore, subclass) %>% 
   rename(match_year = year, time_match = time, valid_match = valid) %>% 
   mutate(match_number = row_number()) # if we allow duplicate matches, we need an unambiguous identifier for later
 

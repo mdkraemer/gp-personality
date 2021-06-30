@@ -323,7 +323,7 @@ Third, to examine rank-order stability in the Big Five and life satisfaction ove
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS panel, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00.}
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00.}
 \end{TableNotes}
 
 \footnotesize{
@@ -343,7 +343,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS panel (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 3.86 & [3.80, 3.92] & 131.70 & < .001 & 3.90 & [3.83, 3.97] & 112.97 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{L} & -0.02 & [-0.10, 0.05] & -0.56 & .572 & -0.01 & [-0.08, 0.06] & -0.20 & .838\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.00] & -0.25 & .802 & -0.01 & [-0.01, 0.00] & -1.81 & .070\\
@@ -378,7 +378,66 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS panel, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.12, \(R^2_{M1b} =\) 0.11, \(R^2_{M2a} =\) 0.08, \(R^2_{M2b} =\) 0.07.}
+\normalsize{\textit{Note.} The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the \emph{linearHypothesis} function from the \emph{car} R package (Fox \& Weisberg, 2019) based on the models from Table \ref{tab:H1-agree-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-agree-contrasts}Linear Contrasts for Agreeableness.}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-agree-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+LISS &  &  &  &  &  & \\
+\ \ \ Shift of the controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{L} & 0.02 & 4.00 & .046 & 0.02 & 2.22 & .136\\
+\ \ \ Shift of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{L} & 0.03 & 1.79 & .181 & 0.03 & 1.51 & .219\\
+\ \ \ Shift of the controls vs. shift of the grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{L} & 0.01 & 0.08 & .779 & 0.01 & 0.18 & .668\\
+\ \ \ Before-slope of the grandparents vs. 0 ($\hat{\gamma}_{10}$ + 
+                              $\hat{\gamma}_{11}$) \textcolor{white}{L} & -0.01 & 1.72 & .189 & -0.01 & 1.45 & .228\\
+\ \ \ After-slope of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{21}$) \textcolor{white}{L} & 0.00 & 0.01 & .934 & 0.00 & 0.00 & .958\\
+HRS &  &  &  &  &  & \\
+\ \ \ Shift of the controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{H} & 0.00 & 0.12 & .725 & 0.03 & 10.76 & .001\\
+\ \ \ Shift of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{H} & 0.00 & 0.03 & .859 & 0.00 & 0.03 & .862\\
+\ \ \ Shift of the controls vs. shift of the grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{H} & 0.01 & 0.10 & .751 & -0.02 & 1.77 & .183\\
+\ \ \ Before-slope of the grandparents vs. 0 ($\hat{\gamma}_{10}$ + 
+                              $\hat{\gamma}_{11}$) \textcolor{white}{H} & 0.00 & 0.09 & .762 & 0.00 & 0.11 & .743\\
+\ \ \ After-slope of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{21}$) \textcolor{white}{H} & 0.00 & 0.23 & .633 & 0.00 & 0.28 & .596\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.12, \(R^2_{M1b} =\) 0.11, \(R^2_{M2a} =\) 0.08, \(R^2_{M2b} =\) 0.07.}
 \end{TableNotes}
 
 \footnotesize{
@@ -398,7 +457,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS panel (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 3.65 & [3.58, 3.73] & 93.02 & < .001 & 3.66 & [3.57, 3.75] & 79.73 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{L} & -0.01 & [-0.08, 0.07] & -0.21 & .833 & 0.02 & [-0.05, 0.08] & 0.45 & .653\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.01] & 0.02 & .984 & 0.00 & [-0.01, 0.01] & -0.37 & .712\\
@@ -449,7 +508,224 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS panel, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.02.}
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-agree-gender-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-agree-gender-contrasts}Linear Contrasts for Agreeableness (Moderated by Gender).}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-agree-gender-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+LISS &  &  &  &  &  & \\
+\ \ \ Shift of male controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{L} & 0.01 & 0.19 & .665 & 0.06 & 13.04 & < .001\\
+\ \ \ Shift of female controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$) \textcolor{white}{L} & 0.03 & 5.25 & .022 & -0.02 & 1.90 & .168\\
+\ \ \ Shift of grandfathers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{L} & 0.02 & 0.47 & .493 & 0.02 & 0.40 & .525\\
+\ \ \ Shift of grandmothers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
+                              $\hat{\gamma}_{33}$) \textcolor{white}{L} & 0.04 & 1.79 & .181 & 0.04 & 1.56 & .212\\
+\ \ \ Shift of male controls vs. grandfathers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{L} & 0.01 & 0.17 & .678 & -0.04 & 1.05 & .305\\
+\ \ \ Before-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) \textcolor{white}{L} & -0.01 & 0.78 & .376 & 0.00 & 0.00 & .971\\
+\ \ \ After-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) \textcolor{white}{L} & 0.01 & 0.78 & .377 & 0.00 & 0.15 & .695\\
+\ \ \ Shift of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{L} & 0.00 & 0.02 & .886 & 0.06 & 3.02 & .082\\
+\ \ \ Shift of male vs. female controls 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) \textcolor{white}{L} & 0.03 & 1.51 & .219 & -0.08 & 12.80 & < .001\\
+\ \ \ Before-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) \textcolor{white}{L} & 0.00 & 0.03 & .853 & 0.00 & 0.03 & .857\\
+\ \ \ After-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) \textcolor{white}{L} & -0.01 & 0.92 & .337 & -0.01 & 0.82 & .366\\
+\ \ \ Shift of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{L} & 0.02 & 0.15 & .695 & 0.02 & 0.14 & .712\\
+HRS &  &  &  &  &  & \\
+\ \ \ Shift of male controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{H} & 0.02 & 3.34 & .067 & 0.01 & 0.41 & .520\\
+\ \ \ Shift of female controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$) \textcolor{white}{H} & -0.02 & 4.49 & .034 & 0.04 & 14.19 & < .001\\
+\ \ \ Shift of grandfathers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{H} & 0.01 & 0.05 & .818 & 0.01 & 0.05 & .815\\
+\ \ \ Shift of grandmothers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
+                              $\hat{\gamma}_{33}$ \textcolor{white}{H} & 0.00 & 0.01 & .927 & 0.00 & 0.01 & .936\\
+\ \ \ Shift of male controls vs. grandfathers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{H} & -0.02 & 0.39 & .531 & 0.00 & 0.01 & .929\\
+\ \ \ Before-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) \textcolor{white}{H} & 0.01 & 0.74 & .390 & 0.01 & 0.58 & .445\\
+\ \ \ After-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) \textcolor{white}{H} & 0.00 & 0.15 & .701 & 0.01 & 1.32 & .250\\
+\ \ \ Shift of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{H} & 0.02 & 1.07 & .301 & -0.04 & 2.61 & .106\\
+\ \ \ Shift of male vs. female controls 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) \textcolor{white}{H} & -0.04 & 7.70 & .006 & 0.03 & 3.92 & .048\\
+\ \ \ Before-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) \textcolor{white}{H} & 0.02 & 1.17 & .279 & 0.02 & 1.28 & .258\\
+\ \ \ After-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) \textcolor{white}{H} & -0.02 & 1.94 & .163 & -0.02 & 2.13 & .144\\
+\ \ \ Shift of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{H} & 0.00 & 0.01 & .912 & 0.00 & 0.01 & .904\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-agree-work-tab}Fixed Effects of Agreeableness Over the Transition to Grandparenthood Moderated by Performing Paid Work.}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-agree-work-tab} continued}}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endhead
+Intercept, $\hat{\gamma}_{00}$ & 3.50 & [3.45, 3.54] & 157.26 & < .001 & 3.48 & [3.43, 3.52] & 138.40 & < .001\\
+Propensity score, $\hat{\gamma}_{04}$ & 0.09 & [0.03, 0.15] & 2.93 & .003 & 0.04 & [-0.03, 0.10] & 1.14 & .253\\
+Before-slope, $\hat{\gamma}_{10}$ & 0.01 & [-0.01, 0.03] & 0.91 & .363 & 0.00 & [-0.02, 0.02] & -0.23 & .819\\
+After-slope, $\hat{\gamma}_{20}$ & -0.02 & [-0.03, -0.01] & -4.07 & < .001 & -0.03 & [-0.04, -0.02] & -5.38 & < .001\\
+Shift, $\hat{\gamma}_{30}$ & -0.01 & [-0.04, 0.02] & -0.53 & .594 & 0.07 & [0.03, 0.10] & 3.93 & < .001\\
+Grandparent, $\hat{\gamma}_{01}$ & -0.11 & [-0.20, -0.02] & -2.33 & .020 & -0.07 & [-0.16, 0.02] & -1.49 & .137\\
+Working, $\hat{\gamma}_{02}$ & -0.06 & [-0.10, -0.02] & -2.77 & .006 & 0.01 & [-0.03, 0.05] & 0.61 & .540\\
+Before-slope * Grandparent, $\hat{\gamma}_{11}$ & 0.04 & [-0.01, 0.09] & 1.55 & .121 & 0.05 & [0.00, 0.10] & 2.09 & .037\\
+After-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.02 & [0.00, 0.05] & 1.96 & .050 & 0.03 & [0.01, 0.05] & 2.68 & .007\\
+Shift * Grandparent, $\hat{\gamma}_{31}$ & 0.00 & [-0.08, 0.07] & -0.07 & .947 & -0.08 & [-0.15, -0.01] & -2.17 & .030\\
+Before-slope * Working, $\hat{\gamma}_{12}$ & 0.00 & [-0.03, 0.02] & -0.30 & .767 & 0.00 & [-0.03, 0.02] & -0.37 & .712\\
+After-slope * Working, $\hat{\gamma}_{22}$ & 0.02 & [0.01, 0.04] & 2.87 & .004 & 0.02 & [0.01, 0.03] & 2.83 & .005\\
+Shift * Working, $\hat{\gamma}_{32}$ & 0.02 & [-0.03, 0.06] & 0.77 & .441 & -0.04 & [-0.08, 0.00] & -1.87 & .061\\
+Grandparent * Working, $\hat{\gamma}_{03}$ & 0.18 & [0.08, 0.28] & 3.68 & < .001 & 0.11 & [0.02, 0.20] & 2.40 & .017\\
+Before-slope * Grandparent * Working, $\hat{\gamma}_{13}$ & -0.06 & [-0.12, -0.01] & -2.15 & .032 & -0.06 & [-0.12, -0.01] & -2.22 & .026\\
+After-slope * Grandparent * Working, $\hat{\gamma}_{23}$ & -0.02 & [-0.05, 0.02] & -0.97 & .333 & -0.01 & [-0.05, 0.02] & -0.94 & .347\\
+Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & -0.01 & [-0.10, 0.09] & -0.11 & .914 & 0.05 & [-0.04, 0.14] & 1.08 & .282\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-agree-work-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-agree-work-contrasts}Linear Contrasts for Agreeableness (Moderated by Paid Work; only HRS).}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-agree-work-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+Shift of not-working controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) & -0.03 & 5.08 & .024 & 0.04 & 7.79 & .005\\
+Shift of working controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$) & 0.01 & 0.52 & .472 & 0.02 & 3.86 & .049\\
+Shift of not-working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) & -0.01 & 0.14 & .713 & -0.01 & 0.15 & .699\\
+Shift of working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
+                              $\hat{\gamma}_{33}$) & 0.01 & 0.10 & .755 & 0.01 & 0.09 & .768\\
+Shift of not-working controls vs. not-working grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & 0.02 & 0.44 & .505 & -0.05 & 2.76 & .097\\
+Before-slope of working controls vs. working grandparents 
+                              ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & -0.02 & 2.73 & .099 & -0.01 & 0.76 & .383\\
+After-slope of working controls vs. working grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) & 0.01 & 0.36 & .548 & 0.02 & 2.00 & .157\\
+Shift of working controls vs. working grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & 0.00 & 0.00 & .966 & -0.01 & 0.35 & .553\\
+Shift of not-working controls vs. working controls 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) & 0.04 & 4.89 & .027 & -0.02 & 1.43 & .232\\
+Before-slope of not-working grandparents vs. working grandparents 
+                              ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & -0.07 & 6.12 & .013 & -0.07 & 6.87 & .009\\
+After-slope of not-working grandparents vs. working grandparents 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) & 0.01 & 0.12 & .734 & 0.01 & 0.13 & .714\\
+Shift of not-working grandparents vs. working grandparents 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & 0.02 & 0.22 & .637 & 0.02 & 0.23 & .633\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.02.}
 \end{TableNotes}
 
 \footnotesize{
@@ -469,7 +745,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS panel (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 3.77 & [3.72, 3.83] & 130.27 & < .001 & 3.82 & [3.75, 3.88] & 112.10 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{L} & 0.00 & [-0.08, 0.08] & -0.02 & .987 & 0.01 & [-0.06, 0.08] & 0.24 & .813\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.00] & -0.84 & .402 & 0.00 & [-0.01, 0.01] & -0.26 & .796\\
@@ -504,7 +780,66 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS panel, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.01, \(R^2_{M2a} =\) 0.02, \(R^2_{M2b} =\) 0.04.}
+\normalsize{\textit{Note.} The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the \emph{linearHypothesis} function from the \emph{car} R package (Fox \& Weisberg, 2019) based on the models from Table \ref{tab:H1-con-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-con-contrasts}Linear Contrasts for Conscientiousness.}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-con-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+LISS &  &  &  &  &  & \\
+\ \ \ Shift of the controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{L} & 0.02 & 4.71 & .030 & 0.01 & 0.40 & .525\\
+\ \ \ Shift of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{L} & 0.00 & 0.01 & .928 & 0.00 & 0.01 & .932\\
+\ \ \ Shift of the controls vs. shift of the grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{L} & -0.03 & 1.14 & .286 & -0.01 & 0.13 & .718\\
+\ \ \ Before-slope of the grandparents vs. 0 ($\hat{\gamma}_{10}$ + 
+                              $\hat{\gamma}_{11}$) \textcolor{white}{L} & 0.00 & 0.20 & .655 & 0.00 & 0.18 & .667\\
+\ \ \ After-slope of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{21}$) \textcolor{white}{L} & 0.00 & 0.01 & .942 & 0.00 & 0.01 & .943\\
+HRS &  &  &  &  &  & \\
+\ \ \ Shift of the controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{H} & 0.01 & 0.47 & .491 & -0.01 & 2.83 & .092\\
+\ \ \ Shift of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{H} & -0.02 & 2.49 & .114 & -0.02 & 2.82 & .093\\
+\ \ \ Shift of the controls vs. shift of the grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{H} & -0.03 & 2.96 & .085 & -0.01 & 0.54 & .462\\
+\ \ \ Before-slope of the grandparents vs. 0 ($\hat{\gamma}_{10}$ + 
+                              $\hat{\gamma}_{11}$) \textcolor{white}{H} & 0.01 & 0.59 & .444 & 0.01 & 0.68 & .409\\
+\ \ \ After-slope of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{21}$) \textcolor{white}{H} & 0.01 & 1.88 & .170 & 0.01 & 2.13 & .145\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.01, \(R^2_{M2a} =\) 0.02, \(R^2_{M2b} =\) 0.04.}
 \end{TableNotes}
 
 \footnotesize{
@@ -524,7 +859,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS panel (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 3.69 & [3.60, 3.77] & 87.30 & < .001 & 3.70 & [3.61, 3.80] & 75.84 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{L} & 0.00 & [-0.08, 0.07] & -0.03 & .976 & 0.01 & [-0.06, 0.08] & 0.34 & .732\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.01] & 0.64 & .524 & 0.00 & [-0.01, 0.01] & 0.75 & .455\\
@@ -575,7 +910,224 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS panel, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00.}
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-con-gender-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-con-gender-contrasts}Linear Contrasts for Conscientiousness (Moderated by Gender).}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-con-gender-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+LISS &  &  &  &  &  & \\
+\ \ \ Shift of male controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{L} & 0.03 & 2.83 & .092 & 0.01 & 0.10 & .750\\
+\ \ \ Shift of female controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$) \textcolor{white}{L} & 0.02 & 1.93 & .165 & 0.01 & 0.22 & .640\\
+\ \ \ Shift of grandfathers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{L} & 0.00 & 0.02 & .883 & 0.00 & 0.02 & .886\\
+\ \ \ Shift of grandmothers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
+                              $\hat{\gamma}_{33}$) \textcolor{white}{L} & -0.01 & 0.04 & .849 & -0.01 & 0.03 & .857\\
+\ \ \ Shift of male controls vs. grandfathers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{L} & -0.02 & 0.40 & .528 & 0.00 & 0.00 & .991\\
+\ \ \ Before-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) \textcolor{white}{L} & 0.01 & 0.81 & .368 & 0.01 & 0.34 & .560\\
+\ \ \ After-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) \textcolor{white}{L} & 0.01 & 2.25 & .133 & -0.02 & 7.67 & .006\\
+\ \ \ Shift of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{L} & -0.03 & 0.64 & .422 & -0.01 & 0.14 & .709\\
+\ \ \ Shift of male vs. female controls 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) \textcolor{white}{L} & -0.01 & 0.09 & .763 & 0.00 & 0.01 & .930\\
+\ \ \ Before-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) \textcolor{white}{L} & 0.00 & 0.02 & .901 & 0.00 & 0.02 & .899\\
+\ \ \ After-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) \textcolor{white}{L} & -0.02 & 2.25 & .134 & -0.02 & 2.12 & .146\\
+\ \ \ Shift of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{L} & -0.01 & 0.06 & .812 & -0.01 & 0.05 & .820\\
+HRS &  &  &  &  &  & \\
+\ \ \ Shift of male controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{H} & 0.01 & 0.21 & .648 & -0.01 & 1.00 & .317\\
+\ \ \ Shift of female controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$) \textcolor{white}{H} & 0.01 & 0.26 & .609 & -0.01 & 1.95 & .163\\
+\ \ \ Shift of grandfathers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{H} & -0.05 & 4.94 & .026 & -0.05 & 5.72 & .017\\
+\ \ \ Shift of grandmothers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
+                              $\hat{\gamma}_{33}$ \textcolor{white}{H} & 0.00 & 0.01 & .906 & 0.00 & 0.01 & .912\\
+\ \ \ Shift of male controls vs. grandfathers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{H} & -0.05 & 4.78 & .029 & -0.04 & 2.75 & .097\\
+\ \ \ Before-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) \textcolor{white}{H} & 0.00 & 0.02 & .900 & 0.00 & 0.04 & .839\\
+\ \ \ After-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) \textcolor{white}{H} & 0.02 & 2.96 & .085 & 0.02 & 5.42 & .020\\
+\ \ \ Shift of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{H} & -0.01 & 0.11 & .737 & 0.01 & 0.27 & .600\\
+\ \ \ Shift of male vs. female controls 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) \textcolor{white}{H} & 0.00 & 0.00 & .998 & 0.00 & 0.02 & .877\\
+\ \ \ Before-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) \textcolor{white}{H} & -0.02 & 1.36 & .244 & -0.03 & 1.58 & .208\\
+\ \ \ After-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) \textcolor{white}{H} & -0.01 & 1.17 & .279 & -0.02 & 1.43 & .232\\
+\ \ \ Shift of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{H} & 0.05 & 2.47 & .116 & 0.05 & 2.90 & .089\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.02, \(R^2_{M2b} =\) 0.03.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-con-work-tab}Fixed Effects of Conscientiousness Over the Transition to Grandparenthood Moderated by Performing Paid Work.}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-con-work-tab} continued}}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endhead
+Intercept, $\hat{\gamma}_{00}$ & 3.41 & [3.37, 3.45] & 165.13 & < .001 & 3.37 & [3.33, 3.42] & 146.02 & < .001\\
+Propensity score, $\hat{\gamma}_{04}$ & 0.06 & [0.00, 0.12] & 2.13 & .033 & 0.14 & [0.09, 0.20] & 4.83 & < .001\\
+Before-slope, $\hat{\gamma}_{10}$ & -0.01 & [-0.03, 0.00] & -1.55 & .121 & 0.00 & [-0.02, 0.02] & -0.28 & .779\\
+After-slope, $\hat{\gamma}_{20}$ & -0.02 & [-0.03, -0.01] & -3.55 & < .001 & -0.02 & [-0.03, -0.01] & -4.10 & < .001\\
+Shift, $\hat{\gamma}_{30}$ & 0.02 & [-0.01, 0.05] & 1.49 & .137 & -0.02 & [-0.05, 0.01] & -1.30 & .193\\
+Grandparent, $\hat{\gamma}_{01}$ & -0.09 & [-0.18, -0.01] & -2.19 & .029 & -0.10 & [-0.18, -0.01] & -2.30 & .022\\
+Working, $\hat{\gamma}_{02}$ & 0.01 & [-0.03, 0.05] & 0.45 & .650 & -0.03 & [-0.06, 0.01] & -1.60 & .109\\
+Before-slope * Grandparent, $\hat{\gamma}_{11}$ & 0.08 & [0.04, 0.13] & 3.54 & < .001 & 0.07 & [0.03, 0.12] & 3.16 & .002\\
+After-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.03 & [0.01, 0.05] & 2.66 & .008 & 0.03 & [0.01, 0.05] & 2.96 & .003\\
+Shift * Grandparent, $\hat{\gamma}_{31}$ & -0.09 & [-0.16, -0.02] & -2.64 & .008 & -0.05 & [-0.11, 0.02] & -1.46 & .145\\
+Before-slope * Working, $\hat{\gamma}_{12}$ & 0.02 & [0.00, 0.05] & 2.21 & .027 & 0.01 & [-0.01, 0.03] & 0.91 & .362\\
+After-slope * Working, $\hat{\gamma}_{22}$ & 0.01 & [0.00, 0.03] & 1.92 & .055 & 0.02 & [0.01, 0.03] & 2.96 & .003\\
+Shift * Working, $\hat{\gamma}_{32}$ & -0.01 & [-0.05, 0.03] & -0.45 & .653 & 0.03 & [-0.01, 0.06] & 1.30 & .194\\
+Grandparent * Working, $\hat{\gamma}_{03}$ & 0.14 & [0.05, 0.23] & 3.16 & .002 & 0.17 & [0.09, 0.26] & 4.05 & < .001\\
+Before-slope * Grandparent * Working, $\hat{\gamma}_{13}$ & -0.10 & [-0.16, -0.05] & -3.69 & < .001 & -0.09 & [-0.14, -0.04] & -3.31 & .001\\
+After-slope * Grandparent * Working, $\hat{\gamma}_{23}$ & -0.01 & [-0.04, 0.02] & -0.76 & .449 & -0.02 & [-0.05, 0.01] & -1.17 & .240\\
+Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & 0.06 & [-0.03, 0.15] & 1.31 & .191 & 0.02 & [-0.06, 0.11] & 0.56 & .578\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-con-work-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-con-work-contrasts}Linear Contrasts for Conscientiousness (Moderated by Paid Work; only HRS).}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-con-work-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+Shift of not-working controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) & 0.01 & 0.23 & .635 & -0.04 & 9.72 & .002\\
+Shift of working controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$) & 0.01 & 1.06 & .304 & 0.00 & 0.28 & .598\\
+Shift of not-working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) & -0.06 & 5.20 & .023 & -0.06 & 5.93 & .015\\
+Shift of working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
+                              $\hat{\gamma}_{33}$) & -0.01 & 0.09 & .768 & -0.01 & 0.13 & .717\\
+Shift of not-working controls vs. not-working grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & -0.06 & 5.09 & .024 & -0.02 & 0.46 & .498\\
+Before-slope of working controls vs. working grandparents 
+                              ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & -0.02 & 1.75 & .185 & -0.02 & 1.50 & .221\\
+After-slope of working controls vs. working grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) & 0.02 & 2.59 & .107 & 0.01 & 1.83 & .176\\
+Shift of working controls vs. working grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & -0.02 & 0.52 & .469 & -0.01 & 0.31 & .578\\
+Shift of not-working controls vs. working controls 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) & 0.00 & 0.06 & .809 & 0.04 & 8.10 & .004\\
+Before-slope of not-working grandparents vs. working grandparents 
+                              ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & -0.08 & 9.38 & .002 & -0.08 & 10.44 & .001\\
+After-slope of not-working grandparents vs. working grandparents 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) & 0.00 & 0.01 & .920 & 0.00 & 0.02 & .879\\
+Shift of not-working grandparents vs. working grandparents 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & 0.05 & 2.62 & .106 & 0.05 & 2.89 & .089\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00.}
 \end{TableNotes}
 
 \footnotesize{
@@ -595,7 +1147,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS panel (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 3.25 & [3.18, 3.33] & 87.65 & < .001 & 3.29 & [3.20, 3.39] & 67.72 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{L} & -0.01 & [-0.10, 0.07] & -0.26 & .793 & 0.01 & [-0.07, 0.08] & 0.18 & .860\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & -0.01 & [-0.01, 0.00] & -1.77 & .077 & 0.00 & [0.00, 0.01] & 0.65 & .515\\
@@ -630,7 +1182,66 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS panel, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.01.}
+\normalsize{\textit{Note.} The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the \emph{linearHypothesis} function from the \emph{car} R package (Fox \& Weisberg, 2019) based on the models from Table \ref{tab:H1-extra-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-extra-contrasts}Linear Contrasts for Extraversion.}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-extra-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+LISS &  &  &  &  &  & \\
+\ \ \ Shift of the controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{L} & -0.02 & 2.12 & .145 & -0.02 & 1.73 & .188\\
+\ \ \ Shift of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{L} & -0.03 & 1.58 & .208 & -0.03 & 1.47 & .225\\
+\ \ \ Shift of the controls vs. shift of the grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{L} & -0.01 & 0.21 & .647 & -0.01 & 0.25 & .620\\
+\ \ \ Before-slope of the grandparents vs. 0 ($\hat{\gamma}_{10}$ + 
+                              $\hat{\gamma}_{11}$) \textcolor{white}{L} & -0.01 & 1.77 & .183 & -0.01 & 1.65 & .200\\
+\ \ \ After-slope of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{21}$) \textcolor{white}{L} & 0.00 & 0.01 & .912 & 0.00 & 0.03 & .852\\
+HRS &  &  &  &  &  & \\
+\ \ \ Shift of the controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{H} & 0.02 & 3.63 & .057 & 0.01 & 1.51 & .219\\
+\ \ \ Shift of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{H} & -0.01 & 0.34 & .561 & -0.01 & 0.36 & .548\\
+\ \ \ Shift of the controls vs. shift of the grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{H} & -0.03 & 1.90 & .168 & -0.02 & 1.19 & .275\\
+\ \ \ Before-slope of the grandparents vs. 0 ($\hat{\gamma}_{10}$ + 
+                              $\hat{\gamma}_{11}$) \textcolor{white}{H} & 0.00 & 0.01 & .925 & 0.00 & 0.01 & .929\\
+\ \ \ After-slope of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{21}$) \textcolor{white}{H} & 0.01 & 1.73 & .189 & 0.01 & 1.86 & .173\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.01.}
 \end{TableNotes}
 
 \footnotesize{
@@ -650,7 +1261,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS panel (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 3.28 & [3.18, 3.39] & 60.26 & < .001 & 3.22 & [3.08, 3.35] & 46.79 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{L} & -0.01 & [-0.09, 0.08] & -0.15 & .881 & 0.01 & [-0.06, 0.09] & 0.30 & .765\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & -0.01 & [-0.02, 0.00] & -1.82 & .069 & 0.02 & [0.01, 0.03] & 4.00 & < .001\\
@@ -701,7 +1312,224 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS panel, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00.}
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-extra-gender-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-extra-gender-contrasts}Linear Contrasts for Extraversion (Moderated by Gender).}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-extra-gender-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+LISS &  &  &  &  &  & \\
+\ \ \ Shift of male controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{L} & -0.05 & 6.28 & .012 & -0.05 & 9.10 & .003\\
+\ \ \ Shift of female controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$) \textcolor{white}{L} & 0.01 & 0.09 & .763 & 0.02 & 0.95 & .330\\
+\ \ \ Shift of grandfathers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{L} & -0.04 & 1.25 & .264 & -0.04 & 1.16 & .281\\
+\ \ \ Shift of grandmothers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
+                              $\hat{\gamma}_{33}$) \textcolor{white}{L} & -0.02 & 0.45 & .500 & -0.02 & 0.41 & .520\\
+\ \ \ Shift of male controls vs. grandfathers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{L} & 0.01 & 0.02 & .891 & 0.01 & 0.13 & .716\\
+\ \ \ Before-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) \textcolor{white}{L} & -0.01 & 0.42 & .518 & 0.00 & 0.13 & .720\\
+\ \ \ After-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) \textcolor{white}{L} & 0.00 & 0.13 & .722 & 0.01 & 2.45 & .117\\
+\ \ \ Shift of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{L} & -0.03 & 0.54 & .461 & -0.04 & 1.03 & .311\\
+\ \ \ Shift of male vs. female controls 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) \textcolor{white}{L} & 0.05 & 4.20 & .040 & 0.07 & 8.22 & .004\\
+\ \ \ Before-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) \textcolor{white}{L} & 0.00 & 0.03 & .871 & 0.00 & 0.01 & .943\\
+\ \ \ After-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) \textcolor{white}{L} & 0.00 & 0.03 & .857 & 0.00 & 0.04 & .834\\
+\ \ \ Shift of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{L} & 0.02 & 0.14 & .709 & 0.02 & 0.13 & .717\\
+HRS &  &  &  &  &  & \\
+\ \ \ Shift of male controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{H} & 0.00 & 0.06 & .812 & 0.00 & 0.09 & .765\\
+\ \ \ Shift of female controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$) \textcolor{white}{H} & 0.03 & 5.44 & .020 & 0.02 & 3.52 & .061\\
+\ \ \ Shift of grandfathers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{H} & 0.00 & 0.01 & .905 & 0.00 & 0.01 & .903\\
+\ \ \ Shift of grandmothers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
+                              $\hat{\gamma}_{33}$ \textcolor{white}{H} & -0.02 & 0.73 & .393 & -0.02 & 0.78 & .377\\
+\ \ \ Shift of male controls vs. grandfathers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{H} & 0.00 & 0.00 & .999 & 0.01 & 0.06 & .805\\
+\ \ \ Before-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) \textcolor{white}{H} & 0.02 & 1.42 & .234 & 0.00 & 0.01 & .909\\
+\ \ \ After-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) \textcolor{white}{H} & 0.02 & 2.40 & .122 & 0.01 & 0.65 & .419\\
+\ \ \ Shift of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{H} & -0.05 & 3.28 & .070 & -0.04 & 2.65 & .104\\
+\ \ \ Shift of male vs. female controls 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) \textcolor{white}{H} & 0.02 & 1.88 & .171 & 0.02 & 2.10 & .147\\
+\ \ \ Before-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) \textcolor{white}{H} & 0.02 & 0.79 & .373 & 0.02 & 0.85 & .357\\
+\ \ \ After-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) \textcolor{white}{H} & -0.01 & 0.57 & .452 & -0.01 & 0.62 & .431\\
+\ \ \ Shift of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{H} & -0.02 & 0.44 & .508 & -0.02 & 0.47 & .495\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-extra-work-tab}Fixed Effects of Extraversion Over the Transition to Grandparenthood Moderated by Performing Paid Work.}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-extra-work-tab} continued}}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endhead
+Intercept, $\hat{\gamma}_{00}$ & 3.18 & [3.13, 3.23] & 129.04 & < .001 & 3.12 & [3.07, 3.17] & 112.49 & < .001\\
+Propensity score, $\hat{\gamma}_{04}$ & 0.01 & [-0.06, 0.08] & 0.31 & .757 & 0.03 & [-0.04, 0.10] & 0.77 & .439\\
+Before-slope, $\hat{\gamma}_{10}$ & 0.02 & [0.00, 0.04] & 1.69 & .091 & 0.00 & [-0.02, 0.02] & 0.09 & .927\\
+After-slope, $\hat{\gamma}_{20}$ & 0.00 & [-0.01, 0.01] & 0.12 & .901 & -0.01 & [-0.02, 0.00] & -1.24 & .213\\
+Shift, $\hat{\gamma}_{30}$ & -0.04 & [-0.08, -0.01] & -2.48 & .013 & 0.02 & [-0.02, 0.05] & 0.91 & .364\\
+Grandparent, $\hat{\gamma}_{01}$ & -0.06 & [-0.16, 0.04] & -1.23 & .217 & -0.01 & [-0.11, 0.09] & -0.18 & .853\\
+Working, $\hat{\gamma}_{02}$ & 0.03 & [-0.02, 0.07] & 1.19 & .232 & 0.00 & [-0.05, 0.04] & -0.12 & .902\\
+Before-slope * Grandparent, $\hat{\gamma}_{11}$ & 0.02 & [-0.03, 0.07] & 0.74 & .460 & 0.04 & [-0.02, 0.09] & 1.38 & .169\\
+After-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.02 & [0.00, 0.04] & 1.65 & .099 & 0.03 & [0.00, 0.05] & 2.32 & .021\\
+Shift * Grandparent, $\hat{\gamma}_{31}$ & -0.02 & [-0.10, 0.06] & -0.46 & .643 & -0.08 & [-0.16, 0.00] & -2.02 & .044\\
+Before-slope * Working, $\hat{\gamma}_{12}$ & -0.03 & [-0.05, -0.01] & -2.38 & .017 & 0.01 & [-0.02, 0.03] & 0.59 & .556\\
+After-slope * Working, $\hat{\gamma}_{22}$ & 0.00 & [-0.02, 0.01] & -0.19 & .848 & 0.01 & [0.00, 0.03] & 1.79 & .074\\
+Shift * Working, $\hat{\gamma}_{32}$ & 0.10 & [0.05, 0.14] & 4.18 & < .001 & -0.01 & [-0.06, 0.04] & -0.43 & .667\\
+Grandparent * Working, $\hat{\gamma}_{03}$ & 0.08 & [-0.02, 0.18] & 1.53 & .126 & 0.11 & [0.01, 0.21] & 2.13 & .034\\
+Before-slope * Grandparent * Working, $\hat{\gamma}_{13}$ & -0.01 & [-0.08, 0.05] & -0.46 & .646 & -0.05 & [-0.11, 0.01] & -1.69 & .092\\
+After-slope * Grandparent * Working, $\hat{\gamma}_{23}$ & -0.01 & [-0.05, 0.02] & -0.80 & .425 & -0.03 & [-0.06, 0.00] & -1.69 & .090\\
+Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & -0.03 & [-0.13, 0.08] & -0.49 & .623 & 0.08 & [-0.02, 0.18] & 1.57 & .115\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-extra-work-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-extra-work-contrasts}Linear Contrasts for Extraversion (Moderated by Paid Work; only HRS).}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-extra-work-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+Shift of not-working controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) & -0.04 & 9.28 & .002 & 0.01 & 0.42 & .515\\
+Shift of working controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$) & 0.05 & 22.76 & < .001 & 0.01 & 1.67 & .196\\
+Shift of not-working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) & -0.04 & 2.05 & .152 & -0.04 & 2.20 & .138\\
+Shift of working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
+                              $\hat{\gamma}_{33}$) & 0.01 & 0.40 & .526 & 0.01 & 0.42 & .517\\
+Shift of not-working controls vs. not-working grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & 0.00 & 0.00 & .957 & -0.05 & 2.60 & .107\\
+Before-slope of working controls vs. working grandparents 
+                              ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & 0.01 & 0.12 & .729 & -0.02 & 1.06 & .303\\
+After-slope of working controls vs. working grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) & 0.01 & 0.28 & .598 & 0.00 & 0.00 & .948\\
+Shift of working controls vs. working grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & -0.04 & 2.46 & .117 & 0.00 & 0.00 & .987\\
+Shift of not-working controls vs. working controls 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) & 0.10 & 27.75 & < .001 & 0.00 & 0.04 & .852\\
+Before-slope of not-working grandparents vs. working grandparents 
+                              ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & -0.04 & 2.34 & .126 & -0.04 & 2.52 & .113\\
+After-slope of not-working grandparents vs. working grandparents 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) & -0.02 & 0.97 & .325 & -0.02 & 1.01 & .314\\
+Shift of not-working grandparents vs. working grandparents 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & 0.06 & 2.24 & .135 & 0.06 & 2.38 & .123\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00.}
 \end{TableNotes}
 
 \footnotesize{
@@ -721,7 +1549,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS panel (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 2.48 & [2.40, 2.56] & 63.09 & < .001 & 2.45 & [2.35, 2.54] & 51.88 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{L} & 0.01 & [-0.09, 0.11] & 0.19 & .852 & 0.00 & [-0.09, 0.09] & 0.04 & .967\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.01] & -0.56 & .575 & -0.01 & [-0.02, -0.01] & -3.66 & < .001\\
@@ -756,7 +1584,66 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS panel, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.01, \(R^2_{M1b} =\) 0.01, \(R^2_{M2a} =\) 0.02, \(R^2_{M2b} =\) 0.01.}
+\normalsize{\textit{Note.} The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the \emph{linearHypothesis} function from the \emph{car} R package (Fox \& Weisberg, 2019) based on the models from Table \ref{tab:H1-neur-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-neur-contrasts}Linear Contrasts for Neuroticism.}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-neur-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+LISS &  &  &  &  &  & \\
+\ \ \ Shift of the controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{L} & -0.05 & 10.12 & .001 & -0.02 & 2.26 & .133\\
+\ \ \ Shift of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{L} & -0.07 & 4.99 & .025 & -0.07 & 4.74 & .029\\
+\ \ \ Shift of the controls vs. shift of the grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{L} & -0.02 & 0.30 & .587 & -0.04 & 1.62 & .203\\
+\ \ \ Before-slope of the grandparents vs. 0 ($\hat{\gamma}_{10}$ + 
+                              $\hat{\gamma}_{11}$) \textcolor{white}{L} & 0.00 & 0.04 & .842 & 0.00 & 0.05 & .830\\
+\ \ \ After-slope of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{21}$) \textcolor{white}{L} & 0.00 & 0.01 & .914 & 0.00 & 0.02 & .900\\
+HRS &  &  &  &  &  & \\
+\ \ \ Shift of the controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{H} & 0.00 & 0.00 & .993 & -0.04 & 20.02 & < .001\\
+\ \ \ Shift of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{H} & -0.08 & 15.10 & < .001 & -0.08 & 15.78 & < .001\\
+\ \ \ Shift of the controls vs. shift of the grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{H} & -0.08 & 12.06 & .001 & -0.03 & 2.29 & .130\\
+\ \ \ Before-slope of the grandparents vs. 0 ($\hat{\gamma}_{10}$ + 
+                              $\hat{\gamma}_{11}$) \textcolor{white}{H} & 0.01 & 0.25 & .618 & 0.01 & 0.19 & .666\\
+\ \ \ After-slope of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{21}$) \textcolor{white}{H} & -0.02 & 5.29 & .021 & -0.02 & 6.13 & .013\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.01, \(R^2_{M1b} =\) 0.01, \(R^2_{M2a} =\) 0.02, \(R^2_{M2b} =\) 0.01.}
 \end{TableNotes}
 
 \footnotesize{
@@ -776,7 +1663,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS panel (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 2.45 & [2.34, 2.56] & 43.45 & < .001 & 2.32 & [2.19, 2.45] & 34.99 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{L} & 0.02 & [-0.09, 0.12] & 0.30 & .767 & 0.02 & [-0.08, 0.11] & 0.33 & .744\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & -0.01 & [-0.02, 0.00] & -1.89 & .059 & -0.01 & [-0.02, 0.00] & -1.12 & .263\\
@@ -827,13 +1714,230 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS panel, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.01, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00.}
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-neur-gender-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-neur-gender-contrasts}Linear Contrasts for Neuroticism (Moderated by Gender).}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-neur-gender-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+LISS &  &  &  &  &  & \\
+\ \ \ Shift of male controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{L} & -0.04 & 3.64 & .056 & -0.04 & 2.76 & .096\\
+\ \ \ Shift of female controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$) \textcolor{white}{L} & -0.05 & 6.02 & .014 & -0.01 & 0.24 & .621\\
+\ \ \ Shift of grandfathers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{L} & -0.09 & 3.89 & .048 & -0.09 & 3.67 & .055\\
+\ \ \ Shift of grandmothers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
+                              $\hat{\gamma}_{33}$) \textcolor{white}{L} & -0.04 & 1.25 & .263 & -0.05 & 1.20 & .273\\
+\ \ \ Shift of male controls vs. grandfathers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{L} & -0.04 & 0.80 & .371 & -0.05 & 0.97 & .325\\
+\ \ \ Before-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) \textcolor{white}{L} & 0.00 & 0.01 & .935 & 0.03 & 4.48 & .034\\
+\ \ \ After-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) \textcolor{white}{L} & 0.01 & 0.51 & .476 & 0.00 & 0.12 & .730\\
+\ \ \ Shift of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{L} & 0.01 & 0.01 & .904 & -0.03 & 0.57 & .451\\
+\ \ \ Shift of male vs. female controls 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) \textcolor{white}{L} & -0.01 & 0.06 & .799 & 0.03 & 0.76 & .382\\
+\ \ \ Before-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) \textcolor{white}{L} & 0.00 & 0.08 & .783 & 0.00 & 0.09 & .765\\
+\ \ \ After-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) \textcolor{white}{L} & 0.00 & 0.02 & .882 & 0.00 & 0.02 & .875\\
+\ \ \ Shift of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{L} & 0.04 & 0.50 & .481 & 0.04 & 0.46 & .498\\
+HRS &  &  &  &  &  & \\
+\ \ \ Shift of male controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{H} & 0.06 & 17.37 & < .001 & -0.02 & 1.08 & .299\\
+\ \ \ Shift of female controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$) \textcolor{white}{H} & -0.05 & 13.66 & < .001 & -0.07 & 25.37 & < .001\\
+\ \ \ Shift of grandfathers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{H} & -0.09 & 9.12 & .003 & -0.09 & 9.50 & .002\\
+\ \ \ Shift of grandmothers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
+                              $\hat{\gamma}_{33}$ \textcolor{white}{H} & -0.07 & 6.49 & .011 & -0.07 & 6.77 & .009\\
+\ \ \ Shift of male controls vs. grandfathers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{H} & -0.16 & 20.99 & < .001 & -0.07 & 5.10 & .024\\
+\ \ \ Before-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) \textcolor{white}{H} & 0.00 & 0.05 & .821 & 0.02 & 0.73 & .392\\
+\ \ \ After-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) \textcolor{white}{H} & -0.03 & 5.41 & .020 & -0.02 & 2.20 & .138\\
+\ \ \ Shift of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{H} & -0.02 & 0.37 & .541 & 0.00 & 0.01 & .943\\
+\ \ \ Shift of male vs. female controls 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) \textcolor{white}{H} & -0.12 & 31.04 & < .001 & -0.05 & 6.32 & .012\\
+\ \ \ Before-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) \textcolor{white}{H} & -0.05 & 2.41 & .120 & -0.05 & 2.56 & .109\\
+\ \ \ After-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) \textcolor{white}{H} & -0.02 & 0.84 & .360 & -0.02 & 0.88 & .349\\
+\ \ \ Shift of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{H} & 0.02 & 0.30 & .584 & 0.02 & 0.31 & .577\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00.}
 \end{TableNotes}
 
 \footnotesize{
 
 \begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
-\caption{\label{tab:H1-open-tab}Fixed Effects of Openness to Experience Over the Transition to Grandparenthood.}\\
+\caption{\label{tab:H1-neur-work-tab}Fixed Effects of Neuroticism Over the Transition to Grandparenthood Moderated by Performing Paid Work.}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-neur-work-tab} continued}}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endhead
+Intercept, $\hat{\gamma}_{00}$ & 2.02 & [1.96, 2.07] & 72.21 & < .001 & 2.02 & [1.96, 2.08] & 63.73 & < .001\\
+Propensity score, $\hat{\gamma}_{04}$ & 0.00 & [-0.08, 0.08] & 0.01 & .993 & 0.15 & [0.06, 0.23] & 3.46 & .001\\
+Before-slope, $\hat{\gamma}_{10}$ & 0.00 & [-0.02, 0.03] & 0.18 & .860 & -0.01 & [-0.04, 0.02] & -0.84 & .400\\
+After-slope, $\hat{\gamma}_{20}$ & -0.01 & [-0.02, 0.01] & -0.79 & .429 & -0.01 & [-0.02, 0.00] & -1.41 & .159\\
+Shift, $\hat{\gamma}_{30}$ & 0.04 & [0.00, 0.08] & 1.91 & .056 & -0.03 & [-0.07, 0.01] & -1.32 & .188\\
+Grandparent, $\hat{\gamma}_{01}$ & 0.13 & [0.02, 0.25] & 2.28 & .022 & 0.07 & [-0.04, 0.19] & 1.27 & .203\\
+Working, $\hat{\gamma}_{02}$ & 0.08 & [0.03, 0.13] & 2.94 & .003 & 0.07 & [0.02, 0.12] & 2.63 & .009\\
+Before-slope * Grandparent, $\hat{\gamma}_{11}$ & -0.07 & [-0.13, 0.00] & -2.04 & .042 & -0.06 & [-0.12, 0.01] & -1.73 & .084\\
+After-slope * Grandparent, $\hat{\gamma}_{21}$ & -0.02 & [-0.05, 0.01] & -1.55 & .122 & -0.02 & [-0.05, 0.01] & -1.37 & .170\\
+Shift * Grandparent, $\hat{\gamma}_{31}$ & -0.05 & [-0.15, 0.05] & -1.03 & .303 & 0.02 & [-0.07, 0.11] & 0.45 & .655\\
+Before-slope * Working, $\hat{\gamma}_{12}$ & -0.02 & [-0.05, 0.01] & -1.43 & .153 & -0.02 & [-0.05, 0.01] & -1.54 & .123\\
+After-slope * Working, $\hat{\gamma}_{22}$ & 0.00 & [-0.02, 0.02] & -0.23 & .820 & -0.01 & [-0.02, 0.01] & -0.73 & .463\\
+Shift * Working, $\hat{\gamma}_{32}$ & -0.05 & [-0.11, 0.00] & -1.90 & .058 & 0.00 & [-0.05, 0.06] & 0.13 & .893\\
+Grandparent * Working, $\hat{\gamma}_{03}$ & -0.25 & [-0.38, -0.13] & -4.08 & < .001 & -0.25 & [-0.37, -0.13] & -4.20 & < .001\\
+Before-slope * Grandparent * Working, $\hat{\gamma}_{13}$ & 0.11 & [0.04, 0.19] & 2.95 & .003 & 0.12 & [0.04, 0.19] & 3.13 & .002\\
+After-slope * Grandparent * Working, $\hat{\gamma}_{23}$ & 0.01 & [-0.03, 0.05] & 0.51 & .613 & 0.02 & [-0.02, 0.06] & 0.75 & .451\\
+Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & -0.02 & [-0.15, 0.10] & -0.33 & .740 & -0.08 & [-0.20, 0.04] & -1.23 & .217\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-neur-work-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-neur-work-contrasts}Linear Contrasts for Neuroticism (Moderated by Paid Work; only HRS).}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-neur-work-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+Shift of not-working controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) & 0.04 & 4.30 & .038 & -0.04 & 4.61 & .032\\
+Shift of working controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$) & -0.02 & 2.18 & .140 & -0.04 & 11.64 & .001\\
+Shift of not-working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) & -0.04 & 1.12 & .290 & -0.04 & 1.24 & .266\\
+Shift of working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
+                              $\hat{\gamma}_{33}$) & -0.10 & 15.38 & < .001 & -0.10 & 16.09 & < .001\\
+Shift of not-working controls vs. not-working grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & -0.07 & 3.47 & .063 & 0.00 & 0.00 & .974\\
+Before-slope of working controls vs. working grandparents 
+                              ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & 0.05 & 5.89 & .015 & 0.06 & 11.29 & .001\\
+After-slope of working controls vs. working grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) & -0.01 & 0.72 & .396 & 0.00 & 0.11 & .743\\
+Shift of working controls vs. working grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & -0.08 & 8.11 & .004 & -0.06 & 4.48 & .034\\
+Shift of not-working controls vs. working controls 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) & -0.06 & 6.36 & .012 & 0.00 & 0.02 & .895\\
+Before-slope of not-working grandparents vs. working grandparents 
+                              ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & 0.09 & 6.73 & .009 & 0.09 & 7.45 & .006\\
+After-slope of not-working grandparents vs. working grandparents 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) & 0.01 & 0.20 & .651 & 0.01 & 0.23 & .634\\
+Shift of not-working grandparents vs. working grandparents 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & -0.07 & 2.14 & .143 & -0.06 & 2.17 & .141\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.01, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-open-tab}Fixed Effects of Openness Over the Transition to Grandparenthood.}\\
 \toprule
  & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
 \cmidrule(r){2-5} \cmidrule(r){6-9}
@@ -847,7 +1951,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS panel (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 3.48 & [3.42, 3.53] & 118.77 & < .001 & 3.52 & [3.45, 3.59] & 104.18 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{L} & 0.00 & [-0.08, 0.07] & -0.07 & .944 & 0.03 & [-0.03, 0.09] & 1.02 & .309\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.00] & -1.58 & .114 & 0.00 & [-0.01, 0.00] & -0.68 & .494\\
@@ -882,13 +1986,72 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS panel, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.01, \(R^2_{M1b} =\) 0.01, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00.}
+\normalsize{\textit{Note.} The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the \emph{linearHypothesis} function from the \emph{car} R package (Fox \& Weisberg, 2019) based on the models from Table \ref{tab:H1-open-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-open-contrasts}Linear Contrasts for Openness.}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-open-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+LISS &  &  &  &  &  & \\
+\ \ \ Shift of the controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{L} & 0.02 & 2.57 & .109 & 0.00 & 0.21 & .650\\
+\ \ \ Shift of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{L} & -0.01 & 0.25 & .618 & -0.01 & 0.30 & .585\\
+\ \ \ Shift of the controls vs. shift of the grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{L} & -0.03 & 1.38 & .241 & -0.02 & 0.48 & .489\\
+\ \ \ Before-slope of the grandparents vs. 0 ($\hat{\gamma}_{10}$ + 
+                              $\hat{\gamma}_{11}$) \textcolor{white}{L} & 0.00 & 0.34 & .561 & 0.00 & 0.40 & .528\\
+\ \ \ After-slope of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{21}$) \textcolor{white}{L} & -0.01 & 1.15 & .284 & -0.01 & 1.36 & .244\\
+HRS &  &  &  &  &  & \\
+\ \ \ Shift of the controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{H} & 0.03 & 16.48 & < .001 & 0.02 & 4.36 & .037\\
+\ \ \ Shift of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{H} & -0.02 & 1.31 & .253 & -0.02 & 1.57 & .210\\
+\ \ \ Shift of the controls vs. shift of the grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{H} & -0.05 & 8.14 & .004 & -0.04 & 4.25 & .039\\
+\ \ \ Before-slope of the grandparents vs. 0 ($\hat{\gamma}_{10}$ + 
+                              $\hat{\gamma}_{11}$) \textcolor{white}{H} & 0.00 & 0.00 & .946 & 0.00 & 0.01 & .908\\
+\ \ \ After-slope of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{21}$) \textcolor{white}{H} & 0.00 & 0.14 & .709 & 0.00 & 0.20 & .658\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.01, \(R^2_{M1b} =\) 0.01, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00.}
 \end{TableNotes}
 
 \footnotesize{
 
 \begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
-\caption{\label{tab:H1-open-gender-tab}Fixed Effects of Openness to Experience Over the Transition to Grandparenthood Moderated by Gender.}\\
+\caption{\label{tab:H1-open-gender-tab}Fixed Effects of Openness Over the Transition to Grandparenthood Moderated by Gender.}\\
 \toprule
  & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
 \cmidrule(r){2-5} \cmidrule(r){6-9}
@@ -902,7 +2065,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS panel (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 3.47 & [3.39, 3.55] & 81.39 & < .001 & 3.54 & [3.45, 3.64] & 73.02 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{L} & 0.00 & [-0.08, 0.07] & -0.04 & .970 & 0.03 & [-0.03, 0.09] & 0.94 & .347\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.01] & 0.17 & .864 & 0.01 & [0.00, 0.02] & 2.39 & .017\\
@@ -953,7 +2116,224 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS panel, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.01.}
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-open-gender-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-open-gender-contrasts}Linear Contrasts for Openness (Moderated by Gender).}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-open-gender-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+LISS &  &  &  &  &  & \\
+\ \ \ Shift of male controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{L} & -0.02 & 1.70 & .192 & -0.01 & 0.14 & .706\\
+\ \ \ Shift of female controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$) \textcolor{white}{L} & 0.05 & 11.29 & .001 & 0.01 & 0.84 & .359\\
+\ \ \ Shift of grandfathers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{L} & 0.01 & 0.03 & .853 & 0.01 & 0.04 & .833\\
+\ \ \ Shift of grandmothers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
+                              $\hat{\gamma}_{33}$) \textcolor{white}{L} & -0.03 & 0.78 & .378 & -0.03 & 0.93 & .335\\
+\ \ \ Shift of male controls vs. grandfathers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{L} & 0.03 & 0.57 & .450 & 0.01 & 0.13 & .721\\
+\ \ \ Before-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) \textcolor{white}{L} & 0.02 & 4.38 & .036 & 0.02 & 6.74 & .009\\
+\ \ \ After-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) \textcolor{white}{L} & 0.01 & 0.91 & .341 & 0.00 & 0.42 & .517\\
+\ \ \ Shift of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{L} & -0.08 & 5.37 & .020 & -0.04 & 1.63 & .202\\
+\ \ \ Shift of male vs. female controls 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) \textcolor{white}{L} & 0.07 & 10.45 & .001 & 0.02 & 0.82 & .366\\
+\ \ \ Before-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) \textcolor{white}{L} & 0.01 & 1.16 & .282 & 0.01 & 1.41 & .236\\
+\ \ \ After-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) \textcolor{white}{L} & 0.01 & 1.10 & .294 & 0.01 & 1.33 & .249\\
+\ \ \ Shift of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{L} & -0.03 & 0.53 & .466 & -0.03 & 0.65 & .421\\
+HRS &  &  &  &  &  & \\
+\ \ \ Shift of male controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{H} & 0.07 & 32.25 & < .001 & -0.02 & 1.67 & .197\\
+\ \ \ Shift of female controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$) \textcolor{white}{H} & 0.00 & 0.15 & .698 & 0.04 & 15.02 & < .001\\
+\ \ \ Shift of grandfathers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{H} & -0.04 & 2.39 & .122 & -0.04 & 2.82 & .093\\
+\ \ \ Shift of grandmothers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
+                              $\hat{\gamma}_{33}$ \textcolor{white}{H} & 0.00 & 0.01 & .919 & 0.00 & 0.02 & .899\\
+\ \ \ Shift of male controls vs. grandfathers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{H} & -0.11 & 15.71 & < .001 & -0.02 & 0.80 & .372\\
+\ \ \ Before-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) \textcolor{white}{H} & 0.03 & 2.17 & .141 & 0.00 & 0.03 & .863\\
+\ \ \ After-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) \textcolor{white}{H} & 0.00 & 0.10 & .747 & 0.01 & 2.08 & .150\\
+\ \ \ Shift of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{H} & -0.01 & 0.07 & .791 & -0.04 & 3.38 & .066\\
+\ \ \ Shift of male vs. female controls 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) \textcolor{white}{H} & -0.07 & 15.92 & < .001 & 0.05 & 12.31 & < .001\\
+\ \ \ Before-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) \textcolor{white}{H} & 0.02 & 0.76 & .382 & 0.02 & 1.04 & .307\\
+\ \ \ After-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) \textcolor{white}{H} & -0.01 & 0.19 & .660 & -0.01 & 0.19 & .663\\
+\ \ \ Shift of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{H} & 0.04 & 1.17 & .280 & 0.04 & 1.35 & .245\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.02, \(R^2_{M2b} =\) 0.00.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-open-work-tab}Fixed Effects of Openness Over the Transition to Grandparenthood Moderated by Performing Paid Work.}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-open-work-tab} continued}}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endhead
+Intercept, $\hat{\gamma}_{00}$ & 3.02 & [2.97, 3.06] & 121.17 & < .001 & 3.03 & [2.97, 3.08] & 111.81 & < .001\\
+Propensity score, $\hat{\gamma}_{04}$ & 0.01 & [-0.06, 0.07] & 0.25 & .800 & -0.01 & [-0.08, 0.05] & -0.39 & .693\\
+Before-slope, $\hat{\gamma}_{10}$ & -0.01 & [-0.03, 0.01] & -1.03 & .303 & -0.01 & [-0.03, 0.01] & -0.96 & .339\\
+After-slope, $\hat{\gamma}_{20}$ & -0.03 & [-0.04, -0.02] & -5.25 & < .001 & -0.02 & [-0.03, -0.01] & -4.51 & < .001\\
+Shift, $\hat{\gamma}_{30}$ & 0.06 & [0.02, 0.09] & 3.20 & .001 & 0.04 & [0.00, 0.07] & 2.21 & .027\\
+Grandparent, $\hat{\gamma}_{01}$ & -0.05 & [-0.15, 0.05] & -1.04 & .299 & -0.06 & [-0.15, 0.04] & -1.17 & .243\\
+Working, $\hat{\gamma}_{02}$ & 0.05 & [0.01, 0.09] & 2.26 & .024 & -0.02 & [-0.06, 0.02] & -0.88 & .378\\
+Before-slope * Grandparent, $\hat{\gamma}_{11}$ & 0.04 & [-0.02, 0.09] & 1.30 & .194 & 0.03 & [-0.01, 0.08] & 1.38 & .167\\
+After-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.05 & [0.02, 0.07] & 3.86 & < .001 & 0.04 & [0.02, 0.06] & 3.73 & < .001\\
+Shift * Grandparent, $\hat{\gamma}_{31}$ & -0.14 & [-0.22, -0.06] & -3.37 & .001 & -0.12 & [-0.19, -0.04] & -3.14 & .002\\
+Before-slope * Working, $\hat{\gamma}_{12}$ & -0.01 & [-0.04, 0.01] & -0.86 & .389 & 0.01 & [-0.01, 0.03] & 0.82 & .414\\
+After-slope * Working, $\hat{\gamma}_{22}$ & 0.02 & [0.01, 0.04] & 2.94 & .003 & 0.02 & [0.00, 0.03] & 2.15 & .031\\
+Shift * Working, $\hat{\gamma}_{32}$ & -0.01 & [-0.06, 0.04] & -0.44 & .661 & -0.01 & [-0.05, 0.03] & -0.52 & .606\\
+Grandparent * Working, $\hat{\gamma}_{03}$ & 0.04 & [-0.06, 0.14] & 0.79 & .429 & 0.11 & [0.02, 0.20] & 2.33 & .020\\
+Before-slope * Grandparent * Working, $\hat{\gamma}_{13}$ & -0.02 & [-0.08, 0.04] & -0.56 & .578 & -0.04 & [-0.10, 0.02] & -1.34 & .179\\
+After-slope * Grandparent * Working, $\hat{\gamma}_{23}$ & -0.06 & [-0.10, -0.03] & -3.46 & .001 & -0.05 & [-0.08, -0.02] & -3.35 & .001\\
+Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & 0.13 & [0.02, 0.23] & 2.37 & .018 & 0.12 & [0.03, 0.22] & 2.62 & .009\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-open-work-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-open-work-contrasts}Linear Contrasts for Openness (Moderated by Paid Work; only HRS).}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-open-work-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+Shift of not-working controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) & 0.03 & 3.80 & .051 & 0.01 & 1.06 & .303\\
+Shift of working controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$) & 0.04 & 13.84 & < .001 & 0.02 & 3.72 & .054\\
+Shift of not-working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) & -0.06 & 4.22 & .040 & -0.06 & 5.04 & .025\\
+Shift of working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
+                              $\hat{\gamma}_{33}$) & 0.02 & 0.61 & .433 & 0.02 & 0.75 & .385\\
+Shift of not-working controls vs. not-working grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & -0.09 & 7.30 & .007 & -0.07 & 6.07 & .014\\
+Before-slope of working controls vs. working grandparents 
+                              ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & 0.02 & 1.23 & .267 & 0.00 & 0.10 & .751\\
+After-slope of working controls vs. working grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) & -0.01 & 1.08 & .299 & -0.01 & 1.00 & .317\\
+Shift of working controls vs. working grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & -0.02 & 0.93 & .336 & 0.00 & 0.00 & .951\\
+Shift of not-working controls vs. working controls 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) & 0.01 & 0.48 & .487 & 0.00 & 0.05 & .818\\
+Before-slope of not-working grandparents vs. working grandparents 
+                              ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & -0.03 & 0.96 & .327 & -0.03 & 1.22 & .270\\
+After-slope of not-working grandparents vs. working grandparents 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) & -0.04 & 5.78 & .016 & -0.04 & 7.17 & .007\\
+Shift of not-working grandparents vs. working grandparents 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & 0.08 & 4.30 & .038 & 0.08 & 5.16 & .023\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.01.}
 \end{TableNotes}
 
 \footnotesize{
@@ -973,7 +2353,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS panel (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 5.11 & [4.99, 5.23] & 85.63 & < .001 & 5.13 & [4.99, 5.27] & 72.47 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{L} & 0.07 & [-0.10, 0.24] & 0.78 & .433 & 0.01 & [-0.15, 0.17] & 0.17 & .863\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & -0.01 & [-0.02, 0.01] & -1.06 & .288 & 0.02 & [0.00, 0.03] & 2.18 & .029\\
@@ -1008,7 +2388,66 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS panel, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.01, \(R^2_{M2b} =\) 0.01.}
+\normalsize{\textit{Note.} The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the \emph{linearHypothesis} function from the \emph{car} R package (Fox \& Weisberg, 2019) based on the models from Table \ref{tab:H1-swls-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-swls-contrasts}Linear Contrasts for Life Satisfaction.}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-swls-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+LISS &  &  &  &  &  & \\
+\ \ \ Shift of the controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{L} & 0.03 & 1.76 & .185 & -0.12 & 17.14 & < .001\\
+\ \ \ Shift of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{L} & 0.06 & 1.51 & .219 & 0.06 & 1.29 & .256\\
+\ \ \ Shift of the controls vs. shift of the grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{L} & 0.03 & 0.24 & .622 & 0.18 & 8.25 & .004\\
+\ \ \ Before-slope of the grandparents vs. 0 ($\hat{\gamma}_{10}$ + 
+                              $\hat{\gamma}_{11}$) \textcolor{white}{L} & 0.01 & 0.39 & .532 & 0.01 & 0.32 & .574\\
+\ \ \ After-slope of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{21}$) \textcolor{white}{L} & -0.01 & 0.84 & .358 & -0.01 & 0.70 & .403\\
+HRS &  &  &  &  &  & \\
+\ \ \ Shift of the controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{H} & 0.03 & 1.26 & .262 & -0.02 & 0.30 & .581\\
+\ \ \ Shift of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{H} & -0.01 & 0.04 & .833 & -0.02 & 0.10 & .754\\
+\ \ \ Shift of the controls vs. shift of the grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{H} & -0.04 & 0.49 & .485 & 0.00 & 0.00 & .978\\
+\ \ \ Before-slope of the grandparents vs. 0 ($\hat{\gamma}_{10}$ + 
+                              $\hat{\gamma}_{11}$) \textcolor{white}{H} & 0.09 & 4.51 & .034 & 0.09 & 5.61 & .018\\
+\ \ \ After-slope of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{21}$) \textcolor{white}{H} & 0.04 & 2.98 & .084 & 0.05 & 3.67 & .055\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.01, \(R^2_{M2b} =\) 0.01.}
 \end{TableNotes}
 
 \footnotesize{
@@ -1028,7 +2467,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS panel (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 5.05 & [4.89, 5.21] & 61.49 & < .001 & 5.05 & [4.86, 5.24] & 51.98 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{L} & 0.06 & [-0.11, 0.23] & 0.70 & .485 & 0.01 & [-0.15, 0.17] & 0.17 & .866\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & -0.01 & [-0.03, 0.01] & -1.13 & .258 & 0.02 & [0.00, 0.05] & 2.28 & .023\\
@@ -1075,10 +2514,235 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 
 
 
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-swls-gender-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-swls-gender-contrasts}Linear Contrasts for Life Satisfaction (Moderated by Gender).}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-swls-gender-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+LISS &  &  &  &  &  & \\
+\ \ \ Shift of male controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{L} & 0.11 & 8.55 & .003 & -0.03 & 0.42 & .515\\
+\ \ \ Shift of female controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$) \textcolor{white}{L} & -0.03 & 0.77 & .379 & -0.20 & 26.82 & < .001\\
+\ \ \ Shift of grandfathers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{L} & 0.09 & 1.42 & .233 & 0.09 & 1.17 & .279\\
+\ \ \ Shift of grandmothers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
+                              $\hat{\gamma}_{33}$) \textcolor{white}{L} & 0.04 & 0.39 & .531 & 0.04 & 0.35 & .552\\
+\ \ \ Shift of male controls vs. grandfathers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{L} & -0.02 & 0.07 & .794 & 0.12 & 1.58 & .208\\
+\ \ \ Before-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) \textcolor{white}{L} & 0.03 & 1.96 & .161 & 0.01 & 0.47 & .493\\
+\ \ \ After-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) \textcolor{white}{L} & -0.02 & 0.99 & .320 & -0.02 & 0.86 & .353\\
+\ \ \ Shift of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{L} & 0.07 & 0.92 & .338 & 0.24 & 8.27 & .004\\
+\ \ \ Shift of male vs. female controls 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) \textcolor{white}{L} & -0.14 & 7.55 & .006 & -0.17 & 9.46 & .002\\
+\ \ \ Before-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) \textcolor{white}{L} & 0.03 & 1.56 & .211 & 0.03 & 1.23 & .267\\
+\ \ \ After-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) \textcolor{white}{L} & 0.01 & 0.27 & .602 & 0.01 & 0.22 & .638\\
+\ \ \ Shift of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{L} & -0.05 & 0.21 & .647 & -0.04 & 0.16 & .690\\
+HRS &  &  &  &  &  & \\
+\ \ \ Shift of male controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) \textcolor{white}{H} & 0.07 & 2.68 & .101 & -0.14 & 10.20 & .001\\
+\ \ \ Shift of female controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$) \textcolor{white}{H} & 0.00 & 0.00 & .973 & 0.07 & 4.01 & .045\\
+\ \ \ Shift of grandfathers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) \textcolor{white}{H} & 0.04 & 0.17 & .680 & 0.03 & 0.12 & .732\\
+\ \ \ Shift of grandmothers vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
+                              $\hat{\gamma}_{33}$ \textcolor{white}{H} & -0.05 & 0.37 & .541 & -0.05 & 0.48 & .489\\
+\ \ \ Shift of male controls vs. grandfathers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{H} & -0.04 & 0.15 & .700 & 0.16 & 3.22 & .073\\
+\ \ \ Before-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) \textcolor{white}{H} & 0.21 & 12.04 & .001 & 0.09 & 2.72 & .099\\
+\ \ \ After-slope of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) \textcolor{white}{H} & 0.02 & 0.38 & .540 & 0.00 & 0.00 & .953\\
+\ \ \ Shift of female controls vs. grandmothers 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{H} & -0.05 & 0.31 & .575 & -0.12 & 2.31 & .129\\
+\ \ \ Shift of male vs. female controls 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) \textcolor{white}{H} & -0.07 & 1.44 & .229 & 0.21 & 13.91 & < .001\\
+\ \ \ Before-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) \textcolor{white}{H} & 0.13 & 2.33 & .127 & 0.12 & 2.41 & .121\\
+\ \ \ After-slope of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) \textcolor{white}{H} & 0.00 & 0.01 & .931 & -0.01 & 0.02 & .894\\
+\ \ \ Shift of grandfathers vs. grandmothers 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) \textcolor{white}{H} & -0.08 & 0.52 & .471 & -0.08 & 0.52 & .470\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.01, \(R^2_{M2b} =\) 0.01.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-swls-work-tab}Fixed Effects of Life Satisfaction Over the Transition to Grandparenthood Moderated by Performing Paid Work.}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-swls-work-tab} continued}}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endhead
+Intercept, $\hat{\gamma}_{00}$ & 4.78 & [4.63, 4.93] & 62.86 & < .001 & 4.55 & [4.38, 4.71] & 53.96 & < .001\\
+Propensity score, $\hat{\gamma}_{04}$ & 0.36 & [0.15, 0.57] & 3.33 & .001 & 0.28 & [0.06, 0.50] & 2.50 & .012\\
+Before-slope, $\hat{\gamma}_{10}$ & -0.06 & [-0.13, 0.01] & -1.77 & .077 & -0.02 & [-0.09, 0.05] & -0.51 & .613\\
+After-slope, $\hat{\gamma}_{20}$ & -0.03 & [-0.07, 0.00] & -1.73 & .083 & 0.08 & [0.04, 0.12] & 4.32 & < .001\\
+Shift, $\hat{\gamma}_{30}$ & 0.13 & [0.01, 0.25] & 2.11 & .034 & 0.07 & [-0.05, 0.19] & 1.17 & .243\\
+Grandparent, $\hat{\gamma}_{01}$ & -0.02 & [-0.33, 0.30] & -0.09 & .925 & 0.22 & [-0.09, 0.53] & 1.37 & .169\\
+Working, $\hat{\gamma}_{02}$ & 0.07 & [-0.07, 0.22] & 0.99 & .324 & 0.12 & [-0.02, 0.25] & 1.64 & .102\\
+Before-slope * Grandparent, $\hat{\gamma}_{11}$ & 0.14 & [-0.04, 0.32] & 1.50 & .134 & 0.10 & [-0.07, 0.27] & 1.12 & .264\\
+After-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.07 & [-0.02, 0.15] & 1.57 & .116 & -0.05 & [-0.12, 0.03] & -1.20 & .231\\
+Shift * Grandparent, $\hat{\gamma}_{31}$ & -0.04 & [-0.31, 0.22] & -0.31 & .755 & 0.01 & [-0.24, 0.27] & 0.10 & .917\\
+Before-slope * Working, $\hat{\gamma}_{12}$ & 0.05 & [-0.03, 0.14] & 1.21 & .225 & 0.09 & [0.00, 0.17] & 1.99 & .047\\
+After-slope * Working, $\hat{\gamma}_{22}$ & 0.10 & [0.05, 0.15] & 3.83 & < .001 & -0.08 & [-0.13, -0.03] & -3.16 & .002\\
+Shift * Working, $\hat{\gamma}_{32}$ & -0.20 & [-0.35, -0.04] & -2.50 & .012 & -0.15 & [-0.30, 0.00] & -1.94 & .052\\
+Grandparent * Working, $\hat{\gamma}_{03}$ & -0.02 & [-0.36, 0.32] & -0.11 & .912 & -0.07 & [-0.39, 0.25] & -0.42 & .676\\
+Before-slope * Grandparent * Working, $\hat{\gamma}_{13}$ & -0.03 & [-0.24, 0.18] & -0.28 & .777 & -0.06 & [-0.26, 0.13] & -0.63 & .527\\
+After-slope * Grandparent * Working, $\hat{\gamma}_{23}$ & -0.08 & [-0.20, 0.03] & -1.40 & .161 & 0.10 & [-0.01, 0.21] & 1.79 & .073\\
+Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & -0.03 & [-0.38, 0.32] & -0.18 & .859 & -0.09 & [-0.42, 0.24] & -0.54 & .590\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-swls-work-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-swls-work-contrasts}Linear Contrasts for Life Satisfaction (Moderated by Paid Work; only HRS).}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-swls-work-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+Shift of not-working controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$) & 0.10 & 3.85 & .050 & 0.15 & 9.24 & .002\\
+Shift of working controls vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$) & 0.00 & 0.00 & .969 & -0.08 & 5.03 & .025\\
+Shift of not-working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$) & 0.12 & 1.47 & .226 & 0.12 & 1.63 & .201\\
+Shift of working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
+                              $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
+                              $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
+                              $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
+                              $\hat{\gamma}_{33}$) & -0.09 & 1.57 & .210 & -0.10 & 2.13 & .144\\
+Shift of not-working controls vs. not-working grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & 0.02 & 0.04 & .834 & -0.03 & 0.10 & .746\\
+Before-slope of working controls vs. working grandparents 
+                              ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & 0.11 & 3.95 & .047 & 0.03 & 0.44 & .505\\
+After-slope of working controls vs. working grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) & -0.02 & 0.17 & .676 & 0.05 & 1.82 & .178\\
+Shift of working controls vs. working grandparents 
+                              ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & -0.09 & 1.21 & .270 & -0.03 & 0.11 & .746\\
+Shift of not-working controls vs. working controls 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) & -0.10 & 2.47 & .116 & -0.23 & 13.96 & < .001\\
+Before-slope of not-working grandparents vs. working grandparents 
+                              ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & 0.02 & 0.05 & .823 & 0.02 & 0.05 & .818\\
+After-slope of not-working grandparents vs. working grandparents 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) & 0.02 & 0.12 & .727 & 0.02 & 0.17 & .678\\
+Shift of not-working grandparents vs. working grandparents 
+                              ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
+                              $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & -0.21 & 2.87 & .090 & -0.22 & 3.48 & .062\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
 \begin{figure}
 \centering
 \includegraphics{Figs/H1-agree-fig-1.pdf}
 \caption{\label{fig:H1-agree-fig}Change trajectories of agreeableness based on the basic models (1st column) and the models with the gender interaction (2nd column). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
+\end{figure}
+
+
+
+\begin{figure}
+\centering
+\includegraphics{Figs/H1-agree-work-fig-1.pdf}
+\caption{\label{fig:H1-agree-work-fig}Change trajectories of agreeableness based on the models of moderation by paid work (see Table \ref{tab:H1-agree-work-tab}). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
 \end{figure}
 
 
@@ -1093,8 +2757,24 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 
 \begin{figure}
 \centering
+\includegraphics{Figs/H1-con-work-fig-1.pdf}
+\caption{\label{fig:H1-con-work-fig}Change trajectories of conscientiousness based on the models of moderation by paid work (see Table \ref{tab:H1-con-work-tab}). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
+\end{figure}
+
+
+
+\begin{figure}
+\centering
 \includegraphics{Figs/H1-extra-fig-1.pdf}
 \caption{\label{fig:H1-extra-fig}Change trajectories of extraversion based on the basic models (1st column) and the models with the gender interaction (2nd column). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
+\end{figure}
+
+
+
+\begin{figure}
+\centering
+\includegraphics{Figs/H1-extra-work-fig-1.pdf}
+\caption{\label{fig:H1-extra-work-fig}Change trajectories of extraversion based on the models of moderation by paid work (see Table \ref{tab:H1-extra-work-tab}). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
 \end{figure}
 
 
@@ -1109,6 +2789,14 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 
 \begin{figure}
 \centering
+\includegraphics{Figs/H1-neur-work-fig-1.pdf}
+\caption{\label{fig:H1-neur-work-fig}Change trajectories of neuroticism based on the models of moderation by paid work (see Table \ref{tab:H1-neur-work-tab}). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
+\end{figure}
+
+
+
+\begin{figure}
+\centering
 \includegraphics{Figs/H1-open-fig-1.pdf}
 \caption{\label{fig:H1-open-fig}Change trajectories of openness based on the basic models (1st column) and the models with the gender interaction (2nd column). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
 \end{figure}
@@ -1117,8 +2805,24 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 
 \begin{figure}
 \centering
+\includegraphics{Figs/H1-open-work-fig-1.pdf}
+\caption{\label{fig:H1-open-work-fig}Change trajectories of openness based on the models of moderation by paid work (see Table \ref{tab:H1-open-work-tab}). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
+\end{figure}
+
+
+
+\begin{figure}
+\centering
 \includegraphics{Figs/H1-swls-fig-1.pdf}
 \caption{\label{fig:H1-swls-fig}Change trajectories of life satisfaction based on the basic models (1st column) and the models with the gender interaction (2nd column). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
+\end{figure}
+
+
+
+\begin{figure}
+\centering
+\includegraphics{Figs/H1-swls-work-fig-1.pdf}
+\caption{\label{fig:H1-swls-work-fig}Change trajectories of life satisfaction based on the models of moderation by paid work (see Table \ref{tab:H1-swls-work-tab}). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
 \end{figure}
 
 \hypertarget{discussion}{%
@@ -2191,29 +3895,30 @@ en\_US.UTF-8/en\_US.UTF-8/en\_US.UTF-8/C/en\_US.UTF-8/en\_US.UTF-8
 attached base packages: {[}1{]} stats graphics grDevices utils datasets
 methods base
 
-other attached packages: {[}1{]} cowplot\_1.1.0 lmerTest\_3.1-3
-lme4\_1.1-26\\
-{[}4{]} Matrix\_1.3-2 GPArotation\_2014.11-1 psych\_2.0.9\\
-{[}7{]} forcats\_0.5.0 stringr\_1.4.0 dplyr\_1.0.2\\
-{[}10{]} purrr\_0.3.4 readr\_1.4.0 tidyr\_1.1.2\\
-{[}13{]} tibble\_3.1.2 ggplot2\_3.3.4 tidyverse\_1.3.0\\
-{[}16{]} citr\_0.3.2 papaja\_0.1.0.9997 tinylabels\_0.1.0
+other attached packages: {[}1{]} car\_3.0-10 carData\_3.0-4
+scales\_1.1.1\\
+{[}4{]} cowplot\_1.1.0 lmerTest\_3.1-3 lme4\_1.1-26\\
+{[}7{]} Matrix\_1.3-2 GPArotation\_2014.11-1 psych\_2.0.9\\
+{[}10{]} forcats\_0.5.0 stringr\_1.4.0 dplyr\_1.0.2\\
+{[}13{]} purrr\_0.3.4 readr\_1.4.0 tidyr\_1.1.2\\
+{[}16{]} tibble\_3.1.2 ggplot2\_3.3.4 tidyverse\_1.3.0\\
+{[}19{]} citr\_0.3.2 papaja\_0.1.0.9997 tinylabels\_0.1.0
 
 loaded via a namespace (and not attached): {[}1{]} nlme\_3.1-152
 fs\_1.5.0 lubridate\_1.7.9.2\\
-{[}4{]} RColorBrewer\_1.1-2 httr\_1.4.2 numDeriv\_2016.8-1.1 {[}7{]}
-tools\_4.0.4 backports\_1.2.1 utf8\_1.2.1\\
-{[}10{]} R6\_2.5.0 DBI\_1.1.0 colorspace\_2.0-1\\
-{[}13{]} withr\_2.4.2 tidyselect\_1.1.0 mnormt\_2.0.2\\
+{[}4{]} httr\_1.4.2 numDeriv\_2016.8-1.1 tools\_4.0.4\\
+{[}7{]} backports\_1.2.1 utf8\_1.2.1 R6\_2.5.0\\
+{[}10{]} DBI\_1.1.0 colorspace\_2.0-1 withr\_2.4.2\\
+{[}13{]} tidyselect\_1.1.0 mnormt\_2.0.2 curl\_4.3.1\\
 {[}16{]} compiler\_4.0.4 cli\_2.5.0 rvest\_0.3.6\\
-{[}19{]} xml2\_1.3.2 labeling\_0.4.2 bookdown\_0.21\\
-{[}22{]} scales\_1.1.1 digest\_0.6.27 minqa\_1.2.4\\
-{[}25{]} rmarkdown\_2.5 base64enc\_0.1-3 pkgconfig\_2.0.3\\
-{[}28{]} htmltools\_0.5.0 highr\_0.8 dbplyr\_1.4.4\\
-{[}31{]} fastmap\_1.0.1 rlang\_0.4.11 readxl\_1.3.1\\
-{[}34{]} rstudioapi\_0.13 shiny\_1.5.0 farver\_2.1.0\\
-{[}37{]} generics\_0.1.0 jsonlite\_1.7.2 magrittr\_2.0.1\\
-{[}40{]} Rcpp\_1.0.6 munsell\_0.5.0 fansi\_0.5.0\\
+{[}19{]} xml2\_1.3.2 bookdown\_0.21 digest\_0.6.27\\
+{[}22{]} foreign\_0.8-81 minqa\_1.2.4 rmarkdown\_2.5\\
+{[}25{]} rio\_0.5.16 base64enc\_0.1-3 pkgconfig\_2.0.3\\
+{[}28{]} htmltools\_0.5.0 dbplyr\_1.4.4 fastmap\_1.0.1\\
+{[}31{]} rlang\_0.4.11 readxl\_1.3.1 rstudioapi\_0.13\\
+{[}34{]} shiny\_1.5.0 generics\_0.1.0 jsonlite\_1.7.2\\
+{[}37{]} zip\_2.1.1 magrittr\_2.0.1 Rcpp\_1.0.6\\
+{[}40{]} munsell\_0.5.0 fansi\_0.5.0 abind\_1.4-5\\
 {[}43{]} lifecycle\_1.0.0 stringi\_1.5.3 yaml\_2.2.1\\
 {[}46{]} MASS\_7.3-53 grid\_4.0.4 blob\_1.2.1\\
 {[}49{]} parallel\_4.0.4 promises\_1.1.1 crayon\_1.4.1\\
@@ -2221,11 +3926,12 @@ tools\_4.0.4 backports\_1.2.1 utf8\_1.2.1\\
 {[}55{]} splines\_4.0.4 hms\_0.5.3 tmvnsim\_1.0-2\\
 {[}58{]} knitr\_1.30 pillar\_1.6.1 boot\_1.3-26\\
 {[}61{]} codetools\_0.2-18 reprex\_0.3.0 glue\_1.4.2\\
-{[}64{]} evaluate\_0.14 modelr\_0.1.8 vctrs\_0.3.8\\
-{[}67{]} nloptr\_1.2.2.2 httpuv\_1.5.4 cellranger\_1.1.0\\
-{[}70{]} gtable\_0.3.0 assertthat\_0.2.1 xfun\_0.19\\
-{[}73{]} mime\_0.9 xtable\_1.8-4 broom\_0.7.6\\
-{[}76{]} later\_1.1.0.1 statmod\_1.4.35 ellipsis\_0.3.2
+{[}64{]} evaluate\_0.14 data.table\_1.13.2 modelr\_0.1.8\\
+{[}67{]} vctrs\_0.3.8 nloptr\_1.2.2.2 httpuv\_1.5.4\\
+{[}70{]} cellranger\_1.1.0 gtable\_0.3.0 assertthat\_0.2.1\\
+{[}73{]} openxlsx\_4.2.3 xfun\_0.19 mime\_0.9\\
+{[}76{]} xtable\_1.8-4 broom\_0.7.6 later\_1.1.0.1\\
+{[}79{]} statmod\_1.4.35 ellipsis\_0.3.2
 
 \newpage
 

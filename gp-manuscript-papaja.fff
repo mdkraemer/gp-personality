@@ -11,8 +11,26 @@
 \ifnextchar[{\eatarg}{}
 
 \centering
+\includegraphics{Figs/H1-agree-work-fig-1.pdf}
+\caption{\label{fig:H1-agree-work-fig}Change trajectories of agreeableness based on the models of moderation by paid work (see Table \ref{tab:H1-agree-work-tab}). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
 \includegraphics{Figs/H1-con-fig-1.pdf}
 \caption{\label{fig:H1-con-fig}Change trajectories of conscientiousness based on the basic models (1st column) and the models with the gender interaction (2nd column). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{Figs/H1-con-work-fig-1.pdf}
+\caption{\label{fig:H1-con-work-fig}Change trajectories of conscientiousness based on the models of moderation by paid work (see Table \ref{tab:H1-con-work-tab}). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
 \end{figure*}
 \efloatseparator
  
@@ -29,8 +47,26 @@
 \ifnextchar[{\eatarg}{}
 
 \centering
+\includegraphics{Figs/H1-extra-work-fig-1.pdf}
+\caption{\label{fig:H1-extra-work-fig}Change trajectories of extraversion based on the models of moderation by paid work (see Table \ref{tab:H1-extra-work-tab}). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
 \includegraphics{Figs/H1-neur-fig-1.pdf}
 \caption{\label{fig:H1-neur-fig}Change trajectories of neuroticism based on the basic models (1st column) and the models with the gender interaction (2nd column). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{Figs/H1-neur-work-fig-1.pdf}
+\caption{\label{fig:H1-neur-work-fig}Change trajectories of neuroticism based on the models of moderation by paid work (see Table \ref{tab:H1-neur-work-tab}). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
 \end{figure*}
 \efloatseparator
  
@@ -47,6 +83,24 @@
 \ifnextchar[{\eatarg}{}
 
 \centering
+\includegraphics{Figs/H1-open-work-fig-1.pdf}
+\caption{\label{fig:H1-open-work-fig}Change trajectories of openness based on the models of moderation by paid work (see Table \ref{tab:H1-open-work-tab}). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
 \includegraphics{Figs/H1-swls-fig-1.pdf}
 \caption{\label{fig:H1-swls-fig}Change trajectories of life satisfaction based on the basic models (1st column) and the models with the gender interaction (2nd column). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{Figs/H1-swls-work-fig-1.pdf}
+\caption{\label{fig:H1-swls-work-fig}Change trajectories of life satisfaction based on the models of moderation by paid work (see Table \ref{tab:H1-swls-work-tab}). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
 \end{figure*}

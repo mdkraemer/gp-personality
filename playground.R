@@ -38,6 +38,21 @@ hrsanalysis_nonparents <- hrsanalysis_nonparents %>% mutate(female = gender - 1)
 lissanalysis_parents <- lissanalysis_parents %>% rename(pid = nomem_encr, hid = nohouse_encr)
 lissanalysis_nonparents <- lissanalysis_nonparents %>% rename(pid = nomem_encr, hid = nohouse_encr)
 
+# code other moderators (only HRS)
+hrsanalysis_parents <- hrsanalysis_parents %>% 
+  mutate(working = ifelse(paidwork %in% c(1,5), ifelse(paidwork==1, 1, 0), NA))
+hrsanalysis_nonparents <- hrsanalysis_nonparents %>% 
+  mutate(working = ifelse(paidwork %in% c(1,5), ifelse(paidwork==1, 1, 0), NA))
+
+df_outcomes <- rbind(cbind(maj="Agreeableness", min="agreeableness"),
+                     cbind(maj="Conscientiousness", min="conscientiousness"),
+                     cbind(maj="Extraversion", min="extraversion"),
+                     cbind(maj="Neuroticism", min="neuroticism"),
+                     cbind(maj="Openness", min="openness"),
+                     cbind(maj="Life Satisfaction", min="life satisfaction"))
+rownames(df_outcomes) <- c("agree", "con", "extra", "neur", "open", "swls")
+
+
 #### descriptives ####
 lissanalysis_parents %>% group_by(time) %>% select(agree, con, extra, neur, open, swls) %>% 
   summarize(a_M = mean(agree), 
@@ -1466,4 +1481,264 @@ for (i in 1:length(outcomes)){
 rm(list = ls(pattern = paste0(c(to_be_tested, to_be_tested_gender), collapse="|")))
 rm(list = ls(pattern = paste0("contrasts_", outcomes, "_", collapse = "|")))
 
-# implement in tables???
+#### Moderator: paid work ####
+
+hrs_swls_parents_test <- lmerTest::lmer(swls ~ 1 + pscore + (before + after + shift + grandparent + 
+                                         grandparent:before + grandparent:after + grandparent:shift)*working + 
+                                         (1 | pid) + (1 | hid), REML = FALSE, data = hrsanalysis_parents) 
+summary(hrs_swls_parents_test)
+
+mod_summaries_work <- list()
+mod_summaries_work_test <- list()
+
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  pos = seq(from = -2, to = 8, by = 2)[i] # changed this because we now only have the 2 HRS datasets
+  for (j in 3:4){
+    dataset = datasets[j]
+    ### moderator: paid work (only HRS)
+    if (icc_list[hid_icc_tbl[j], outcome] < 0.05){ # nesting in hid leads to singular fit for some models
+      model_1 <- lme4::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
+                                                           grandparent:before + grandparent:after + grandparent:shift)*working + 
+                              (1 | pid), REML = FALSE, data = get(dataset))
+      model_2 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
+                                                               grandparent:before + grandparent:after + grandparent:shift)*working + 
+                                  (1 | pid), REML = FALSE, data = get(dataset))
+    } else { # cross-nesting in pid & hid for all other models
+      model_1 <- lme4::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
+                                                           grandparent:before + grandparent:after + grandparent:shift)*working + 
+                              (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+      model_2 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
+                                                               grandparent:before + grandparent:after + grandparent:shift)*working + 
+                                  (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+    }      
+    mod_summaries_work[[pos + j]] <- model_1
+    names(mod_summaries_work)[[pos + j]] <- paste0(outcome, "_", dataset)
+    mod_summaries_work_test[[pos + j]] <- model_2
+    names(mod_summaries_work_test)[[pos + j]] <- paste0(outcome, "_", dataset)
+    # compute R^2
+    pred_work <- cbind(subset(get(dataset), !is.na(get(outcome)) & !is.na(working), 
+                       select = c(pid, time, get(outcome))), 
+                       pred_outcome = predict(model_1, re.form=NA)) # model outcome values (work)
+    r2_work <- cor(pred_work[outcomes[i]], pred_work$pred_outcome)^2
+    r2_work_name <- paste0("r2_", outcome, "_", dataset, "_work")
+    eval(call("<-", as.name(r2_work_name), r2_work))
+  }
+}
+
+# data.frames for plots for moderation by 'paid work'
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  pos = seq(from = -2, to = 8, by = 2)[i] # changed this because we now only have the 2 HRS datasets
+  for (j in 3:4){
+    dataset = datasets[j]
+    dataset_short = datasets_short[j]
+    ### moderation by paid work models
+    obj_test_work = mod_summaries_work_test[[pos + j]] # unfold list objects (lmerTest)
+    # create data.frame (with all predictors)
+    ps_mean_work <- as.data.frame(subset(get(dataset), !is.na(get(outcome)) & 
+                                           !is.na(working) & time==0) %>% 
+                                    group_by(grandparent, working) %>% summarise(pscore = mean(pscore)))
+    # only HRS
+    dframe_work <- data.frame(
+      pscore = c(rep(ps_mean_work[1,3], 7),  # non-working controls
+                 rep(ps_mean_work[2,3], 7),  # working controls
+                 rep(ps_mean_work[3,3], 7),  # non-working grandparents
+                 rep(ps_mean_work[4,3], 7)), # working grandparents
+      before = rep(c(0:2, rep(2, 4)), 4),
+      after = rep(c(rep(0, 3), 1:4), 4),
+      shift = rep(c(rep(0, 3), rep(1, 4)), 4),
+      grandparent = c(rep(0, 14), rep(1, 14)),
+      working = rep(c(rep(0, 7), rep(1, 7)), 2),
+      x = rep(seq(-6, 6, by=2), 2)
+    )
+    # predict response (again, same procedure for LISS & HRS)
+    dframe_work$pred <- predict(obj_test_work, newdata = dframe_work, re.form=NA)
+    # create design matrix
+    designmat_work <- model.matrix(as.formula(lme4::nobars(formula(obj_test_work))[-2]), 
+                                   dframe_work) # [-2] drops response from formula
+    # compute standard error
+    predvar_work <- diag(designmat_work %*% vcov(obj_test_work) %*% t(designmat_work)) 
+    dframe_work$SE <- sqrt(predvar_work) # for confidence intervals
+    # add grandparent variable as a factor
+    if (dataset_short=="hrs_parents"){ 
+      dframe_work$gpgroup <- factor(dframe_work$grandparent, 
+                                    labels=c("Parent\nControls","Grandparents"))
+    } else { # for nonparent controls
+      dframe_work$gpgroup <- factor(dframe_work$grandparent, 
+                                    labels=c("Nonparent\nControls","Grandparents"))
+    }      
+    dframe_work$gpgroup <- fct_rev(dframe_work$gpgroup)
+    # add female variable as a factor
+    dframe_work$work <- factor(dframe_work$working, labels=c("Not Working","Working"))
+    dframe_work$work <- fct_rev(dframe_work$work)
+    dframe_name_work <- paste0("dframe_", outcome, "_", dataset_short, "_work")
+    eval(call("<-", as.name(dframe_name_work), dframe_work)) # save data.frame for later ggplot use
+  }
+}
+
+
+#### Moderator: grandchild care ####
+
+hrsanalysis_parents %>% filter(grandparent==1) %>% group_by(grandkids100h, time) %>% summarise(n = n())
+
+# only post-event period
+hrsanalysis_care_parents <- hrsanalysis_parents %>% filter(time %in% c(0:6))
+hrsanalysis_care_nonparents <- hrsanalysis_nonparents %>% filter(time %in% c(0:6))
+
+# transfer grandparents' values of grandchild care (grandkids100h) to their matched controls
+# careful to regard temporal changes, too
+hrsanalysis_care_parents %>% filter(subclass==99) %>% # example cases 4 , 200
+  select(pid, grandparent, time, subclass, time_match, match_number, grandkids100h)
+
+hrsanalysis_care_parents <- hrsanalysis_care_parents %>% group_by(subclass, time) %>% 
+  mutate(grandkids100h = max(grandkids100h, na.rm = T)) %>% ungroup() %>% 
+  mutate(grandkids100h = replace(grandkids100h, grandkids100h==-Inf, NA)) # regular NA pls
+hrsanalysis_care_nonparents <- hrsanalysis_care_nonparents %>% group_by(subclass, time) %>% 
+  mutate(grandkids100h = max(grandkids100h, na.rm = T)) %>% ungroup() %>% 
+  mutate(grandkids100h = replace(grandkids100h, grandkids100h==-Inf, NA)) # regular NA pls
+
+hrsanalysis_care_parents %>% group_by(grandparent, time, grandkids100h) %>%
+  summarise(n = n()) %>% print(n=30)
+
+hrsanalysis_care_parents %>% filter(!is.na(grandkids100h) & grandkids100h!=8) %>% 
+  group_by(grandparent, time) %>% summarise(n = n())
+
+hrsanalysis_care_parents <- hrsanalysis_care_parents %>% 
+  mutate(caring = ifelse(grandkids100h %in% c(1,5), ifelse(grandkids100h==1, 1, 0), NA)) %>% 
+  filter(!is.na(caring))
+hrsanalysis_care_nonparents <- hrsanalysis_care_nonparents %>% 
+  mutate(caring = ifelse(grandkids100h %in% c(1,5), ifelse(grandkids100h==1, 1, 0), NA)) %>% 
+  filter(!is.na(caring))
+
+
+hrs_swls_parents_care_test <- lmerTest::lmer(swls ~ 1 + pscore + (after + grandparent + grandparent:after)*caring + 
+                                          (1 | pid) + (1 | hid), REML = FALSE, data = hrsanalysis_care_parents) 
+summary(hrs_swls_parents_care_test)
+
+mod_summaries_care <- list()
+mod_summaries_care_test <- list()
+
+datasets_care <- c("hrsanalysis_care_parents", "hrsanalysis_care_nonparents")
+  
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  pos = seq(from = 0, to = 10, by = 2)[i] 
+  for (j in 1:length(datasets_care)){
+    dataset = datasets_care[j]
+    ### moderator: grandchild care (only HRS)
+    if (icc_list[hid_icc_tbl[j], outcome] < 0.05){ # nesting in hid leads to singular fit for some models
+      model_1 <- lme4::lmer(get(outcome) ~ 1 + pscore + (after + grandparent + grandparent:after)*caring + 
+                              (1 | pid), REML = FALSE, data = get(dataset))
+      model_2 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + (after + grandparent + grandparent:after)*caring + 
+                                  (1 | pid), REML = FALSE, data = get(dataset))
+    } else { # cross-nesting in pid & hid for all other models
+      model_1 <- lme4::lmer(get(outcome) ~ 1 + pscore + (after + grandparent + grandparent:after)*caring + 
+                              (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+      model_2 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + (after + grandparent + grandparent:after)*caring + 
+                                  (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+    }      
+    mod_summaries_care[[pos + j]] <- model_1
+    names(mod_summaries_care)[[pos + j]] <- paste0(outcome, "_", dataset)
+    mod_summaries_care_test[[pos + j]] <- model_2
+    names(mod_summaries_care_test)[[pos + j]] <- paste0(outcome, "_", dataset)
+    # compute R^2
+    pred_care <- cbind(subset(get(dataset), !is.na(get(outcome)) & !is.na(caring), 
+                              select = c(pid, time, get(outcome))), 
+                       pred_outcome = predict(model_1, re.form=NA)) # model outcome values (care)
+    r2_care <- cor(pred_care[outcomes[i]], pred_care$pred_outcome)^2
+    r2_care_name <- paste0("r2_", outcome, "_", dataset, "_care")
+    eval(call("<-", as.name(r2_care_name), r2_care))
+  }
+}
+
+coefs_care <- c("Intercept", "pscore", "after", "grandparent", 
+                "caring", "after_grandparent", 
+                "after_caring", "grandparent_caring", 
+                "after_grandparent_caring")
+gammas_care <- c("gamma}_{00", "gamma}_{04", "gamma}_{10", "gamma}_{01", 
+                 "gamma}_{02", "gamma}_{11",
+                 "gamma}_{12", "gamma}_{03", 
+                 "gamma}_{13")
+
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  pos = seq(from = -2, to = 8, by = 2)[i] # changed this because we now only have the 2 HRS datasets
+  for (j in 3:4){
+    dataset = datasets_short[j]
+    ### moderation by grandchild care
+    obj_care = apa_print(mod_summaries_care[[pos + j]]) # unfold list objects
+    obj_care_test = mod_summaries_care_test[[pos + j]] # unfold list objects (lmerTest)
+    # reformatting: change beta^hat to gamma^hat (plus subscripts)
+    for (k in 1:length(coefs_care)){ 
+      coef <- coefs_care[k] # 17 coefficients for each model (object)
+      gamma <- gammas_care[k]
+      obj_care$estimate[coef] <- lapply(obj_care$estimate[coef], gsub, pattern="beta", replacement=gamma)
+      obj_care$full_result[coef] <- lapply(obj_care$full_result[coef], gsub, pattern="beta", replacement=gamma)
+    }
+    obj_care_name <- paste0(outcome, "_", dataset, "_care_summary")
+    eval(call("<-", as.name(obj_care_name), obj_care)) # save object
+    obj_care_test_name <- paste0(outcome, "_", dataset, "_care_test")
+    eval(call("<-", as.name(obj_care_test_name), obj_care_test)) # save object
+    # for better formatting in text: p-values
+    obj_care_p <- as.data.frame(summary(mod_summaries_care_test[[pos + j]])$coefficients) %>% # unfold list
+      rownames_to_column() %>% select(rowname, "Pr(>|t|)") %>% rename(p = "Pr(>|t|)") %>% 
+      mutate(p = scales::pvalue(p, prefix = c("$p$ < ", "$p$ = ", "$p$ > "))) %>% column_to_rownames()
+    obj_care_p["p"] <- # remove "0" from the chr's 
+      lapply(obj_care_p["p"], gsub, pattern="0\\.", replacement="\\.")
+    obj_care_name_p <- paste0(outcome, "_", dataset, "_care_p")
+    eval(call("<-", as.name(obj_care_name_p), obj_care_p)) # save objects  
+  }
+}
+
+# data.frames for plots for moderation by 'grandchild care'
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  pos = seq(from = 0, to = 10, by = 2)[i] 
+  for (j in 1:length(datasets_care)){
+    dataset = datasets_care[j]
+    dataset_short = datasets_short[j+2] # only HRS
+    ### moderation by grandchild care models
+    obj_test_care = mod_summaries_care_test[[pos + j]] # unfold list objects (lmerTest)
+    # create data.frame (with all predictors)
+    ps_mean_care <- as.data.frame(subset(get(dataset), !is.na(get(outcome)) & 
+                                           !is.na(caring) & time==0) %>% 
+                                    group_by(grandparent, caring) %>% summarise(pscore = mean(pscore)))
+    # only HRS (simplified post-transition model)
+    dframe_care <- data.frame(
+      pscore = c(rep(ps_mean_care[1,3], 4),  # non-caring controls
+                 rep(ps_mean_care[2,3], 4),  # caring controls
+                 rep(ps_mean_care[3,3], 4),  # non-caring grandparents (>100 h)
+                 rep(ps_mean_care[4,3], 4)), # caring grandparents
+      after = rep(c(1:4), 4),
+      grandparent = c(rep(0, 8), rep(1, 8)),
+      caring = rep(c(rep(0, 4), rep(1, 4)), 2),
+      x = rep(seq(0, 6, by=2), 4)
+    )
+    # predict response (again, same procedure for LISS & HRS)
+    dframe_care$pred <- predict(obj_test_care, newdata = dframe_care, re.form=NA)
+    # create design matrix
+    designmat_care <- model.matrix(as.formula(lme4::nobars(formula(obj_test_care))[-2]), 
+                                   dframe_care) # [-2] drops response from formula
+    # compute standard error
+    predvar_care <- diag(designmat_care %*% vcov(obj_test_care) %*% t(designmat_care)) 
+    dframe_care$SE <- sqrt(predvar_care) # for confidence intervals
+    # add grandparent variable as a factor
+    if (dataset_short=="hrs_parents"){ 
+      dframe_care$gpgroup <- factor(dframe_care$grandparent, 
+                                    labels=c("Parent\nControls","Grandparents"))
+    } else { # for nonparent controls
+      dframe_care$gpgroup <- factor(dframe_care$grandparent, 
+                                    labels=c("Nonparent\nControls","Grandparents"))
+    }      
+    dframe_care$gpgroup <- fct_rev(dframe_care$gpgroup)
+    # add female variable as a factor
+    dframe_care$care <- factor(dframe_care$caring, labels=c("Grandchild\nCare < 100h","Grandchild\nCare >= 100h"))
+    dframe_care$care <- fct_rev(dframe_care$care)
+    dframe_name_care <- paste0("dframe_", outcome, "_", dataset_short, "_care")
+    eval(call("<-", as.name(dframe_name_care), dframe_care)) # save data.frame for later ggplot use
+  }
+}
+
+# linear contrasts
+
