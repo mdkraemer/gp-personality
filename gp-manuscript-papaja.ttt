@@ -391,6 +391,85 @@ Shift of not-working grandparents vs. working grandparents
 \begin{lltable}
 
 \begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.01. \(caring=1\) indicates more than 100 hours of grandchild care since the last assessment.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-agree-care-tab}Fixed Effects of Agreeableness Over the Transition to Grandparenthood Moderated by Grandchild Care.}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-agree-care-tab} continued}}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endhead
+Intercept, $\hat{\gamma}_{00}$ & 3.47 & [3.43, 3.52] & 155.84 & < .001 & 3.47 & [3.42, 3.53] & 130.92 & < .001\\
+Propensity score, $\hat{\gamma}_{04}$ & 0.16 & [0.08, 0.24] & 3.91 & < .001 & 0.15 & [0.07, 0.23] & 3.67 & < .001\\
+After-slope, $\hat{\gamma}_{10}$ & -0.02 & [-0.03, -0.01] & -4.36 & < .001 & -0.02 & [-0.03, -0.01] & -3.63 & < .001\\
+Grandparent, $\hat{\gamma}_{01}$ & -0.04 & [-0.11, 0.03] & -1.16 & .246 & -0.05 & [-0.12, 0.02] & -1.49 & .137\\
+Caring, $\hat{\gamma}_{02}$ & 0.00 & [-0.04, 0.03] & -0.27 & .784 & 0.02 & [-0.01, 0.05] & 1.09 & .276\\
+After-slope * Grandparent, $\hat{\gamma}_{11}$ & 0.03 & [0.00, 0.05] & 2.36 & .018 & 0.02 & [0.00, 0.04] & 2.02 & .044\\
+After-slope * Caring, $\hat{\gamma}_{12}$ & 0.00 & [-0.01, 0.02] & 0.29 & .773 & 0.00 & [-0.02, 0.01] & -0.60 & .550\\
+Grandparent * Caring, $\hat{\gamma}_{03}$ & 0.02 & [-0.07, 0.11] & 0.46 & .645 & 0.00 & [-0.09, 0.08] & -0.09 & .925\\
+After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & 0.01 & [-0.02, 0.04] & 0.57 & .572 & 0.02 & [-0.02, 0.05] & 1.00 & .319\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+\efloatseparator
+ 
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-agree-care-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-agree-care-contrasts}Linear Contrasts for Agreeableness (Moderated by Grandchild Care; only HRS).}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-agree-care-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+After-slope of caring controls vs. caring grandparents
+                                  ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & 0.04 & 7.62 & .006 & 0.04 & 9.15 & .002\\
+After-slope of not-caring grandparents vs. caring grandparents
+                                  ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & 0.01 & 0.61 & .434 & 0.01 & 0.66 & .415\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+\efloatseparator
+ 
+\begin{lltable}
+
+\begin{TableNotes}[para]
 \normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.02.}
 \end{TableNotes}
 
@@ -768,6 +847,85 @@ After-slope of not-working grandparents vs. working grandparents
 Shift of not-working grandparents vs. working grandparents
                               ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ +
                               $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & 0.05 & 2.62 & .106 & 0.05 & 2.89 & .089\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+\efloatseparator
+ 
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.03. \(caring=1\) indicates more than 100 hours of grandchild care since the last assessment.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-con-care-tab}Fixed Effects of Conscientiousness Over the Transition to Grandparenthood Moderated by Grandchild Care.}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-con-care-tab} continued}}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endhead
+Intercept, $\hat{\gamma}_{00}$ & 3.44 & [3.40, 3.48] & 168.69 & < .001 & 3.34 & [3.30, 3.39] & 138.33 & < .001\\
+Propensity score, $\hat{\gamma}_{04}$ & 0.08 & [0.00, 0.15] & 2.03 & .042 & 0.29 & [0.22, 0.37] & 7.78 & < .001\\
+After-slope, $\hat{\gamma}_{10}$ & -0.02 & [-0.03, -0.01] & -3.80 & < .001 & -0.01 & [-0.02, 0.00] & -2.74 & .006\\
+Grandparent, $\hat{\gamma}_{01}$ & -0.02 & [-0.08, 0.05] & -0.51 & .610 & -0.02 & [-0.09, 0.04] & -0.74 & .462\\
+Caring, $\hat{\gamma}_{02}$ & 0.00 & [-0.03, 0.03] & 0.03 & .972 & 0.02 & [0.00, 0.05] & 1.64 & .102\\
+After-slope * Grandparent, $\hat{\gamma}_{11}$ & 0.01 & [-0.01, 0.03] & 1.37 & .170 & 0.01 & [-0.01, 0.02] & 0.73 & .468\\
+After-slope * Caring, $\hat{\gamma}_{12}$ & 0.00 & [-0.01, 0.01] & 0.01 & .993 & -0.01 & [-0.02, 0.00] & -1.72 & .085\\
+Grandparent * Caring, $\hat{\gamma}_{03}$ & -0.04 & [-0.12, 0.04] & -0.93 & .355 & -0.07 & [-0.14, 0.01] & -1.74 & .081\\
+After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & 0.03 & [0.00, 0.06] & 1.88 & .060 & 0.04 & [0.01, 0.07] & 2.82 & .005\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+\efloatseparator
+ 
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-con-care-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-con-care-contrasts}Linear Contrasts for Conscientiousness (Moderated by Grandchild Care; only HRS).}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-con-care-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+After-slope of caring controls vs. caring grandparents
+                                  ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & 0.04 & 13.75 & < .001 & 0.05 & 19.49 & < .001\\
+After-slope of not-caring grandparents vs. caring grandparents
+                                  ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & 0.03 & 4.48 & .034 & 0.03 & 5.28 & .022\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -1171,6 +1329,85 @@ Shift of not-working grandparents vs. working grandparents
 \begin{lltable}
 
 \begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00. \(caring=1\) indicates more than 100 hours of grandchild care since the last assessment.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-extra-care-tab}Fixed Effects of Extraversion Over the Transition to Grandparenthood Moderated by Grandchild Care.}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-extra-care-tab} continued}}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endhead
+Intercept, $\hat{\gamma}_{00}$ & 3.19 & [3.14, 3.24] & 128.26 & < .001 & 3.12 & [3.06, 3.18] & 102.87 & < .001\\
+Propensity score, $\hat{\gamma}_{04}$ & 0.13 & [0.04, 0.22] & 2.98 & .003 & 0.08 & [-0.01, 0.17] & 1.67 & .096\\
+After-slope, $\hat{\gamma}_{10}$ & -0.01 & [-0.03, 0.00] & -2.61 & .009 & 0.00 & [-0.01, 0.01] & -0.39 & .694\\
+Grandparent, $\hat{\gamma}_{01}$ & -0.04 & [-0.11, 0.03] & -1.05 & .296 & 0.04 & [-0.04, 0.12] & 1.06 & .288\\
+Caring, $\hat{\gamma}_{02}$ & 0.00 & [-0.03, 0.04] & 0.23 & .815 & 0.02 & [-0.02, 0.05] & 0.86 & .391\\
+After-slope * Grandparent, $\hat{\gamma}_{11}$ & 0.02 & [-0.01, 0.04] & 1.32 & .186 & 0.00 & [-0.02, 0.02] & 0.30 & .767\\
+After-slope * Caring, $\hat{\gamma}_{12}$ & 0.00 & [-0.02, 0.02] & -0.04 & .965 & 0.00 & [-0.02, 0.01] & -0.42 & .676\\
+Grandparent * Caring, $\hat{\gamma}_{03}$ & -0.04 & [-0.13, 0.06] & -0.74 & .461 & -0.05 & [-0.14, 0.04] & -1.04 & .299\\
+After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & 0.03 & [-0.01, 0.06] & 1.56 & .119 & 0.03 & [0.00, 0.07] & 1.83 & .067\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+\efloatseparator
+ 
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-extra-care-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-extra-care-contrasts}Linear Contrasts for Extraversion (Moderated by Grandchild Care; only HRS).}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-extra-care-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+After-slope of caring controls vs. caring grandparents
+                                  ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & 0.04 & 10.45 & .001 & 0.04 & 7.39 & .007\\
+After-slope of not-caring grandparents vs. caring grandparents
+                                  ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & 0.03 & 2.98 & .084 & 0.03 & 3.37 & .066\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+\efloatseparator
+ 
+\begin{lltable}
+
+\begin{TableNotes}[para]
 \normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00.}
 \end{TableNotes}
 
@@ -1548,6 +1785,85 @@ After-slope of not-working grandparents vs. working grandparents
 Shift of not-working grandparents vs. working grandparents
                               ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ +
                               $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & -0.07 & 2.14 & .143 & -0.06 & 2.17 & .141\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+\efloatseparator
+ 
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00. \(caring=1\) indicates more than 100 hours of grandchild care since the last assessment.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-neur-care-tab}Fixed Effects of Neuroticism Over the Transition to Grandparenthood Moderated by Grandchild Care.}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-neur-care-tab} continued}}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endhead
+Intercept, $\hat{\gamma}_{00}$ & 2.04 & [1.99, 2.09] & 75.41 & < .001 & 1.97 & [1.91, 2.04] & 59.05 & < .001\\
+Propensity score, $\hat{\gamma}_{04}$ & -0.02 & [-0.12, 0.07] & -0.45 & .652 & 0.14 & [0.03, 0.24] & 2.59 & .010\\
+After-slope, $\hat{\gamma}_{10}$ & 0.00 & [-0.01, 0.01] & -0.02 & .982 & -0.02 & [-0.03, 0.00] & -2.67 & .008\\
+Grandparent, $\hat{\gamma}_{01}$ & -0.10 & [-0.18, -0.02] & -2.45 & .014 & -0.11 & [-0.20, -0.02] & -2.43 & .015\\
+Caring, $\hat{\gamma}_{02}$ & 0.01 & [-0.04, 0.05] & 0.33 & .740 & 0.00 & [-0.04, 0.04] & -0.09 & .930\\
+After-slope * Grandparent, $\hat{\gamma}_{11}$ & 0.00 & [-0.03, 0.02] & -0.17 & .865 & 0.01 & [-0.01, 0.04] & 1.06 & .291\\
+After-slope * Caring, $\hat{\gamma}_{12}$ & -0.01 & [-0.03, 0.01] & -1.01 & .311 & 0.01 & [-0.01, 0.03] & 0.68 & .494\\
+Grandparent * Caring, $\hat{\gamma}_{03}$ & 0.09 & [-0.02, 0.20] & 1.57 & .117 & 0.09 & [-0.02, 0.21] & 1.67 & .095\\
+After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & -0.03 & [-0.07, 0.01] & -1.34 & .182 & -0.04 & [-0.09, 0.00] & -2.07 & .038\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+\efloatseparator
+ 
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-neur-care-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-neur-care-contrasts}Linear Contrasts for Neuroticism (Moderated by Grandchild Care; only HRS).}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-neur-care-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+After-slope of caring controls vs. caring grandparents
+                                  ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & -0.03 & 3.78 & .052 & -0.03 & 3.60 & .058\\
+After-slope of not-caring grandparents vs. caring grandparents
+                                  ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & -0.04 & 4.06 & .044 & -0.04 & 3.90 & .048\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -1951,6 +2267,85 @@ Shift of not-working grandparents vs. working grandparents
 \begin{lltable}
 
 \begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00. \(caring=1\) indicates more than 100 hours of grandchild care since the last assessment.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-open-care-tab}Fixed Effects of Openness Over the Transition to Grandparenthood Moderated by Grandchild Care.}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-open-care-tab} continued}}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endhead
+Intercept, $\hat{\gamma}_{00}$ & 3.06 & [3.01, 3.10] & 125.52 & < .001 & 3.00 & [2.95, 3.06] & 103.68 & < .001\\
+Propensity score, $\hat{\gamma}_{04}$ & 0.08 & [-0.01, 0.16] & 1.81 & .070 & 0.22 & [0.13, 0.30] & 5.00 & < .001\\
+After-slope, $\hat{\gamma}_{10}$ & -0.04 & [-0.05, -0.03] & -6.73 & < .001 & -0.02 & [-0.03, -0.01] & -4.90 & < .001\\
+Grandparent, $\hat{\gamma}_{01}$ & -0.06 & [-0.14, 0.01] & -1.74 & .082 & -0.08 & [-0.16, -0.01] & -2.21 & .027\\
+Caring, $\hat{\gamma}_{02}$ & -0.02 & [-0.06, 0.02] & -1.09 & .275 & 0.01 & [-0.02, 0.04] & 0.67 & .503\\
+After-slope * Grandparent, $\hat{\gamma}_{11}$ & 0.02 & [0.00, 0.05] & 2.10 & .036 & 0.01 & [-0.01, 0.03] & 0.88 & .377\\
+After-slope * Caring, $\hat{\gamma}_{12}$ & 0.01 & [0.00, 0.03] & 1.52 & .129 & 0.00 & [-0.02, 0.01] & -0.24 & .807\\
+Grandparent * Caring, $\hat{\gamma}_{03}$ & 0.00 & [-0.10, 0.10] & 0.02 & .985 & -0.04 & [-0.12, 0.05] & -0.79 & .432\\
+After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & 0.01 & [-0.02, 0.05] & 0.74 & .457 & 0.03 & [0.00, 0.06] & 1.73 & .084\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+\efloatseparator
+ 
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-open-care-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-open-care-contrasts}Linear Contrasts for Openness (Moderated by Grandchild Care; only HRS).}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-open-care-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+After-slope of caring controls vs. caring grandparents
+                                  ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & 0.04 & 7.78 & .005 & 0.04 & 9.46 & .002\\
+After-slope of not-caring grandparents vs. caring grandparents
+                                  ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & 0.03 & 2.58 & .108 & 0.03 & 3.26 & .071\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+\efloatseparator
+ 
+\begin{lltable}
+
+\begin{TableNotes}[para]
 \normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.01.}
 \end{TableNotes}
 
@@ -2328,6 +2723,85 @@ After-slope of not-working grandparents vs. working grandparents
 Shift of not-working grandparents vs. working grandparents
                               ($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ +
                               $\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & -0.21 & 2.87 & .090 & -0.22 & 3.48 & .062\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+\efloatseparator
+ 
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00. \(caring=1\) indicates more than 100 hours of grandchild care since the last assessment.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-swls-care-tab}Fixed Effects of Life Satisfaction Over the Transition to Grandparenthood Moderated by Grandchild Care.}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-swls-care-tab} continued}}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endhead
+Intercept, $\hat{\gamma}_{00}$ & 4.86 & [4.72, 5.00] & 67.71 & < .001 & 4.75 & [4.58, 4.92] & 55.25 & < .001\\
+Propensity score, $\hat{\gamma}_{04}$ & 0.27 & [0.01, 0.53] & 2.05 & .040 & 0.05 & [-0.21, 0.31] & 0.35 & .728\\
+After-slope, $\hat{\gamma}_{10}$ & 0.00 & [-0.04, 0.03] & -0.02 & .986 & 0.03 & [0.00, 0.06] & 1.99 & .047\\
+Grandparent, $\hat{\gamma}_{01}$ & 0.00 & [-0.22, 0.21] & -0.04 & .967 & 0.17 & [-0.06, 0.40] & 1.45 & .148\\
+Caring, $\hat{\gamma}_{02}$ & -0.10 & [-0.22, 0.02] & -1.67 & .094 & 0.02 & [-0.09, 0.12] & 0.34 & .738\\
+After-slope * Grandparent, $\hat{\gamma}_{11}$ & 0.07 & [0.00, 0.14] & 1.85 & .065 & 0.04 & [-0.02, 0.11] & 1.24 & .216\\
+After-slope * Caring, $\hat{\gamma}_{12}$ & 0.04 & [-0.01, 0.10] & 1.70 & .089 & -0.01 & [-0.06, 0.03] & -0.59 & .557\\
+Grandparent * Caring, $\hat{\gamma}_{03}$ & 0.32 & [0.02, 0.62] & 2.08 & .038 & 0.21 & [-0.07, 0.48] & 1.45 & .147\\
+After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & -0.08 & [-0.19, 0.03] & -1.40 & .162 & -0.03 & [-0.13, 0.08] & -0.51 & .613\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+\efloatseparator
+ 
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-swls-care-tab}.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-swls-care-contrasts}Linear Contrasts for Life Satisfaction (Moderated by Grandchild Care; only HRS).}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-swls-care-contrasts} continued}}\\
+\toprule
+ & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+\midrule
+\endhead
+After-slope of caring controls vs. caring grandparents
+                                  ($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & -0.01 & 0.10 & .751 & 0.01 & 0.13 & .722\\
+After-slope of not-caring grandparents vs. caring grandparents
+                                  ($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & -0.04 & 0.49 & .486 & -0.04 & 0.73 & .392\\
 \bottomrule
 \addlinespace
 \insertTableNotes

@@ -1254,12 +1254,12 @@ limits <- cbind(limits_lower, limits_upper)
 rownames(limits) <- outcomes_plots
 
 # collect data frames in correct order (ACENO+LS -> LISS-p, LISS-np, HRS-p, HRS-np)
-dframes <- c(sort(ls()[grep("^(?=.*dframe_agree)(?!.*gender)", ls(), perl=T)], decreasing=T),
-             sort(ls()[grep("^(?=.*dframe_con)(?!.*gender)", ls(), perl=T)], decreasing=T),
-             sort(ls()[grep("^(?=.*dframe_extra)(?!.*gender)", ls(), perl=T)], decreasing=T),
-             sort(ls()[grep("^(?=.*dframe_neur)(?!.*gender)", ls(), perl=T)], decreasing=T),
-             sort(ls()[grep("^(?=.*dframe_open)(?!.*gender)", ls(), perl=T)], decreasing=T),
-             sort(ls()[grep("^(?=.*dframe_swls)(?!.*gender)", ls(), perl=T)], decreasing=T))
+dframes <- c(sort(ls()[grep("^(?=.*dframe_agree)(?!.*gender)(?!.*care)", ls(), perl=T)], decreasing=T),
+             sort(ls()[grep("^(?=.*dframe_con)(?!.*gender)(?!.*care)", ls(), perl=T)], decreasing=T),
+             sort(ls()[grep("^(?=.*dframe_extra)(?!.*gender)(?!.*care)", ls(), perl=T)], decreasing=T),
+             sort(ls()[grep("^(?=.*dframe_neur)(?!.*gender)(?!.*care)", ls(), perl=T)], decreasing=T),
+             sort(ls()[grep("^(?=.*dframe_open)(?!.*gender)(?!.*care)", ls(), perl=T)], decreasing=T),
+             sort(ls()[grep("^(?=.*dframe_swls)(?!.*gender)(?!.*care)", ls(), perl=T)], decreasing=T))
 dframes_gender <- c(sort(ls()[grep("^(?=.*dframe_agree)(?=.*gender)", ls(), perl=T)], decreasing=T),
                     sort(ls()[grep("^(?=.*dframe_con)(?=.*gender)", ls(), perl=T)], decreasing=T),
                     sort(ls()[grep("^(?=.*dframe_extra)(?=.*gender)", ls(), perl=T)], decreasing=T),
@@ -1742,3 +1742,110 @@ for (i in 1:length(outcomes)){
 
 # linear contrasts
 
+to_be_tested_care <- c("after_gp_vs_control_care", # after-slope of caring GPs vs. caring controls
+                       "after_nocare_vs_care_gp") # after-slope of not-caring vs. caring GPs
+
+contrasts_care <- list(c("after:grandparent", "after:grandparent:caring"),
+                       c("after:caring", "after:grandparent:caring"))
+
+for (i in 1:length(outcomes)){
+  for (j in 1:length(datasets_short_hrs)){ # now only for the 2 HRS datasets
+    ### moderation by grandchild care
+    model_care <- get(paste0(outcomes[i], "_", datasets_short_hrs[j], "_care_test"))
+    for (k in 1:length(to_be_tested_care)){
+      contrast_care <- as.data.frame(
+        cbind(est = sum(fixef(model_care)[contrasts_care[[k]]]), 
+              chi = linearHypothesis(model_care, paste(contrasts_care[[k]], 
+                                                       collapse = " + "))[2, "Chisq"], 
+              df = linearHypothesis(model_care, paste(contrasts_care[[k]], 
+                                                      collapse = " + "))[2, "Df"], 
+              p = linearHypothesis(model_care, paste(contrasts_care[[k]], 
+                                                     collapse = " + "))[2, "Pr(>Chisq)"])
+      )
+      contrast_care <- contrast_care %>% mutate( # reformat for reporting in text
+        est_num = printnum(est),
+        chi_print = paste0("$\\chi^2$", " (", contrast_care$df, ") = ", printnum(contrast_care$chi)),
+        p_print = scales::pvalue(p, prefix = c("$p$ < ", "$p$ = ", "$p$ > "))
+      )
+      contrast_care_name <- paste0(to_be_tested_care[k], "_", outcomes[i], "_", datasets_short_hrs[j])
+      eval(call("<-", as.name(contrast_care_name), contrast_care))
+    }
+    collect_contrasts_care <- do.call(rbind, lapply(paste0(to_be_tested_care, "_", 
+                                                           outcomes[i], "_", datasets_short_hrs[j]), get)) #all k's
+    rownames(collect_contrasts_care) <- to_be_tested_care
+    collected_care_name <- paste0("contrasts_", outcomes[i], "_", datasets_short_hrs[j], "_care")
+    eval(call("<-", as.name(collected_care_name), collect_contrasts_care))
+  }
+  listed_contrasts_care <- do.call(list, lapply(paste0("contrasts_", outcomes[i], "_", 
+                                                       datasets_short_hrs, "_care"), get)) # all j's
+  names(listed_contrasts_care) <- datasets_short_hrs
+  listed_care_name <- paste0("contrasts_care_", outcomes[i])
+  eval(call("<-", as.name(listed_care_name), listed_contrasts_care))
+}
+
+for (i in 1:length(dframes_care)){
+  ### moderation by grandchild care
+  plot_care <- ggplot(get(dframes_care[i]), aes(x=x,y=pred,colour=gpgroup,linetype=care))+
+    geom_line(position=position_dodge(width=0.2),size=1)+
+    geom_point(position=position_dodge(width=0.2),size=1.5)+
+    scale_colour_brewer(palette = "Set1", name="Group")+ 
+    scale_linetype_discrete(name="Grandchild Care")+
+    geom_errorbar(aes(ymin=pred-1.96*SE,ymax=pred+1.96*SE),width=0.6,position=position_dodge(width=0.2))+
+    coord_cartesian(ylim=c(limits[i*2, 1], limits[i*2, 2]))+ # loop over limits (but *2 because of length)
+    scale_x_continuous(name="Time (in Years)",breaks=seq(0,6,2))+ # starts at 0 now
+    theme(#axis.text = element_text(face="bold"), #, size=14
+      #axis.title = element_text(size=18),
+      #legend.background = element_rect(fill="gray90", size=.5, linetype="dotted"),
+      #legend.text=element_text(size=14),
+      #legend.title=element_text(size=14),
+      panel.border=element_rect(colour="darkgrey", fill=NA, size=1),
+      axis.title.y=element_blank())+
+    guides(colour = guide_legend(order = 1), linetype = guide_legend(order = 2)) # legend element order
+    #scale_y_continuous(name=outcomes_plots[i*2])
+    if (dframes_care[i] %in% dframes_care[grep("^(?=.*_parents_)", dframes_care, perl=T)]){ 
+      plot_care <- plot_care + theme(axis.title.x=element_blank()) # omit x-axis title for parent plots
+    } 
+  plot_name_care <- gsub("dframe", "plot", dframes_care[i])
+  eval(call("<-", as.name(plot_name_care), plot_care)) # save plots for later assembly
+}
+
+#### H2: Individual differences in intraindividual change #### 
+
+swls_formula <- as.formula("swls ~ 1 + pscore + before + after + shift + grandparent + 
+                                  grandparent:before + grandparent:after + grandparent:shift + 
+                                  (1 | pid) + (1 | hid)")
+
+m1 <- lme4::lmer(neur ~ 1 + pscore + before + after + shift + grandparent + 
+                                  grandparent:before + grandparent:after + grandparent:shift + 
+                                  (1 | pid), REML = FALSE, data = hrsanalysis_nonparents) 
+
+m1 <- mod_summaries[[4]]
+m1 <- update(m1, agree ~ ., data = hrsanalysis_nonparents)
+
+summary(m1)
+
+m2 <- update(m1, agree ~ . -(1 | pid) +(1 + before | pid), data = hrsanalysis_nonparents)
+summary(m2)
+
+(a1 <- anova(m1, m2))
+
+
+
+anova_summaries <- list()
+
+# run models (save in list object)
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  pos = seq(from = 0, to = 20, by = 4)[i]
+  for (j in 1:length(datasets)){
+    dataset = datasets[j]
+    # update basic models with random slopes (one at a time)
+    rs_before <- update(mod_summaries[[pos + j]], . ~ . -(1 | pid) +(1 + before | pid))
+    rs_after <-  update(mod_summaries[[pos + j]], . ~ . -(1 | pid) +(1 + after | pid))
+    rs_shift <-  update(mod_summaries[[pos + j]], . ~ . -(1 | pid) +(1 + shift | pid))
+    # run anova() for model comparison
+    
+    anova_summaries[[pos + j]] <- model_1
+    names(anova_summaries)[[pos + j]] <- paste0(outcome, "_", dataset)
+  }
+}

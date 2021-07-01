@@ -537,7 +537,7 @@ df_outcomes <- rbind(cbind(maj="Agreeableness", min="agreeableness"),
 rownames(df_outcomes) <- c("agree", "con", "extra", "neur", "open", "swls")
 ```
 
-```{r H1-run-models, include=FALSE, cache = TRUE}
+```{r H1-run-models, include=FALSE, cache=T}
 # This chunk runs all the models related to H1.
 # Results tables are created in following chunks.
 
@@ -836,7 +836,7 @@ for (i in 1:length(outcomes)){
                               select = c(pid, time, get(outcome))), 
                        pred_outcome = predict(model_1, re.form=NA)) # model outcome values (care)
     r2_care <- cor(pred_care[outcomes[i]], pred_care$pred_outcome)^2
-    r2_care_name <- paste0("r2_", outcome, "_", dataset, "_care")
+    r2_care_name <- paste0("r2_", outcome, "_", dataset) # data set name already includes '_care'
     eval(call("<-", as.name(r2_care_name), r2_care))
   }
 }
@@ -882,232 +882,7 @@ for (i in 1:length(outcomes)){
 }
 ```
 
-```{r H1-dataframes-plots, include=FALSE, cache = TRUE}
-# create predicted values data.frames for plots
-# sources: 
-# http://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#lme/
-# https://stackoverflow.com/questions/14358811/extract-prediction-band-from-lme-fit/
-# https://stats.stackexchange.com/questions/29690/getting-fixed-effect-only-predictions-from-mixed-model-on-new-data-in-r/
-
-#### basic models & moderation by gender ####
-
-for (i in 1:length(outcomes)){
-  outcome = outcomes[i]
-  pos = seq(from = 0, to = 24, by = 4)[i]
-  for (j in 1:length(datasets_short)){
-    ### basic models
-    dataset = datasets[j]
-    dataset_short = datasets_short[j]
-    obj_test = mod_summaries_test[[pos + j]] # unfold list objects (lmerTest)
-    # create data.frame (with all predictors)
-    ps_mean <- as.data.frame(subset(get(dataset), !is.na(get(outcome)) & time==0) %>% 
-                               group_by(grandparent) %>% summarise(pscore = mean(pscore))) # pscore mean
-    # different time sequences for LISS/HRS
-    if (dataset_short %in% c("liss_parents", "liss_nonparents")){ 
-      dframe <- data.frame( # for LISS
-        pscore = c(rep(ps_mean[1,2], 13),  # controls
-                   rep(ps_mean[2,2], 13)), # grandparents
-        before = rep(c(0:5, rep(5, 7)), 2),
-        after = rep(c(rep(0, 6), 1:7), 2),
-        shift = rep(c(rep(0, 6), rep(1, 7)), 2),
-        grandparent = c(rep(0, 13), rep(1, 13)),
-        x = rep(-6:6, 2)
-      )
-    } else { # for HRS
-      dframe <- data.frame(
-        pscore = c(rep(ps_mean[1,2], 7), 
-                   rep(ps_mean[2,2], 7)),
-        before = rep(c(0:2, rep(2, 4)), 2),
-        after = rep(c(rep(0, 3), 1:4), 2),
-        shift = rep(c(rep(0, 3), rep(1, 4)), 2),
-        grandparent = c(rep(0, 7), rep(1, 7)),
-        x = rep(seq(-6, 6, by=2), 2)
-      )
-    }      
-    # predict response (again, same procedure for LISS & HRS)
-    dframe$pred <- predict(obj_test, newdata = dframe, re.form=NA)
-    # create design matrix
-    designmat <- model.matrix(as.formula(lme4::nobars(formula(obj_test))[-2]), 
-                              dframe) # [-2] drops response from formula
-    # compute standard error
-    predvar <- diag(designmat %*% vcov(obj_test) %*% t(designmat)) 
-    dframe$SE <- sqrt(predvar) # for confidence intervals
-    # add grandparent variable as a factor
-    if (dataset_short %in% c("liss_parents", "hrs_parents")){ 
-      dframe$gpgroup <- factor(dframe$grandparent, labels=c("Parent\nControls","Grandparents"))
-    } else { # for nonparent controls
-      dframe$gpgroup <- factor(dframe$grandparent, labels=c("Nonparent\nControls","Grandparents"))
-    }      
-    dframe$gpgroup <- fct_rev(dframe$gpgroup)
-    dframe_name <- paste0("dframe_", outcome, "_", dataset_short)
-    eval(call("<-", as.name(dframe_name), dframe)) # save data.frame for later ggplot use
-    ### moderation by gender models
-    obj_test_gender = mod_summaries_gender_test[[pos + j]] # unfold list objects (lmerTest)
-    # create data.frame (with all predictors)
-    ps_mean_gender <- as.data.frame(subset(get(dataset), !is.na(get(outcome)) & time==0) %>% 
-                               group_by(grandparent, female) %>% summarise(pscore = mean(pscore)))
-    # different time sequences for LISS/HRS
-    if (dataset_short %in% c("liss_parents", "liss_nonparents")){ 
-      dframe_gender <- data.frame(
-        pscore = c(rep(ps_mean_gender[1,3], 13),  # male controls
-                   rep(ps_mean_gender[2,3], 13),  # female controls
-                   rep(ps_mean_gender[3,3], 13),  # male grandparents
-                   rep(ps_mean_gender[4,3], 13)), # female grandparents
-        before = rep(c(0:5, rep(5, 7)), 4),
-        after = rep(c(rep(0, 6), 1:7), 4),
-        shift = rep(c(rep(0, 6), rep(1, 7)), 4),
-        grandparent = c(rep(0, 26), rep(1, 26)),
-        female = rep(c(rep(0, 13), rep(1, 13)), 2),
-        x = rep(-6:6, 4)
-      )
-    } else { # for HRS
-      dframe_gender <- data.frame(
-        pscore = c(rep(ps_mean_gender[1,3], 7),  # male controls
-                   rep(ps_mean_gender[2,3], 7),  # female controls
-                   rep(ps_mean_gender[3,3], 7),  # male grandparents
-                   rep(ps_mean_gender[4,3], 7)), # female grandparents
-        before = rep(c(0:2, rep(2, 4)), 4),
-        after = rep(c(rep(0, 3), 1:4), 4),
-        shift = rep(c(rep(0, 3), rep(1, 4)), 4),
-        grandparent = c(rep(0, 14), rep(1, 14)),
-        female = rep(c(rep(0, 7), rep(1, 7)), 2),
-        x = rep(seq(-6, 6, by=2), 4)
-      )
-    }      
-    # predict response (again, same procedure for LISS & HRS)
-    dframe_gender$pred <- predict(obj_test_gender, newdata = dframe_gender, re.form=NA)
-    # create design matrix
-    designmat_gender <- model.matrix(as.formula(lme4::nobars(formula(obj_test_gender))[-2]), 
-                              dframe_gender) # [-2] drops response from formula
-    # compute standard error
-    predvar_gender <- diag(designmat_gender %*% vcov(obj_test_gender) %*% t(designmat_gender)) 
-    dframe_gender$SE <- sqrt(predvar_gender) # for confidence intervals
-    # add grandparent variable as a factor
-    if (dataset_short %in% c("liss_parents", "hrs_parents")){ 
-      dframe_gender$gpgroup <- factor(dframe_gender$grandparent, 
-                                      labels=c("Parent\nControls","Grandparents"))
-    } else { # for nonparent controls
-      dframe_gender$gpgroup <- factor(dframe_gender$grandparent, 
-                                      labels=c("Nonparent\nControls","Grandparents"))
-    }      
-    dframe_gender$gpgroup <- fct_rev(dframe_gender$gpgroup)
-    # add female variable as a factor
-    dframe_gender$gender <- factor(dframe_gender$female, labels=c("Men","Women"))
-    dframe_gender$gender <- fct_rev(dframe_gender$gender)
-    dframe_name_gender <- paste0("dframe_", outcome, "_", dataset_short, "_gender")
-    eval(call("<-", as.name(dframe_name_gender), dframe_gender)) # save data.frame for later ggplot use
-  }
-}
-
-#### moderation by paid work ####
-
-for (i in 1:length(outcomes)){
-  outcome = outcomes[i]
-  pos = seq(from = -2, to = 8, by = 2)[i] # changed this because we now only have the 2 HRS datasets
-  for (j in 3:4){
-    dataset = datasets[j]
-    dataset_short = datasets_short[j]
-    ### moderation by paid work models
-    obj_test_work = mod_summaries_work_test[[pos + j]] # unfold list objects (lmerTest)
-    # create data.frame (with all predictors)
-    ps_mean_work <- as.data.frame(subset(get(dataset), !is.na(get(outcome)) & 
-                                           !is.na(working) & time==0) %>% 
-                               group_by(grandparent, working) %>% summarise(pscore = mean(pscore)))
-    # only HRS
-      dframe_work <- data.frame(
-        pscore = c(rep(ps_mean_work[1,3], 7),  # non-working controls
-                   rep(ps_mean_work[2,3], 7),  # working controls
-                   rep(ps_mean_work[3,3], 7),  # non-working grandparents
-                   rep(ps_mean_work[4,3], 7)), # working grandparents
-        before = rep(c(0:2, rep(2, 4)), 4),
-        after = rep(c(rep(0, 3), 1:4), 4),
-        shift = rep(c(rep(0, 3), rep(1, 4)), 4),
-        grandparent = c(rep(0, 14), rep(1, 14)),
-        working = rep(c(rep(0, 7), rep(1, 7)), 2),
-        x = rep(seq(-6, 6, by=2), 4)
-      )
-    # predict response (again, same procedure for LISS & HRS)
-    dframe_work$pred <- predict(obj_test_work, newdata = dframe_work, re.form=NA)
-    # create design matrix
-    designmat_work <- model.matrix(as.formula(lme4::nobars(formula(obj_test_work))[-2]), 
-                              dframe_work) # [-2] drops response from formula
-    # compute standard error
-    predvar_work <- diag(designmat_work %*% vcov(obj_test_work) %*% t(designmat_work)) 
-    dframe_work$SE <- sqrt(predvar_work) # for confidence intervals
-    # add grandparent variable as a factor
-    if (dataset_short=="hrs_parents"){ 
-      dframe_work$gpgroup <- factor(dframe_work$grandparent, 
-                                      labels=c("Parent\nControls","Grandparents"))
-    } else { # for nonparent controls
-      dframe_work$gpgroup <- factor(dframe_work$grandparent, 
-                                      labels=c("Nonparent\nControls","Grandparents"))
-    }      
-    dframe_work$gpgroup <- fct_rev(dframe_work$gpgroup)
-    # add female variable as a factor
-    dframe_work$work <- factor(dframe_work$working, labels=c("Not Working","Working"))
-    dframe_work$work <- fct_rev(dframe_work$work)
-    dframe_name_work <- paste0("dframe_", outcome, "_", dataset_short, "_work")
-    eval(call("<-", as.name(dframe_name_work), dframe_work)) # save data.frame for later ggplot use
-  }
-}
-
-#### moderation by grandchild care ####
-
-for (i in 1:length(outcomes)){
-  outcome = outcomes[i]
-  pos = seq(from = 0, to = 10, by = 2)[i] 
-  for (j in 1:length(datasets_care)){
-    dataset = datasets_care[j]
-    dataset_short = datasets_short[j+2] # only HRS
-    ### moderation by grandchild care models
-    obj_test_care = mod_summaries_care_test[[pos + j]] # unfold list objects (lmerTest)
-    # create data.frame (with all predictors)
-    ps_mean_care <- as.data.frame(subset(get(dataset), !is.na(get(outcome)) & 
-                                           !is.na(caring) & time==0) %>% 
-                                    group_by(grandparent, caring) %>% summarise(pscore = mean(pscore)))
-    # only HRS (simplified post-transition model)
-    dframe_care <- data.frame(
-      pscore = c(rep(ps_mean_care[1,3], 4),  # non-caring controls
-                 rep(ps_mean_care[2,3], 4),  # caring controls
-                 rep(ps_mean_care[3,3], 4),  # non-caring grandparents (>100 h)
-                 rep(ps_mean_care[4,3], 4)), # caring grandparents
-      after = rep(c(1:4), 4),
-      grandparent = c(rep(0, 8), rep(1, 8)),
-      caring = rep(c(rep(0, 4), rep(1, 4)), 2),
-      x = rep(seq(0, 6, by=2), 4)
-    )
-    # predict response (again, same procedure for LISS & HRS)
-    dframe_care$pred <- predict(obj_test_care, newdata = dframe_care, re.form=NA)
-    # create design matrix
-    designmat_care <- model.matrix(as.formula(lme4::nobars(formula(obj_test_care))[-2]), 
-                                   dframe_care) # [-2] drops response from formula
-    # compute standard error
-    predvar_care <- diag(designmat_care %*% vcov(obj_test_care) %*% t(designmat_care)) 
-    dframe_care$SE <- sqrt(predvar_care) # for confidence intervals
-    # add grandparent variable as a factor
-    if (dataset_short=="hrs_parents"){ 
-      dframe_care$gpgroup <- factor(dframe_care$grandparent, 
-                                    labels=c("Parent\nControls","Grandparents"))
-    } else { # for nonparent controls
-      dframe_care$gpgroup <- factor(dframe_care$grandparent, 
-                                    labels=c("Nonparent\nControls","Grandparents"))
-    }      
-    dframe_care$gpgroup <- fct_rev(dframe_care$gpgroup)
-    # add female variable as a factor
-    dframe_care$care <- factor(dframe_care$caring, labels=c("Grandchild\nCare < 100h",
-                                                            "Grandchild\nCare >= 100h"))
-    dframe_care$care <- fct_rev(dframe_care$care)
-    dframe_name_care <- paste0("dframe_", outcome, "_", dataset_short, "_care")
-    eval(call("<-", as.name(dframe_name_care), dframe_care)) # save data.frame for later ggplot use
-  }
-}
-
-# remove list objects from environment
-rm(mod_summaries, mod_summaries_test, mod_summaries_gender, mod_summaries_gender_test,
-   mod_summaries_work, mod_summaries_work_test, mod_summaries_care, mod_summaries_care_test)
-```
-
-```{r H1-linear-contrasts, include=FALSE, cache = TRUE}
+```{r H1-linear-contrasts, include=FALSE, cache=T}
 
 #### basic models ####
 
@@ -1289,12 +1064,279 @@ for (i in 1:length(outcomes)){
 
 #### moderation by grandchild care ####
 
+to_be_tested_care <- c("after_gp_vs_control_care", # after-slope of caring GPs vs. caring controls
+                       "after_nocare_vs_care_gp") # after-slope of not-caring vs. caring GPs
+
+contrasts_care <- list(c("after:grandparent", "after:grandparent:caring"),
+                       c("after:caring", "after:grandparent:caring"))
+
+for (i in 1:length(outcomes)){
+  for (j in 1:length(datasets_short_hrs)){ # now only for the 2 HRS datasets
+    ### moderation by grandchild care
+    model_care <- get(paste0(outcomes[i], "_", datasets_short_hrs[j], "_care_test"))
+    for (k in 1:length(to_be_tested_care)){
+      contrast_care <- as.data.frame(
+        cbind(est = sum(fixef(model_care)[contrasts_care[[k]]]), 
+              chi = linearHypothesis(model_care, paste(contrasts_care[[k]], 
+                                                         collapse = " + "))[2, "Chisq"], 
+              df = linearHypothesis(model_care, paste(contrasts_care[[k]], 
+                                                        collapse = " + "))[2, "Df"], 
+              p = linearHypothesis(model_care, paste(contrasts_care[[k]], 
+                                                       collapse = " + "))[2, "Pr(>Chisq)"])
+      )
+      contrast_care <- contrast_care %>% mutate( # reformat for reporting in text
+        est_num = printnum(est),
+        chi_print = paste0("$\\chi^2$", " (", contrast_care$df, ") = ", printnum(contrast_care$chi)),
+        p_print = scales::pvalue(p, prefix = c("$p$ < ", "$p$ = ", "$p$ > "))
+      )
+      contrast_care_name <- paste0(to_be_tested_care[k], "_", outcomes[i], "_", datasets_short_hrs[j])
+      eval(call("<-", as.name(contrast_care_name), contrast_care))
+  }
+    collect_contrasts_care <- do.call(rbind, lapply(paste0(to_be_tested_care, "_", 
+                                        outcomes[i], "_", datasets_short_hrs[j]), get)) #all k's
+    rownames(collect_contrasts_care) <- to_be_tested_care
+    collected_care_name <- paste0("contrasts_", outcomes[i], "_", datasets_short_hrs[j], "_care")
+    eval(call("<-", as.name(collected_care_name), collect_contrasts_care))
+}
+  listed_contrasts_care <- do.call(list, lapply(paste0("contrasts_", outcomes[i], "_", 
+                                                         datasets_short_hrs, "_care"), get)) # all j's
+  names(listed_contrasts_care) <- datasets_short_hrs
+  listed_care_name <- paste0("contrasts_care_", outcomes[i])
+  eval(call("<-", as.name(listed_care_name), listed_contrasts_care))
+}
+
 # remove unnecessary objects
-rm(list = ls(pattern = paste0(c(to_be_tested, to_be_tested_gender, to_be_tested_work), collapse="|")))
+rm(list = ls(pattern = paste0(c(to_be_tested, to_be_tested_gender, 
+                                to_be_tested_work, to_be_tested_care), collapse="|")))
 rm(list = ls(pattern = paste0("contrasts_", outcomes, "_", collapse = "|")))
 ```
 
-```{r H1-build-plots, include=FALSE, cache = TRUE}
+```{r H1-dataframes-plots, include=FALSE, cache=T}
+# create predicted values data.frames for plots
+# sources: 
+# http://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#lme/
+# https://stackoverflow.com/questions/14358811/extract-prediction-band-from-lme-fit/
+# https://stats.stackexchange.com/questions/29690/getting-fixed-effect-only-predictions-from-mixed-model-on-new-data-in-r/
+
+#### basic models & moderation by gender ####
+
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  pos = seq(from = 0, to = 24, by = 4)[i]
+  for (j in 1:length(datasets_short)){
+    ### basic models
+    dataset = datasets[j]
+    dataset_short = datasets_short[j]
+    obj_test = mod_summaries_test[[pos + j]] # unfold list objects (lmerTest)
+    # create data.frame (with all predictors)
+    ps_mean <- as.data.frame(subset(get(dataset), !is.na(get(outcome)) & time==0) %>% 
+                               group_by(grandparent) %>% summarise(pscore = mean(pscore))) # pscore mean
+    # different time sequences for LISS/HRS
+    if (dataset_short %in% c("liss_parents", "liss_nonparents")){ 
+      dframe <- data.frame( # for LISS
+        pscore = c(rep(ps_mean[1,2], 13),  # controls
+                   rep(ps_mean[2,2], 13)), # grandparents
+        before = rep(c(0:5, rep(5, 7)), 2),
+        after = rep(c(rep(0, 6), 1:7), 2),
+        shift = rep(c(rep(0, 6), rep(1, 7)), 2),
+        grandparent = c(rep(0, 13), rep(1, 13)),
+        x = rep(-6:6, 2)
+      )
+    } else { # for HRS
+      dframe <- data.frame(
+        pscore = c(rep(ps_mean[1,2], 7), 
+                   rep(ps_mean[2,2], 7)),
+        before = rep(c(0:2, rep(2, 4)), 2),
+        after = rep(c(rep(0, 3), 1:4), 2),
+        shift = rep(c(rep(0, 3), rep(1, 4)), 2),
+        grandparent = c(rep(0, 7), rep(1, 7)),
+        x = rep(seq(-6, 6, by=2), 2)
+      )
+    }      
+    # predict response (again, same procedure for LISS & HRS)
+    dframe$pred <- predict(obj_test, newdata = dframe, re.form=NA)
+    # create design matrix
+    designmat <- model.matrix(as.formula(lme4::nobars(formula(obj_test))[-2]), 
+                              dframe) # [-2] drops response from formula
+    # compute standard error
+    predvar <- diag(designmat %*% vcov(obj_test) %*% t(designmat)) 
+    dframe$SE <- sqrt(predvar) # for confidence intervals
+    # add grandparent variable as a factor
+    if (dataset_short %in% c("liss_parents", "hrs_parents")){ 
+      dframe$gpgroup <- factor(dframe$grandparent, labels=c("Parent\nControls","Grandparents"))
+    } else { # for nonparent controls
+      dframe$gpgroup <- factor(dframe$grandparent, labels=c("Nonparent\nControls","Grandparents"))
+    }      
+    dframe$gpgroup <- fct_rev(dframe$gpgroup)
+    dframe_name <- paste0("dframe_", outcome, "_", dataset_short)
+    eval(call("<-", as.name(dframe_name), dframe)) # save data.frame for later ggplot use
+    ### moderation by gender models
+    obj_test_gender = mod_summaries_gender_test[[pos + j]] # unfold list objects (lmerTest)
+    # create data.frame (with all predictors)
+    ps_mean_gender <- as.data.frame(subset(get(dataset), !is.na(get(outcome)) & time==0) %>% 
+                               group_by(grandparent, female) %>% summarise(pscore = mean(pscore)))
+    # different time sequences for LISS/HRS
+    if (dataset_short %in% c("liss_parents", "liss_nonparents")){ 
+      dframe_gender <- data.frame(
+        pscore = c(rep(ps_mean_gender[1,3], 13),  # male controls
+                   rep(ps_mean_gender[2,3], 13),  # female controls
+                   rep(ps_mean_gender[3,3], 13),  # male grandparents
+                   rep(ps_mean_gender[4,3], 13)), # female grandparents
+        before = rep(c(0:5, rep(5, 7)), 4),
+        after = rep(c(rep(0, 6), 1:7), 4),
+        shift = rep(c(rep(0, 6), rep(1, 7)), 4),
+        grandparent = c(rep(0, 26), rep(1, 26)),
+        female = rep(c(rep(0, 13), rep(1, 13)), 2),
+        x = rep(-6:6, 4)
+      )
+    } else { # for HRS
+      dframe_gender <- data.frame(
+        pscore = c(rep(ps_mean_gender[1,3], 7),  # male controls
+                   rep(ps_mean_gender[2,3], 7),  # female controls
+                   rep(ps_mean_gender[3,3], 7),  # male grandparents
+                   rep(ps_mean_gender[4,3], 7)), # female grandparents
+        before = rep(c(0:2, rep(2, 4)), 4),
+        after = rep(c(rep(0, 3), 1:4), 4),
+        shift = rep(c(rep(0, 3), rep(1, 4)), 4),
+        grandparent = c(rep(0, 14), rep(1, 14)),
+        female = rep(c(rep(0, 7), rep(1, 7)), 2),
+        x = rep(seq(-6, 6, by=2), 4)
+      )
+    }      
+    # predict response (again, same procedure for LISS & HRS)
+    dframe_gender$pred <- predict(obj_test_gender, newdata = dframe_gender, re.form=NA)
+    # create design matrix
+    designmat_gender <- model.matrix(as.formula(lme4::nobars(formula(obj_test_gender))[-2]), 
+                              dframe_gender) # [-2] drops response from formula
+    # compute standard error
+    predvar_gender <- diag(designmat_gender %*% vcov(obj_test_gender) %*% t(designmat_gender)) 
+    dframe_gender$SE <- sqrt(predvar_gender) # for confidence intervals
+    # add grandparent variable as a factor
+    if (dataset_short %in% c("liss_parents", "hrs_parents")){ 
+      dframe_gender$gpgroup <- factor(dframe_gender$grandparent, 
+                                      labels=c("Parent\nControls","Grandparents"))
+    } else { # for nonparent controls
+      dframe_gender$gpgroup <- factor(dframe_gender$grandparent, 
+                                      labels=c("Nonparent\nControls","Grandparents"))
+    }      
+    dframe_gender$gpgroup <- fct_rev(dframe_gender$gpgroup)
+    # add female variable as a factor
+    dframe_gender$gender <- factor(dframe_gender$female, labels=c("Men","Women"))
+    dframe_gender$gender <- fct_rev(dframe_gender$gender)
+    dframe_name_gender <- paste0("dframe_", outcome, "_", dataset_short, "_gender")
+    eval(call("<-", as.name(dframe_name_gender), dframe_gender)) # save data.frame for later ggplot use
+  }
+}
+
+#### moderation by paid work ####
+
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  pos = seq(from = -2, to = 8, by = 2)[i] # changed this because we now only have the 2 HRS datasets
+  for (j in 3:4){
+    dataset = datasets[j]
+    dataset_short = datasets_short[j]
+    ### moderation by paid work models
+    obj_test_work = mod_summaries_work_test[[pos + j]] # unfold list objects (lmerTest)
+    # create data.frame (with all predictors)
+    ps_mean_work <- as.data.frame(subset(get(dataset), !is.na(get(outcome)) & 
+                                           !is.na(working) & time==0) %>% 
+                               group_by(grandparent, working) %>% summarise(pscore = mean(pscore)))
+    # only HRS
+      dframe_work <- data.frame(
+        pscore = c(rep(ps_mean_work[1,3], 7),  # non-working controls
+                   rep(ps_mean_work[2,3], 7),  # working controls
+                   rep(ps_mean_work[3,3], 7),  # non-working grandparents
+                   rep(ps_mean_work[4,3], 7)), # working grandparents
+        before = rep(c(0:2, rep(2, 4)), 4),
+        after = rep(c(rep(0, 3), 1:4), 4),
+        shift = rep(c(rep(0, 3), rep(1, 4)), 4),
+        grandparent = c(rep(0, 14), rep(1, 14)),
+        working = rep(c(rep(0, 7), rep(1, 7)), 2),
+        x = rep(seq(-6, 6, by=2), 4)
+      )
+    # predict response (again, same procedure for LISS & HRS)
+    dframe_work$pred <- predict(obj_test_work, newdata = dframe_work, re.form=NA)
+    # create design matrix
+    designmat_work <- model.matrix(as.formula(lme4::nobars(formula(obj_test_work))[-2]), 
+                              dframe_work) # [-2] drops response from formula
+    # compute standard error
+    predvar_work <- diag(designmat_work %*% vcov(obj_test_work) %*% t(designmat_work)) 
+    dframe_work$SE <- sqrt(predvar_work) # for confidence intervals
+    # add grandparent variable as a factor
+    if (dataset_short=="hrs_parents"){ 
+      dframe_work$gpgroup <- factor(dframe_work$grandparent, 
+                                      labels=c("Parent\nControls","Grandparents"))
+    } else { # for nonparent controls
+      dframe_work$gpgroup <- factor(dframe_work$grandparent, 
+                                      labels=c("Nonparent\nControls","Grandparents"))
+    }      
+    dframe_work$gpgroup <- fct_rev(dframe_work$gpgroup)
+    # add paid work as a factor
+    dframe_work$work <- factor(dframe_work$working, labels=c("Not Working","Working"))
+    dframe_work$work <- fct_rev(dframe_work$work)
+    dframe_name_work <- paste0("dframe_", outcome, "_", dataset_short, "_work")
+    eval(call("<-", as.name(dframe_name_work), dframe_work)) # save data.frame for later ggplot use
+  }
+}
+
+#### moderation by grandchild care ####
+
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  pos = seq(from = 0, to = 10, by = 2)[i] 
+  for (j in 1:length(datasets_care)){
+    dataset = datasets_care[j]
+    dataset_short = datasets_short[j+2] # only HRS
+    ### moderation by grandchild care models
+    obj_test_care = mod_summaries_care_test[[pos + j]] # unfold list objects (lmerTest)
+    # create data.frame (with all predictors)
+    ps_mean_care <- as.data.frame(subset(get(dataset), !is.na(get(outcome)) & 
+                                           !is.na(caring) & time==0) %>% 
+                                    group_by(grandparent, caring) %>% summarise(pscore = mean(pscore)))
+    # only HRS (simplified post-transition model)
+    dframe_care <- data.frame(
+      pscore = c(rep(ps_mean_care[1,3], 4),  # non-caring controls
+                 rep(ps_mean_care[2,3], 4),  # caring controls
+                 rep(ps_mean_care[3,3], 4),  # non-caring grandparents (>100 h)
+                 rep(ps_mean_care[4,3], 4)), # caring grandparents
+      after = rep(c(1:4), 4),
+      grandparent = c(rep(0, 8), rep(1, 8)),
+      caring = rep(c(rep(0, 4), rep(1, 4)), 2),
+      x = rep(seq(0, 6, by=2), 4)
+    )
+    # predict response (again, same procedure for LISS & HRS)
+    dframe_care$pred <- predict(obj_test_care, newdata = dframe_care, re.form=NA)
+    # create design matrix
+    designmat_care <- model.matrix(as.formula(lme4::nobars(formula(obj_test_care))[-2]), 
+                                   dframe_care) # [-2] drops response from formula
+    # compute standard error
+    predvar_care <- diag(designmat_care %*% vcov(obj_test_care) %*% t(designmat_care)) 
+    dframe_care$SE <- sqrt(predvar_care) # for confidence intervals
+    # add grandparent variable as a factor
+    if (dataset_short=="hrs_parents"){ 
+      dframe_care$gpgroup <- factor(dframe_care$grandparent, 
+                                    labels=c("Parent\nControls","Grandparents"))
+    } else { # for nonparent controls
+      dframe_care$gpgroup <- factor(dframe_care$grandparent, 
+                                    labels=c("Nonparent\nControls","Grandparents"))
+    }      
+    dframe_care$gpgroup <- fct_rev(dframe_care$gpgroup)
+    # add grandchild care as a factor
+    dframe_care$care <- factor(dframe_care$caring, labels=c("Less than 100h",
+                                                            "More than 100h"))
+    dframe_care$care <- fct_rev(dframe_care$care)
+    dframe_name_care <- paste0("dframe_", outcome, "_", dataset_short, "_care")
+    eval(call("<-", as.name(dframe_name_care), dframe_care)) # save data.frame for later ggplot use
+  }
+}
+
+# remove list objects from environment
+rm(mod_summaries, mod_summaries_test, mod_summaries_gender, mod_summaries_gender_test,
+   mod_summaries_work, mod_summaries_work_test, mod_summaries_care, mod_summaries_care_test)
+```
+
+```{r H1-build-plots, include=FALSE, cache=T}
 outcomes_plots <- c(rep("Agreeableness", 4), rep("Conscientiousness", 4), rep("Extraversion", 4),  
                    rep("Neuroticism", 4), rep("Openness", 4), rep("Life Satisfaction", 4))
 # y-axis limits (same span but different sections)
@@ -1429,13 +1471,40 @@ dframes_care <- c(sort(ls()[grep("^(?=.*dframe_agree)(?=.*care)", ls(), perl=T)]
                     sort(ls()[grep("^(?=.*dframe_open)(?=.*care)", ls(), perl=T)], decreasing=T),
                     sort(ls()[grep("^(?=.*dframe_swls)(?=.*care)", ls(), perl=T)], decreasing=T))
 
+dframes_hrs <- dframes[grep("^(?=.*hrs)", dframes, perl=T)]
+
+for (i in 1:length(dframes_hrs)){
+  ### shortened version of basic plots for comparison (only post-transition)
+  dframe_short = get(dframes_hrs[i]) %>% filter(x %in% 0:6)
+  plot_short <- ggplot(dframe_short, aes(x=x,y=pred,colour=gpgroup))+
+    geom_line(position=position_dodge(width=0.2),size=1)+
+    geom_point(position=position_dodge(width=0.2),size=1.5)+
+    scale_colour_brewer(palette = "Set1", name="Group")+ 
+    geom_errorbar(aes(ymin=pred-1.96*SE,ymax=pred+1.96*SE),width=0.6,position=position_dodge(width=0.2))+
+    coord_cartesian(ylim=c(limits[i*2, 1], limits[i*2, 2]))+ # loop over limits (but *2 because of length)
+    scale_x_continuous(name="Time (in Years)",breaks=seq(0,6,2))+ # starts at 0 now
+    theme(#axis.text = element_text(face="bold"), #, size=14
+          #axis.title = element_text(size=18),
+          #legend.background = element_rect(fill="gray90", size=.5, linetype="dotted"),
+          #legend.text=element_text(size=14),
+          #legend.title=element_text(size=14),
+          panel.border=element_rect(colour="darkgrey", fill=NA, size=1),
+          #axis.title.y=element_blank()
+          )+
+    scale_y_continuous(name=outcomes_plots[i*2])
+  if (dframes_hrs[i] %in% dframes_hrs[grep("^(?=.*_parents_)", dframes_hrs, perl=T)]){ 
+    plot_short <- plot_short + theme(axis.title.x=element_blank()) # omit x-axis title for parent plots
+  } 
+  plot_name_short <- paste0(gsub("dframe", "plot", dframes_hrs[i]), "_short")
+  eval(call("<-", as.name(plot_name_short), plot_short)) # save plots for later assembly
+}
 for (i in 1:length(dframes_care)){
   ### moderation by grandchild care
   plot_care <- ggplot(get(dframes_care[i]), aes(x=x,y=pred,colour=gpgroup,linetype=care))+
     geom_line(position=position_dodge(width=0.2),size=1)+
     geom_point(position=position_dodge(width=0.2),size=1.5)+
     scale_colour_brewer(palette = "Set1", name="Group")+ 
-    scale_linetype_discrete(name="Work Status")+
+    scale_linetype_discrete(name="Grandchild Care")+
     geom_errorbar(aes(ymin=pred-1.96*SE,ymax=pred+1.96*SE),width=0.6,position=position_dodge(width=0.2))+
     coord_cartesian(ylim=c(limits[i*2, 1], limits[i*2, 2]))+ # loop over limits (but *2 because of length)
     scale_x_continuous(name="Time (in Years)",breaks=seq(0,6,2))+ # starts at 0 now
@@ -1446,8 +1515,8 @@ for (i in 1:length(dframes_care)){
           #legend.title=element_text(size=14),
           panel.border=element_rect(colour="darkgrey", fill=NA, size=1),
           axis.title.y=element_blank())+
-    guides(colour = guide_legend(order = 1), linetype = guide_legend(order = 2))+ # legend element order
-    scale_y_continuous(name=outcomes_plots[i])
+    guides(colour = guide_legend(order = 1), linetype = guide_legend(order = 2)) # legend element order
+    #scale_y_continuous(name=outcomes_plots[i*2])
   if (dframes_care[i] %in% dframes_care[grep("^(?=.*_parents_)", dframes_care, perl=T)]){ 
     plot_care <- plot_care + theme(axis.title.x=element_blank()) # omit x-axis title for parent plots
   } 
@@ -1802,7 +1871,6 @@ apa_table(
 )
 ```
 
-
 (ref:H1-agree-work-contrasts-cap) Linear Contrasts for `r df_outcomes["agree", "maj"]` (Moderated by Paid Work; only HRS).
 (ref:H1-agree-work-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-agree-work-tab).
 
@@ -1847,6 +1915,80 @@ apa_table(
   tabcon_agree_work
   , caption = "(ref:H1-agree-work-contrasts-cap)"
   , note = "(ref:H1-agree-work-contrasts-note)"
+  , col.names = c("Linear Contrast", 
+                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+  , align = c("l", "r", "r", "r", "r", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,3,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,4), "Nonparent controls" = c(5,7))
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , placement = "H"
+)
+```
+
+(ref:H1-agree-care-tab-cap) Fixed Effects of `r df_outcomes["agree", "maj"]` Over the Transition to Grandparenthood Moderated by Grandchild Care.
+(ref:H1-agree-care-tab-note) Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. $R^2_{M2a} =$ `r printnum(r2_agree_hrsanalysis_care_parents)`, $R^2_{M2b} =$ `r printnum(r2_agree_hrsanalysis_care_nonparents)`. $caring=1$ indicates more than 100 hours of grandchild care since the last assessment.
+
+```{r H1-agree-care-tab, results="asis"}
+agree_care_df <- 
+  cbind(printnum(agree_hrs_parents_care_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(agree_hrs_parents_care_test)$coefficients[, 5], # parents: p-value
+        printnum(agree_hrs_nonparents_care_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(agree_hrs_nonparents_care_test)$coefficients[, 5])  # nonparents: p-value
+
+colnames(agree_care_df)[c(4,8)] <- c("p", "p")
+
+rownames_agree_care_df <- c("Intercept, $\\hat{\\gamma}_{00}$",
+                      "Propensity score, $\\hat{\\gamma}_{04}$", 
+                      "After-slope, $\\hat{\\gamma}_{10}$", 
+                      "Grandparent, $\\hat{\\gamma}_{01}$", 
+                      "Caring, $\\hat{\\gamma}_{02}$", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
+                      "After-slope * Caring, $\\hat{\\gamma}_{12}$", 
+                      "Grandparent * Caring, $\\hat{\\gamma}_{03}$", 
+                      "After-slope * Grandparent * Caring, $\\hat{\\gamma}_{13}$")
+rownames(agree_care_df) <- rownames_agree_care_df
+
+apa_table(
+  agree_care_df
+  , caption = "(ref:H1-agree-care-tab-cap)"
+  , note = "(ref:H1-agree-care-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , placement = "H"
+)
+```
+
+(ref:H1-agree-care-contrasts-cap) Linear Contrasts for `r df_outcomes["agree", "maj"]` (Moderated by Grandchild Care; only HRS).
+(ref:H1-agree-care-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-agree-care-tab).
+
+```{r H1-agree-care-contrasts, results="asis"}
+tabcon_agree_care <- cbind(contrasts_care_agree[[1]][, c(1, 2, 4)],  # parents
+                           contrasts_care_agree[[2]][, c(1, 2, 4)])  # nonparents
+
+rownames_tabcon_agree_care <- c("After-slope of caring controls vs. caring grandparents 
+                                  ($\\hat{\\gamma}_{11}$ + $\\hat{\\gamma}_{13}$)",
+                                "After-slope of not-caring grandparents vs. caring grandparents 
+                                  ($\\hat{\\gamma}_{12}$ + $\\hat{\\gamma}_{13}$)")
+rownames(tabcon_agree_care) <- rownames_tabcon_agree_care
+
+apa_table(
+  tabcon_agree_care
+  , caption = "(ref:H1-agree-care-contrasts-cap)"
+  , note = "(ref:H1-agree-care-contrasts-note)"
   , col.names = c("Linear Contrast", 
                   "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
                   "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
@@ -2267,6 +2409,80 @@ apa_table(
 )
 ```
 
+(ref:H1-con-care-tab-cap) Fixed Effects of `r df_outcomes["con", "maj"]` Over the Transition to Grandparenthood Moderated by Grandchild Care.
+(ref:H1-con-care-tab-note) Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. $R^2_{M2a} =$ `r printnum(r2_con_hrsanalysis_care_parents)`, $R^2_{M2b} =$ `r printnum(r2_con_hrsanalysis_care_nonparents)`. $caring=1$ indicates more than 100 hours of grandchild care since the last assessment.
+
+```{r H1-con-care-tab, results="asis"}
+con_care_df <- 
+  cbind(printnum(con_hrs_parents_care_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(con_hrs_parents_care_test)$coefficients[, 5], # parents: p-value
+        printnum(con_hrs_nonparents_care_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(con_hrs_nonparents_care_test)$coefficients[, 5])  # nonparents: p-value
+
+colnames(con_care_df)[c(4,8)] <- c("p", "p")
+
+rownames_con_care_df <- c("Intercept, $\\hat{\\gamma}_{00}$",
+                      "Propensity score, $\\hat{\\gamma}_{04}$", 
+                      "After-slope, $\\hat{\\gamma}_{10}$", 
+                      "Grandparent, $\\hat{\\gamma}_{01}$", 
+                      "Caring, $\\hat{\\gamma}_{02}$", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
+                      "After-slope * Caring, $\\hat{\\gamma}_{12}$", 
+                      "Grandparent * Caring, $\\hat{\\gamma}_{03}$", 
+                      "After-slope * Grandparent * Caring, $\\hat{\\gamma}_{13}$")
+rownames(con_care_df) <- rownames_con_care_df
+
+apa_table(
+  con_care_df
+  , caption = "(ref:H1-con-care-tab-cap)"
+  , note = "(ref:H1-con-care-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , placement = "H"
+)
+```
+
+(ref:H1-con-care-contrasts-cap) Linear Contrasts for `r df_outcomes["con", "maj"]` (Moderated by Grandchild Care; only HRS).
+(ref:H1-con-care-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-con-care-tab).
+
+```{r H1-con-care-contrasts, results="asis"}
+tabcon_con_care <- cbind(contrasts_care_con[[1]][, c(1, 2, 4)],  # parents
+                           contrasts_care_con[[2]][, c(1, 2, 4)])  # nonparents
+
+rownames_tabcon_con_care <- c("After-slope of caring controls vs. caring grandparents 
+                                  ($\\hat{\\gamma}_{11}$ + $\\hat{\\gamma}_{13}$)",
+                                "After-slope of not-caring grandparents vs. caring grandparents 
+                                  ($\\hat{\\gamma}_{12}$ + $\\hat{\\gamma}_{13}$)")
+rownames(tabcon_con_care) <- rownames_tabcon_con_care
+
+apa_table(
+  tabcon_con_care
+  , caption = "(ref:H1-con-care-contrasts-cap)"
+  , note = "(ref:H1-con-care-contrasts-note)"
+  , col.names = c("Linear Contrast", 
+                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+  , align = c("l", "r", "r", "r", "r", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,3,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,4), "Nonparent controls" = c(5,7))
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , placement = "H"
+)
+```
+
 (ref:H1-extra-tab-cap) Fixed Effects of `r df_outcomes["extra", "maj"]` Over the Transition to Grandparenthood.
 (ref:H1-extra-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. $R^2_{M1a} =$ `r printnum(r2_extra_lissanalysis_parents)`, $R^2_{M1b} =$ `r printnum(r2_extra_lissanalysis_nonparents)`, $R^2_{M2a} =$ `r printnum(r2_extra_hrsanalysis_parents)`, $R^2_{M2b} =$ `r printnum(r2_extra_hrsanalysis_nonparents)`.
 
@@ -2657,6 +2873,80 @@ apa_table(
   tabcon_extra_work
   , caption = "(ref:H1-extra-work-contrasts-cap)"
   , note = "(ref:H1-extra-work-contrasts-note)"
+  , col.names = c("Linear Contrast", 
+                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+  , align = c("l", "r", "r", "r", "r", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,3,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,4), "Nonparent controls" = c(5,7))
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , placement = "H"
+)
+```
+
+(ref:H1-extra-care-tab-cap) Fixed Effects of `r df_outcomes["extra", "maj"]` Over the Transition to Grandparenthood Moderated by Grandchild Care.
+(ref:H1-extra-care-tab-note) Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. $R^2_{M2a} =$ `r printnum(r2_extra_hrsanalysis_care_parents)`, $R^2_{M2b} =$ `r printnum(r2_extra_hrsanalysis_care_nonparents)`. $caring=1$ indicates more than 100 hours of grandchild care since the last assessment.
+
+```{r H1-extra-care-tab, results="asis"}
+extra_care_df <- 
+  cbind(printnum(extra_hrs_parents_care_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(extra_hrs_parents_care_test)$coefficients[, 5], # parents: p-value
+        printnum(extra_hrs_nonparents_care_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(extra_hrs_nonparents_care_test)$coefficients[, 5])  # nonparents: p-value
+
+colnames(extra_care_df)[c(4,8)] <- c("p", "p")
+
+rownames_extra_care_df <- c("Intercept, $\\hat{\\gamma}_{00}$",
+                      "Propensity score, $\\hat{\\gamma}_{04}$", 
+                      "After-slope, $\\hat{\\gamma}_{10}$", 
+                      "Grandparent, $\\hat{\\gamma}_{01}$", 
+                      "Caring, $\\hat{\\gamma}_{02}$", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
+                      "After-slope * Caring, $\\hat{\\gamma}_{12}$", 
+                      "Grandparent * Caring, $\\hat{\\gamma}_{03}$", 
+                      "After-slope * Grandparent * Caring, $\\hat{\\gamma}_{13}$")
+rownames(extra_care_df) <- rownames_extra_care_df
+
+apa_table(
+  extra_care_df
+  , caption = "(ref:H1-extra-care-tab-cap)"
+  , note = "(ref:H1-extra-care-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , placement = "H"
+)
+```
+
+(ref:H1-extra-care-contrasts-cap) Linear Contrasts for `r df_outcomes["extra", "maj"]` (Moderated by Grandchild Care; only HRS).
+(ref:H1-extra-care-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-extra-care-tab).
+
+```{r H1-extra-care-contrasts, results="asis"}
+tabcon_extra_care <- cbind(contrasts_care_extra[[1]][, c(1, 2, 4)],  # parents
+                           contrasts_care_extra[[2]][, c(1, 2, 4)])  # nonparents
+
+rownames_tabcon_extra_care <- c("After-slope of caring controls vs. caring grandparents 
+                                  ($\\hat{\\gamma}_{11}$ + $\\hat{\\gamma}_{13}$)",
+                                "After-slope of not-caring grandparents vs. caring grandparents 
+                                  ($\\hat{\\gamma}_{12}$ + $\\hat{\\gamma}_{13}$)")
+rownames(tabcon_extra_care) <- rownames_tabcon_extra_care
+
+apa_table(
+  tabcon_extra_care
+  , caption = "(ref:H1-extra-care-contrasts-cap)"
+  , note = "(ref:H1-extra-care-contrasts-note)"
   , col.names = c("Linear Contrast", 
                   "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
                   "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
@@ -3077,6 +3367,80 @@ apa_table(
 )
 ```
 
+(ref:H1-neur-care-tab-cap) Fixed Effects of `r df_outcomes["neur", "maj"]` Over the Transition to Grandparenthood Moderated by Grandchild Care.
+(ref:H1-neur-care-tab-note) Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. $R^2_{M2a} =$ `r printnum(r2_neur_hrsanalysis_care_parents)`, $R^2_{M2b} =$ `r printnum(r2_neur_hrsanalysis_care_nonparents)`. $caring=1$ indicates more than 100 hours of grandchild care since the last assessment.
+
+```{r H1-neur-care-tab, results="asis"}
+neur_care_df <- 
+  cbind(printnum(neur_hrs_parents_care_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(neur_hrs_parents_care_test)$coefficients[, 5], # parents: p-value
+        printnum(neur_hrs_nonparents_care_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(neur_hrs_nonparents_care_test)$coefficients[, 5])  # nonparents: p-value
+
+colnames(neur_care_df)[c(4,8)] <- c("p", "p")
+
+rownames_neur_care_df <- c("Intercept, $\\hat{\\gamma}_{00}$",
+                      "Propensity score, $\\hat{\\gamma}_{04}$", 
+                      "After-slope, $\\hat{\\gamma}_{10}$", 
+                      "Grandparent, $\\hat{\\gamma}_{01}$", 
+                      "Caring, $\\hat{\\gamma}_{02}$", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
+                      "After-slope * Caring, $\\hat{\\gamma}_{12}$", 
+                      "Grandparent * Caring, $\\hat{\\gamma}_{03}$", 
+                      "After-slope * Grandparent * Caring, $\\hat{\\gamma}_{13}$")
+rownames(neur_care_df) <- rownames_neur_care_df
+
+apa_table(
+  neur_care_df
+  , caption = "(ref:H1-neur-care-tab-cap)"
+  , note = "(ref:H1-neur-care-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , placement = "H"
+)
+```
+
+(ref:H1-neur-care-contrasts-cap) Linear Contrasts for `r df_outcomes["neur", "maj"]` (Moderated by Grandchild Care; only HRS).
+(ref:H1-neur-care-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-neur-care-tab).
+
+```{r H1-neur-care-contrasts, results="asis"}
+tabcon_neur_care <- cbind(contrasts_care_neur[[1]][, c(1, 2, 4)],  # parents
+                           contrasts_care_neur[[2]][, c(1, 2, 4)])  # nonparents
+
+rownames_tabcon_neur_care <- c("After-slope of caring controls vs. caring grandparents 
+                                  ($\\hat{\\gamma}_{11}$ + $\\hat{\\gamma}_{13}$)",
+                                "After-slope of not-caring grandparents vs. caring grandparents 
+                                  ($\\hat{\\gamma}_{12}$ + $\\hat{\\gamma}_{13}$)")
+rownames(tabcon_neur_care) <- rownames_tabcon_neur_care
+
+apa_table(
+  tabcon_neur_care
+  , caption = "(ref:H1-neur-care-contrasts-cap)"
+  , note = "(ref:H1-neur-care-contrasts-note)"
+  , col.names = c("Linear Contrast", 
+                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+  , align = c("l", "r", "r", "r", "r", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,3,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,4), "Nonparent controls" = c(5,7))
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , placement = "H"
+)
+```
+
 (ref:H1-open-tab-cap) Fixed Effects of `r df_outcomes["open", "maj"]` Over the Transition to Grandparenthood.
 (ref:H1-open-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. $R^2_{M1a} =$ `r printnum(r2_open_lissanalysis_parents)`, $R^2_{M1b} =$ `r printnum(r2_open_lissanalysis_nonparents)`, $R^2_{M2a} =$ `r printnum(r2_open_hrsanalysis_parents)`, $R^2_{M2b} =$ `r printnum(r2_open_hrsanalysis_nonparents)`.
 
@@ -3467,6 +3831,80 @@ apa_table(
   tabcon_open_work
   , caption = "(ref:H1-open-work-contrasts-cap)"
   , note = "(ref:H1-open-work-contrasts-note)"
+  , col.names = c("Linear Contrast", 
+                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+  , align = c("l", "r", "r", "r", "r", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,3,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,4), "Nonparent controls" = c(5,7))
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , placement = "H"
+)
+```
+
+(ref:H1-open-care-tab-cap) Fixed Effects of `r df_outcomes["open", "maj"]` Over the Transition to Grandparenthood Moderated by Grandchild Care.
+(ref:H1-open-care-tab-note) Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. $R^2_{M2a} =$ `r printnum(r2_open_hrsanalysis_care_parents)`, $R^2_{M2b} =$ `r printnum(r2_open_hrsanalysis_care_nonparents)`. $caring=1$ indicates more than 100 hours of grandchild care since the last assessment.
+
+```{r H1-open-care-tab, results="asis"}
+open_care_df <- 
+  cbind(printnum(open_hrs_parents_care_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(open_hrs_parents_care_test)$coefficients[, 5], # parents: p-value
+        printnum(open_hrs_nonparents_care_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(open_hrs_nonparents_care_test)$coefficients[, 5])  # nonparents: p-value
+
+colnames(open_care_df)[c(4,8)] <- c("p", "p")
+
+rownames_open_care_df <- c("Intercept, $\\hat{\\gamma}_{00}$",
+                      "Propensity score, $\\hat{\\gamma}_{04}$", 
+                      "After-slope, $\\hat{\\gamma}_{10}$", 
+                      "Grandparent, $\\hat{\\gamma}_{01}$", 
+                      "Caring, $\\hat{\\gamma}_{02}$", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
+                      "After-slope * Caring, $\\hat{\\gamma}_{12}$", 
+                      "Grandparent * Caring, $\\hat{\\gamma}_{03}$", 
+                      "After-slope * Grandparent * Caring, $\\hat{\\gamma}_{13}$")
+rownames(open_care_df) <- rownames_open_care_df
+
+apa_table(
+  open_care_df
+  , caption = "(ref:H1-open-care-tab-cap)"
+  , note = "(ref:H1-open-care-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , placement = "H"
+)
+```
+
+(ref:H1-open-care-contrasts-cap) Linear Contrasts for `r df_outcomes["open", "maj"]` (Moderated by Grandchild Care; only HRS).
+(ref:H1-open-care-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-open-care-tab).
+
+```{r H1-open-care-contrasts, results="asis"}
+tabcon_open_care <- cbind(contrasts_care_open[[1]][, c(1, 2, 4)],  # parents
+                           contrasts_care_open[[2]][, c(1, 2, 4)])  # nonparents
+
+rownames_tabcon_open_care <- c("After-slope of caring controls vs. caring grandparents 
+                                  ($\\hat{\\gamma}_{11}$ + $\\hat{\\gamma}_{13}$)",
+                                "After-slope of not-caring grandparents vs. caring grandparents 
+                                  ($\\hat{\\gamma}_{12}$ + $\\hat{\\gamma}_{13}$)")
+rownames(tabcon_open_care) <- rownames_tabcon_open_care
+
+apa_table(
+  tabcon_open_care
+  , caption = "(ref:H1-open-care-contrasts-cap)"
+  , note = "(ref:H1-open-care-contrasts-note)"
   , col.names = c("Linear Contrast", 
                   "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
                   "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
@@ -3887,9 +4325,83 @@ apa_table(
 )
 ```
 
+(ref:H1-swls-care-tab-cap) Fixed Effects of `r df_outcomes["swls", "maj"]` Over the Transition to Grandparenthood Moderated by Grandchild Care.
+(ref:H1-swls-care-tab-note) Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. $R^2_{M2a} =$ `r printnum(r2_swls_hrsanalysis_care_parents)`, $R^2_{M2b} =$ `r printnum(r2_swls_hrsanalysis_care_nonparents)`. $caring=1$ indicates more than 100 hours of grandchild care since the last assessment.
+
+```{r H1-swls-care-tab, results="asis"}
+swls_care_df <- 
+  cbind(printnum(swls_hrs_parents_care_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(swls_hrs_parents_care_test)$coefficients[, 5], # parents: p-value
+        printnum(swls_hrs_nonparents_care_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(swls_hrs_nonparents_care_test)$coefficients[, 5])  # nonparents: p-value
+
+colnames(swls_care_df)[c(4,8)] <- c("p", "p")
+
+rownames_swls_care_df <- c("Intercept, $\\hat{\\gamma}_{00}$",
+                      "Propensity score, $\\hat{\\gamma}_{04}$", 
+                      "After-slope, $\\hat{\\gamma}_{10}$", 
+                      "Grandparent, $\\hat{\\gamma}_{01}$", 
+                      "Caring, $\\hat{\\gamma}_{02}$", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
+                      "After-slope * Caring, $\\hat{\\gamma}_{12}$", 
+                      "Grandparent * Caring, $\\hat{\\gamma}_{03}$", 
+                      "After-slope * Grandparent * Caring, $\\hat{\\gamma}_{13}$")
+rownames(swls_care_df) <- rownames_swls_care_df
+
+apa_table(
+  swls_care_df
+  , caption = "(ref:H1-swls-care-tab-cap)"
+  , note = "(ref:H1-swls-care-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , placement = "H"
+)
+```
+
+(ref:H1-swls-care-contrasts-cap) Linear Contrasts for `r df_outcomes["swls", "maj"]` (Moderated by Grandchild Care; only HRS).
+(ref:H1-swls-care-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-swls-care-tab).
+
+```{r H1-swls-care-contrasts, results="asis"}
+tabcon_swls_care <- cbind(contrasts_care_swls[[1]][, c(1, 2, 4)],  # parents
+                           contrasts_care_swls[[2]][, c(1, 2, 4)])  # nonparents
+
+rownames_tabcon_swls_care <- c("After-slope of caring controls vs. caring grandparents 
+                                  ($\\hat{\\gamma}_{11}$ + $\\hat{\\gamma}_{13}$)",
+                                "After-slope of not-caring grandparents vs. caring grandparents 
+                                  ($\\hat{\\gamma}_{12}$ + $\\hat{\\gamma}_{13}$)")
+rownames(tabcon_swls_care) <- rownames_tabcon_swls_care
+
+apa_table(
+  tabcon_swls_care
+  , caption = "(ref:H1-swls-care-contrasts-cap)"
+  , note = "(ref:H1-swls-care-contrasts-note)"
+  , col.names = c("Linear Contrast", 
+                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+  , align = c("l", "r", "r", "r", "r", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,3,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,4), "Nonparent controls" = c(5,7))
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , placement = "H"
+)
+```
+
 (ref:H1-agree-fig-cap) Change trajectories of `r df_outcomes["agree", "min"]` based on the basic models (1st column) and the models with the gender interaction (2nd column). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
 
-```{r H1-agree-fig, fig.cap = "(ref:H1-agree-fig-cap)", fig.height=9, fig.width=7, cache = TRUE}
+```{r H1-agree-fig, fig.cap = "(ref:H1-agree-fig-cap)", fig.height=9, fig.width=7, cache=T}
 # extract the legends
 legend_parents <- get_legend(plot_agree_liss_parents_gender + 
                                theme(legend.box.margin = margin(0, 0, 0, 20)))
@@ -3934,7 +4446,7 @@ plot_grid(title_liss, grid_agree_liss, title_HRS, grid_agree_hrs,
 
 (ref:H1-agree-work-fig-cap) Change trajectories of `r df_outcomes["agree", "min"]` based on the models of moderation by paid work (see Table \@ref(tab:H1-agree-work-tab)). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
 
-```{r H1-agree-work-fig, fig.cap = "(ref:H1-agree-work-fig-cap)", fig.height=6, fig.width=7, cache = TRUE}
+```{r H1-agree-work-fig, fig.cap = "(ref:H1-agree-work-fig-cap)", fig.height=6, fig.width=7, cache=T}
 # extract the legends
 legend_work_parents <- get_legend(plot_agree_hrs_parents_work + 
                                theme(legend.box.margin = margin(0, 0, 0, 20)))
@@ -3963,9 +4475,40 @@ plot_grid(title_HRS, grid_agree_work,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
+(ref:H1-agree-care-fig-cap) Change trajectories of `r df_outcomes["agree", "min"]` based on the models of moderation by grandchild care (see Table \@ref(tab:H1-agree-care-tab)). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figures \@ref(fig:H1-agree-fig) and \@ref(fig:H1-agree-work-fig) but restricted to the post-transition period for better comparability.
+
+```{r H1-agree-care-fig, fig.cap = "(ref:H1-agree-care-fig-cap)", fig.height=6, fig.width=7, cache=T}
+# extract the legends 
+legend_care_parents <- get_legend(plot_agree_hrs_parents_care + 
+                               theme(legend.box.margin = margin(0, 0, 0, 20)))
+legend_care_nonparents <- get_legend(plot_agree_hrs_nonparents_care + 
+                                  theme(legend.box.margin = margin(0, 0, 0, 20)))
+
+# add the legend to the row we made earlier - adjust width via rel_widths
+grid_agree_care <- cowplot::plot_grid(
+  plot_agree_hrs_parents_short + theme(legend.position="none"), 
+  plot_agree_hrs_parents_care + theme(legend.position="none"),
+  plot_agree_hrs_nonparents_short + theme(legend.position="none"), 
+  plot_agree_hrs_nonparents_care + theme(legend.position="none"), 
+  align = "vh", ncol = 2)
+grid_agree_care <- cowplot::plot_grid(
+  grid_agree_care, 
+  cowplot::plot_grid(legend_care_parents, legend_care_nonparents, ncol = 1),
+  rel_widths = c(3, .80), ncol = 2)
+
+# now add the title
+title_HRS <- ggdraw() + 
+  draw_label("HRS", fontface = 'bold', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+# print final object
+plot_grid(title_HRS, grid_agree_care, 
+          ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
+```
+
 (ref:H1-con-fig-cap) Change trajectories of `r df_outcomes["con", "min"]` based on the basic models (1st column) and the models with the gender interaction (2nd column). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
 
-```{r H1-con-fig, fig.cap = "(ref:H1-con-fig-cap)", fig.height=9, fig.width=7, cache = TRUE}
+```{r H1-con-fig, fig.cap = "(ref:H1-con-fig-cap)", fig.height=9, fig.width=7, cache=T}
 # extract the legends
 legend_parents <- get_legend(plot_con_liss_parents_gender + 
                                theme(legend.box.margin = margin(0, 0, 0, 20)))
@@ -4010,7 +4553,7 @@ plot_grid(title_liss, grid_con_liss, title_HRS, grid_con_hrs,
 
 (ref:H1-con-work-fig-cap) Change trajectories of `r df_outcomes["con", "min"]` based on the models of moderation by paid work (see Table \@ref(tab:H1-con-work-tab)). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
 
-```{r H1-con-work-fig, fig.cap = "(ref:H1-con-work-fig-cap)", fig.height=6, fig.width=7, cache = TRUE}
+```{r H1-con-work-fig, fig.cap = "(ref:H1-con-work-fig-cap)", fig.height=6, fig.width=7, cache=T}
 # extract the legends
 legend_work_parents <- get_legend(plot_con_hrs_parents_work + 
                                theme(legend.box.margin = margin(0, 0, 0, 20)))
@@ -4039,9 +4582,40 @@ plot_grid(title_HRS, grid_con_work,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
+(ref:H1-con-care-fig-cap) Change trajectories of `r df_outcomes["con", "min"]` based on the models of moderation by grandchild care (see Table \@ref(tab:H1-con-care-tab)). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figures \@ref(fig:H1-con-fig) and \@ref(fig:H1-con-work-fig) but restricted to the post-transition period for better comparability.
+
+```{r H1-con-care-fig, fig.cap = "(ref:H1-con-care-fig-cap)", fig.height=6, fig.width=7, cache=T}
+# extract the legends 
+legend_care_parents <- get_legend(plot_con_hrs_parents_care + 
+                               theme(legend.box.margin = margin(0, 0, 0, 20)))
+legend_care_nonparents <- get_legend(plot_con_hrs_nonparents_care + 
+                                  theme(legend.box.margin = margin(0, 0, 0, 20)))
+
+# add the legend to the row we made earlier - adjust width via rel_widths
+grid_con_care <- cowplot::plot_grid(
+  plot_con_hrs_parents_short + theme(legend.position="none"), 
+  plot_con_hrs_parents_care + theme(legend.position="none"),
+  plot_con_hrs_nonparents_short + theme(legend.position="none"), 
+  plot_con_hrs_nonparents_care + theme(legend.position="none"), 
+  align = "vh", ncol = 2)
+grid_con_care <- cowplot::plot_grid(
+  grid_con_care, 
+  cowplot::plot_grid(legend_care_parents, legend_care_nonparents, ncol = 1),
+  rel_widths = c(3, .80), ncol = 2)
+
+# now add the title
+title_HRS <- ggdraw() + 
+  draw_label("HRS", fontface = 'bold', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+# print final object
+plot_grid(title_HRS, grid_con_care, 
+          ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
+```
+
 (ref:H1-extra-fig-cap) Change trajectories of `r df_outcomes["extra", "min"]` based on the basic models (1st column) and the models with the gender interaction (2nd column). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
 
-```{r H1-extra-fig, fig.cap = "(ref:H1-extra-fig-cap)", fig.height=9, fig.width=7, cache = TRUE}
+```{r H1-extra-fig, fig.cap = "(ref:H1-extra-fig-cap)", fig.height=9, fig.width=7, cache=T}
 # extract the legends
 legend_parents <- get_legend(plot_extra_liss_parents_gender + 
                                theme(legend.box.margin = margin(0, 0, 0, 20)))
@@ -4086,7 +4660,7 @@ plot_grid(title_liss, grid_extra_liss, title_HRS, grid_extra_hrs,
 
 (ref:H1-extra-work-fig-cap) Change trajectories of `r df_outcomes["extra", "min"]` based on the models of moderation by paid work (see Table \@ref(tab:H1-extra-work-tab)). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
 
-```{r H1-extra-work-fig, fig.cap = "(ref:H1-extra-work-fig-cap)", fig.height=6, fig.width=7, cache = TRUE}
+```{r H1-extra-work-fig, fig.cap = "(ref:H1-extra-work-fig-cap)", fig.height=6, fig.width=7, cache=T}
 # extract the legends
 legend_work_parents <- get_legend(plot_extra_hrs_parents_work + 
                                theme(legend.box.margin = margin(0, 0, 0, 20)))
@@ -4115,9 +4689,40 @@ plot_grid(title_HRS, grid_extra_work,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
+(ref:H1-extra-care-fig-cap) Change trajectories of `r df_outcomes["extra", "min"]` based on the models of moderation by grandchild care (see Table \@ref(tab:H1-extra-care-tab)). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figures \@ref(fig:H1-extra-fig) and \@ref(fig:H1-extra-work-fig) but restricted to the post-transition period for better comparability.
+
+```{r H1-extra-care-fig, fig.cap = "(ref:H1-extra-care-fig-cap)", fig.height=6, fig.width=7, cache=T}
+# extract the legends 
+legend_care_parents <- get_legend(plot_extra_hrs_parents_care + 
+                               theme(legend.box.margin = margin(0, 0, 0, 20)))
+legend_care_nonparents <- get_legend(plot_extra_hrs_nonparents_care + 
+                                  theme(legend.box.margin = margin(0, 0, 0, 20)))
+
+# add the legend to the row we made earlier - adjust width via rel_widths
+grid_extra_care <- cowplot::plot_grid(
+  plot_extra_hrs_parents_short + theme(legend.position="none"), 
+  plot_extra_hrs_parents_care + theme(legend.position="none"),
+  plot_extra_hrs_nonparents_short + theme(legend.position="none"), 
+  plot_extra_hrs_nonparents_care + theme(legend.position="none"), 
+  align = "vh", ncol = 2)
+grid_extra_care <- cowplot::plot_grid(
+  grid_extra_care, 
+  cowplot::plot_grid(legend_care_parents, legend_care_nonparents, ncol = 1),
+  rel_widths = c(3, .80), ncol = 2)
+
+# now add the title
+title_HRS <- ggdraw() + 
+  draw_label("HRS", fontface = 'bold', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+# print final object
+plot_grid(title_HRS, grid_extra_care, 
+          ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
+```
+
 (ref:H1-neur-fig-cap) Change trajectories of `r df_outcomes["neur", "min"]` based on the basic models (1st column) and the models with the gender interaction (2nd column). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
 
-```{r H1-neur-fig, fig.cap = "(ref:H1-neur-fig-cap)", fig.height=9, fig.width=7, cache = TRUE}
+```{r H1-neur-fig, fig.cap = "(ref:H1-neur-fig-cap)", fig.height=9, fig.width=7, cache=T}
 # extract the legends
 legend_parents <- get_legend(plot_neur_liss_parents_gender + 
                                theme(legend.box.margin = margin(0, 0, 0, 20)))
@@ -4162,7 +4767,7 @@ plot_grid(title_liss, grid_neur_liss, title_HRS, grid_neur_hrs,
 
 (ref:H1-neur-work-fig-cap) Change trajectories of `r df_outcomes["neur", "min"]` based on the models of moderation by paid work (see Table \@ref(tab:H1-neur-work-tab)). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
 
-```{r H1-neur-work-fig, fig.cap = "(ref:H1-neur-work-fig-cap)", fig.height=6, fig.width=7, cache = TRUE}
+```{r H1-neur-work-fig, fig.cap = "(ref:H1-neur-work-fig-cap)", fig.height=6, fig.width=7, cache=T}
 # extract the legends
 legend_work_parents <- get_legend(plot_neur_hrs_parents_work + 
                                theme(legend.box.margin = margin(0, 0, 0, 20)))
@@ -4191,9 +4796,40 @@ plot_grid(title_HRS, grid_neur_work,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
+(ref:H1-neur-care-fig-cap) Change trajectories of `r df_outcomes["neur", "min"]` based on the models of moderation by grandchild care (see Table \@ref(tab:H1-neur-care-tab)). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figures \@ref(fig:H1-neur-fig) and \@ref(fig:H1-neur-work-fig) but restricted to the post-transition period for better comparability.
+
+```{r H1-neur-care-fig, fig.cap = "(ref:H1-neur-care-fig-cap)", fig.height=6, fig.width=7, cache=T}
+# extract the legends 
+legend_care_parents <- get_legend(plot_neur_hrs_parents_care + 
+                               theme(legend.box.margin = margin(0, 0, 0, 20)))
+legend_care_nonparents <- get_legend(plot_neur_hrs_nonparents_care + 
+                                  theme(legend.box.margin = margin(0, 0, 0, 20)))
+
+# add the legend to the row we made earlier - adjust width via rel_widths
+grid_neur_care <- cowplot::plot_grid(
+  plot_neur_hrs_parents_short + theme(legend.position="none"), 
+  plot_neur_hrs_parents_care + theme(legend.position="none"),
+  plot_neur_hrs_nonparents_short + theme(legend.position="none"), 
+  plot_neur_hrs_nonparents_care + theme(legend.position="none"), 
+  align = "vh", ncol = 2)
+grid_neur_care <- cowplot::plot_grid(
+  grid_neur_care, 
+  cowplot::plot_grid(legend_care_parents, legend_care_nonparents, ncol = 1),
+  rel_widths = c(3, .80), ncol = 2)
+
+# now add the title
+title_HRS <- ggdraw() + 
+  draw_label("HRS", fontface = 'bold', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+# print final object
+plot_grid(title_HRS, grid_neur_care, 
+          ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
+```
+
 (ref:H1-open-fig-cap) Change trajectories of `r df_outcomes["open", "min"]` based on the basic models (1st column) and the models with the gender interaction (2nd column). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
 
-```{r H1-open-fig, fig.cap = "(ref:H1-open-fig-cap)", fig.height=9, fig.width=7, cache = TRUE}
+```{r H1-open-fig, fig.cap = "(ref:H1-open-fig-cap)", fig.height=9, fig.width=7, cache=T}
 # extract the legends
 legend_parents <- get_legend(plot_open_liss_parents_gender + 
                                theme(legend.box.margin = margin(0, 0, 0, 20)))
@@ -4238,7 +4874,7 @@ plot_grid(title_liss, grid_open_liss, title_HRS, grid_open_hrs,
 
 (ref:H1-open-work-fig-cap) Change trajectories of `r df_outcomes["open", "min"]` based on the models of moderation by paid work (see Table \@ref(tab:H1-open-work-tab)). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
 
-```{r H1-open-work-fig, fig.cap = "(ref:H1-open-work-fig-cap)", fig.height=6, fig.width=7, cache = TRUE}
+```{r H1-open-work-fig, fig.cap = "(ref:H1-open-work-fig-cap)", fig.height=6, fig.width=7, cache=T}
 # extract the legends
 legend_work_parents <- get_legend(plot_open_hrs_parents_work + 
                                theme(legend.box.margin = margin(0, 0, 0, 20)))
@@ -4267,9 +4903,40 @@ plot_grid(title_HRS, grid_open_work,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
+(ref:H1-open-care-fig-cap) Change trajectories of `r df_outcomes["open", "min"]` based on the models of moderation by grandchild care (see Table \@ref(tab:H1-open-care-tab)). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figures \@ref(fig:H1-open-fig) and \@ref(fig:H1-open-work-fig) but restricted to the post-transition period for better comparability.
+
+```{r H1-open-care-fig, fig.cap = "(ref:H1-open-care-fig-cap)", fig.height=6, fig.width=7, cache=T}
+# extract the legends 
+legend_care_parents <- get_legend(plot_open_hrs_parents_care + 
+                               theme(legend.box.margin = margin(0, 0, 0, 20)))
+legend_care_nonparents <- get_legend(plot_open_hrs_nonparents_care + 
+                                  theme(legend.box.margin = margin(0, 0, 0, 20)))
+
+# add the legend to the row we made earlier - adjust width via rel_widths
+grid_open_care <- cowplot::plot_grid(
+  plot_open_hrs_parents_short + theme(legend.position="none"), 
+  plot_open_hrs_parents_care + theme(legend.position="none"),
+  plot_open_hrs_nonparents_short + theme(legend.position="none"), 
+  plot_open_hrs_nonparents_care + theme(legend.position="none"), 
+  align = "vh", ncol = 2)
+grid_open_care <- cowplot::plot_grid(
+  grid_open_care, 
+  cowplot::plot_grid(legend_care_parents, legend_care_nonparents, ncol = 1),
+  rel_widths = c(3, .80), ncol = 2)
+
+# now add the title
+title_HRS <- ggdraw() + 
+  draw_label("HRS", fontface = 'bold', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+# print final object
+plot_grid(title_HRS, grid_open_care, 
+          ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
+```
+
 (ref:H1-swls-fig-cap) Change trajectories of `r df_outcomes["swls", "min"]` based on the basic models (1st column) and the models with the gender interaction (2nd column). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
 
-```{r H1-swls-fig, fig.cap = "(ref:H1-swls-fig-cap)", fig.height=9, fig.width=7, cache = TRUE}
+```{r H1-swls-fig, fig.cap = "(ref:H1-swls-fig-cap)", fig.height=9, fig.width=7, cache=T}
 # extract the legends
 legend_parents <- get_legend(plot_swls_liss_parents_gender + 
                                theme(legend.box.margin = margin(0, 0, 0, 20)))
@@ -4314,7 +4981,7 @@ plot_grid(title_liss, grid_swls_liss, title_HRS, grid_swls_hrs,
 
 (ref:H1-swls-work-fig-cap) Change trajectories of `r df_outcomes["swls", "min"]` based on the models of moderation by paid work (see Table \@ref(tab:H1-swls-work-tab)). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
 
-```{r H1-swls-work-fig, fig.cap = "(ref:H1-swls-work-fig-cap)", fig.height=6, fig.width=7, cache = TRUE}
+```{r H1-swls-work-fig, fig.cap = "(ref:H1-swls-work-fig-cap)", fig.height=6, fig.width=7, cache=T}
 # extract the legends
 legend_work_parents <- get_legend(plot_swls_hrs_parents_work + 
                                theme(legend.box.margin = margin(0, 0, 0, 20)))
@@ -4340,6 +5007,37 @@ title_HRS <- ggdraw() +
 
 # print final object
 plot_grid(title_HRS, grid_swls_work, 
+          ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
+```
+
+(ref:H1-swls-care-fig-cap) Change trajectories of `r df_outcomes["swls", "min"]` based on the models of moderation by grandchild care (see Table \@ref(tab:H1-swls-care-tab)). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figures \@ref(fig:H1-swls-fig) and \@ref(fig:H1-swls-work-fig) but restricted to the post-transition period for better comparability.
+
+```{r H1-swls-care-fig, fig.cap = "(ref:H1-swls-care-fig-cap)", fig.height=6, fig.width=7, cache=T}
+# extract the legends 
+legend_care_parents <- get_legend(plot_swls_hrs_parents_care + 
+                               theme(legend.box.margin = margin(0, 0, 0, 20)))
+legend_care_nonparents <- get_legend(plot_swls_hrs_nonparents_care + 
+                                  theme(legend.box.margin = margin(0, 0, 0, 20)))
+
+# add the legend to the row we made earlier - adjust width via rel_widths
+grid_swls_care <- cowplot::plot_grid(
+  plot_swls_hrs_parents_short + theme(legend.position="none"), 
+  plot_swls_hrs_parents_care + theme(legend.position="none"),
+  plot_swls_hrs_nonparents_short + theme(legend.position="none"), 
+  plot_swls_hrs_nonparents_care + theme(legend.position="none"), 
+  align = "vh", ncol = 2)
+grid_swls_care <- cowplot::plot_grid(
+  grid_swls_care, 
+  cowplot::plot_grid(legend_care_parents, legend_care_nonparents, ncol = 1),
+  rel_widths = c(3, .80), ncol = 2)
+
+# now add the title
+title_HRS <- ggdraw() + 
+  draw_label("HRS", fontface = 'bold', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+# print final object
+plot_grid(title_HRS, grid_swls_care, 
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 

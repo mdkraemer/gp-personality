@@ -20,6 +20,15 @@
 \ifnextchar[{\eatarg}{}
 
 \centering
+\includegraphics{Figs/H1-agree-care-fig-1.pdf}
+\caption{\label{fig:H1-agree-care-fig}Change trajectories of agreeableness based on the models of moderation by grandchild care (see Table \ref{tab:H1-agree-care-tab}). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figures \ref{fig:H1-agree-fig} and \ref{fig:H1-agree-work-fig} but restricted to the post-transition period for better comparability.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
 \includegraphics{Figs/H1-con-fig-1.pdf}
 \caption{\label{fig:H1-con-fig}Change trajectories of conscientiousness based on the basic models (1st column) and the models with the gender interaction (2nd column). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
 \end{figure*}
@@ -31,6 +40,15 @@
 \centering
 \includegraphics{Figs/H1-con-work-fig-1.pdf}
 \caption{\label{fig:H1-con-work-fig}Change trajectories of conscientiousness based on the models of moderation by paid work (see Table \ref{tab:H1-con-work-tab}). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{Figs/H1-con-care-fig-1.pdf}
+\caption{\label{fig:H1-con-care-fig}Change trajectories of conscientiousness based on the models of moderation by grandchild care (see Table \ref{tab:H1-con-care-tab}). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figures \ref{fig:H1-con-fig} and \ref{fig:H1-con-work-fig} but restricted to the post-transition period for better comparability.}
 \end{figure*}
 \efloatseparator
  
@@ -56,6 +74,15 @@
 \ifnextchar[{\eatarg}{}
 
 \centering
+\includegraphics{Figs/H1-extra-care-fig-1.pdf}
+\caption{\label{fig:H1-extra-care-fig}Change trajectories of extraversion based on the models of moderation by grandchild care (see Table \ref{tab:H1-extra-care-tab}). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figures \ref{fig:H1-extra-fig} and \ref{fig:H1-extra-work-fig} but restricted to the post-transition period for better comparability.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
 \includegraphics{Figs/H1-neur-fig-1.pdf}
 \caption{\label{fig:H1-neur-fig}Change trajectories of neuroticism based on the basic models (1st column) and the models with the gender interaction (2nd column). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
 \end{figure*}
@@ -67,6 +94,15 @@
 \centering
 \includegraphics{Figs/H1-neur-work-fig-1.pdf}
 \caption{\label{fig:H1-neur-work-fig}Change trajectories of neuroticism based on the models of moderation by paid work (see Table \ref{tab:H1-neur-work-tab}). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{Figs/H1-neur-care-fig-1.pdf}
+\caption{\label{fig:H1-neur-care-fig}Change trajectories of neuroticism based on the models of moderation by grandchild care (see Table \ref{tab:H1-neur-care-tab}). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figures \ref{fig:H1-neur-fig} and \ref{fig:H1-neur-work-fig} but restricted to the post-transition period for better comparability.}
 \end{figure*}
 \efloatseparator
  
@@ -92,6 +128,15 @@
 \ifnextchar[{\eatarg}{}
 
 \centering
+\includegraphics{Figs/H1-open-care-fig-1.pdf}
+\caption{\label{fig:H1-open-care-fig}Change trajectories of openness based on the models of moderation by grandchild care (see Table \ref{tab:H1-open-care-tab}). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figures \ref{fig:H1-open-fig} and \ref{fig:H1-open-work-fig} but restricted to the post-transition period for better comparability.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
 \includegraphics{Figs/H1-swls-fig-1.pdf}
 \caption{\label{fig:H1-swls-fig}Change trajectories of life satisfaction based on the basic models (1st column) and the models with the gender interaction (2nd column). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
 \end{figure*}
@@ -103,4 +148,13 @@
 \centering
 \includegraphics{Figs/H1-swls-work-fig-1.pdf}
 \caption{\label{fig:H1-swls-work-fig}Change trajectories of life satisfaction based on the models of moderation by paid work (see Table \ref{tab:H1-swls-work-tab}). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{Figs/H1-swls-care-fig-1.pdf}
+\caption{\label{fig:H1-swls-care-fig}Change trajectories of life satisfaction based on the models of moderation by grandchild care (see Table \ref{tab:H1-swls-care-tab}). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figures \ref{fig:H1-swls-fig} and \ref{fig:H1-swls-work-fig} but restricted to the post-transition period for better comparability.}
 \end{figure*}
