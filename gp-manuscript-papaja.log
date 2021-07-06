@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  6 JUL 2021 17:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  6 JUL 2021 19:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1952,7 +1952,7 @@ Package rerunfilecheck Info: File `gp-manuscript-papaja.out' has not changed.
 Here is how much of TeX's memory you used:
  25566 strings out of 480962
  465570 string characters out of 5906169
- 993801 words of memory out of 5000000
+ 993399 words of memory out of 5000000
  41796 multiletter control sequences out of 15000+600000
  496100 words of font info for 104 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -1993,9 +1993,9 @@ pdfTeX warning (dest): name{Hfootnote.2} has been referenced but does not exist
 pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exist
 , replaced by a fixed one
 
-{/Users/michaelkramer/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{
-/Users/michaelkramer/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.en
-c}{/Users/michaelkramer/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit
+{/Users/michaelkramer/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.e
+nc}{/Users/michaelkramer/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.en
+c}{/Users/michaelkramer/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy
 .enc}{/Users/michaelkramer/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.
 enc}{/Users/michaelkramer/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.
 enc}</Users/michaelkramer/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx
@@ -2003,19 +2003,20 @@ enc}</Users/michaelkramer/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx
 mbxi10.pfb></Users/michaelkramer/Library/TinyTeX/texmf-dist/fonts/type1/public/
 lm/lmmi10.pfb></Users/michaelkramer/Library/TinyTeX/texmf-dist/fonts/type1/publ
 ic/lm/lmmi12.pfb></Users/michaelkramer/Library/TinyTeX/texmf-dist/fonts/type1/p
-ublic/lm/lmmi8.pfb></Users/michaelkramer/Library/TinyTeX/texmf-dist/fonts/type1
-/public/lm/lmr10.pfb></Users/michaelkramer/Library/TinyTeX/texmf-dist/fonts/typ
-e1/public/lm/lmr12.pfb></Users/michaelkramer/Library/TinyTeX/texmf-dist/fonts/t
-ype1/public/lm/lmr7.pfb></Users/michaelkramer/Library/TinyTeX/texmf-dist/fonts/
-type1/public/lm/lmr8.pfb></Users/michaelkramer/Library/TinyTeX/texmf-dist/fonts
-/type1/public/lm/lmri10.pfb></Users/michaelkramer/Library/TinyTeX/texmf-dist/fo
-nts/type1/public/lm/lmri12.pfb></Users/michaelkramer/Library/TinyTeX/texmf-dist
-/fonts/type1/public/lm/lmss8.pfb></Users/michaelkramer/Library/TinyTeX/texmf-di
-st/fonts/type1/public/lm/lmsy10.pfb>
-Output written on gp-manuscript-papaja.pdf (149 pages, 857934 bytes).
+ublic/lm/lmmi7.pfb></Users/michaelkramer/Library/TinyTeX/texmf-dist/fonts/type1
+/public/lm/lmmi8.pfb></Users/michaelkramer/Library/TinyTeX/texmf-dist/fonts/typ
+e1/public/lm/lmr10.pfb></Users/michaelkramer/Library/TinyTeX/texmf-dist/fonts/t
+ype1/public/lm/lmr12.pfb></Users/michaelkramer/Library/TinyTeX/texmf-dist/fonts
+/type1/public/lm/lmr7.pfb></Users/michaelkramer/Library/TinyTeX/texmf-dist/font
+s/type1/public/lm/lmr8.pfb></Users/michaelkramer/Library/TinyTeX/texmf-dist/fon
+ts/type1/public/lm/lmri10.pfb></Users/michaelkramer/Library/TinyTeX/texmf-dist/
+fonts/type1/public/lm/lmri12.pfb></Users/michaelkramer/Library/TinyTeX/texmf-di
+st/fonts/type1/public/lm/lmss8.pfb></Users/michaelkramer/Library/TinyTeX/texmf-
+dist/fonts/type1/public/lm/lmsy10.pfb>
+Output written on gp-manuscript-papaja.pdf (149 pages, 859791 bytes).
 PDF statistics:
- 1595 PDF objects out of 1728 (max. 8388607)
- 1331 compressed objects within 14 object streams
+ 1597 PDF objects out of 1728 (max. 8388607)
+ 1332 compressed objects within 14 object streams
  441 named destinations out of 1000 (max. 500000)
  263 words of extra memory for PDF output out of 10000 (max. 10000000)
 

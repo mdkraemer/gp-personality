@@ -1,7 +1,7 @@
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00.}
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.}
 \end{TableNotes}
 
 \footnotesize{
@@ -21,7 +21,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 3.86 & [3.80, 3.92] & 131.70 & < .001 & 3.90 & [3.83, 3.97] & 112.97 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{L} & -0.02 & [-0.10, 0.05] & -0.56 & .572 & -0.01 & [-0.08, 0.06] & -0.20 & .838\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.00] & -0.25 & .802 & -0.01 & [-0.01, 0.00] & -1.81 & .070\\
@@ -31,7 +31,7 @@ LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{L} & -0.01 & [-0.02, 0.01] & -1.06 & .289 & 0.00 & [-0.01, 0.01] & -0.26 & .791\\
 \ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{L} & 0.02 & [0.01, 0.03] & 2.99 & .003 & 0.01 & [0.00, 0.02] & 1.44 & .149\\
 \ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{L} & -0.01 & [-0.06, 0.04] & -0.37 & .714 & 0.00 & [-0.06, 0.06] & 0.08 & .937\\
-HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
+HRS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{H} & 3.46 & [3.43, 3.50] & 196.32 & < .001 & 3.48 & [3.44, 3.52] & 166.19 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{H} & 0.08 & [0.02, 0.14] & 2.51 & .012 & 0.05 & [-0.01, 0.11] & 1.51 & .131\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{H} & 0.01 & [0.00, 0.02] & 1.37 & .169 & -0.01 & [-0.02, 0.00] & -1.33 & .184\\
@@ -54,7 +54,7 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the \emph{linearHypothesis} function from the \emph{car} R package (Fox \& Weisberg, 2019) based on the models from Table \ref{tab:H1-agree-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the \emph{linearHypothesis} function from the \emph{car} R package (Fox \& Weisberg, 2019) based on the models from Table \ref{tab:H1-agree-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -64,14 +64,14 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-agree-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 LISS &  &  &  &  &  & \\
@@ -111,7 +111,7 @@ HRS &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.12, \(R^2_{M1b} =\) 0.11, \(R^2_{M2a} =\) 0.08, \(R^2_{M2b} =\) 0.07.}
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.}
 \end{TableNotes}
 
 \footnotesize{
@@ -131,7 +131,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 3.65 & [3.58, 3.73] & 93.02 & < .001 & 3.66 & [3.57, 3.75] & 79.73 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{L} & -0.01 & [-0.08, 0.07] & -0.21 & .833 & 0.02 & [-0.05, 0.08] & 0.45 & .653\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.01] & 0.02 & .984 & 0.00 & [-0.01, 0.01] & -0.37 & .712\\
@@ -149,7 +149,7 @@ LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Before-slope * Grandparent * Female, $\hat{\gamma}_{13}$ \textcolor{white}{L} & 0.00 & [-0.03, 0.02] & -0.05 & .959 & 0.00 & [-0.02, 0.03] & 0.35 & .728\\
 \ \ \ After-slope * Grandparent * Female, $\hat{\gamma}_{23}$ \textcolor{white}{L} & -0.02 & [-0.04, 0.00] & -1.92 & .056 & -0.01 & [-0.03, 0.01] & -0.93 & .351\\
 \ \ \ Shift * Grandparent * Female, $\hat{\gamma}_{33}$ \textcolor{white}{L} & 0.01 & [-0.10, 0.12] & 0.21 & .836 & 0.11 & [-0.01, 0.23] & 1.87 & .061\\
-HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
+HRS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{H} & 3.27 & [3.23, 3.32] & 132.82 & < .001 & 3.38 & [3.33, 3.43] & 122.35 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{H} & 0.09 & [0.03, 0.15] & 2.91 & .004 & 0.04 & [-0.03, 0.10] & 1.12 & .261\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{H} & 0.02 & [0.01, 0.04] & 2.98 & .003 & -0.01 & [-0.02, 0.01] & -1.12 & .262\\
@@ -180,7 +180,7 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-agree-gender-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-agree-gender-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -190,14 +190,14 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-agree-gender-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 LISS &  &  &  &  &  & \\
@@ -277,7 +277,7 @@ HRS &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00.}
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. \(working=1\) indicates being employed in paid work.}
 \end{TableNotes}
 
 \footnotesize{
@@ -327,7 +327,7 @@ Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & -0.01 & [-0.10, 0.09] & -0.
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-agree-work-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-agree-work-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -337,14 +337,14 @@ Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & -0.01 & [-0.10, 0.09] & -0.
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-agree-work-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 Shift of not-working controls vs. 0 ($\hat{\gamma}_{20}$ +
@@ -391,7 +391,7 @@ Shift of not-working grandparents vs. working grandparents
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.01. \(caring=1\) indicates more than 100 hours of grandchild care since the last assessment.}
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. \(caring=1\) indicates more than 100 hours of grandchild care since the last assessment.}
 \end{TableNotes}
 
 \footnotesize{
@@ -433,7 +433,7 @@ After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & 0.01 & [-0.02, 0.04] &
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-agree-care-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-agree-care-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -443,14 +443,14 @@ After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & 0.01 & [-0.02, 0.04] &
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-agree-care-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 After-slope of caring controls vs. caring grandparents
@@ -470,7 +470,7 @@ After-slope of not-caring grandparents vs. caring grandparents
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.02.}
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.}
 \end{TableNotes}
 
 \footnotesize{
@@ -490,7 +490,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 3.77 & [3.72, 3.83] & 130.27 & < .001 & 3.82 & [3.75, 3.88] & 112.10 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{L} & 0.00 & [-0.08, 0.08] & -0.02 & .987 & 0.01 & [-0.06, 0.08] & 0.24 & .813\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.00] & -0.84 & .402 & 0.00 & [-0.01, 0.01] & -0.26 & .796\\
@@ -500,7 +500,7 @@ LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.02] & 0.77 & .439 & 0.00 & [-0.01, 0.02] & 0.50 & .617\\
 \ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{L} & 0.02 & [0.00, 0.03] & 2.73 & .006 & -0.01 & [-0.02, 0.00] & -1.61 & .107\\
 \ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{L} & -0.04 & [-0.10, 0.01] & -1.49 & .137 & 0.00 & [-0.06, 0.06] & 0.01 & .989\\
-HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
+HRS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{H} & 3.41 & [3.38, 3.44] & 206.26 & < .001 & 3.35 & [3.31, 3.38] & 172.70 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{H} & 0.08 & [0.03, 0.14] & 2.86 & .004 & 0.17 & [0.11, 0.23] & 5.74 & < .001\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{H} & 0.00 & [-0.01, 0.01] & 0.31 & .754 & 0.00 & [-0.01, 0.01] & 0.72 & .473\\
@@ -523,7 +523,7 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the \emph{linearHypothesis} function from the \emph{car} R package (Fox \& Weisberg, 2019) based on the models from Table \ref{tab:H1-con-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the \emph{linearHypothesis} function from the \emph{car} R package (Fox \& Weisberg, 2019) based on the models from Table \ref{tab:H1-con-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -533,14 +533,14 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-con-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 LISS &  &  &  &  &  & \\
@@ -580,7 +580,7 @@ HRS &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.01, \(R^2_{M2a} =\) 0.02, \(R^2_{M2b} =\) 0.04.}
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.}
 \end{TableNotes}
 
 \footnotesize{
@@ -600,7 +600,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 3.69 & [3.60, 3.77] & 87.30 & < .001 & 3.70 & [3.61, 3.80] & 75.84 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{L} & 0.00 & [-0.08, 0.07] & -0.03 & .976 & 0.01 & [-0.06, 0.08] & 0.34 & .732\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.01] & 0.64 & .524 & 0.00 & [-0.01, 0.01] & 0.75 & .455\\
@@ -618,7 +618,7 @@ LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Before-slope * Grandparent * Female, $\hat{\gamma}_{13}$ \textcolor{white}{L} & 0.01 & [-0.02, 0.03] & 0.61 & .542 & 0.01 & [-0.02, 0.03] & 0.44 & .663\\
 \ \ \ After-slope * Grandparent * Female, $\hat{\gamma}_{23}$ \textcolor{white}{L} & -0.01 & [-0.03, 0.01] & -0.84 & .403 & -0.03 & [-0.05, 0.00] & -2.37 & .018\\
 \ \ \ Shift * Grandparent * Female, $\hat{\gamma}_{33}$ \textcolor{white}{L} & 0.01 & [-0.11, 0.12] & 0.11 & .916 & 0.02 & [-0.10, 0.13] & 0.27 & .787\\
-HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
+HRS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{H} & 3.35 & [3.30, 3.39] & 143.72 & < .001 & 3.26 & [3.21, 3.31] & 124.79 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{H} & 0.09 & [0.03, 0.14] & 3.00 & .003 & 0.17 & [0.11, 0.23] & 5.65 & < .001\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{H} & 0.01 & [-0.01, 0.02] & 1.19 & .234 & 0.01 & [0.00, 0.03] & 2.08 & .037\\
@@ -649,7 +649,7 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-con-gender-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-con-gender-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -659,14 +659,14 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-con-gender-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 LISS &  &  &  &  &  & \\
@@ -746,7 +746,7 @@ HRS &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.02, \(R^2_{M2b} =\) 0.03.}
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. \(working=1\) indicates being employed in paid work.}
 \end{TableNotes}
 
 \footnotesize{
@@ -796,7 +796,7 @@ Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & 0.06 & [-0.03, 0.15] & 1.31
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-con-work-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-con-work-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -806,14 +806,14 @@ Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & 0.06 & [-0.03, 0.15] & 1.31
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-con-work-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 Shift of not-working controls vs. 0 ($\hat{\gamma}_{20}$ +
@@ -860,7 +860,7 @@ Shift of not-working grandparents vs. working grandparents
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.03. \(caring=1\) indicates more than 100 hours of grandchild care since the last assessment.}
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. \(caring=1\) indicates more than 100 hours of grandchild care since the last assessment.}
 \end{TableNotes}
 
 \footnotesize{
@@ -902,7 +902,7 @@ After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & 0.03 & [0.00, 0.06] & 
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-con-care-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-con-care-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -912,14 +912,14 @@ After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & 0.03 & [0.00, 0.06] & 
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-con-care-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 After-slope of caring controls vs. caring grandparents
@@ -939,7 +939,7 @@ After-slope of not-caring grandparents vs. caring grandparents
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00.}
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.}
 \end{TableNotes}
 
 \footnotesize{
@@ -959,7 +959,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 3.25 & [3.18, 3.33] & 87.65 & < .001 & 3.29 & [3.20, 3.39] & 67.72 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{L} & -0.01 & [-0.10, 0.07] & -0.26 & .793 & 0.01 & [-0.07, 0.08] & 0.18 & .860\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & -0.01 & [-0.01, 0.00] & -1.77 & .077 & 0.00 & [0.00, 0.01] & 0.65 & .515\\
@@ -969,7 +969,7 @@ LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{L} & 0.00 & [-0.02, 0.01] & -0.40 & .690 & -0.01 & [-0.02, 0.00] & -1.44 & .150\\
 \ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.02] & 0.57 & .569 & 0.01 & [0.00, 0.02] & 1.45 & .146\\
 \ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{L} & -0.02 & [-0.08, 0.05] & -0.51 & .607 & -0.02 & [-0.08, 0.04] & -0.73 & .467\\
-HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
+HRS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{H} & 3.20 & [3.16, 3.24] & 159.82 & < .001 & 3.11 & [3.07, 3.16] & 133.29 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{H} & 0.02 & [-0.05, 0.08] & 0.56 & .577 & 0.05 & [-0.02, 0.12] & 1.44 & .150\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{H} & 0.00 & [-0.01, 0.01] & -0.52 & .604 & 0.01 & [-0.01, 0.02] & 0.99 & .321\\
@@ -992,7 +992,7 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the \emph{linearHypothesis} function from the \emph{car} R package (Fox \& Weisberg, 2019) based on the models from Table \ref{tab:H1-extra-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the \emph{linearHypothesis} function from the \emph{car} R package (Fox \& Weisberg, 2019) based on the models from Table \ref{tab:H1-extra-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -1002,14 +1002,14 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-extra-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 LISS &  &  &  &  &  & \\
@@ -1049,7 +1049,7 @@ HRS &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.01.}
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.}
 \end{TableNotes}
 
 \footnotesize{
@@ -1069,7 +1069,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 3.28 & [3.18, 3.39] & 60.26 & < .001 & 3.22 & [3.08, 3.35] & 46.79 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{L} & -0.01 & [-0.09, 0.08] & -0.15 & .881 & 0.01 & [-0.06, 0.09] & 0.30 & .765\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & -0.01 & [-0.02, 0.00] & -1.82 & .069 & 0.02 & [0.01, 0.03] & 4.00 & < .001\\
@@ -1087,7 +1087,7 @@ LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Before-slope * Grandparent * Female, $\hat{\gamma}_{13}$ \textcolor{white}{L} & -0.01 & [-0.04, 0.02] & -0.53 & .593 & 0.03 & [0.00, 0.06] & 2.09 & .037\\
 \ \ \ After-slope * Grandparent * Female, $\hat{\gamma}_{23}$ \textcolor{white}{L} & -0.01 & [-0.04, 0.01] & -1.11 & .266 & 0.01 & [-0.02, 0.03] & 0.71 & .475\\
 \ \ \ Shift * Grandparent * Female, $\hat{\gamma}_{33}$ \textcolor{white}{L} & -0.02 & [-0.14, 0.10] & -0.29 & .768 & -0.06 & [-0.18, 0.06] & -0.98 & .328\\
-HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
+HRS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{H} & 3.15 & [3.09, 3.21] & 108.70 & < .001 & 3.11 & [3.04, 3.17] & 96.32 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{H} & 0.02 & [-0.04, 0.09] & 0.64 & .520 & 0.05 & [-0.02, 0.12] & 1.31 & .191\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{H} & 0.01 & [-0.01, 0.02] & 0.70 & .482 & 0.00 & [-0.02, 0.01] & -0.37 & .709\\
@@ -1118,7 +1118,7 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-extra-gender-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-extra-gender-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -1128,14 +1128,14 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-extra-gender-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 LISS &  &  &  &  &  & \\
@@ -1215,7 +1215,7 @@ HRS &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00.}
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. \(working=1\) indicates being employed in paid work.}
 \end{TableNotes}
 
 \footnotesize{
@@ -1265,7 +1265,7 @@ Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & -0.03 & [-0.13, 0.08] & -0.
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-extra-work-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-extra-work-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -1275,14 +1275,14 @@ Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & -0.03 & [-0.13, 0.08] & -0.
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-extra-work-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 Shift of not-working controls vs. 0 ($\hat{\gamma}_{20}$ +
@@ -1329,7 +1329,7 @@ Shift of not-working grandparents vs. working grandparents
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00. \(caring=1\) indicates more than 100 hours of grandchild care since the last assessment.}
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. \(caring=1\) indicates more than 100 hours of grandchild care since the last assessment.}
 \end{TableNotes}
 
 \footnotesize{
@@ -1371,7 +1371,7 @@ After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & 0.03 & [-0.01, 0.06] &
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-extra-care-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-extra-care-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -1381,14 +1381,14 @@ After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & 0.03 & [-0.01, 0.06] &
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-extra-care-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 After-slope of caring controls vs. caring grandparents
@@ -1408,7 +1408,7 @@ After-slope of not-caring grandparents vs. caring grandparents
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00.}
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.}
 \end{TableNotes}
 
 \footnotesize{
@@ -1428,7 +1428,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 2.48 & [2.40, 2.56] & 63.09 & < .001 & 2.45 & [2.35, 2.54] & 51.88 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{L} & 0.01 & [-0.09, 0.11] & 0.19 & .852 & 0.00 & [-0.09, 0.09] & 0.04 & .967\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.01] & -0.56 & .575 & -0.01 & [-0.02, -0.01] & -3.66 & < .001\\
@@ -1438,7 +1438,7 @@ LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.02] & 0.43 & .668 & 0.02 & [0.00, 0.03] & 1.83 & .067\\
 \ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{L} & 0.00 & [-0.02, 0.01] & -0.33 & .744 & 0.00 & [-0.02, 0.01] & -0.48 & .635\\
 \ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{L} & -0.02 & [-0.09, 0.06] & -0.41 & .684 & -0.04 & [-0.12, 0.04] & -1.01 & .312\\
-HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
+HRS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{H} & 2.07 & [2.03, 2.11] & 94.42 & < .001 & 2.07 & [2.02, 2.12] & 79.36 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{H} & 0.00 & [-0.07, 0.08] & 0.12 & .902 & 0.15 & [0.07, 0.23] & 3.70 & < .001\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{H} & -0.01 & [-0.03, 0.00] & -1.90 & .057 & -0.03 & [-0.04, -0.02] & -4.70 & < .001\\
@@ -1461,7 +1461,7 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the \emph{linearHypothesis} function from the \emph{car} R package (Fox \& Weisberg, 2019) based on the models from Table \ref{tab:H1-neur-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the \emph{linearHypothesis} function from the \emph{car} R package (Fox \& Weisberg, 2019) based on the models from Table \ref{tab:H1-neur-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -1471,14 +1471,14 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-neur-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 LISS &  &  &  &  &  & \\
@@ -1518,7 +1518,7 @@ HRS &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.01, \(R^2_{M1b} =\) 0.01, \(R^2_{M2a} =\) 0.02, \(R^2_{M2b} =\) 0.01.}
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.}
 \end{TableNotes}
 
 \footnotesize{
@@ -1538,7 +1538,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 2.45 & [2.34, 2.56] & 43.45 & < .001 & 2.32 & [2.19, 2.45] & 34.99 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{L} & 0.02 & [-0.09, 0.12] & 0.30 & .767 & 0.02 & [-0.08, 0.11] & 0.33 & .744\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & -0.01 & [-0.02, 0.00] & -1.89 & .059 & -0.01 & [-0.02, 0.00] & -1.12 & .263\\
@@ -1556,7 +1556,7 @@ LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Before-slope * Grandparent * Female, $\hat{\gamma}_{13}$ \textcolor{white}{L} & -0.01 & [-0.05, 0.02] & -0.66 & .508 & 0.02 & [-0.02, 0.05] & 1.08 & .279\\
 \ \ \ After-slope * Grandparent * Female, $\hat{\gamma}_{23}$ \textcolor{white}{L} & 0.02 & [-0.01, 0.05] & 1.48 & .138 & 0.02 & [-0.01, 0.05] & 1.08 & .282\\
 \ \ \ Shift * Grandparent * Female, $\hat{\gamma}_{33}$ \textcolor{white}{L} & 0.03 & [-0.12, 0.18] & 0.35 & .730 & 0.00 & [-0.16, 0.15] & -0.03 & .975\\
-HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
+HRS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{H} & 1.98 & [1.91, 2.04] & 62.73 & < .001 & 2.01 & [1.94, 2.08] & 56.33 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{H} & 0.01 & [-0.07, 0.09] & 0.26 & .798 & 0.15 & [0.07, 0.23] & 3.58 & < .001\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{H} & -0.02 & [-0.04, 0.00] & -2.11 & .035 & -0.03 & [-0.05, -0.01] & -3.18 & .001\\
@@ -1587,7 +1587,7 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-neur-gender-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-neur-gender-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -1597,14 +1597,14 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-neur-gender-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 LISS &  &  &  &  &  & \\
@@ -1684,7 +1684,7 @@ HRS &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00.}
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. \(working=1\) indicates being employed in paid work.}
 \end{TableNotes}
 
 \footnotesize{
@@ -1734,7 +1734,7 @@ Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & -0.02 & [-0.15, 0.10] & -0.
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-neur-work-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-neur-work-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -1744,14 +1744,14 @@ Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & -0.02 & [-0.15, 0.10] & -0.
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-neur-work-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 Shift of not-working controls vs. 0 ($\hat{\gamma}_{20}$ +
@@ -1798,7 +1798,7 @@ Shift of not-working grandparents vs. working grandparents
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00. \(caring=1\) indicates more than 100 hours of grandchild care since the last assessment.}
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. \(caring=1\) indicates more than 100 hours of grandchild care since the last assessment.}
 \end{TableNotes}
 
 \footnotesize{
@@ -1840,7 +1840,7 @@ After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & -0.03 & [-0.07, 0.01] 
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-neur-care-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-neur-care-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -1850,14 +1850,14 @@ After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & -0.03 & [-0.07, 0.01] 
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-neur-care-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 After-slope of caring controls vs. caring grandparents
@@ -1877,7 +1877,7 @@ After-slope of not-caring grandparents vs. caring grandparents
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.01, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00.}
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.}
 \end{TableNotes}
 
 \footnotesize{
@@ -1897,7 +1897,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 3.48 & [3.42, 3.53] & 118.77 & < .001 & 3.52 & [3.45, 3.59] & 104.18 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{L} & 0.00 & [-0.08, 0.07] & -0.07 & .944 & 0.03 & [-0.03, 0.09] & 1.02 & .309\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.00] & -1.58 & .114 & 0.00 & [-0.01, 0.00] & -0.68 & .494\\
@@ -1907,7 +1907,7 @@ LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{L} & 0.01 & [0.00, 0.02] & 1.23 & .220 & 0.01 & [-0.01, 0.02] & 0.87 & .384\\
 \ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.01] & 0.11 & .910 & -0.01 & [-0.02, 0.00] & -1.92 & .055\\
 \ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{L} & -0.03 & [-0.08, 0.03] & -1.05 & .296 & -0.01 & [-0.06, 0.04] & -0.21 & .832\\
-HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
+HRS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{H} & 3.04 & [3.00, 3.08] & 149.49 & < .001 & 3.01 & [2.96, 3.06] & 129.29 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{H} & 0.03 & [-0.04, 0.09] & 0.82 & .411 & 0.00 & [-0.06, 0.07] & 0.13 & .895\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{H} & -0.02 & [-0.03, -0.01] & -3.29 & .001 & 0.00 & [-0.01, 0.01] & -0.68 & .495\\
@@ -1930,7 +1930,7 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the \emph{linearHypothesis} function from the \emph{car} R package (Fox \& Weisberg, 2019) based on the models from Table \ref{tab:H1-open-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the \emph{linearHypothesis} function from the \emph{car} R package (Fox \& Weisberg, 2019) based on the models from Table \ref{tab:H1-open-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -1940,14 +1940,14 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-open-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 LISS &  &  &  &  &  & \\
@@ -1987,7 +1987,7 @@ HRS &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.01, \(R^2_{M1b} =\) 0.01, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00.}
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.}
 \end{TableNotes}
 
 \footnotesize{
@@ -2007,7 +2007,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 3.47 & [3.39, 3.55] & 81.39 & < .001 & 3.54 & [3.45, 3.64] & 73.02 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{L} & 0.00 & [-0.08, 0.07] & -0.04 & .970 & 0.03 & [-0.03, 0.09] & 0.94 & .347\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.01] & 0.17 & .864 & 0.01 & [0.00, 0.02] & 2.39 & .017\\
@@ -2025,7 +2025,7 @@ LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Before-slope * Grandparent * Female, $\hat{\gamma}_{13}$ \textcolor{white}{L} & 0.02 & [0.00, 0.05] & 1.70 & .090 & 0.03 & [0.01, 0.06] & 2.80 & .005\\
 \ \ \ After-slope * Grandparent * Female, $\hat{\gamma}_{23}$ \textcolor{white}{L} & 0.01 & [-0.01, 0.04] & 1.29 & .197 & 0.01 & [-0.01, 0.03] & 1.14 & .255\\
 \ \ \ Shift * Grandparent * Female, $\hat{\gamma}_{33}$ \textcolor{white}{L} & -0.12 & [-0.23, -0.01] & -2.11 & .035 & -0.06 & [-0.16, 0.04] & -1.21 & .225\\
-HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
+HRS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{H} & 3.06 & [3.00, 3.12] & 108.70 & < .001 & 3.03 & [2.97, 3.09] & 97.90 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{H} & 0.03 & [-0.04, 0.09] & 0.86 & .391 & 0.00 & [-0.06, 0.07] & 0.03 & .976\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{H} & -0.02 & [-0.04, 0.00] & -2.44 & .015 & -0.01 & [-0.03, 0.00] & -1.90 & .058\\
@@ -2056,7 +2056,7 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-open-gender-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-open-gender-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -2066,14 +2066,14 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-open-gender-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 LISS &  &  &  &  &  & \\
@@ -2153,7 +2153,7 @@ HRS &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.02, \(R^2_{M2b} =\) 0.00.}
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. \(working=1\) indicates being employed in paid work.}
 \end{TableNotes}
 
 \footnotesize{
@@ -2203,7 +2203,7 @@ Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & 0.13 & [0.02, 0.23] & 2.37 
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-open-work-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-open-work-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -2213,14 +2213,14 @@ Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & 0.13 & [0.02, 0.23] & 2.37 
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-open-work-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 Shift of not-working controls vs. 0 ($\hat{\gamma}_{20}$ +
@@ -2267,7 +2267,7 @@ Shift of not-working grandparents vs. working grandparents
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00. \(caring=1\) indicates more than 100 hours of grandchild care since the last assessment.}
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. \(caring=1\) indicates more than 100 hours of grandchild care since the last assessment.}
 \end{TableNotes}
 
 \footnotesize{
@@ -2309,7 +2309,7 @@ After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & 0.01 & [-0.02, 0.05] &
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-open-care-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-open-care-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -2319,14 +2319,14 @@ After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & 0.01 & [-0.02, 0.05] &
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-open-care-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 After-slope of caring controls vs. caring grandparents
@@ -2346,7 +2346,7 @@ After-slope of not-caring grandparents vs. caring grandparents
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.01.}
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.}
 \end{TableNotes}
 
 \footnotesize{
@@ -2366,7 +2366,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 5.11 & [4.99, 5.23] & 85.63 & < .001 & 5.13 & [4.99, 5.27] & 72.47 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{L} & 0.07 & [-0.10, 0.24] & 0.78 & .433 & 0.01 & [-0.15, 0.17] & 0.17 & .863\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & -0.01 & [-0.02, 0.01] & -1.06 & .288 & 0.02 & [0.00, 0.03] & 2.18 & .029\\
@@ -2376,7 +2376,7 @@ LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{L} & 0.02 & [-0.01, 0.04] & 1.03 & .301 & -0.01 & [-0.04, 0.02] & -0.47 & .637\\
 \ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{L} & -0.02 & [-0.05, 0.00] & -1.78 & .075 & 0.00 & [-0.03, 0.02] & -0.33 & .741\\
 \ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{L} & 0.05 & [-0.08, 0.18] & 0.79 & .428 & 0.18 & [0.04, 0.32] & 2.57 & .010\\
-HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
+HRS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{H} & 4.81 & [4.69, 4.92] & 82.17 & < .001 & 4.58 & [4.45, 4.72] & 66.89 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{H} & 0.40 & [0.19, 0.61] & 3.78 & < .001 & 0.33 & [0.11, 0.54] & 3.01 & .003\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{H} & -0.03 & [-0.07, 0.01] & -1.53 & .125 & 0.05 & [0.01, 0.08] & 2.50 & .013\\
@@ -2399,7 +2399,7 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the \emph{linearHypothesis} function from the \emph{car} R package (Fox \& Weisberg, 2019) based on the models from Table \ref{tab:H1-swls-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the \emph{linearHypothesis} function from the \emph{car} R package (Fox \& Weisberg, 2019) based on the models from Table \ref{tab:H1-swls-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -2409,14 +2409,14 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-swls-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 LISS &  &  &  &  &  & \\
@@ -2456,7 +2456,7 @@ HRS &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. \(R^2_{M1a} =\) 0.00, \(R^2_{M1b} =\) 0.00, \(R^2_{M2a} =\) 0.01, \(R^2_{M2b} =\) 0.01.}
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.}
 \end{TableNotes}
 
 \footnotesize{
@@ -2476,7 +2476,7 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
 \midrule
 \endhead
-LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
+LISS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 5.05 & [4.89, 5.21] & 61.49 & < .001 & 5.05 & [4.86, 5.24] & 51.98 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{L} & 0.06 & [-0.11, 0.23] & 0.70 & .485 & 0.01 & [-0.15, 0.17] & 0.17 & .866\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & -0.01 & [-0.03, 0.01] & -1.13 & .258 & 0.02 & [0.00, 0.05] & 2.28 & .023\\
@@ -2494,7 +2494,7 @@ LISS (M1a, M1b) &  &  &  &  &  &  &  & \\
 \ \ \ Before-slope * Grandparent * Female, $\hat{\gamma}_{13}$ \textcolor{white}{L} & 0.03 & [-0.03, 0.08] & 0.87 & .385 & 0.05 & [-0.02, 0.11] & 1.48 & .138\\
 \ \ \ After-slope * Grandparent * Female, $\hat{\gamma}_{23}$ \textcolor{white}{L} & 0.01 & [-0.04, 0.07] & 0.51 & .607 & -0.03 & [-0.08, 0.03] & -0.90 & .369\\
 \ \ \ Shift * Grandparent * Female, $\hat{\gamma}_{33}$ \textcolor{white}{L} & 0.08 & [-0.17, 0.34] & 0.63 & .530 & 0.15 & [-0.13, 0.43] & 1.07 & .283\\
-HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
+HRS &  &  &  &  &  &  &  & \\
 \ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{H} & 4.67 & [4.52, 4.82] & 60.70 & < .001 & 4.54 & [4.37, 4.71] & 52.50 & < .001\\
 \ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{H} & 0.41 & [0.20, 0.62] & 3.84 & < .001 & 0.30 & [0.08, 0.51] & 2.71 & .007\\
 \ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{H} & 0.01 & [-0.04, 0.07] & 0.49 & .625 & 0.05 & [-0.01, 0.10] & 1.61 & .107\\
@@ -2525,7 +2525,7 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-swls-gender-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-swls-gender-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -2535,14 +2535,14 @@ HRS (M2a, M2b) &  &  &  &  &  &  &  & \\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-swls-gender-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 LISS &  &  &  &  &  & \\
@@ -2622,7 +2622,7 @@ HRS &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.01, \(R^2_{M2b} =\) 0.01.}
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. \(working=1\) indicates being employed in paid work.}
 \end{TableNotes}
 
 \footnotesize{
@@ -2672,7 +2672,7 @@ Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & -0.03 & [-0.38, 0.32] & -0.
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-swls-work-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-swls-work-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -2682,14 +2682,14 @@ Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & -0.03 & [-0.38, 0.32] & -0.
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-swls-work-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 Shift of not-working controls vs. 0 ($\hat{\gamma}_{20}$ +
@@ -2736,7 +2736,7 @@ Shift of not-working grandparents vs. working grandparents
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. \(R^2_{M2a} =\) 0.00, \(R^2_{M2b} =\) 0.00. \(caring=1\) indicates more than 100 hours of grandchild care since the last assessment.}
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. \(caring=1\) indicates more than 100 hours of grandchild care since the last assessment.}
 \end{TableNotes}
 
 \footnotesize{
@@ -2778,7 +2778,7 @@ After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & -0.08 & [-0.19, 0.03] 
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-swls-care-tab}.}
+\normalsize{\textit{Note.} The linear contrasts are based on the models from Table \ref{tab:H1-swls-care-tab}. \(\hat{\gamma}_{c}\) = combined fixed-effects estimate.}
 \end{TableNotes}
 
 \footnotesize{
@@ -2788,14 +2788,14 @@ After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & -0.08 & [-0.19, 0.03] 
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:H1-swls-care-contrasts} continued}}\\
 \toprule
  & \multicolumn{3}{c}{Parent controls} & \multicolumn{3}{c}{Nonparent controls} \\
 \cmidrule(r){2-4} \cmidrule(r){5-7}
-Linear Contrast & $\hat{\gamma}$ & $\chi^2$ & $p$ & $\hat{\gamma}$ & $\chi^2$ & $p$\\
+Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
 After-slope of caring controls vs. caring grandparents

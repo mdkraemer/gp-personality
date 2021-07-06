@@ -635,17 +635,6 @@ for (i in 1:length(outcomes)){
     names(mod_summaries_gender)[[pos + j]] <- paste0(outcome, "_", dataset)
     mod_summaries_gender_test[[pos + j]] <- model_4
     names(mod_summaries_gender_test)[[pos + j]] <- paste0(outcome, "_", dataset)
-    # compute R^2
-    pred <- cbind(subset(get(dataset), !is.na(get(outcome)), select = c(pid, time, get(outcome))), 
-                  pred_outcome = predict(model_1, re.form=NA)) # model predicted outcome values (basic)
-    r2 <- cor(pred[outcomes[i]], pred$pred_outcome)^2
-    r2_name <- paste0("r2_", outcome, "_", dataset)
-    eval(call("<-", as.name(r2_name), r2))
-    pred_gender <- cbind(subset(get(dataset), !is.na(get(outcome)), select = c(pid, time, get(outcome))), 
-                         pred_outcome = predict(model_3, re.form=NA)) # model outcome values (gender)
-    r2_gender <- cor(pred_gender[outcomes[i]], pred_gender$pred_outcome)^2
-    r2_gender_name <- paste0("r2_", outcome, "_", dataset, "_gender")
-    eval(call("<-", as.name(r2_gender_name), r2_gender))
   }
 }
 
@@ -748,13 +737,6 @@ for (i in 1:length(outcomes)){
     names(mod_summaries_work)[[pos + j]] <- paste0(outcome, "_", dataset)
     mod_summaries_work_test[[pos + j]] <- model_2
     names(mod_summaries_work_test)[[pos + j]] <- paste0(outcome, "_", dataset)
-    # compute R^2
-    pred_work <- cbind(subset(get(dataset), !is.na(get(outcome)) & !is.na(working), 
-                       select = c(pid, time, get(outcome))), 
-                       pred_outcome = predict(model_1, re.form=NA)) # model outcome values (work)
-    r2_work <- cor(pred_work[outcomes[i]], pred_work$pred_outcome)^2
-    r2_work_name <- paste0("r2_", outcome, "_", dataset, "_work")
-    eval(call("<-", as.name(r2_work_name), r2_work))
   }
 }
 
@@ -831,13 +813,6 @@ for (i in 1:length(outcomes)){
     names(mod_summaries_care)[[pos + j]] <- paste0(outcome, "_", dataset)
     mod_summaries_care_test[[pos + j]] <- model_2
     names(mod_summaries_care_test)[[pos + j]] <- paste0(outcome, "_", dataset)
-    # compute R^2
-    pred_care <- cbind(subset(get(dataset), !is.na(get(outcome)) & !is.na(caring), 
-                              select = c(pid, time, get(outcome))), 
-                       pred_outcome = predict(model_1, re.form=NA)) # model outcome values (care)
-    r2_care <- cor(pred_care[outcomes[i]], pred_care$pred_outcome)^2
-    r2_care_name <- paste0("r2_", outcome, "_", dataset) # data set name already includes '_care'
-    eval(call("<-", as.name(r2_care_name), r2_care))
   }
 }
 
@@ -1754,7 +1729,7 @@ for (i in 1:length(outcomes)){
 ```
 
 (ref:H1-agree-tab-cap) Fixed Effects of `r df_outcomes["agree", "maj"]` Over the Transition to Grandparenthood.
-(ref:H1-agree-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. $R^2_{M1a} =$ `r printnum(r2_agree_lissanalysis_parents)`, $R^2_{M1b} =$ `r printnum(r2_agree_lissanalysis_nonparents)`, $R^2_{M2a} =$ `r printnum(r2_agree_hrsanalysis_parents)`, $R^2_{M2b} =$ `r printnum(r2_agree_hrsanalysis_nonparents)`.
+(ref:H1-agree-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.
 
 ```{r H1-agree-tab, results="asis"}
 agree_liss_df <- 
@@ -1811,13 +1786,13 @@ apa_table(
   , escape = F
   , landscape = T
   , font_size = "footnotesize"
-  , stub_indents = list("LISS (M1a, M1b)" = 1:9, "HRS (M2a, M2b)" = 10:18)
+  , stub_indents = list("LISS" = 1:9, "HRS" = 10:18)
   , placement = "H"
 )
 ```
 
 (ref:H1-agree-contrasts-cap) Linear Contrasts for `r df_outcomes["agree", "maj"]`.
-(ref:H1-agree-contrasts-note) The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the *linearHypothesis* function from the *car* R package [@car2019] based on the models from Table \@ref(tab:H1-agree-tab).
+(ref:H1-agree-contrasts-note) The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the *linearHypothesis* function from the *car* R package [@car2019] based on the models from Table \@ref(tab:H1-agree-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-agree-contrasts, results="asis"}
 tabcon_agree <- rbind(
@@ -1857,8 +1832,8 @@ apa_table(
   , caption = "(ref:H1-agree-contrasts-cap)"
   , note = "(ref:H1-agree-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
@@ -1874,7 +1849,7 @@ apa_table(
 ```
 
 (ref:H1-agree-gender-tab-cap) Fixed Effects of `r df_outcomes["agree", "maj"]` Over the Transition to Grandparenthood Moderated by Gender.
-(ref:H1-agree-gender-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. $R^2_{M1a} =$ `r printnum(r2_agree_lissanalysis_parents_gender)`, $R^2_{M1b} =$ `r printnum(r2_agree_lissanalysis_nonparents_gender)`, $R^2_{M2a} =$ `r printnum(r2_agree_hrsanalysis_parents_gender)`, $R^2_{M2b} =$ `r printnum(r2_agree_hrsanalysis_nonparents_gender)`.
+(ref:H1-agree-gender-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.
 
 ```{r H1-agree-gender-tab, results="asis"}
 agree_gender_liss_df <- 
@@ -1947,13 +1922,13 @@ apa_table(
   , escape = F
   , landscape = T
   , font_size = "footnotesize"
-  , stub_indents = list("LISS (M1a, M1b)" = 1:17, "HRS (M2a, M2b)" = 18:34)
+  , stub_indents = list("LISS" = 1:17, "HRS" = 18:34)
   , placement = "H"
 )
 ```
 
 (ref:H1-agree-gender-contrasts-cap) Linear Contrasts for `r df_outcomes["agree", "maj"]` (Moderated by Gender).
-(ref:H1-agree-gender-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-agree-gender-tab).
+(ref:H1-agree-gender-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-agree-gender-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-agree-gender-contrasts, results="asis"}
 tabcon_agree_gender <- rbind(
@@ -2032,8 +2007,8 @@ apa_table(
   , caption = "(ref:H1-agree-gender-contrasts-cap)"
   , note = "(ref:H1-agree-gender-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
@@ -2049,7 +2024,7 @@ apa_table(
 ```
 
 (ref:H1-agree-work-tab-cap) Fixed Effects of `r df_outcomes["agree", "maj"]` Over the Transition to Grandparenthood Moderated by Performing Paid Work.
-(ref:H1-agree-work-tab-note) Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. $R^2_{M2a} =$ `r printnum(r2_agree_hrsanalysis_parents_work)`, $R^2_{M2b} =$ `r printnum(r2_agree_hrsanalysis_nonparents_work)`.
+(ref:H1-agree-work-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $working=1$ indicates being employed in paid work.
 
 ```{r H1-agree-work-tab, results="asis"}
 agree_work_df <- 
@@ -2100,7 +2075,7 @@ apa_table(
 ```
 
 (ref:H1-agree-work-contrasts-cap) Linear Contrasts for `r df_outcomes["agree", "maj"]` (Moderated by Paid Work; only HRS).
-(ref:H1-agree-work-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-agree-work-tab).
+(ref:H1-agree-work-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-agree-work-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-agree-work-contrasts, results="asis"}
 tabcon_agree_work <- cbind(contrasts_work_agree[[1]][, c(1, 2, 4)],  # parents
@@ -2144,8 +2119,8 @@ apa_table(
   , caption = "(ref:H1-agree-work-contrasts-cap)"
   , note = "(ref:H1-agree-work-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
@@ -2159,7 +2134,7 @@ apa_table(
 ```
 
 (ref:H1-agree-care-tab-cap) Fixed Effects of `r df_outcomes["agree", "maj"]` Over the Transition to Grandparenthood Moderated by Grandchild Care.
-(ref:H1-agree-care-tab-note) Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. $R^2_{M2a} =$ `r printnum(r2_agree_hrsanalysis_care_parents)`, $R^2_{M2b} =$ `r printnum(r2_agree_hrsanalysis_care_nonparents)`. $caring=1$ indicates more than 100 hours of grandchild care since the last assessment.
+(ref:H1-agree-care-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $caring=1$ indicates more than 100 hours of grandchild care since the last assessment.
 
 ```{r H1-agree-care-tab, results="asis"}
 agree_care_df <- 
@@ -2201,7 +2176,7 @@ apa_table(
 ```
 
 (ref:H1-agree-care-contrasts-cap) Linear Contrasts for `r df_outcomes["agree", "maj"]` (Moderated by Grandchild Care; only HRS).
-(ref:H1-agree-care-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-agree-care-tab).
+(ref:H1-agree-care-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-agree-care-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-agree-care-contrasts, results="asis"}
 tabcon_agree_care <- cbind(contrasts_care_agree[[1]][, c(1, 2, 4)],  # parents
@@ -2218,8 +2193,8 @@ apa_table(
   , caption = "(ref:H1-agree-care-contrasts-cap)"
   , note = "(ref:H1-agree-care-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
@@ -2233,7 +2208,7 @@ apa_table(
 ```
 
 (ref:H1-con-tab-cap) Fixed Effects of `r df_outcomes["con", "maj"]` Over the Transition to Grandparenthood.
-(ref:H1-con-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. $R^2_{M1a} =$ `r printnum(r2_con_lissanalysis_parents)`, $R^2_{M1b} =$ `r printnum(r2_con_lissanalysis_nonparents)`, $R^2_{M2a} =$ `r printnum(r2_con_hrsanalysis_parents)`, $R^2_{M2b} =$ `r printnum(r2_con_hrsanalysis_nonparents)`.
+(ref:H1-con-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.
 
 ```{r H1-con-tab, results="asis"}
 con_liss_df <- 
@@ -2290,13 +2265,13 @@ apa_table(
   , escape = F
   , landscape = T
   , font_size = "footnotesize"
-  , stub_indents = list("LISS (M1a, M1b)" = 1:9, "HRS (M2a, M2b)" = 10:18)
+  , stub_indents = list("LISS" = 1:9, "HRS" = 10:18)
   , placement = "H"
 )
 ```
 
 (ref:H1-con-contrasts-cap) Linear Contrasts for `r df_outcomes["con", "maj"]`.
-(ref:H1-con-contrasts-note) The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the *linearHypothesis* function from the *car* R package [@car2019] based on the models from Table \@ref(tab:H1-con-tab).
+(ref:H1-con-contrasts-note) The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the *linearHypothesis* function from the *car* R package [@car2019] based on the models from Table \@ref(tab:H1-con-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-con-contrasts, results="asis"}
 tabcon_con <- rbind(
@@ -2336,8 +2311,8 @@ apa_table(
   , caption = "(ref:H1-con-contrasts-cap)"
   , note = "(ref:H1-con-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
@@ -2353,7 +2328,7 @@ apa_table(
 ```
 
 (ref:H1-con-gender-tab-cap) Fixed Effects of `r df_outcomes["con", "maj"]` Over the Transition to Grandparenthood Moderated by Gender.
-(ref:H1-con-gender-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. $R^2_{M1a} =$ `r printnum(r2_con_lissanalysis_parents_gender)`, $R^2_{M1b} =$ `r printnum(r2_con_lissanalysis_nonparents_gender)`, $R^2_{M2a} =$ `r printnum(r2_con_hrsanalysis_parents_gender)`, $R^2_{M2b} =$ `r printnum(r2_con_hrsanalysis_nonparents_gender)`.
+(ref:H1-con-gender-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.
 
 ```{r H1-con-gender-tab, results="asis"}
 con_gender_liss_df <- 
@@ -2426,13 +2401,13 @@ apa_table(
   , escape = F
   , landscape = T
   , font_size = "footnotesize"
-  , stub_indents = list("LISS (M1a, M1b)" = 1:17, "HRS (M2a, M2b)" = 18:34)
+  , stub_indents = list("LISS" = 1:17, "HRS" = 18:34)
   , placement = "H"
 )
 ```
 
 (ref:H1-con-gender-contrasts-cap) Linear Contrasts for `r df_outcomes["con", "maj"]` (Moderated by Gender).
-(ref:H1-con-gender-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-con-gender-tab).
+(ref:H1-con-gender-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-con-gender-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-con-gender-contrasts, results="asis"}
 tabcon_con_gender <- rbind(
@@ -2511,8 +2486,8 @@ apa_table(
   , caption = "(ref:H1-con-gender-contrasts-cap)"
   , note = "(ref:H1-con-gender-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
@@ -2528,7 +2503,7 @@ apa_table(
 ```
 
 (ref:H1-con-work-tab-cap) Fixed Effects of `r df_outcomes["con", "maj"]` Over the Transition to Grandparenthood Moderated by Performing Paid Work.
-(ref:H1-con-work-tab-note) Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. $R^2_{M2a} =$ `r printnum(r2_con_hrsanalysis_parents_work)`, $R^2_{M2b} =$ `r printnum(r2_con_hrsanalysis_nonparents_work)`.
+(ref:H1-con-work-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $working=1$ indicates being employed in paid work.
 
 ```{r H1-con-work-tab, results="asis"}
 con_work_df <- 
@@ -2579,7 +2554,7 @@ apa_table(
 ```
 
 (ref:H1-con-work-contrasts-cap) Linear Contrasts for `r df_outcomes["con", "maj"]` (Moderated by Paid Work; only HRS).
-(ref:H1-con-work-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-con-work-tab).
+(ref:H1-con-work-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-con-work-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-con-work-contrasts, results="asis"}
 tabcon_con_work <- cbind(contrasts_work_con[[1]][, c(1, 2, 4)],  # parents
@@ -2623,8 +2598,8 @@ apa_table(
   , caption = "(ref:H1-con-work-contrasts-cap)"
   , note = "(ref:H1-con-work-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
@@ -2638,7 +2613,7 @@ apa_table(
 ```
 
 (ref:H1-con-care-tab-cap) Fixed Effects of `r df_outcomes["con", "maj"]` Over the Transition to Grandparenthood Moderated by Grandchild Care.
-(ref:H1-con-care-tab-note) Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. $R^2_{M2a} =$ `r printnum(r2_con_hrsanalysis_care_parents)`, $R^2_{M2b} =$ `r printnum(r2_con_hrsanalysis_care_nonparents)`. $caring=1$ indicates more than 100 hours of grandchild care since the last assessment.
+(ref:H1-con-care-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $caring=1$ indicates more than 100 hours of grandchild care since the last assessment.
 
 ```{r H1-con-care-tab, results="asis"}
 con_care_df <- 
@@ -2680,7 +2655,7 @@ apa_table(
 ```
 
 (ref:H1-con-care-contrasts-cap) Linear Contrasts for `r df_outcomes["con", "maj"]` (Moderated by Grandchild Care; only HRS).
-(ref:H1-con-care-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-con-care-tab).
+(ref:H1-con-care-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-con-care-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-con-care-contrasts, results="asis"}
 tabcon_con_care <- cbind(contrasts_care_con[[1]][, c(1, 2, 4)],  # parents
@@ -2697,8 +2672,8 @@ apa_table(
   , caption = "(ref:H1-con-care-contrasts-cap)"
   , note = "(ref:H1-con-care-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
@@ -2712,7 +2687,7 @@ apa_table(
 ```
 
 (ref:H1-extra-tab-cap) Fixed Effects of `r df_outcomes["extra", "maj"]` Over the Transition to Grandparenthood.
-(ref:H1-extra-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. $R^2_{M1a} =$ `r printnum(r2_extra_lissanalysis_parents)`, $R^2_{M1b} =$ `r printnum(r2_extra_lissanalysis_nonparents)`, $R^2_{M2a} =$ `r printnum(r2_extra_hrsanalysis_parents)`, $R^2_{M2b} =$ `r printnum(r2_extra_hrsanalysis_nonparents)`.
+(ref:H1-extra-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.
 
 ```{r H1-extra-tab, results="asis"}
 extra_liss_df <- 
@@ -2769,13 +2744,13 @@ apa_table(
   , escape = F
   , landscape = T
   , font_size = "footnotesize"
-  , stub_indents = list("LISS (M1a, M1b)" = 1:9, "HRS (M2a, M2b)" = 10:18)
+  , stub_indents = list("LISS" = 1:9, "HRS" = 10:18)
   , placement = "H"
 )
 ```
 
 (ref:H1-extra-contrasts-cap) Linear Contrasts for `r df_outcomes["extra", "maj"]`.
-(ref:H1-extra-contrasts-note) The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the *linearHypothesis* function from the *car* R package [@car2019] based on the models from Table \@ref(tab:H1-extra-tab).
+(ref:H1-extra-contrasts-note) The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the *linearHypothesis* function from the *car* R package [@car2019] based on the models from Table \@ref(tab:H1-extra-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-extra-contrasts, results="asis"}
 tabcon_extra <- rbind(
@@ -2815,8 +2790,8 @@ apa_table(
   , caption = "(ref:H1-extra-contrasts-cap)"
   , note = "(ref:H1-extra-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
@@ -2832,7 +2807,7 @@ apa_table(
 ```
 
 (ref:H1-extra-gender-tab-cap) Fixed Effects of `r df_outcomes["extra", "maj"]` Over the Transition to Grandparenthood Moderated by Gender.
-(ref:H1-extra-gender-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. $R^2_{M1a} =$ `r printnum(r2_extra_lissanalysis_parents_gender)`, $R^2_{M1b} =$ `r printnum(r2_extra_lissanalysis_nonparents_gender)`, $R^2_{M2a} =$ `r printnum(r2_extra_hrsanalysis_parents_gender)`, $R^2_{M2b} =$ `r printnum(r2_extra_hrsanalysis_nonparents_gender)`.
+(ref:H1-extra-gender-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.
 
 ```{r H1-extra-gender-tab, results="asis"}
 extra_gender_liss_df <- 
@@ -2905,13 +2880,13 @@ apa_table(
   , escape = F
   , landscape = T
   , font_size = "footnotesize"
-  , stub_indents = list("LISS (M1a, M1b)" = 1:17, "HRS (M2a, M2b)" = 18:34)
+  , stub_indents = list("LISS" = 1:17, "HRS" = 18:34)
   , placement = "H"
 )
 ```
 
 (ref:H1-extra-gender-contrasts-cap) Linear Contrasts for `r df_outcomes["extra", "maj"]` (Moderated by Gender).
-(ref:H1-extra-gender-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-extra-gender-tab).
+(ref:H1-extra-gender-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-extra-gender-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-extra-gender-contrasts, results="asis"}
 tabcon_extra_gender <- rbind(
@@ -2990,8 +2965,8 @@ apa_table(
   , caption = "(ref:H1-extra-gender-contrasts-cap)"
   , note = "(ref:H1-extra-gender-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
@@ -3007,7 +2982,7 @@ apa_table(
 ```
 
 (ref:H1-extra-work-tab-cap) Fixed Effects of `r df_outcomes["extra", "maj"]` Over the Transition to Grandparenthood Moderated by Performing Paid Work.
-(ref:H1-extra-work-tab-note) Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. $R^2_{M2a} =$ `r printnum(r2_extra_hrsanalysis_parents_work)`, $R^2_{M2b} =$ `r printnum(r2_extra_hrsanalysis_nonparents_work)`.
+(ref:H1-extra-work-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $working=1$ indicates being employed in paid work.
 
 ```{r H1-extra-work-tab, results="asis"}
 extra_work_df <- 
@@ -3058,7 +3033,7 @@ apa_table(
 ```
 
 (ref:H1-extra-work-contrasts-cap) Linear Contrasts for `r df_outcomes["extra", "maj"]` (Moderated by Paid Work; only HRS).
-(ref:H1-extra-work-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-extra-work-tab).
+(ref:H1-extra-work-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-extra-work-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-extra-work-contrasts, results="asis"}
 tabcon_extra_work <- cbind(contrasts_work_extra[[1]][, c(1, 2, 4)],  # parents
@@ -3102,8 +3077,8 @@ apa_table(
   , caption = "(ref:H1-extra-work-contrasts-cap)"
   , note = "(ref:H1-extra-work-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
@@ -3117,7 +3092,7 @@ apa_table(
 ```
 
 (ref:H1-extra-care-tab-cap) Fixed Effects of `r df_outcomes["extra", "maj"]` Over the Transition to Grandparenthood Moderated by Grandchild Care.
-(ref:H1-extra-care-tab-note) Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. $R^2_{M2a} =$ `r printnum(r2_extra_hrsanalysis_care_parents)`, $R^2_{M2b} =$ `r printnum(r2_extra_hrsanalysis_care_nonparents)`. $caring=1$ indicates more than 100 hours of grandchild care since the last assessment.
+(ref:H1-extra-care-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $caring=1$ indicates more than 100 hours of grandchild care since the last assessment.
 
 ```{r H1-extra-care-tab, results="asis"}
 extra_care_df <- 
@@ -3159,7 +3134,7 @@ apa_table(
 ```
 
 (ref:H1-extra-care-contrasts-cap) Linear Contrasts for `r df_outcomes["extra", "maj"]` (Moderated by Grandchild Care; only HRS).
-(ref:H1-extra-care-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-extra-care-tab).
+(ref:H1-extra-care-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-extra-care-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-extra-care-contrasts, results="asis"}
 tabcon_extra_care <- cbind(contrasts_care_extra[[1]][, c(1, 2, 4)],  # parents
@@ -3176,8 +3151,8 @@ apa_table(
   , caption = "(ref:H1-extra-care-contrasts-cap)"
   , note = "(ref:H1-extra-care-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
@@ -3191,7 +3166,7 @@ apa_table(
 ```
 
 (ref:H1-neur-tab-cap) Fixed Effects of `r df_outcomes["neur", "maj"]` Over the Transition to Grandparenthood.
-(ref:H1-neur-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. $R^2_{M1a} =$ `r printnum(r2_neur_lissanalysis_parents)`, $R^2_{M1b} =$ `r printnum(r2_neur_lissanalysis_nonparents)`, $R^2_{M2a} =$ `r printnum(r2_neur_hrsanalysis_parents)`, $R^2_{M2b} =$ `r printnum(r2_neur_hrsanalysis_nonparents)`.
+(ref:H1-neur-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.
 
 ```{r H1-neur-tab, results="asis"}
 neur_liss_df <- 
@@ -3248,13 +3223,13 @@ apa_table(
   , escape = F
   , landscape = T
   , font_size = "footnotesize"
-  , stub_indents = list("LISS (M1a, M1b)" = 1:9, "HRS (M2a, M2b)" = 10:18)
+  , stub_indents = list("LISS" = 1:9, "HRS" = 10:18)
   , placement = "H"
 )
 ```
 
 (ref:H1-neur-contrasts-cap) Linear Contrasts for `r df_outcomes["neur", "maj"]`.
-(ref:H1-neur-contrasts-note) The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the *linearHypothesis* function from the *car* R package [@car2019] based on the models from Table \@ref(tab:H1-neur-tab).
+(ref:H1-neur-contrasts-note) The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the *linearHypothesis* function from the *car* R package [@car2019] based on the models from Table \@ref(tab:H1-neur-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-neur-contrasts, results="asis"}
 tabcon_neur <- rbind(
@@ -3294,8 +3269,8 @@ apa_table(
   , caption = "(ref:H1-neur-contrasts-cap)"
   , note = "(ref:H1-neur-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
@@ -3311,7 +3286,7 @@ apa_table(
 ```
 
 (ref:H1-neur-gender-tab-cap) Fixed Effects of `r df_outcomes["neur", "maj"]` Over the Transition to Grandparenthood Moderated by Gender.
-(ref:H1-neur-gender-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. $R^2_{M1a} =$ `r printnum(r2_neur_lissanalysis_parents_gender)`, $R^2_{M1b} =$ `r printnum(r2_neur_lissanalysis_nonparents_gender)`, $R^2_{M2a} =$ `r printnum(r2_neur_hrsanalysis_parents_gender)`, $R^2_{M2b} =$ `r printnum(r2_neur_hrsanalysis_nonparents_gender)`.
+(ref:H1-neur-gender-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.
 
 ```{r H1-neur-gender-tab, results="asis"}
 neur_gender_liss_df <- 
@@ -3384,13 +3359,13 @@ apa_table(
   , escape = F
   , landscape = T
   , font_size = "footnotesize"
-  , stub_indents = list("LISS (M1a, M1b)" = 1:17, "HRS (M2a, M2b)" = 18:34)
+  , stub_indents = list("LISS" = 1:17, "HRS" = 18:34)
   , placement = "H"
 )
 ```
 
 (ref:H1-neur-gender-contrasts-cap) Linear Contrasts for `r df_outcomes["neur", "maj"]` (Moderated by Gender).
-(ref:H1-neur-gender-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-neur-gender-tab).
+(ref:H1-neur-gender-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-neur-gender-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-neur-gender-contrasts, results="asis"}
 tabcon_neur_gender <- rbind(
@@ -3469,8 +3444,8 @@ apa_table(
   , caption = "(ref:H1-neur-gender-contrasts-cap)"
   , note = "(ref:H1-neur-gender-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
@@ -3486,7 +3461,7 @@ apa_table(
 ```
 
 (ref:H1-neur-work-tab-cap) Fixed Effects of `r df_outcomes["neur", "maj"]` Over the Transition to Grandparenthood Moderated by Performing Paid Work.
-(ref:H1-neur-work-tab-note) Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. $R^2_{M2a} =$ `r printnum(r2_neur_hrsanalysis_parents_work)`, $R^2_{M2b} =$ `r printnum(r2_neur_hrsanalysis_nonparents_work)`.
+(ref:H1-neur-work-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $working=1$ indicates being employed in paid work.
 
 ```{r H1-neur-work-tab, results="asis"}
 neur_work_df <- 
@@ -3537,7 +3512,7 @@ apa_table(
 ```
 
 (ref:H1-neur-work-contrasts-cap) Linear Contrasts for `r df_outcomes["neur", "maj"]` (Moderated by Paid Work; only HRS).
-(ref:H1-neur-work-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-neur-work-tab).
+(ref:H1-neur-work-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-neur-work-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-neur-work-contrasts, results="asis"}
 tabcon_neur_work <- cbind(contrasts_work_neur[[1]][, c(1, 2, 4)],  # parents
@@ -3581,8 +3556,8 @@ apa_table(
   , caption = "(ref:H1-neur-work-contrasts-cap)"
   , note = "(ref:H1-neur-work-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
@@ -3596,7 +3571,7 @@ apa_table(
 ```
 
 (ref:H1-neur-care-tab-cap) Fixed Effects of `r df_outcomes["neur", "maj"]` Over the Transition to Grandparenthood Moderated by Grandchild Care.
-(ref:H1-neur-care-tab-note) Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. $R^2_{M2a} =$ `r printnum(r2_neur_hrsanalysis_care_parents)`, $R^2_{M2b} =$ `r printnum(r2_neur_hrsanalysis_care_nonparents)`. $caring=1$ indicates more than 100 hours of grandchild care since the last assessment.
+(ref:H1-neur-care-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $caring=1$ indicates more than 100 hours of grandchild care since the last assessment.
 
 ```{r H1-neur-care-tab, results="asis"}
 neur_care_df <- 
@@ -3638,7 +3613,7 @@ apa_table(
 ```
 
 (ref:H1-neur-care-contrasts-cap) Linear Contrasts for `r df_outcomes["neur", "maj"]` (Moderated by Grandchild Care; only HRS).
-(ref:H1-neur-care-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-neur-care-tab).
+(ref:H1-neur-care-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-neur-care-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-neur-care-contrasts, results="asis"}
 tabcon_neur_care <- cbind(contrasts_care_neur[[1]][, c(1, 2, 4)],  # parents
@@ -3655,8 +3630,8 @@ apa_table(
   , caption = "(ref:H1-neur-care-contrasts-cap)"
   , note = "(ref:H1-neur-care-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
@@ -3670,7 +3645,7 @@ apa_table(
 ```
 
 (ref:H1-open-tab-cap) Fixed Effects of `r df_outcomes["open", "maj"]` Over the Transition to Grandparenthood.
-(ref:H1-open-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. $R^2_{M1a} =$ `r printnum(r2_open_lissanalysis_parents)`, $R^2_{M1b} =$ `r printnum(r2_open_lissanalysis_nonparents)`, $R^2_{M2a} =$ `r printnum(r2_open_hrsanalysis_parents)`, $R^2_{M2b} =$ `r printnum(r2_open_hrsanalysis_nonparents)`.
+(ref:H1-open-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.
 
 ```{r H1-open-tab, results="asis"}
 open_liss_df <- 
@@ -3727,13 +3702,13 @@ apa_table(
   , escape = F
   , landscape = T
   , font_size = "footnotesize"
-  , stub_indents = list("LISS (M1a, M1b)" = 1:9, "HRS (M2a, M2b)" = 10:18)
+  , stub_indents = list("LISS" = 1:9, "HRS" = 10:18)
   , placement = "H"
 )
 ```
 
 (ref:H1-open-contrasts-cap) Linear Contrasts for `r df_outcomes["open", "maj"]`.
-(ref:H1-open-contrasts-note) The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the *linearHypothesis* function from the *car* R package [@car2019] based on the models from Table \@ref(tab:H1-open-tab).
+(ref:H1-open-contrasts-note) The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the *linearHypothesis* function from the *car* R package [@car2019] based on the models from Table \@ref(tab:H1-open-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-open-contrasts, results="asis"}
 tabcon_open <- rbind(
@@ -3773,8 +3748,8 @@ apa_table(
   , caption = "(ref:H1-open-contrasts-cap)"
   , note = "(ref:H1-open-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
@@ -3790,7 +3765,7 @@ apa_table(
 ```
 
 (ref:H1-open-gender-tab-cap) Fixed Effects of `r df_outcomes["open", "maj"]` Over the Transition to Grandparenthood Moderated by Gender.
-(ref:H1-open-gender-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. $R^2_{M1a} =$ `r printnum(r2_open_lissanalysis_parents_gender)`, $R^2_{M1b} =$ `r printnum(r2_open_lissanalysis_nonparents_gender)`, $R^2_{M2a} =$ `r printnum(r2_open_hrsanalysis_parents_gender)`, $R^2_{M2b} =$ `r printnum(r2_open_hrsanalysis_nonparents_gender)`.
+(ref:H1-open-gender-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.
 
 ```{r H1-open-gender-tab, results="asis"}
 open_gender_liss_df <- 
@@ -3863,13 +3838,13 @@ apa_table(
   , escape = F
   , landscape = T
   , font_size = "footnotesize"
-  , stub_indents = list("LISS (M1a, M1b)" = 1:17, "HRS (M2a, M2b)" = 18:34)
+  , stub_indents = list("LISS" = 1:17, "HRS" = 18:34)
   , placement = "H"
 )
 ```
 
 (ref:H1-open-gender-contrasts-cap) Linear Contrasts for `r df_outcomes["open", "maj"]` (Moderated by Gender).
-(ref:H1-open-gender-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-open-gender-tab).
+(ref:H1-open-gender-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-open-gender-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-open-gender-contrasts, results="asis"}
 tabcon_open_gender <- rbind(
@@ -3948,8 +3923,8 @@ apa_table(
   , caption = "(ref:H1-open-gender-contrasts-cap)"
   , note = "(ref:H1-open-gender-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
@@ -3965,7 +3940,7 @@ apa_table(
 ```
 
 (ref:H1-open-work-tab-cap) Fixed Effects of `r df_outcomes["open", "maj"]` Over the Transition to Grandparenthood Moderated by Performing Paid Work.
-(ref:H1-open-work-tab-note) Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. $R^2_{M2a} =$ `r printnum(r2_open_hrsanalysis_parents_work)`, $R^2_{M2b} =$ `r printnum(r2_open_hrsanalysis_nonparents_work)`.
+(ref:H1-open-work-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $working=1$ indicates being employed in paid work.
 
 ```{r H1-open-work-tab, results="asis"}
 open_work_df <- 
@@ -4016,7 +3991,7 @@ apa_table(
 ```
 
 (ref:H1-open-work-contrasts-cap) Linear Contrasts for `r df_outcomes["open", "maj"]` (Moderated by Paid Work; only HRS).
-(ref:H1-open-work-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-open-work-tab).
+(ref:H1-open-work-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-open-work-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-open-work-contrasts, results="asis"}
 tabcon_open_work <- cbind(contrasts_work_open[[1]][, c(1, 2, 4)],  # parents
@@ -4060,8 +4035,8 @@ apa_table(
   , caption = "(ref:H1-open-work-contrasts-cap)"
   , note = "(ref:H1-open-work-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
@@ -4075,7 +4050,7 @@ apa_table(
 ```
 
 (ref:H1-open-care-tab-cap) Fixed Effects of `r df_outcomes["open", "maj"]` Over the Transition to Grandparenthood Moderated by Grandchild Care.
-(ref:H1-open-care-tab-note) Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. $R^2_{M2a} =$ `r printnum(r2_open_hrsanalysis_care_parents)`, $R^2_{M2b} =$ `r printnum(r2_open_hrsanalysis_care_nonparents)`. $caring=1$ indicates more than 100 hours of grandchild care since the last assessment.
+(ref:H1-open-care-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $caring=1$ indicates more than 100 hours of grandchild care since the last assessment.
 
 ```{r H1-open-care-tab, results="asis"}
 open_care_df <- 
@@ -4117,7 +4092,7 @@ apa_table(
 ```
 
 (ref:H1-open-care-contrasts-cap) Linear Contrasts for `r df_outcomes["open", "maj"]` (Moderated by Grandchild Care; only HRS).
-(ref:H1-open-care-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-open-care-tab).
+(ref:H1-open-care-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-open-care-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-open-care-contrasts, results="asis"}
 tabcon_open_care <- cbind(contrasts_care_open[[1]][, c(1, 2, 4)],  # parents
@@ -4134,8 +4109,8 @@ apa_table(
   , caption = "(ref:H1-open-care-contrasts-cap)"
   , note = "(ref:H1-open-care-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
@@ -4149,7 +4124,7 @@ apa_table(
 ```
 
 (ref:H1-swls-tab-cap) Fixed Effects of `r df_outcomes["swls", "maj"]` Over the Transition to Grandparenthood.
-(ref:H1-swls-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. $R^2_{M1a} =$ `r printnum(r2_swls_lissanalysis_parents)`, $R^2_{M1b} =$ `r printnum(r2_swls_lissanalysis_nonparents)`, $R^2_{M2a} =$ `r printnum(r2_swls_hrsanalysis_parents)`, $R^2_{M2b} =$ `r printnum(r2_swls_hrsanalysis_nonparents)`.
+(ref:H1-swls-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.
 
 ```{r H1-swls-tab, results="asis"}
 swls_liss_df <- 
@@ -4206,13 +4181,13 @@ apa_table(
   , escape = F
   , landscape = T
   , font_size = "footnotesize"
-  , stub_indents = list("LISS (M1a, M1b)" = 1:9, "HRS (M2a, M2b)" = 10:18)
+  , stub_indents = list("LISS" = 1:9, "HRS" = 10:18)
   , placement = "H"
 )
 ```
 
 (ref:H1-swls-contrasts-cap) Linear Contrasts for `r df_outcomes["swls", "maj"]`.
-(ref:H1-swls-contrasts-note) The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the *linearHypothesis* function from the *car* R package [@car2019] based on the models from Table \@ref(tab:H1-swls-tab).
+(ref:H1-swls-contrasts-note) The linear contrasts are needed in cases where estimates of interest are represented by multiple fixed-effects coefficients and are computed using the *linearHypothesis* function from the *car* R package [@car2019] based on the models from Table \@ref(tab:H1-swls-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-swls-contrasts, results="asis"}
 tabcon_swls <- rbind(
@@ -4252,8 +4227,8 @@ apa_table(
   , caption = "(ref:H1-swls-contrasts-cap)"
   , note = "(ref:H1-swls-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
@@ -4269,7 +4244,7 @@ apa_table(
 ```
 
 (ref:H1-swls-gender-tab-cap) Fixed Effects of `r df_outcomes["swls", "maj"]` Over the Transition to Grandparenthood Moderated by Gender.
-(ref:H1-swls-gender-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls (models MXa) and with nonparent controls (models MXb). CI = confidence interval. $R^2_{M1a} =$ `r printnum(r2_swls_lissanalysis_parents_gender)`, $R^2_{M1b} =$ `r printnum(r2_swls_lissanalysis_nonparents_gender)`, $R^2_{M2a} =$ `r printnum(r2_swls_hrsanalysis_parents_gender)`, $R^2_{M2b} =$ `r printnum(r2_swls_hrsanalysis_nonparents_gender)`.
+(ref:H1-swls-gender-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.
 
 ```{r H1-swls-gender-tab, results="asis"}
 swls_gender_liss_df <- 
@@ -4342,13 +4317,13 @@ apa_table(
   , escape = F
   , landscape = T
   , font_size = "footnotesize"
-  , stub_indents = list("LISS (M1a, M1b)" = 1:17, "HRS (M2a, M2b)" = 18:34)
+  , stub_indents = list("LISS" = 1:17, "HRS" = 18:34)
   , placement = "H"
 )
 ```
 
 (ref:H1-swls-gender-contrasts-cap) Linear Contrasts for `r df_outcomes["swls", "maj"]` (Moderated by Gender).
-(ref:H1-swls-gender-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-swls-gender-tab).
+(ref:H1-swls-gender-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-swls-gender-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-swls-gender-contrasts, results="asis"}
 tabcon_swls_gender <- rbind(
@@ -4427,8 +4402,8 @@ apa_table(
   , caption = "(ref:H1-swls-gender-contrasts-cap)"
   , note = "(ref:H1-swls-gender-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
@@ -4444,7 +4419,7 @@ apa_table(
 ```
 
 (ref:H1-swls-work-tab-cap) Fixed Effects of `r df_outcomes["swls", "maj"]` Over the Transition to Grandparenthood Moderated by Performing Paid Work.
-(ref:H1-swls-work-tab-note) Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. $R^2_{M2a} =$ `r printnum(r2_swls_hrsanalysis_parents_work)`, $R^2_{M2b} =$ `r printnum(r2_swls_hrsanalysis_nonparents_work)`.
+(ref:H1-swls-work-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $working=1$ indicates being employed in paid work.
 
 ```{r H1-swls-work-tab, results="asis"}
 swls_work_df <- 
@@ -4495,7 +4470,7 @@ apa_table(
 ```
 
 (ref:H1-swls-work-contrasts-cap) Linear Contrasts for `r df_outcomes["swls", "maj"]` (Moderated by Paid Work; only HRS).
-(ref:H1-swls-work-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-swls-work-tab).
+(ref:H1-swls-work-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-swls-work-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-swls-work-contrasts, results="asis"}
 tabcon_swls_work <- cbind(contrasts_work_swls[[1]][, c(1, 2, 4)],  # parents
@@ -4539,8 +4514,8 @@ apa_table(
   , caption = "(ref:H1-swls-work-contrasts-cap)"
   , note = "(ref:H1-swls-work-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
@@ -4554,7 +4529,7 @@ apa_table(
 ```
 
 (ref:H1-swls-care-tab-cap) Fixed Effects of `r df_outcomes["swls", "maj"]` Over the Transition to Grandparenthood Moderated by Grandchild Care.
-(ref:H1-swls-care-tab-note) Two models were computed (only HRS): grandparents matched with parent controls (model M2a) and with nonparent controls (model M2b). CI = confidence interval. $R^2_{M2a} =$ `r printnum(r2_swls_hrsanalysis_care_parents)`, $R^2_{M2b} =$ `r printnum(r2_swls_hrsanalysis_care_nonparents)`. $caring=1$ indicates more than 100 hours of grandchild care since the last assessment.
+(ref:H1-swls-care-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $caring=1$ indicates more than 100 hours of grandchild care since the last assessment.
 
 ```{r H1-swls-care-tab, results="asis"}
 swls_care_df <- 
@@ -4596,7 +4571,7 @@ apa_table(
 ```
 
 (ref:H1-swls-care-contrasts-cap) Linear Contrasts for `r df_outcomes["swls", "maj"]` (Moderated by Grandchild Care; only HRS).
-(ref:H1-swls-care-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-swls-care-tab).
+(ref:H1-swls-care-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-swls-care-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
 ```{r H1-swls-care-contrasts, results="asis"}
 tabcon_swls_care <- cbind(contrasts_care_swls[[1]][, c(1, 2, 4)],  # parents
@@ -4613,8 +4588,8 @@ apa_table(
   , caption = "(ref:H1-swls-care-contrasts-cap)"
   , note = "(ref:H1-swls-care-contrasts-note)"
   , col.names = c("Linear Contrast", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$", 
-                  "$\\hat{\\gamma}$", "$\\chi^2$", "$p$")
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$", 
+                  "$\\hat{\\gamma}_{c}$", "$\\chi^2$", "$p$")
   , align = c("l", "r", "r", "r", "r", "r", "r")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
                        digits = c(2,2,2,3,2,2,3),
