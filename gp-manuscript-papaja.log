@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  1 JUL 2021 13:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  6 JUL 2021 17:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1556,306 +1556,407 @@ File: Figs/H1-swls-care-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-swls-care-fig-1.pdf>
 Package pdftex.def Info: Figs/H1-swls-care-fig-1.pdf  used on input line 158.
 (pdftex.def)             Requested size: 469.76265pt x 402.65372pt.
-)pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
- been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.3926 ... Material}\label{supplemental-material}}
-                                                   [1
+) [123
 
  <./Figs/H1-swls-care-fig-1.pdf>]
-Overfull \hbox (24.72507pt too wide) in paragraph at lines 3934--3966
+Overfull \hbox (24.72507pt too wide) in paragraph at lines 3935--3967
  [] 
+ []
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.3980 \begin{lltable}
+                       [1
+
+]pdfTeX warning (ext4): destination with the same identifier (name{table.2}) ha
+s been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.3991 \begin{longtable}{lccccccccccccc}
+                                        \noalign{\getlongtablewidth\global\L...
+
+Overfull \hbox (5.06787pt too wide) in paragraph at lines 3994--3994
+[] [] 
+ []
+
+
+Overfull \hbox (10.13573pt too wide) in alignment at lines 3991--4000
+ [] [] [] [] [] [] [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (5.06787pt too wide) in paragraph at lines 4001--4001
+[] [] 
+ []
+
+
+Overfull \hbox (10.13573pt too wide) in alignment at lines 4000--4007
+ [] [] [] [] [] [] [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (10.13573pt too wide) in alignment at lines 4007--4028
+ [] [] [] [] [] [] [] [] [] [] [] [] [] [] 
+ []
+
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10.95> on input line 4032.
+
+Overfull \hbox (10.13573pt too wide) in alignment at lines 4028--4033
+ [] [] [] [] [] [] [] [] [] [] [] [] [] [] 
  []
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.3979 \begin{lltable}
-                       [2
-
-]pdfTeX warning (ext4): destination with the same identifier (name{table.2}) ha
-s been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.3990 \begin{longtable}{lccccccccccccc}
-                                        \noalign{\getlongtablewidth\global\L...
-
-Overfull \hbox (5.06787pt too wide) in paragraph at lines 3993--3993
-[] [] 
- []
-
-
-Overfull \hbox (10.13573pt too wide) in alignment at lines 3990--3999
- [] [] [] [] [] [] [] [] [] [] [] [] [] [] 
- []
-
-
-Overfull \hbox (5.06787pt too wide) in paragraph at lines 4000--4000
-[] [] 
- []
-
-
-Overfull \hbox (10.13573pt too wide) in alignment at lines 3999--4006
- [] [] [] [] [] [] [] [] [] [] [] [] [] [] 
- []
-
-
-Overfull \hbox (10.13573pt too wide) in alignment at lines 4006--4027
- [] [] [] [] [] [] [] [] [] [] [] [] [] [] 
- []
-
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 4031.
-
-Overfull \hbox (10.13573pt too wide) in alignment at lines 4027--4032
- [] [] [] [] [] [] [] [] [] [] [] [] [] [] 
- []
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has 
-been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.4036 \end{lltable}
-                     [3
+l.4037 \end{lltable}
+                     [2
 
 ]pdfTeX warning (ext4): destination with the same identifier (name{table.3}) ha
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.4055 \begin{longtable}{lccccccccccccc}
+l.4056 \begin{longtable}{lccccccccccccc}
                                         \noalign{\getlongtablewidth\global\L...
-pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has 
+pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.4116 \end{longtable}
-                       [4
+l.4117 \end{longtable}
+                       [3
 
 
-]pdfTeX warning (ext4): destination with the same identifier (name{page.5}) has
+]pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.4120 \end{lltable}
-                     [5]pdfTeX warning (ext4): destination with the same identi
+l.4121 \end{lltable}
+                     [4]pdfTeX warning (ext4): destination with the same identi
 fier (name{table.4}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.4135 \begin{longtable}{lccccccccccccc}
+l.4136 \begin{longtable}{lccccccccccccc}
                                         \noalign{\getlongtablewidth\global\L...
-pdfTeX warning (ext4): destination with the same identifier (name{page.6}) has 
+pdfTeX warning (ext4): destination with the same identifier (name{page.5}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.4196 \end{longtable}
-                       [6
+l.4197 \end{longtable}
+                       [5
 
 
-]pdfTeX warning (ext4): destination with the same identifier (name{page.7}) has
+]pdfTeX warning (ext4): destination with the same identifier (name{page.6}) has
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.4200 \end{lltable}
-                     [7]pdfTeX warning (ext4): destination with the same identi
+l.4201 \end{lltable}
+                     [6]pdfTeX warning (ext4): destination with the same identi
 fier (name{table.5}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.4228 \begin{longtable}{lllrrrr}
+l.4229 \begin{longtable}{lllrrrr}
                                  \noalign{\getlongtablewidth\global\LTcapwid...
 
-Overfull \hbox (0.9331pt too wide) in alignment at lines 4228--4237
+Overfull \hbox (0.9331pt too wide) in alignment at lines 4229--4238
  [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (0.9331pt too wide) in alignment at lines 4237--4244
+Overfull \hbox (0.9331pt too wide) in alignment at lines 4238--4245
  [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (0.9331pt too wide) in alignment at lines 4244--4265
+Overfull \hbox (0.9331pt too wide) in alignment at lines 4245--4266
  [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (0.9331pt too wide) in alignment at lines 4265--4285
+Overfull \hbox (0.9331pt too wide) in alignment at lines 4266--4286
  [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (0.9331pt too wide) in alignment at lines 4285--4290
+Overfull \hbox (0.9331pt too wide) in alignment at lines 4286--4291
  [] [] [] [] [] [] [] 
  []
 
-pdfTeX warning (ext4): destination with the same identifier (name{page.8}) has 
+pdfTeX warning (ext4): destination with the same identifier (name{page.7}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.4290 \end{longtable}
-                       [8
+l.4291 \end{longtable}
+                       [7
 
 
-]pdfTeX warning (ext4): destination with the same identifier (name{page.9}) has
+]pdfTeX warning (ext4): destination with the same identifier (name{page.8}) has
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.4294 \end{lltable}
-                     [9]pdfTeX warning (ext4): destination with the same identi
+l.4295 \end{lltable}
+                     [8]pdfTeX warning (ext4): destination with the same identi
 fier (name{table.6}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.4314 \begin{longtable}{lllrrrr}
+l.4315 \begin{longtable}{lllrrrr}
                                  \noalign{\getlongtablewidth\global\LTcapwid...
 
-Overfull \hbox (1.54973pt too wide) in paragraph at lines 4317--4317
+Overfull \hbox (1.54973pt too wide) in paragraph at lines 4318--4318
 [] [] 
  []
 
 
-Overfull \hbox (3.09946pt too wide) in alignment at lines 4314--4323
+Overfull \hbox (3.09946pt too wide) in alignment at lines 4315--4324
  [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (1.54973pt too wide) in paragraph at lines 4324--4324
+Overfull \hbox (1.54973pt too wide) in paragraph at lines 4325--4325
 [] [] 
  []
 
 
-Overfull \hbox (3.09946pt too wide) in alignment at lines 4323--4330
+Overfull \hbox (3.09946pt too wide) in alignment at lines 4324--4331
  [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (3.09946pt too wide) in alignment at lines 4330--4351
+Overfull \hbox (3.09946pt too wide) in alignment at lines 4331--4352
  [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (3.09946pt too wide) in alignment at lines 4351--4371
+Overfull \hbox (3.09946pt too wide) in alignment at lines 4352--4372
  [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (3.09946pt too wide) in alignment at lines 4371--4386
+Overfull \hbox (3.09946pt too wide) in alignment at lines 4372--4387
  [] [] [] [] [] [] [] 
  []
 
-pdfTeX warning (ext4): destination with the same identifier (name{page.10}) has
- been already used, duplicate ignored
+pdfTeX warning (ext4): destination with the same identifier (name{page.9}) has 
+been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.4386 \end{longtable}
-                       [10
+l.4387 \end{longtable}
+                       [9
 
 
-]pdfTeX warning (ext4): destination with the same identifier (name{page.11}) ha
+]pdfTeX warning (ext4): destination with the same identifier (name{page.10}) ha
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.4390 \end{lltable}
-                     [11]pdfTeX warning (ext4): destination with the same ident
-ifier (name{page.12}) has been already used, duplicate ignored
+l.4391 \end{lltable}
+                     [10]pdfTeX warning (ext4): destination with the same ident
+ifier (name{table.7}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.4396 \newpage
-                [12
+l.4425 \begin{longtable}{lrrrrcrrrrc}
+                                     \noalign{\getlongtablewidth\global\LTca...
+pdfTeX warning (ext4): destination with the same identifier (name{page.11}) has
+ been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.4469 \end{lltable}
+                     [11
 
-]
-Underfull \vbox (badness 3977) has occurred while \output is active []
 
+]pdfTeX warning (ext4): destination with the same identifier (name{table.8}) ha
+s been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.4492 \begin{longtable}{lrrrrcrrrrc}
+                                     \noalign{\getlongtablewidth\global\LTca...
+pdfTeX warning (ext4): destination with the same identifier (name{page.12}) has
+ been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.4536 \end{lltable}
+                     [12
+
+
+]pdfTeX warning (ext4): destination with the same identifier (name{table.9}) ha
+s been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.4559 \begin{longtable}{lrrrrcrrrrc}
+                                     \noalign{\getlongtablewidth\global\LTca...
 pdfTeX warning (ext4): destination with the same identifier (name{page.13}) has
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.4437 
-        [13]pdfTeX warning (ext4): destination with the same identifier (name{p
-age.14}) has been already used, duplicate ignored
+l.4603 \end{lltable}
+                     [13
+
+
+]pdfTeX warning (ext4): destination with the same identifier (name{table.10}) h
+as been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.4468 ...ycle\_1.0.0 stringi\_1.5.3 yaml\_2.2.1\\
-                                                   [14]pdfTeX warning (ext4): d
-estination with the same identifier (name{page.15}) has been already used, dupl
+l.4626 \begin{longtable}{lrrrrcrrrrc}
+                                     \noalign{\getlongtablewidth\global\LTca...
+pdfTeX warning (ext4): destination with the same identifier (name{page.14}) has
+ been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.4670 \end{lltable}
+                     [14
+
+
+]pdfTeX warning (ext4): destination with the same identifier (name{table.11}) h
+as been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.4693 \begin{longtable}{lrrrrcrrrrc}
+                                     \noalign{\getlongtablewidth\global\LTca...
+pdfTeX warning (ext4): destination with the same identifier (name{page.15}) has
+ been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.4737 \end{lltable}
+                     [15
+
+
+]pdfTeX warning (ext4): destination with the same identifier (name{table.12}) h
+as been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.4760 \begin{longtable}{lrrrrcrrrrc}
+                                     \noalign{\getlongtablewidth\global\LTca...
+pdfTeX warning (ext4): destination with the same identifier (name{page.16}) has
+ been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.4804 \end{lltable}
+                     [16
+
+
+]pdfTeX warning (ext4): destination with the same identifier (name{table.13}) h
+as been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.4838 \begin{longtable}{lrrrrrrrr}
+                                   \noalign{\getlongtablewidth\global\LTcapw...
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.17}) has
+ been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.4874 \end{lltable}
+                     [17
+
+
+]pdfTeX warning (ext4): destination with the same identifier (name{page.18}) ha
+s been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.4874 \end{lltable}
+                     [18]pdfTeX warning (ext4): destination with the same ident
+ifier (name{page.19}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.4880 \newpage
+                [19
+
+]
+Underfull \vbox (badness 3977) has occurred while \output is active []
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.20}) has
+ been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.4921 
+        [20]pdfTeX warning (ext4): destination with the same identifier (name{p
+age.21}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.4952 ...ycle\_1.0.0 stringi\_1.5.3 yaml\_2.2.1\\
+                                                   [21]pdfTeX warning (ext4): d
+estination with the same identifier (name{page.22}) has been already used, dupl
 icate ignored
 <to be read again> 
                    \relax 
-l.4482 \newpage
-                [15]pdfTeX warning (ext4): destination with the same identifier
+l.4966 \newpage
+                [22]pdfTeX warning (ext4): destination with the same identifier
  (name{refs}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.4490 \hypertarget{refs}{}
+l.4974 \hypertarget{refs}{}
                            pdfTeX warning (ext4): destination with the same ide
 ntifier (name{ref-R-papaja}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.4495 \leavevmode\hypertarget{ref-R-papaja}{}
+l.4979 \leavevmode\hypertarget{ref-R-papaja}{}
                                               %pdfTeX warning (ext4): destinati
 on with the same identifier (name{ref-austinIntroductionPropensityScore2011}) h
 as been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.4499 ...austinIntroductionPropensityScore2011}{}
+l.4983 ...austinIntroductionPropensityScore2011}{}
                                                   %pdfTeX warning (ext4): desti
 nation with the same identifier (name{ref-R-lme4}) has been already used, dupli
 cate ignored
 <to be read again> 
                    \relax 
-l.4513 \leavevmode\hypertarget{ref-R-lme4}{}
+l.4997 \leavevmode\hypertarget{ref-R-lme4}{}
                                             %pdfTeX warning (ext4): destination
- with the same identifier (name{page.16}) has been already used, duplicate igno
+ with the same identifier (name{page.23}) has been already used, duplicate igno
 red
 <to be read again> 
                    \relax 
-l.4540 
-        [16]pdfTeX warning (ext4): destination with the same identifier (name{r
+l.5024 
+        [23]pdfTeX warning (ext4): destination with the same identifier (name{r
 ef-R-lmerTest}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.4564 \leavevmode\hypertarget{ref-R-lmerTest}{}
+l.5048 \leavevmode\hypertarget{ref-R-lmerTest}{}
                                                 %pdfTeX warning (ext4): destina
 tion with the same identifier (name{ref-R-base}) has been already used, duplica
 te ignored
 <to be read again> 
                    \relax 
-l.4595 \leavevmode\hypertarget{ref-R-base}{}
+l.5079 \leavevmode\hypertarget{ref-R-base}{}
                                             %pdfTeX warning (ext4): destination
- with the same identifier (name{page.17}) has been already used, duplicate igno
+ with the same identifier (name{page.24}) has been already used, duplicate igno
 red
 <to be read again> 
                    \relax 
-l.4599 
-        [17]pdfTeX warning (ext4): destination with the same identifier (name{r
+l.5083 
+        [24]pdfTeX warning (ext4): destination with the same identifier (name{r
 ef-stuartMatchingMethodsCausal2010}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.4605 ...t{ref-stuartMatchingMethodsCausal2010}{}
+l.5089 ...t{ref-stuartMatchingMethodsCausal2010}{}
                                                   %pdfTeX warning (ext4): desti
-nation with the same identifier (name{page.18}) has been already used, duplicat
+nation with the same identifier (name{page.25}) has been already used, duplicat
 e ignored
 <to be read again> 
                    \relax 
-l.4648 
-        [18] AED endfloat: Processing end Figures and TablespdfTeX warning (ext
-4): destination with the same identifier (name{page.19}) has been already used,
+l.5132 
+        [25] AED endfloat: Processing end Figures and TablespdfTeX warning (ext
+4): destination with the same identifier (name{page.26}) has been already used,
  duplicate ignored
 <to be read again> 
                    \relax 
-l.4673 \end{document}
-                      [19] (./gp-manuscript-papaja.aux)
+l.5157 \end{document}
+                      [26] (./gp-manuscript-papaja.aux)
 Package rerunfilecheck Info: File `gp-manuscript-papaja.out' has not changed.
 (rerunfilecheck)             Checksum: 021C0E3493E10C333CC96C2DF6511C4B;2582.
  ) 
 Here is how much of TeX's memory you used:
- 25551 strings out of 480962
- 465352 string characters out of 5906169
- 992263 words of memory out of 5000000
- 41782 multiletter control sequences out of 15000+600000
+ 25566 strings out of 480962
+ 465570 string characters out of 5906169
+ 993801 words of memory out of 5000000
+ 41796 multiletter control sequences out of 15000+600000
  496100 words of font info for 104 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 102i,12n,103p,2163b,764s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 102i,12n,103p,2163b,768s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{Hfootnote.12} has been referenced but does not ex
 ist, replaced by a fixed one
 
@@ -1911,10 +2012,10 @@ type1/public/lm/lmr8.pfb></Users/michaelkramer/Library/TinyTeX/texmf-dist/fonts
 nts/type1/public/lm/lmri12.pfb></Users/michaelkramer/Library/TinyTeX/texmf-dist
 /fonts/type1/public/lm/lmss8.pfb></Users/michaelkramer/Library/TinyTeX/texmf-di
 st/fonts/type1/public/lm/lmsy10.pfb>
-Output written on gp-manuscript-papaja.pdf (141 pages, 836514 bytes).
+Output written on gp-manuscript-papaja.pdf (149 pages, 857934 bytes).
 PDF statistics:
- 1561 PDF objects out of 1728 (max. 8388607)
- 1312 compressed objects within 14 object streams
- 440 named destinations out of 1000 (max. 500000)
+ 1595 PDF objects out of 1728 (max. 8388607)
+ 1331 compressed objects within 14 object streams
+ 441 named destinations out of 1000 (max. 500000)
  263 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1824,6 +1824,8 @@ m1 <- update(m1, agree ~ ., data = hrsanalysis_nonparents)
 
 summary(m1)
 
+ctrl <- lmerControl(maxIter = 10000, msMaxIter = 1000, niterEM = 1000, msMaxEval = 10000)
+
 m2 <- update(m1, agree ~ . -(1 | pid) +(1 + before | pid), data = hrsanalysis_nonparents)
 summary(m2)
 
@@ -1833,19 +1835,304 @@ summary(m2)
 
 anova_summaries <- list()
 
-# run models (save in list object)
 for (i in 1:length(outcomes)){
   outcome = outcomes[i]
   pos = seq(from = 0, to = 20, by = 4)[i]
   for (j in 1:length(datasets)){
     dataset = datasets[j]
-    # update basic models with random slopes (one at a time)
-    rs_before <- update(mod_summaries[[pos + j]], . ~ . -(1 | pid) +(1 + before | pid))
-    rs_after <-  update(mod_summaries[[pos + j]], . ~ . -(1 | pid) +(1 + after | pid))
-    rs_shift <-  update(mod_summaries[[pos + j]], . ~ . -(1 | pid) +(1 + shift | pid))
+    # update basic models with random slopes (one at a time) -> random slopes for pid (not hid)
+    rs_before <- update(mod_summaries[[pos + j]], . ~ . -(1 | pid) + (1 + before | pid), 
+                        control = lme4::lmerControl(optimizer="bobyqa")) # some nonconvergence with default opt
+    rs_after <-  update(mod_summaries[[pos + j]], . ~ . -(1 | pid) + (1 + after | pid), 
+                        control = lme4::lmerControl(optimizer="bobyqa"))
+    rs_shift <-  update(mod_summaries[[pos + j]], . ~ . -(1 | pid) + (1 + shift | pid), 
+                        control = lme4::lmerControl(optimizer="bobyqa"))
     # run anova() for model comparison
-    
-    anova_summaries[[pos + j]] <- model_1
-    names(anova_summaries)[[pos + j]] <- paste0(outcome, "_", dataset)
+    before_anov <- as.numeric(anova(mod_summaries[[pos + j]], rs_before)[2, c("Chisq", "Pr(>Chisq)")])
+    after_anov <-  as.numeric(anova(mod_summaries[[pos + j]], rs_after)[2, c("Chisq", "Pr(>Chisq)")])
+    shift_anov <-  as.numeric(anova(mod_summaries[[pos + j]], rs_shift)[2, c("Chisq", "Pr(>Chisq)")])
+    # together
+    comp_anov <- as.data.frame(rbind(before_anov, after_anov, shift_anov))
+    comp_anov <- comp_anov %>% mutate(
+      chi2 = printnum(V1),
+      p = scales::pvalue(V2, prefix = c("$p$ < ", "$p$ = ", "$p$ > ")),
+      ) %>% select(chi2, p)
+    comp_anov["p"] <- # remove "0" from the chr's
+      lapply(comp_anov["p"], gsub, pattern="0\\.", replacement="\\.")
+    rownames(comp_anov) <- c("before", "after", "shift")
+    # save in list object
+    anova_summaries[[pos + j]] <- comp_anov
+    names(anova_summaries)[[pos + j]] <- paste0(outcome, "_", dataset, "_comp")
   }
 }
+# all p < .001
+
+# heterogeneous variance models in 'nlme' (also possible in 'lme4' but we preregistered 'nlme')
+hetmod1 <- nlme::lme(swls ~ 0 + dummy(grandparent,"0") + dummy(grandparent,"1") + 
+                             time:dummy(grandparent,"0") + time:dummy(grandparent,"1"),
+                     random=list(pid = nlme::pdBlocked(list(nlme::pdSymm(~ 0 + dummy(grandparent,"0") +
+                                                                           time:dummy(grandparent,"0")),
+                                                            nlme::pdSymm(~ 0 + dummy(grandparent,"1") + 
+                                                                           time:dummy(grandparent,"1"))))), 
+                     data = hrsanalysis_parents, method = 'REML', na.action = 'na.omit')
+summary(hetmod1)
+VarCorr(hetmod1)
+
+hetmod1b <- lme4::lmer(swls ~ 0 + dummy(grandparent, "0") + dummy(grandparent, "1") + 
+                              time:dummy(grandparent, "0") + time:dummy(grandparent, "1") + 
+                              (0 + dummy(grandparent, "0") + time:dummy(grandparent, "0") | pid) + 
+                              (0 + dummy(grandparent, "1") + time:dummy(grandparent, "1") | pid) + (1 | hid),
+                            data = hrsanalysis_parents,
+                       control = lmerControl(optimizer="bobyqa"),
+                            REML = TRUE)
+summary(hetmod1b)
+VarCorr(hetmod1b)
+
+hetmod2 <- nlme::lme(swls ~ 0 + dummy(grandparent,"0") + dummy(grandparent,"1") + 
+                       time:dummy(grandparent,"0") + time:dummy(grandparent,"1"),
+                            random=list(pid = nlme::pdBlocked(list(nlme::pdSymm(~ 0 + dummy(grandparent,"0")),
+                                                                   nlme::pdSymm(~ 0 + dummy(grandparent,"1")),
+                                                                   nlme::pdSymm(~ 0 + time)))), 
+                            data = hrsanalysis_parents, method = 'REML', na.action = 'na.omit')
+summary(hetmod2)
+VarCorr(hetmod2)
+
+anova(hetmod1, hetmod2)
+
+m1 <- lme4::lmer(neur ~ 1 + pscore + before + after + shift + grandparent + 
+                   grandparent:before + grandparent:after + grandparent:shift + 
+                   (1 | pid), REML = FALSE, data = hrsanalysis_nonparents) 
+
+# heterogeneous variance models in 'nlme' (also possible in 'lme4' but we preregistered 'nlme')
+# same number of fixed effects just coded differently 
+hetmod3 <- nlme::lme(swls ~ 0 + pscore + dummy(grandparent,"0") + dummy(grandparent,"1") + 
+                       before:dummy(grandparent,"0") + before:dummy(grandparent,"1") +
+                       after:dummy(grandparent,"0") + after:dummy(grandparent,"1") +
+                       shift:dummy(grandparent,"0") + shift:dummy(grandparent,"1"),
+                     random=list(pid = nlme::pdBlocked(list(nlme::pdSymm(~ 0 + dummy(grandparent,"0") +
+                                                                           shift:dummy(grandparent,"0")),
+                                                            nlme::pdSymm(~ 0 + dummy(grandparent,"1") + 
+                                                                           shift:dummy(grandparent,"1"))))), 
+                     data = hrsanalysis_nonparents, method = 'REML', na.action = 'na.omit')
+summary(hetmod3)
+VarCorr(hetmod3)
+
+hetmod4 <- nlme::lme(swls ~ 0 + pscore + dummy(grandparent,"0") + dummy(grandparent,"1") + 
+                       before:dummy(grandparent,"0") + before:dummy(grandparent,"1") +
+                       after:dummy(grandparent,"0") + after:dummy(grandparent,"1") +
+                       shift:dummy(grandparent,"0") + shift:dummy(grandparent,"1"),
+                     random=list(pid = nlme::pdBlocked(list(nlme::pdSymm(~ 0 + dummy(grandparent,"0")),
+                                                            nlme::pdSymm(~ 0 + dummy(grandparent,"1")),
+                                                            nlme::pdSymm(~ 0 + shift)))), 
+                     data = hrsanalysis_nonparents, method = 'REML', na.action = 'na.omit')
+summary(hetmod4)
+VarCorr(hetmod4)
+
+anova(hetmod3, hetmod4)
+
+
+hetvar_summaries <- list()
+
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  print(outcome)
+  pos = seq(from = 0, to = 20, by = 4)[i]
+  for (j in 1:length(datasets)){
+    dataset = datasets[j]
+    print(dataset)
+    # test heterogeneous variance ('slopes' = model with separate random slope variances for each group)
+    # heterogeneous variance models in 'nlme' (also possible in 'lme4' but we preregistered 'nlme')
+    # same number of fixed effects just coded differently 
+    dummyfixed <- formula(paste(outcome, '0 + pscore + dummy(grandparent,"0") + dummy(grandparent,"1") + 
+                  before:dummy(grandparent,"0") + before:dummy(grandparent,"1") +
+                  after:dummy(grandparent,"0") + after:dummy(grandparent,"1") +
+                  shift:dummy(grandparent,"0") + shift:dummy(grandparent,"1")', sep = "~"))
+    ### before-slope -> random slope
+    before_mod_hetvar_slopes <- 
+      nlme::lme(fixed = dummyfixed,
+                random=list(pid = nlme::pdBlocked(list(nlme::pdSymm(~ 0 + dummy(grandparent,"0") +
+                                                                  before:dummy(grandparent,"0")),
+                                                       nlme::pdSymm(~ 0 + dummy(grandparent,"1") + 
+                                                                  before:dummy(grandparent,"1"))))), 
+                data = get(dataset), method = 'REML', na.action = 'na.omit')
+    # base model with same FE specification but uniform random slope variance
+    before_mod_hetvar_base <- 
+      nlme::lme(fixed = dummyfixed,
+                random=list(pid = nlme::pdBlocked(list(nlme::pdSymm(~ 0 + dummy(grandparent,"0")),
+                                                       nlme::pdSymm(~ 0 + dummy(grandparent,"1")),
+                                                       nlme::pdSymm(~ 0 + before)))), 
+                data = get(dataset), method = 'REML', na.action = 'na.omit')
+    ### after-slope -> random slope
+    after_mod_hetvar_slopes <- 
+      nlme::lme(fixed = dummyfixed,
+                random=list(pid = nlme::pdBlocked(list(nlme::pdSymm(~ 0 + dummy(grandparent,"0") +
+                                                                      after:dummy(grandparent,"0")),
+                                                       nlme::pdSymm(~ 0 + dummy(grandparent,"1") + 
+                                                                      after:dummy(grandparent,"1"))))), 
+                data = get(dataset), method = 'REML', na.action = 'na.omit')
+    # base model with same FE specification but uniform random slope variance
+    after_mod_hetvar_base <- 
+      nlme::lme(fixed = dummyfixed,
+                random=list(pid = nlme::pdBlocked(list(nlme::pdSymm(~ 0 + dummy(grandparent,"0")),
+                                                       nlme::pdSymm(~ 0 + dummy(grandparent,"1")),
+                                                       nlme::pdSymm(~ 0 + after)))), 
+                data = get(dataset), method = 'REML', na.action = 'na.omit')
+    ### shift -> random slope
+    shift_mod_hetvar_slopes <- 
+      nlme::lme(fixed = dummyfixed,
+                random=list(pid = nlme::pdBlocked(list(nlme::pdSymm(~ 0 + dummy(grandparent,"0") +
+                                                                      shift:dummy(grandparent,"0")),
+                                                       nlme::pdSymm(~ 0 + dummy(grandparent,"1") + 
+                                                                      shift:dummy(grandparent,"1"))))), 
+                data = get(dataset), method = 'REML', na.action = 'na.omit')
+    # base model with same FE specification but uniform random slope variance
+    shift_mod_hetvar_base <- 
+      nlme::lme(fixed = dummyfixed,
+                random=list(pid = nlme::pdBlocked(list(nlme::pdSymm(~ 0 + dummy(grandparent,"0")),
+                                                       nlme::pdSymm(~ 0 + dummy(grandparent,"1")),
+                                                       nlme::pdSymm(~ 0 + shift)))), 
+                data = get(dataset), method = 'REML', na.action = 'na.omit')
+    # variance estimates
+    varest <- # row1 = single random slope var; row2 / row3 = het. random slope var (controls / GPs) etc.
+      as.data.frame(rbind(
+        cbind(as.numeric(VarCorr(before_mod_hetvar_base)[3, 1]),
+              as.numeric(VarCorr(before_mod_hetvar_base)[3, 2])), 
+        cbind(as.numeric(VarCorr(before_mod_hetvar_slopes)[c(2,4), 1]), 
+              as.numeric(VarCorr(before_mod_hetvar_slopes)[c(2,4), 2])),
+        cbind(as.numeric(VarCorr(after_mod_hetvar_base)[3, 1]), 
+              as.numeric(VarCorr(after_mod_hetvar_base)[3, 2])), 
+        cbind(as.numeric(VarCorr(after_mod_hetvar_slopes)[c(2,4), 1]), 
+              as.numeric(VarCorr(after_mod_hetvar_slopes)[c(2,4), 2])),
+        cbind(as.numeric(VarCorr(shift_mod_hetvar_base)[3, 1]), 
+              as.numeric(VarCorr(shift_mod_hetvar_base)[3, 2])), 
+        cbind(as.numeric(VarCorr(shift_mod_hetvar_slopes)[c(2,4), 1]), 
+              as.numeric(VarCorr(shift_mod_hetvar_slopes)[c(2,4), 2]))))
+    colnames(varest) <- c("var", "sd")
+    varest_names <- c("before_uni_rand_slope", "before_control_rand_slope", "before_gp_rand_slope",
+                      "after_uni_rand_slope", "after_control_rand_slope", "after_gp_rand_slope",
+                      "shift_uni_rand_slope", "shift_control_rand_slope", "shift_gp_rand_slope")
+    rownames(varest) <- varest_names
+    # run anova() for model comparison
+    before_hetvar_anov <- as.numeric(anova(before_mod_hetvar_base, 
+                                           before_mod_hetvar_slopes)[2, c("L.Ratio", "p-value")])
+    after_hetvar_anov <-  as.numeric(anova(after_mod_hetvar_base, 
+                                           after_mod_hetvar_slopes)[2, c("L.Ratio", "p-value")])
+    shift_hetvar_anov <-  as.numeric(anova(shift_mod_hetvar_base, 
+                                           shift_mod_hetvar_slopes)[2, c("L.Ratio", "p-value")])
+    before_hetvar_anov[3] <- ifelse(varest["before_control_rand_slope","var"] < 
+                                      varest["before_gp_rand_slope","var"], "yes", "no")
+    after_hetvar_anov[3] <- ifelse(varest["after_control_rand_slope","var"] < 
+                                      varest["after_gp_rand_slope","var"], "yes", "no")
+    shift_hetvar_anov[3] <- ifelse(varest["shift_control_rand_slope","var"] < 
+                                      varest["shift_gp_rand_slope","var"], "yes", "no")
+    # together
+    comp_hetvar_anov <- as.data.frame(rbind(
+      do.call("rbind", replicate(3, before_hetvar_anov, simplify = FALSE)), # three times for later cbind
+      do.call("rbind", replicate(3, after_hetvar_anov, simplify = FALSE)),
+      do.call("rbind", replicate(3, shift_hetvar_anov, simplify = FALSE))))
+    comp_hetvar_anov <- comp_hetvar_anov %>% mutate(
+      lratio = printnum(as.numeric(V1)),
+      p = scales::pvalue(as.numeric(V2), prefix = c("$p$ < ", "$p$ = ", "$p$ > ")),
+    ) %>% select(lratio, p, gp_greater = V3)
+    comp_hetvar_anov["p"] <- # remove "0" from the chr's 
+      lapply(comp_hetvar_anov["p"], gsub, pattern="0\\.", replacement="\\.")
+    rownames(comp_hetvar_anov) <- varest_names
+    # bind variance estimates + anova results
+    varest <- cbind(varest, comp_hetvar_anov)
+    # save in list object
+    hetvar_summaries[[pos + j]] <- varest
+    names(hetvar_summaries)[[pos + j]] <- paste0(outcome, "_", dataset, "_hetvar")
+  }
+}
+
+#### H3: rank-order stability ####
+
+# construct data set with the last pre- and the first post-transition assessment (within-person)
+lissanalysis_parents_rank_below <- lissanalysis_parents %>% 
+  filter(time<0) %>% group_by(match_number) %>% slice_max(time) %>% ungroup() %>%
+  select(match_number, grandparent, time_pre = time, # using match_number instead of pid
+         agree_pre = agree, con_pre = con, extra_pre = extra, 
+         neur_pre = neur, open_pre = open, swls_pre = swls)
+  
+lissanalysis_parents_rank_above <- lissanalysis_parents %>% 
+  filter(time>=0) %>% group_by(match_number) %>% slice_min(time) %>% ungroup() %>% 
+  select(match_number, grandparent, time, all_of(outcomes))
+# slightly smaller n because of attrition in the controls
+
+lissanalysis_parents_rank <- left_join(lissanalysis_parents_rank_above, lissanalysis_parents_rank_below)
+lissanalysis_parents_rank <- lissanalysis_parents_rank %>% mutate(yr_lag = time - time_pre)
+
+draw_below <- function(x) { 
+  x %>% 
+    filter(time<0) %>% group_by(match_number) %>% slice_max(time) %>% ungroup() %>%
+    select(match_number, grandparent, time_pre = time, # using match_number instead of pid
+           agree_pre = agree, con_pre = con, extra_pre = extra, 
+           neur_pre = neur, open_pre = open, swls_pre = swls) }
+draw_above <- function(x) { 
+  x %>% 
+  filter(time>=0) %>% group_by(match_number) %>% slice_min(time) %>% ungroup() %>% 
+  select(match_number, grandparent, time, all_of(outcomes)) }
+
+list_below <- list(lissanalysis_parents, lissanalysis_nonparents,
+                   hrsanalysis_parents, hrsanalysis_nonparents) %>% lapply(draw_below)
+list_above <- list(lissanalysis_parents, lissanalysis_nonparents,
+                   hrsanalysis_parents, hrsanalysis_nonparents) %>% lapply(draw_above)
+names(list_below) <- paste0(datasets, "_rank_below")
+names(list_above) <- paste0(datasets, "_rank_above")
+
+list2env(c(list_below, list_above), .GlobalEnv)
+rm(list_below, list_above)
+
+# liss
+lissanalysis_parents_rank <- left_join(lissanalysis_parents_rank_above, 
+                                       lissanalysis_parents_rank_below) %>% 
+  mutate(yr_lag = time - time_pre)
+lissanalysis_nonparents_rank <- left_join(lissanalysis_nonparents_rank_above, 
+                                          lissanalysis_nonparents_rank_below) %>% 
+  mutate(yr_lag = time - time_pre)
+# hrs
+hrsanalysis_parents_rank <- left_join(hrsanalysis_parents_rank_above, 
+                                      hrsanalysis_parents_rank_below) %>% 
+  mutate(yr_lag = time - time_pre)
+hrsanalysis_nonparents_rank <- left_join(hrsanalysis_nonparents_rank_above, 
+                                         hrsanalysis_nonparents_rank_below) %>% 
+  mutate(yr_lag = time - time_pre)
+
+# modeling rank-order stability
+cor(lissanalysis_parents_rank$agree, lissanalysis_parents_rank$agree_pre)
+cor(subset(lissanalysis_parents_rank, grandparent==1)$agree,
+    subset(lissanalysis_parents_rank, grandparent==1)$agree_pre)
+cor(subset(lissanalysis_parents_rank, grandparent==0)$agree,
+    subset(lissanalysis_parents_rank, grandparent==0)$agree_pre)
+rank_order_int <- lm(agree ~ agree_pre*grandparent, data = lissanalysis_parents_rank)
+
+
+rank_order_df <- as.data.frame(
+  cbind(cor_all = rep(NA, 24), cor_gp = rep(NA, 24), cor_con = rep(NA, 24), p = rep(NA, 24)))
+
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  pos = seq(from = 0, to = 20, by = 4)[i]
+  for (j in 1:length(datasets)){
+    dataset = paste0(datasets[j], "_rank")
+    # simple correlations
+    cor_all <- as.numeric(get(dataset) %>% 
+      filter(!is.na(get(outcome)) & !is.na(get(paste0(outcome, "_pre")))) %>% 
+      summarise(cor(get(outcome), get(paste0(outcome, "_pre")))))
+    cor_gp <-  as.numeric(get(dataset) %>% 
+      filter(grandparent==1 & !is.na(get(outcome)) & !is.na(get(paste0(outcome, "_pre")))) %>% 
+      summarise(cor(get(outcome), get(paste0(outcome, "_pre")))))
+    cor_con <- as.numeric(get(dataset) %>% 
+      filter(grandparent==0 & !is.na(get(outcome)) & !is.na(get(paste0(outcome, "_pre")))) %>% 
+      summarise(cor(get(outcome), get(paste0(outcome, "_pre")))))
+    # interaction model as significance test for group differences
+    formula_rank <- formula(paste(outcome, paste0(outcome, "_pre*grandparent"), sep = "~"))
+    rank_order_int <- lm(formula = formula_rank, data = get(dataset))
+    # save in df
+    rank_order_df[pos + j, ] <- 
+      c(cor_all, cor_gp, cor_con, summary(rank_order_int)$coef[4, 4]) # interaction p-val. 
+    rownames(rank_order_df)[pos + j] <- paste0(outcomes[i], "_", datasets_short[j], "_rank")
+  }
+}
+
+

@@ -1,9 +1,10 @@
 \renewcommand{\appendixname}{\textcolor{white}{.}}
+
+# Supplemental Material
+
 \renewcommand{\thefigure}{S\arabic{figure}} \setcounter{figure}{0}
 \renewcommand{\thetable}{S\arabic{table}} \setcounter{table}{0}
 \setcounter{page}{1} <!-- to reset page numbering -->
-
-# Supplemental Material
 
 \noindent
 **Supplemental Tables**  
@@ -70,7 +71,7 @@ sample_time_hrs_p <- sample_time_hrs_p %>% arrange(desc(grandparent))
 sample_time_hrs_np <- sample_time_hrs_np %>% filter(grandparent==0)
 ```
 
-(ref:piecewise-coding-scheme-cap) Longitudinal sample size in the analysis samples and coding scheme for the piecewise regression coefficients
+(ref:piecewise-coding-scheme-cap) Longitudinal sample size in the analysis samples and coding scheme for the piecewise regression coefficients.
 
 (ref:piecewise-coding-scheme-note) obs. = observations. $time=0$ marks the first year where the transition to grandparenthood has been reported. The number of grandparent participants is $N_{LISS}=$ 250 and $N_{HRS}=$ 846. 
 
@@ -187,7 +188,7 @@ descriptives_hrs <- descriptives_hrs %>% add_column(`-5` = "", `-3` = "", `-1` =
   select(`-6`, `-5`, `-4`, `-3`, `-2`, `-1`, `0`, `1`, `2`, `3`, `4`, `5`, `6`)
 ```
 
-(ref:descriptives-liss-cap) Mean and Standard Deviation of the Big Five and Life Satisfaction over Time in the LISS Panel
+(ref:descriptives-liss-cap) Mean and Standard Deviation of the Big Five and Life Satisfaction over Time in the LISS Panel.
 
 (ref:descriptives-note) Standard deviation shown in brackets; $time=0$ marks the first year where the transition to grandparenthood has been reported.
 
@@ -250,7 +251,7 @@ apa_table(
 )
 ```
 
-(ref:descriptives-hrs-cap) Mean and Standard Deviation of the Big Five and Life Satisfaction over Time in the HRS
+(ref:descriptives-hrs-cap) Mean and Standard Deviation of the Big Five and Life Satisfaction over Time in the HRS.
 
 ```{r descriptives-hrs, results="asis", warning=FALSE, message=FALSE}
 # no duplicate rownames allowed :(
@@ -311,7 +312,7 @@ apa_table(
 )
 ```
 
-(ref:stddiffmeans-balance-liss-cap) Standardized Difference in Means for Covariates Used in Propensity Score Matching and the Propensity Score in the LISS panel 
+(ref:stddiffmeans-balance-liss-cap) Standardized Difference in Means for Covariates Used in Propensity Score Matching and the Propensity Score in the LISS panel.
 
 (ref:stddiffmeans-balance-note) PSM = propensity score matching, ref. = reference category, f. = female, m. = male, NA = covariate not used in this sample. The standardized difference in means between the grandparent and the two control groups (parent and nonparent) was computed by $(\bar{x}_{gp}-\bar{x}_{c})/ (\hat\sigma_{gp})$. Rules of thumb say that this measure should ideally be below $.25$ [@stuartMatchingMethodsCausal2010] or below $.10$ [@austinIntroductionPropensityScore2011].  
 
@@ -340,7 +341,7 @@ apa_table(
 )
 ```
 
-(ref:stddiffmeans-balance-hrs-cap) Standardized Difference in Means for Covariates Used in Propensity Score Matching and the Propensity Score in the HRS 
+(ref:stddiffmeans-balance-hrs-cap) Standardized Difference in Means for Covariates Used in Propensity Score Matching and the Propensity Score in the HRS.
 
 ```{r stddiffmeans-balance-hrs, results="asis"}
 # Standardized differences between means
@@ -367,6 +368,394 @@ apa_table(
   , longtable = T
   , placement = "t"
   , font_size = "footnotesize"
+)
+```
+
+(ref:H2-hetvar-tab-agree-cap) Tests of Heterogeneous Random Slope Variance Models for `r df_outcomes["agree", "maj"]` Against Comparison Models With a Uniform Random Slope Variance.
+
+(ref:H2-hetvar-tab-note) The heterogeneous variance models (*df* = 16) differ only in the random effects from the comparison models (*df* = 13). In addition to two random slope variances (instead of one), the heterogeneous variance models estimate two additional random intercept/slope covariances. Both models estimate heterogeneous random intercept variances for the grandparent and control groups. *Var.* = random slope variance; *SD* = standard deviation; *LR* = likelihood ratio; *p* = p-value (of the LR test); *GP greater* = indicating if the random slope variance of the grandparents is larger than that of either control group.  
+
+```{r H2-hetvar-tab-agree, results="asis"}
+hetvar_agree_df <- rbind(
+  cbind(hetvar_summaries$agree_lissanalysis_parents_hetvar, 
+        hetvar_summaries$agree_lissanalysis_nonparents_hetvar),
+  cbind(hetvar_summaries$agree_hrsanalysis_parents_hetvar, 
+        hetvar_summaries$agree_hrsanalysis_nonparents_hetvar)
+)
+hetvar_agree_df[c(4,9)] <- lapply(hetvar_agree_df[c(4,9)], gsub, pattern="\\$p\\$", replacement="")
+hetvar_agree_df[c(4,9)] <- lapply(hetvar_agree_df[c(4,9)], gsub, pattern="\\=", replacement="")
+hetvar_agree_df[c(1:2, 4:5, 7:8, 10:11, 13:14, 16:17), c(3:5, 8:10)] <- ""
+
+# make one large table
+colnames(hetvar_agree_df) <- rep(c("Var.", "SD", "LR", "p", "GP greater"), 2)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_hetvar_agree_df <- c("Before-slope: uniform \\textcolor{white}{L}", 
+                              "Before-slope: heterogeneous (controls) \\textcolor{white}{L}", 
+                              "Before-slope: heterogeneous (grandparents) \\textcolor{white}{L}", 
+                              "After-slope: uniform \\textcolor{white}{L}", 
+                              "After-slope: heterogeneous (controls) \\textcolor{white}{L}", 
+                              "After-slope: heterogeneous (grandparents) \\textcolor{white}{L}", 
+                              "Shift: uniform \\textcolor{white}{L}", 
+                              "Shift: heterogeneous (controls) \\textcolor{white}{L}", 
+                              "Shift: heterogeneous (grandparents) \\textcolor{white}{L}", 
+                              "Before-slope: uniform \\textcolor{white}{H}", 
+                              "Before-slope: heterogeneous (controls) \\textcolor{white}{H}", 
+                              "Before-slope: heterogeneous (grandparents) \\textcolor{white}{H}", 
+                              "After-slope: uniform \\textcolor{white}{H}", 
+                              "After-slope: heterogeneous (controls) \\textcolor{white}{H}", 
+                              "After-slope: heterogeneous (grandparents) \\textcolor{white}{H}", 
+                              "Shift: uniform \\textcolor{white}{H}", 
+                              "Shift: heterogeneous (controls) \\textcolor{white}{H}", 
+                              "Shift: heterogeneous (grandparents) \\textcolor{white}{H}")
+rownames(hetvar_agree_df) <- rownames_hetvar_agree_df
+
+apa_table(
+  hetvar_agree_df
+  , caption = "(ref:H2-hetvar-tab-agree-cap)"
+  , note = "(ref:H2-hetvar-tab-note)"
+  , col.names = c("", 
+                  "Var.", "SD", "LR", "p", "GP greater", 
+                  "Var.", "SD", "LR", "p", "GP greater")
+  , align = c("l", "r", "r", "r", "r", "c", "r", "r", "r", "r", "c")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE),
+                       digits = c(2,2,2,2,3,2,2,2,2,3,2),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE))
+  , col_spanners = list("Parent controls" = c(2,6), "Nonparent controls" = c(7,11))
+  #, stub_indents = list("Fixed effects" = 1:12)
+  , escape = F
+  , landscape = T
+  , font_size = "scriptsize"
+  , stub_indents = list("LISS" = 1:9, "HRS" = 10:18)
+  , placement = "H"
+)
+```
+
+(ref:H2-hetvar-tab-con-cap) Tests of Heterogeneous Random Slope Variance Models for `r df_outcomes["con", "maj"]` Against Comparison Models With a Uniform Random Slope Variance.
+
+```{r H2-hetvar-tab-con, results="asis"}
+hetvar_con_df <- rbind(
+  cbind(hetvar_summaries$con_lissanalysis_parents_hetvar, 
+        hetvar_summaries$con_lissanalysis_nonparents_hetvar),
+  cbind(hetvar_summaries$con_hrsanalysis_parents_hetvar, 
+        hetvar_summaries$con_hrsanalysis_nonparents_hetvar)
+)
+hetvar_con_df[c(4,9)] <- lapply(hetvar_con_df[c(4,9)], gsub, pattern="\\$p\\$", replacement="")
+hetvar_con_df[c(4,9)] <- lapply(hetvar_con_df[c(4,9)], gsub, pattern="\\=", replacement="")
+hetvar_con_df[c(1:2, 4:5, 7:8, 10:11, 13:14, 16:17), c(3:5, 8:10)] <- ""
+
+# make one large table
+colnames(hetvar_con_df) <- rep(c("Var.", "SD", "LR", "p", "GP greater"), 2)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_hetvar_con_df <- c("Before-slope: uniform \\textcolor{white}{L}", 
+                              "Before-slope: heterogeneous (controls) \\textcolor{white}{L}", 
+                              "Before-slope: heterogeneous (grandparents) \\textcolor{white}{L}", 
+                              "After-slope: uniform \\textcolor{white}{L}", 
+                              "After-slope: heterogeneous (controls) \\textcolor{white}{L}", 
+                              "After-slope: heterogeneous (grandparents) \\textcolor{white}{L}", 
+                              "Shift: uniform \\textcolor{white}{L}", 
+                              "Shift: heterogeneous (controls) \\textcolor{white}{L}", 
+                              "Shift: heterogeneous (grandparents) \\textcolor{white}{L}", 
+                              "Before-slope: uniform \\textcolor{white}{H}", 
+                              "Before-slope: heterogeneous (controls) \\textcolor{white}{H}", 
+                              "Before-slope: heterogeneous (grandparents) \\textcolor{white}{H}", 
+                              "After-slope: uniform \\textcolor{white}{H}", 
+                              "After-slope: heterogeneous (controls) \\textcolor{white}{H}", 
+                              "After-slope: heterogeneous (grandparents) \\textcolor{white}{H}", 
+                              "Shift: uniform \\textcolor{white}{H}", 
+                              "Shift: heterogeneous (controls) \\textcolor{white}{H}", 
+                              "Shift: heterogeneous (grandparents) \\textcolor{white}{H}")
+rownames(hetvar_con_df) <- rownames_hetvar_con_df
+
+apa_table(
+  hetvar_con_df
+  , caption = "(ref:H2-hetvar-tab-con-cap)"
+  , note = "(ref:H2-hetvar-tab-note)"
+  , col.names = c("", 
+                  "Var.", "SD", "LR", "p", "GP greater", 
+                  "Var.", "SD", "LR", "p", "GP greater")
+  , align = c("l", "r", "r", "r", "r", "c", "r", "r", "r", "r", "c")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE),
+                       digits = c(2,2,2,2,3,2,2,2,2,3,2),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE))
+  , col_spanners = list("Parent controls" = c(2,6), "Nonparent controls" = c(7,11))
+  #, stub_indents = list("Fixed effects" = 1:12)
+  , escape = F
+  , landscape = T
+  , font_size = "scriptsize"
+  , stub_indents = list("LISS" = 1:9, "HRS" = 10:18)
+  , placement = "H"
+)
+```
+
+(ref:H2-hetvar-tab-extra-cap) Tests of Heterogeneous Random Slope Variance Models for `r df_outcomes["extra", "maj"]` Against Comparison Models With a Uniform Random Slope Variance.
+
+```{r H2-hetvar-tab-extra, results="asis"}
+hetvar_extra_df <- rbind(
+  cbind(hetvar_summaries$extra_lissanalysis_parents_hetvar, 
+        hetvar_summaries$extra_lissanalysis_nonparents_hetvar),
+  cbind(hetvar_summaries$extra_hrsanalysis_parents_hetvar, 
+        hetvar_summaries$extra_hrsanalysis_nonparents_hetvar)
+)
+hetvar_extra_df[c(4,9)] <- lapply(hetvar_extra_df[c(4,9)], gsub, pattern="\\$p\\$", replacement="")
+hetvar_extra_df[c(4,9)] <- lapply(hetvar_extra_df[c(4,9)], gsub, pattern="\\=", replacement="")
+hetvar_extra_df[c(1:2, 4:5, 7:8, 10:11, 13:14, 16:17), c(3:5, 8:10)] <- ""
+
+# make one large table
+colnames(hetvar_extra_df) <- rep(c("Var.", "SD", "LR", "p", "GP greater"), 2)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_hetvar_extra_df <- c("Before-slope: uniform \\textcolor{white}{L}", 
+                              "Before-slope: heterogeneous (controls) \\textcolor{white}{L}", 
+                              "Before-slope: heterogeneous (grandparents) \\textcolor{white}{L}", 
+                              "After-slope: uniform \\textcolor{white}{L}", 
+                              "After-slope: heterogeneous (controls) \\textcolor{white}{L}", 
+                              "After-slope: heterogeneous (grandparents) \\textcolor{white}{L}", 
+                              "Shift: uniform \\textcolor{white}{L}", 
+                              "Shift: heterogeneous (controls) \\textcolor{white}{L}", 
+                              "Shift: heterogeneous (grandparents) \\textcolor{white}{L}", 
+                              "Before-slope: uniform \\textcolor{white}{H}", 
+                              "Before-slope: heterogeneous (controls) \\textcolor{white}{H}", 
+                              "Before-slope: heterogeneous (grandparents) \\textcolor{white}{H}", 
+                              "After-slope: uniform \\textcolor{white}{H}", 
+                              "After-slope: heterogeneous (controls) \\textcolor{white}{H}", 
+                              "After-slope: heterogeneous (grandparents) \\textcolor{white}{H}", 
+                              "Shift: uniform \\textcolor{white}{H}", 
+                              "Shift: heterogeneous (controls) \\textcolor{white}{H}", 
+                              "Shift: heterogeneous (grandparents) \\textcolor{white}{H}")
+rownames(hetvar_extra_df) <- rownames_hetvar_extra_df
+
+apa_table(
+  hetvar_extra_df
+  , caption = "(ref:H2-hetvar-tab-extra-cap)"
+  , note = "(ref:H2-hetvar-tab-note)"
+  , col.names = c("", 
+                  "Var.", "SD", "LR", "p", "GP greater", 
+                  "Var.", "SD", "LR", "p", "GP greater")
+  , align = c("l", "r", "r", "r", "r", "c", "r", "r", "r", "r", "c")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE),
+                       digits = c(2,2,2,2,3,2,2,2,2,3,2),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE))
+  , col_spanners = list("Parent controls" = c(2,6), "Nonparent controls" = c(7,11))
+  #, stub_indents = list("Fixed effects" = 1:12)
+  , escape = F
+  , landscape = T
+  , font_size = "scriptsize"
+  , stub_indents = list("LISS" = 1:9, "HRS" = 10:18)
+  , placement = "H"
+)
+```
+
+(ref:H2-hetvar-tab-neur-cap) Tests of Heterogeneous Random Slope Variance Models for `r df_outcomes["neur", "maj"]` Against Comparison Models With a Uniform Random Slope Variance.
+
+```{r H2-hetvar-tab-neur, results="asis"}
+hetvar_neur_df <- rbind(
+  cbind(hetvar_summaries$neur_lissanalysis_parents_hetvar, 
+        hetvar_summaries$neur_lissanalysis_nonparents_hetvar),
+  cbind(hetvar_summaries$neur_hrsanalysis_parents_hetvar, 
+        hetvar_summaries$neur_hrsanalysis_nonparents_hetvar)
+)
+hetvar_neur_df[c(4,9)] <- lapply(hetvar_neur_df[c(4,9)], gsub, pattern="\\$p\\$", replacement="")
+hetvar_neur_df[c(4,9)] <- lapply(hetvar_neur_df[c(4,9)], gsub, pattern="\\=", replacement="")
+hetvar_neur_df[c(1:2, 4:5, 7:8, 10:11, 13:14, 16:17), c(3:5, 8:10)] <- ""
+
+# make one large table
+colnames(hetvar_neur_df) <- rep(c("Var.", "SD", "LR", "p", "GP greater"), 2)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_hetvar_neur_df <- c("Before-slope: uniform \\textcolor{white}{L}", 
+                              "Before-slope: heterogeneous (controls) \\textcolor{white}{L}", 
+                              "Before-slope: heterogeneous (grandparents) \\textcolor{white}{L}", 
+                              "After-slope: uniform \\textcolor{white}{L}", 
+                              "After-slope: heterogeneous (controls) \\textcolor{white}{L}", 
+                              "After-slope: heterogeneous (grandparents) \\textcolor{white}{L}", 
+                              "Shift: uniform \\textcolor{white}{L}", 
+                              "Shift: heterogeneous (controls) \\textcolor{white}{L}", 
+                              "Shift: heterogeneous (grandparents) \\textcolor{white}{L}", 
+                              "Before-slope: uniform \\textcolor{white}{H}", 
+                              "Before-slope: heterogeneous (controls) \\textcolor{white}{H}", 
+                              "Before-slope: heterogeneous (grandparents) \\textcolor{white}{H}", 
+                              "After-slope: uniform \\textcolor{white}{H}", 
+                              "After-slope: heterogeneous (controls) \\textcolor{white}{H}", 
+                              "After-slope: heterogeneous (grandparents) \\textcolor{white}{H}", 
+                              "Shift: uniform \\textcolor{white}{H}", 
+                              "Shift: heterogeneous (controls) \\textcolor{white}{H}", 
+                              "Shift: heterogeneous (grandparents) \\textcolor{white}{H}")
+rownames(hetvar_neur_df) <- rownames_hetvar_neur_df
+
+apa_table(
+  hetvar_neur_df
+  , caption = "(ref:H2-hetvar-tab-neur-cap)"
+  , note = "(ref:H2-hetvar-tab-note)"
+  , col.names = c("", 
+                  "Var.", "SD", "LR", "p", "GP greater", 
+                  "Var.", "SD", "LR", "p", "GP greater")
+  , align = c("l", "r", "r", "r", "r", "c", "r", "r", "r", "r", "c")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE),
+                       digits = c(2,2,2,2,3,2,2,2,2,3,2),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE))
+  , col_spanners = list("Parent controls" = c(2,6), "Nonparent controls" = c(7,11))
+  #, stub_indents = list("Fixed effects" = 1:12)
+  , escape = F
+  , landscape = T
+  , font_size = "scriptsize"
+  , stub_indents = list("LISS" = 1:9, "HRS" = 10:18)
+  , placement = "H"
+)
+```
+
+(ref:H2-hetvar-tab-open-cap) Tests of Heterogeneous Random Slope Variance Models for `r df_outcomes["open", "maj"]` Against Comparison Models With a Uniform Random Slope Variance.
+
+```{r H2-hetvar-tab-open, results="asis"}
+hetvar_open_df <- rbind(
+  cbind(hetvar_summaries$open_lissanalysis_parents_hetvar, 
+        hetvar_summaries$open_lissanalysis_nonparents_hetvar),
+  cbind(hetvar_summaries$open_hrsanalysis_parents_hetvar, 
+        hetvar_summaries$open_hrsanalysis_nonparents_hetvar)
+)
+hetvar_open_df[c(4,9)] <- lapply(hetvar_open_df[c(4,9)], gsub, pattern="\\$p\\$", replacement="")
+hetvar_open_df[c(4,9)] <- lapply(hetvar_open_df[c(4,9)], gsub, pattern="\\=", replacement="")
+hetvar_open_df[c(1:2, 4:5, 7:8, 10:11, 13:14, 16:17), c(3:5, 8:10)] <- ""
+
+# make one large table
+colnames(hetvar_open_df) <- rep(c("Var.", "SD", "LR", "p", "GP greater"), 2)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_hetvar_open_df <- c("Before-slope: uniform \\textcolor{white}{L}", 
+                              "Before-slope: heterogeneous (controls) \\textcolor{white}{L}", 
+                              "Before-slope: heterogeneous (grandparents) \\textcolor{white}{L}", 
+                              "After-slope: uniform \\textcolor{white}{L}", 
+                              "After-slope: heterogeneous (controls) \\textcolor{white}{L}", 
+                              "After-slope: heterogeneous (grandparents) \\textcolor{white}{L}", 
+                              "Shift: uniform \\textcolor{white}{L}", 
+                              "Shift: heterogeneous (controls) \\textcolor{white}{L}", 
+                              "Shift: heterogeneous (grandparents) \\textcolor{white}{L}", 
+                              "Before-slope: uniform \\textcolor{white}{H}", 
+                              "Before-slope: heterogeneous (controls) \\textcolor{white}{H}", 
+                              "Before-slope: heterogeneous (grandparents) \\textcolor{white}{H}", 
+                              "After-slope: uniform \\textcolor{white}{H}", 
+                              "After-slope: heterogeneous (controls) \\textcolor{white}{H}", 
+                              "After-slope: heterogeneous (grandparents) \\textcolor{white}{H}", 
+                              "Shift: uniform \\textcolor{white}{H}", 
+                              "Shift: heterogeneous (controls) \\textcolor{white}{H}", 
+                              "Shift: heterogeneous (grandparents) \\textcolor{white}{H}")
+rownames(hetvar_open_df) <- rownames_hetvar_open_df
+
+apa_table(
+  hetvar_open_df
+  , caption = "(ref:H2-hetvar-tab-open-cap)"
+  , note = "(ref:H2-hetvar-tab-note)"
+  , col.names = c("", 
+                  "Var.", "SD", "LR", "p", "GP greater", 
+                  "Var.", "SD", "LR", "p", "GP greater")
+  , align = c("l", "r", "r", "r", "r", "c", "r", "r", "r", "r", "c")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE),
+                       digits = c(2,2,2,2,3,2,2,2,2,3,2),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE))
+  , col_spanners = list("Parent controls" = c(2,6), "Nonparent controls" = c(7,11))
+  #, stub_indents = list("Fixed effects" = 1:12)
+  , escape = F
+  , landscape = T
+  , font_size = "scriptsize"
+  , stub_indents = list("LISS" = 1:9, "HRS" = 10:18)
+  , placement = "H"
+)
+```
+
+(ref:H2-hetvar-tab-swls-cap) Tests of Heterogeneous Random Slope Variance Models for `r df_outcomes["swls", "maj"]` Against Comparison Models With a Uniform Random Slope Variance.
+
+```{r H2-hetvar-tab-swls, results="asis"}
+hetvar_swls_df <- rbind(
+  cbind(hetvar_summaries$swls_lissanalysis_parents_hetvar, 
+        hetvar_summaries$swls_lissanalysis_nonparents_hetvar),
+  cbind(hetvar_summaries$swls_hrsanalysis_parents_hetvar, 
+        hetvar_summaries$swls_hrsanalysis_nonparents_hetvar)
+)
+hetvar_swls_df[c(4,9)] <- lapply(hetvar_swls_df[c(4,9)], gsub, pattern="\\$p\\$", replacement="")
+hetvar_swls_df[c(4,9)] <- lapply(hetvar_swls_df[c(4,9)], gsub, pattern="\\=", replacement="")
+hetvar_swls_df[c(1:2, 4:5, 7:8, 10:11, 13:14, 16:17), c(3:5, 8:10)] <- ""
+
+# make one large table
+colnames(hetvar_swls_df) <- rep(c("Var.", "SD", "LR", "p", "GP greater"), 2)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_hetvar_swls_df <- c("Before-slope: uniform \\textcolor{white}{L}", 
+                              "Before-slope: heterogeneous (controls) \\textcolor{white}{L}", 
+                              "Before-slope: heterogeneous (grandparents) \\textcolor{white}{L}", 
+                              "After-slope: uniform \\textcolor{white}{L}", 
+                              "After-slope: heterogeneous (controls) \\textcolor{white}{L}", 
+                              "After-slope: heterogeneous (grandparents) \\textcolor{white}{L}", 
+                              "Shift: uniform \\textcolor{white}{L}", 
+                              "Shift: heterogeneous (controls) \\textcolor{white}{L}", 
+                              "Shift: heterogeneous (grandparents) \\textcolor{white}{L}", 
+                              "Before-slope: uniform \\textcolor{white}{H}", 
+                              "Before-slope: heterogeneous (controls) \\textcolor{white}{H}", 
+                              "Before-slope: heterogeneous (grandparents) \\textcolor{white}{H}", 
+                              "After-slope: uniform \\textcolor{white}{H}", 
+                              "After-slope: heterogeneous (controls) \\textcolor{white}{H}", 
+                              "After-slope: heterogeneous (grandparents) \\textcolor{white}{H}", 
+                              "Shift: uniform \\textcolor{white}{H}", 
+                              "Shift: heterogeneous (controls) \\textcolor{white}{H}", 
+                              "Shift: heterogeneous (grandparents) \\textcolor{white}{H}")
+rownames(hetvar_swls_df) <- rownames_hetvar_swls_df
+
+apa_table(
+  hetvar_swls_df
+  , caption = "(ref:H2-hetvar-tab-swls-cap)"
+  , note = "(ref:H2-hetvar-tab-note)"
+  , col.names = c("", 
+                  "Var.", "SD", "LR", "p", "GP greater", 
+                  "Var.", "SD", "LR", "p", "GP greater")
+  , align = c("l", "r", "r", "r", "r", "c", "r", "r", "r", "r", "c")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE),
+                       digits = c(2,2,2,2,3,2,2,2,2,3,2),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE))
+  , col_spanners = list("Parent controls" = c(2,6), "Nonparent controls" = c(7,11))
+  #, stub_indents = list("Fixed effects" = 1:12)
+  , escape = F
+  , landscape = T
+  , font_size = "scriptsize"
+  , stub_indents = list("LISS" = 1:9, "HRS" = 10:18)
+  , placement = "H"
+)
+```
+
+
+(ref:H3-rankorder-tab-cap) Rank-order stability.
+
+(ref:H3-rankorder-tab-note) Correlations as indicators of rank-order stability and p-values of the interactions between each outcome at the last pre-transition assessment and the *grandparent* variable in regression models predicting the first available post-transition assessment. The average time lags in years between these two assessments are `r printnum(mean(lissanalysis_parents_rank$yr_lag))` ($SD$ = `r printnum(sd(lissanalysis_parents_rank$yr_lag))`) for the LISS parent sample, `r printnum(mean(lissanalysis_nonparents_rank$yr_lag))` ($SD$ = `r printnum(sd(lissanalysis_nonparents_rank$yr_lag))`) for the LISS nonparent sample, `r printnum(mean(hrsanalysis_parents_rank$yr_lag))` ($SD$ = `r printnum(sd(hrsanalysis_parents_rank$yr_lag))`) for the HRS parent sample, and `r printnum(mean(hrsanalysis_nonparents_rank$yr_lag))` ($SD$ = `r printnum(sd(hrsanalysis_nonparents_rank$yr_lag))`) for the HRS nonparent sample. $Cor_{all}$ = rank-order stability; $Cor_{GP}$ = rank-order stability (only grandparents); $Cor_{con}$ = rank-order stability (only controls).
+
+```{r H3-rankorder-tab, results="asis"}
+rank_order_df_ordered <- rbind(
+  cbind(rank_order_df[seq(1, 24, 4), ], # LISS parents
+        rank_order_df[seq(2, 24, 4), ]), # LISS nonparents
+  cbind(rank_order_df[seq(3, 24, 4), ], # HRS parents
+        rank_order_df[seq(4, 24, 4), ]) # HRS nonparents
+)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_rank_order_df <- c(paste(df_outcomes[outcomes, "maj"], "\\textcolor{white}{L}"),
+                            paste(df_outcomes[outcomes, "maj"], "\\textcolor{white}{H}"))
+rownames(rank_order_df_ordered) <- rownames_rank_order_df
+
+apa_table(
+  rank_order_df_ordered
+  , caption = "(ref:H3-rankorder-tab-cap)"
+  , note = "(ref:H3-rankorder-tab-note)"
+  , col.names = c("Outcome", 
+                  "$Cor_{all}$", "$Cor_{GP}$", "$Cor_{con}$", "$p$", 
+                  "$Cor_{all}$", "$Cor_{GP}$", "$Cor_{con}$", "$p$")
+  , align = c("l", "r", "r", "r", "r", "r", "r", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  , escape = F
+  , landscape = T
+  , font_size = "small"
+  , stub_indents = list("LISS" = 1:6, "HRS" = 7:12)
+  , placement = "H"
 )
 ```
 
