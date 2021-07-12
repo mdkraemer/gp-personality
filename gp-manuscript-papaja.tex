@@ -320,7 +320,7 @@ Third, to examine rank-order stability in the Big Five and life satisfaction ove
 \hypertarget{descriptive-results}{%
 \subsection{Descriptive Results}\label{descriptive-results}}
 
-Means and standard deviations of the Big Five and life satisfaction over time are presented in Tables \ref{tab:descriptives-liss} and \ref{tab:descriptives-hrs}. In both the LISS and the HRS, all six outcomes display marked stability over time. Standard deviations for life satisfaction are considerably larger than those of the Big Five.
+Means and standard deviations of the Big Five and life satisfaction over the analyzed time points are presented in Tables \ref{tab:descriptives-liss} and \ref{tab:descriptives-hrs}. In both the LISS and the HRS, all six outcomes display marked stability over time. Standard deviations for life satisfaction are considerably larger than those of the Big Five. Intra-class correlations (see Table \ref{tab:icc-table}) show that for the Big Five large portions of the total variance could be explained by nesting in participants (\emph{median} = 0.75), while nesting in households only accounted for minor portions (\emph{median} = 0.03). For outcome--subsample combinations with an \(ICC_{hid}\) below \(.05\) we omitted the household nesting factor from all models because this frequently lead to computational errors---a small deviation from our preregistration. For life satisfaction the nesting in households accounted for slightly larger portions of the total variance (\emph{median} = 0.36) than nesting in participants (\emph{median} = 0.32). For all outcomes, the proportion of variance due to within-person factors was relatively low (\emph{median} = 0.22).
 
 \hypertarget{mean-level-changes}{%
 \subsection{Mean-Level Changes}\label{mean-level-changes}}
@@ -328,42 +328,51 @@ Means and standard deviations of the Big Five and life satisfaction over time ar
 \hypertarget{agreeableness}{%
 \subsubsection{Agreeableness}\label{agreeableness}}
 
-In the basic models (see Tables \ref{tab:H1-agree-tab} \& \ref{tab:H1-agree-contrasts} and Figure \ref{fig:H1-agree-fig}), grandparents in the LISS sample slightly increase in agreeableness in the years after the transition to grandparenthood as compared to the parent controls, \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.01, 0.03]\), \(t = 2.99\), \(p\) = .003. However, this effect is very small in magnitude and not significant when compared against the nonparent controls, or against either control sample in the HRS sample (suggestive evidence in the HRS nonparents: \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.01, 0.04]\), \(t = 2.78\), \(p\) = .006). The models including the gender interaction (see Tables \ref{tab:H1-agree-gender-tab} \& \ref{tab:H1-agree-gender-contrasts} and Figure \ref{fig:H1-agree-fig}) suggests that this difference is due to grandfathers' post-transition increases in agreeableness as compared to parent (LISS: \(\hat{\gamma}_{21} = 0.03\), 95\% CI \([0.01, 0.05]\), \(t = 3.43\), \(p\) \textless{} .001; HRS: \(\hat{\gamma}_{21} = 0.04\), 95\% CI \([0.01, 0.06]\), \(t = 3.00\), \(p\) = .003) and nonparent controls (only HRS: \(\hat{\gamma}_{21} = 0.03\), 95\% CI \([0.01, 0.05]\), \(t = 2.85\), \(p\) = .004).\\
-There is only suggestive evidence for a moderation by paid work (see Tables \ref{tab:H1-agree-work-tab} \& \ref{tab:H1-agree-work-contrasts} and Figure \ref{fig:H1-agree-work-fig}): non-working grandparents increase more in agreeableness than working grandparents in anticipation of the transition to grandparenthood {[}parents: (\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\)) = -0.07, \(\chi^2\) (1) = 6.12, \(p\) = .013; nonparents: (\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\)) = -0.07, \(\chi^2\) (1) = 6.87, \(p\) = .009{]}. Grandparents providing substantial grandchild care increased in agreeableness after the transition to grandparenthood as compared to matched nonparent controls, (\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\)) = 0.04, \(\chi^2\) (1) = 9.15, \(p\) = .002 {[}suggestive evidence when compared to the parent controls: (\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\)) = 0.04, \(\chi^2\) (1) = 7.62, \(p\) = .006; see Tables \ref{tab:H1-agree-care-tab} \& \ref{tab:H1-agree-care-contrasts} and Figure \ref{fig:H1-agree-care-fig}{]}.
+In the basic models (see Tables \ref{tab:H1-agree-tab} \& \ref{tab:H1-agree-contrasts} and Figure \ref{fig:H1-agree-fig}), grandparents in the LISS increased slightly in agreeableness in the years after the transition to grandparenthood as compared to the parent controls, \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.01, 0.03]\), \(p\) = .003. However, this effect was quite small in magnitude and not significant when compared against the nonparent controls, or against either control sample in the HRS sample (suggestive evidence in the HRS nonparents: \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.01, 0.04]\), \(p\) = .006). The models including the gender interaction (see Tables \ref{tab:H1-agree-gender-tab} \& \ref{tab:H1-agree-gender-contrasts} and Figure \ref{fig:H1-agree-fig}) suggest that this difference was due to grandfathers' post-transition increases in agreeableness as compared to parent (LISS: \(\hat{\gamma}_{21} = 0.03\), 95\% CI \([0.01, 0.05]\), \(p\) \textless{} .001; HRS: \(\hat{\gamma}_{21} = 0.04\), 95\% CI \([0.01, 0.06]\), \(p\) = .003) and nonparent controls (HRS: \(\hat{\gamma}_{21} = 0.03\), 95\% CI \([0.01, 0.05]\), \(p\) = .004).\\
+There is only suggestive evidence for a moderation by paid work (see Tables \ref{tab:H1-agree-work-tab} \& \ref{tab:H1-agree-work-contrasts} and Figure \ref{fig:H1-agree-work-fig}): non-working grandparents increased more in agreeableness than working grandparents in anticipation of the transition to grandparenthood (difference in \emph{before} parameter; parents: {[}\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\){]} = -0.07, 95\% CI {[}-0.12, -0.01{]}, \(p\) = .013; nonparents: {[}\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\){]} = -0.07, 95\% CI {[}-0.12, -0.02{]}, \(p\) = .009). Grandparents providing substantial grandchild care increased in agreeableness after the transition to grandparenthood as compared to matched nonparent controls (difference in \emph{after} parameter: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.04, 95\% CI {[}0.01, 0.06{]}, \(p\) = .002; suggestive evidence in the parent sample: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.04, 95\% CI {[}0.01, 0.06{]}, \(p\) = .006; see Tables \ref{tab:H1-agree-care-tab} \& \ref{tab:H1-agree-care-contrasts} and Figure \ref{fig:H1-agree-care-fig}). Again, the effects are very small and the differences between caring and non-caring grandparents are not significant in either sample (see Table \ref{tab:H1-agree-care-contrasts}).
 
 \hypertarget{conscientiousness}{%
 \subsubsection{Conscientiousness}\label{conscientiousness}}
 
-For conscientiousness (see Tables \ref{tab:H1-con-tab} \& \ref{tab:H1-con-contrasts} and Figure \ref{fig:H1-con-fig}), there is evidence for a slight post-transition increase in the grandparents as compared to the controls in the HRS (parents: \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.01, 0.04]\), \(t = 3.06\), \(p\) = .002; nonparents: \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.01, 0.04]\), \(t = 3.01\), \(p\) = .003; suggestive evidence in the LISS parent sample: \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.00, 0.03]\), \(t = 2.73\), \(p\) = .006). Effects for conscientiousness were not moderated by gender (see Tables \ref{tab:H1-con-gender-tab} \& \ref{tab:H1-con-gender-contrasts} and Figure \ref{fig:H1-con-fig}).\\
-However, there were significant differences depending on grandparents' work status (see Tables \ref{tab:H1-con-work-tab} \& \ref{tab:H1-con-work-contrasts} and Figure \ref{fig:H1-con-work-fig}): non-working grandparents saw more pronounced increases in conscientiousness in the years before the transition to grandparenthood compared to non-working parent, \(\hat{\gamma}_{11} = 0.08\), 95\% CI \([0.04, 0.13]\), \(t = 3.54\), \(p\) \textless{} .001, and nonparent controls, \(\hat{\gamma}_{11} = 0.07\), 95\% CI \([0.03, 0.12]\), \(t = 3.16\), \(p\) = .002, and compared to working grandparents {[}parents: (\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\)) = -0.08, \(\chi^2\) (1) = 9.38, \(p\) = .002; nonparents: (\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\)) = -0.08, \(\chi^2\) (1) = 10.44, \(p\) = .001{]}. There is suggestive evidence that grandparents who provide substantial grandchild care increase more strongly in conscientiousness after the transition compared to grandparents who do not {[}parents: (\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\)) = 0.03, \(\chi^2\) (1) = 4.48, \(p\) = .034; nonparents: (\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\)) = 0.03, \(\chi^2\) (1) = 5.28, \(p\) = .022, see Tables \ref{tab:H1-con-care-tab} \& \ref{tab:H1-con-care-contrasts} and Figure \ref{fig:H1-con-care-fig}{]}.
+For conscientiousness (see Tables \ref{tab:H1-con-tab} \& \ref{tab:H1-con-contrasts} and Figure \ref{fig:H1-con-fig}), there is evidence for a slight post-transition increase in the grandparents as compared to the controls in the HRS (parents: \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.01, 0.04]\), \(p\) = .002; nonparents: \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.01, 0.04]\), \(p\) = .003; suggestive evidence in the LISS parent sample: \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.00, 0.03]\), \(p\) = .006). Grandparents' conscientiousness trajectories were not significantly moderated by gender (see Tables \ref{tab:H1-con-gender-tab} \& \ref{tab:H1-con-gender-contrasts} and Figure \ref{fig:H1-con-fig}).\\
+However, there were significant differences depending on grandparents' work status (see Tables \ref{tab:H1-con-work-tab} \& \ref{tab:H1-con-work-contrasts} and Figure \ref{fig:H1-con-work-fig}): non-working grandparents saw more pronounced increases in conscientiousness in the years before the transition to grandparenthood compared to non-working parent, \(\hat{\gamma}_{11} = 0.08\), 95\% CI \([0.04, 0.13]\), \(p\) \textless{} .001, and nonparent controls, \(\hat{\gamma}_{11} = 0.07\), 95\% CI \([0.03, 0.12]\), \(p\) = .002, and compared to working grandparents (difference in \emph{before} parameter; parents: {[}\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\){]} = -0.08, 95\% CI {[}-0.13, -0.03{]}, \(p\) = .002; nonparents: {[}\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\){]} = -0.08, 95\% CI {[}-0.12, -0.03{]}, \(p\) = .001). There is suggestive evidence that grandparents who provided substantial grandchild care increased more strongly in conscientiousness after the transition compared to grandparents who did not (difference in \emph{after} parameter; parents: {[}\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\){]} = 0.03, 95\% CI {[}0.00, 0.06{]}, \(p\) = .034; nonparents: {[}\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\){]} = 0.03, 95\% CI {[}0.00, 0.06{]}, \(p\) = .022; see Tables \ref{tab:H1-con-care-tab} \& \ref{tab:H1-con-care-contrasts} and Figure \ref{fig:H1-con-care-fig}).
 
 \hypertarget{extraversion}{%
 \subsubsection{Extraversion}\label{extraversion}}
 
-The trajectories of grandparents' extraversion closely follow those of the matched controls. There are no significant effects indicating differences between grandparents and controls in the basic models (see Tables \ref{tab:H1-extra-tab} \& \ref{tab:H1-extra-contrasts} and Figure \ref{fig:H1-extra-fig}), the models including the gender interaction (see Tables \ref{tab:H1-extra-gender-tab} \& \ref{tab:H1-extra-gender-contrasts} and Figure \ref{fig:H1-extra-fig}), or the models of moderation by paid work (see Tables \ref{tab:H1-extra-work-tab} \& \ref{tab:H1-extra-work-contrasts} and Figure \ref{fig:H1-extra-work-fig}). In the analysis of moderation by grandchild care (see Tables \ref{tab:H1-extra-care-tab} \& \ref{tab:H1-extra-care-contrasts} and Figure \ref{fig:H1-extra-care-fig}) it can be seen that compared to matched parent controls caring grandparents increase slightly more strongly in extraversion after the transition to grandparenthood, (\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\)) = 0.04, \(\chi^2\) (1) = 10.45, \(p\) = .001 {[}suggestive evidence in the nonparent sample: (\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\)) = 0.04, \(\chi^2\) (1) = 7.39, \(p\) = .007{]}.
+The trajectories of grandparents' extraversion closely follow those of the matched controls. There are no significant effects indicating differences between grandparents and controls in the basic models (see Tables \ref{tab:H1-extra-tab} \& \ref{tab:H1-extra-contrasts} and Figure \ref{fig:H1-extra-fig}), the models including the gender interaction (see Tables \ref{tab:H1-extra-gender-tab} \& \ref{tab:H1-extra-gender-contrasts} and Figure \ref{fig:H1-extra-fig}), or the models of moderation by paid work (see Tables \ref{tab:H1-extra-work-tab} \& \ref{tab:H1-extra-work-contrasts} and Figure \ref{fig:H1-extra-work-fig}). In the analysis of moderation by grandchild care (see Tables \ref{tab:H1-extra-care-tab} \& \ref{tab:H1-extra-care-contrasts} and Figure \ref{fig:H1-extra-care-fig}) it can be seen that compared to matched parent controls caring grandparents increased slightly more strongly in extraversion after the transition to grandparenthood (difference in \emph{after} parameter: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.04, 95\% CI {[}0.02, 0.07{]}, \(p\) = .001; suggestive evidence in the nonparent sample: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.04, 95\% CI {[}0.01, 0.06{]}, \(p\) = .007).
 
 \hypertarget{neuroticism}{%
 \subsubsection{Neuroticism}\label{neuroticism}}
 
-The basic models for neuroticism (see Tables \ref{tab:H1-neur-tab} \& \ref{tab:H1-neur-contrasts} and Figure \ref{fig:H1-neur-fig}) only show minor differences between grandparents and matched controls. Compared to the parent controls, grandparents in the HRS shifted slightly downward in their neuroticism immediately after the transition to grandparenthood, (\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\)) = -0.08, \(\chi^2\) (1) = 12.06, \(p\) \textless{} .001. However, this was not the case in the three other samples (HRS nonparents, LISS parents, and LISS nonparents). Further, in the HRS there is suggestive evidence that grandparents increase in neuroticism before the transition to grandparenthood compared to the nonparent controls, \(\hat{\gamma}_{11} = 0.04\), 95\% CI \([0.01, 0.07]\), \(t = 2.42\), \(p\) = .016. The models including the gender interaction (see Tables \ref{tab:H1-neur-gender-tab} \& \ref{tab:H1-neur-gender-contrasts} and Figure \ref{fig:H1-neur-fig}) only show one significant effect in the comparison of grandparents and controls: In the HRS, grandfathers, as compared to male parent controls, shift downwards in neuroticism in the year immediately after the transition to grandparenthood, (\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\)) = -0.16, \(\chi^2\) (1) = 20.99, \(p\) \textless{} .001 {[}suggestive evidence in the HRS nonparent sample: (\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\)) = -0.07, \(\chi^2\) (1) = 5.10, \(p\) = .024{]}. There is also suggestive evidence that grandfathers in the HRS increase more strongly in neuroticism before the transition than the controls (parent controls: \(\hat{\gamma}_{11} = 0.06\), 95\% CI \([0.01, 0.10]\), \(t = 2.26\), \(p\) = .024; nonparent controls: \(\hat{\gamma}_{11} = 0.06\), 95\% CI \([0.02, 0.11]\), \(t = 2.72\), \(p\) = .007).\\
-Grandparents' trajectories of neuroticism as compared to the controls were significantly moderated by paid work (see Tables \ref{tab:H1-neur-work-tab} \& \ref{tab:H1-neur-work-contrasts} and Figure \ref{fig:H1-neur-work-fig}): Compared to working nonparent controls, working grandparents increase more strongly in neuroticism in the years before the transition to grandparenthood, (\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\)) = 0.06, \(\chi^2\) (1) = 11.29, \(p\) \textless{} .001 {[}suggestive evidence in the parent sample (\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\)) = 0.05, \(\chi^2\) (1) = 5.89, \(p\) = .015{]}. At the first assessment post-transition, working grandparents decrease more strongly in neuroticism compared to working parent controls, (\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\) + \(\hat{\gamma}_{23}\) + \(\hat{\gamma}_{33}\)) = -0.08, \(\chi^2\) (1) = 8.11, \(p\) = .004 {[}suggestive evidence in the nonparent sample (\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\) + \(\hat{\gamma}_{23}\) + \(\hat{\gamma}_{33}\)) = -0.06, \(\chi^2\) (1) = 4.48, \(p\) = .034{]}. There is suggestive evidence that grandparents providing substantial grandchild care decrease more strongly in neuroticism after the transition to grandparenthood than grandparents who do not {[}parents: (\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\)) = -0.04, \(\chi^2\) (1) = 4.06, \(p\) = .044; nonparents: (\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\)) = -0.04, \(\chi^2\) (1) = 3.90, \(p\) = .048, see Tables \ref{tab:H1-neur-care-tab} \& \ref{tab:H1-neur-care-contrasts} and Figure \ref{fig:H1-neur-care-fig}{]}.
+The basic models for neuroticism (see Tables \ref{tab:H1-neur-tab} \& \ref{tab:H1-neur-contrasts} and Figure \ref{fig:H1-neur-fig}) only show minor differences between grandparents and matched controls. Compared to the parent controls, grandparents in the HRS shifted slightly downward in their neuroticism immediately after the transition to grandparenthood (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.08, 95\% CI {[}-0.12, -0.03{]}, \(p\) \textless{} .001). However, this was not the case in the three other samples (HRS nonparents, LISS parents, and LISS nonparents). Further, in the HRS there is suggestive evidence that grandparents increased in neuroticism before the transition to grandparenthood compared to the nonparent controls, \(\hat{\gamma}_{11} = 0.04\), 95\% CI \([0.01, 0.07]\), \(p\) = .016. The models including the gender interaction (see Tables \ref{tab:H1-neur-gender-tab} \& \ref{tab:H1-neur-gender-contrasts} and Figure \ref{fig:H1-neur-fig}) only show one significant effect in the comparison of grandparents and controls: In the HRS, grandfathers, as compared to male parent controls, shifted downwards in neuroticism in the year immediately after the transition to grandparenthood (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.16, 95\% CI {[}-0.22, -0.09{]}, \(p\) \textless{} .001; suggestive evidence in the nonparent sample: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.07, 95\% CI {[}-0.14, -0.01{]}, \(p\) = .024). There is also suggestive evidence that grandfathers in the HRS increased more strongly in neuroticism before the transition than the male controls (parent controls: \(\hat{\gamma}_{11} = 0.06\), 95\% CI \([0.01, 0.10]\), \(p\) = .024; nonparent controls: \(\hat{\gamma}_{11} = 0.06\), 95\% CI \([0.02, 0.11]\), \(p\) = .007). Thus, effects present in the basic models seem to be mostly due to differences in the grandfathers (vs.~male controls).\\
+Grandparents' trajectories of neuroticism as compared to the controls were significantly moderated by paid work (see Tables \ref{tab:H1-neur-work-tab} \& \ref{tab:H1-neur-work-contrasts} and Figure \ref{fig:H1-neur-work-fig}): Compared to working nonparent controls, working grandparents increased more strongly in neuroticism in the years before the transition to grandparenthood (difference in \emph{before} parameter: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.06, 95\% CI {[}0.03, 0.10{]}, \(p\) \textless{} .001; suggestive evidence in the parent sample: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.05, 95\% CI {[}0.01, 0.08{]}, \(p\) = .015). At the first post-transition assessment, working grandparents shifted downward in neuroticism compared to working parent controls (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\) + \(\hat{\gamma}_{23}\) + \(\hat{\gamma}_{33}\){]} = -0.08, 95\% CI {[}-0.14, -0.03{]}, \(p\) = .004; suggestive evidence in the nonparent sample: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\) + \(\hat{\gamma}_{23}\) + \(\hat{\gamma}_{33}\){]} = -0.06, 95\% CI {[}-0.11, 0.00{]}, \(p\) = .034). There is suggestive evidence that grandparents providing substantial grandchild care decreased more strongly in neuroticism after the transition to grandparenthood than grandparents who did not (difference in \emph{after} parameter; parents: {[}\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\){]} = -0.04, 95\% CI {[}-0.07, 0.00{]}, \(p\) = .044; nonparents: {[}\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\){]} = -0.04, 95\% CI {[}-0.07, 0.00{]}, \(p\) = .048; see Tables \ref{tab:H1-neur-care-tab} \& \ref{tab:H1-neur-care-contrasts} and Figure \ref{fig:H1-neur-care-fig}).
 
 \hypertarget{openness}{%
 \subsubsection{Openness}\label{openness}}
 
-For openness there is also a high degree of similarity between the grandparents and the matched control subjects in the basic (see Tables \ref{tab:H1-open-tab} \& \ref{tab:H1-open-contrasts} and Figure \ref{fig:H1-open-fig}) and gender interactions models (see Tables \ref{tab:H1-open-gender-tab} \& \ref{tab:H1-open-gender-contrasts} and Figure \ref{fig:H1-open-fig}). Grandparents in the HRS decreased in openness in the first assessment after the transition to grandparenthood compared to the parent controls, (\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\)) = -0.05, \(\chi^2\) (1) = 8.14, \(p\) = .004 {[}suggestive evidence in the nonparent sample: (\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\)) = -0.04, \(\chi^2\) (1) = 4.25, \(p\) = .039{]}. This effect is due to significant differences between grandfathers and male parent controls in the shift immediately after the transition, (\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\)) = -0.11, \(\chi^2\) (1) = 15.71, \(p\) \textless{} .001. There is suggestive evidence that grandmothers in the LISS increase more strongly in openness before the transition to grandparenthood than female controls {[}parents: (\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\)) = 0.02, \(\chi^2\) (1) = 4.38, \(p\) = .036; nonparents: (\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\)) = 0.02, \(\chi^2\) (1) = 6.74, \(p\) = .009{]}.\\
-Performing paid work moderated grandparents' trajectories in subtle ways (see Tables \ref{tab:H1-open-work-tab} \& \ref{tab:H1-open-work-contrasts} and Figure \ref{fig:H1-open-work-fig}): Non-working grandparents increased more strongly in openness post-transition than non-working controls (parents: \(\hat{\gamma}_{21} = 0.05\), 95\% CI \([0.02, 0.07]\), \(t = 3.86\), \(p\) \textless{} .001; nonparents: \(\hat{\gamma}_{21} = 0.04\), 95\% CI \([0.02, 0.06]\), \(t = 3.73\), \(p\) \textless{} .001). Further, there is suggestive evidence that openness of non-working grandparents decreased compared to non-working controls directly after the transition {[}parents: (\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\)) = -0.09, \(\chi^2\) (1) = 7.30, \(p\) = .007; nonparents: (\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\)) = -0.07, \(\chi^2\) (1) = 6.07, \(p\) = .014{]}, and that---compared to non-working grandparents---working grandparents increased in openness directly after the transition {[}parents: (\(\hat{\gamma}_{22}\) + \(\hat{\gamma}_{32}\) + \(\hat{\gamma}_{23}\) + \(\hat{\gamma}_{33}\)) = 0.08, \(\chi^2\) (1) = 4.30, \(p\) = .038; nonparents: (\(\hat{\gamma}_{22}\) + \(\hat{\gamma}_{32}\) + \(\hat{\gamma}_{23}\) + \(\hat{\gamma}_{33}\)) = 0.08, \(\chi^2\) (1) = 5.16, \(p\) = .023{]} and decreased afterwards {[}parents: (\(\hat{\gamma}_{22}\) + \(\hat{\gamma}_{23}\)) = -0.04, \(\chi^2\) (1) = 5.78, \(p\) = .016; nonparents: (\(\hat{\gamma}_{22}\) + \(\hat{\gamma}_{23}\)) = -0.04, \(\chi^2\) (1) = 7.17, \(p\) = .007{]}. The analysis of moderation by grandchild care (see Tables \ref{tab:H1-open-care-tab} \& \ref{tab:H1-open-care-contrasts} and Figure \ref{fig:H1-open-care-fig}) reveals that grandparents providing substantial grandchild care increased more strongly in openness after the transition to grandparenthood than their matched nonparent controls, (\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\)) = 0.04, \(\chi^2\) (1) = 9.46, \(p\) = .002 ((\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\)) = 0.04, \(\chi^2\) (1) = 7.78, \(p\) = .005).
+For openness, there is also a high degree of similarity between the grandparents and the matched control subjects in their trajectories based on the basic models (see Tables \ref{tab:H1-open-tab} \& \ref{tab:H1-open-contrasts} and Figure \ref{fig:H1-open-fig}) and models including the gender interaction (see Tables \ref{tab:H1-open-gender-tab} \& \ref{tab:H1-open-gender-contrasts} and Figure \ref{fig:H1-open-fig}). Grandparents in the HRS shifted downwards in openness in the first assessment after the transition to grandparenthood compared to the parent controls (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.05, 95\% CI {[}-0.09, -0.02{]}, \(p\) = .004; suggestive evidence in the nonparent sample: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.04, 95\% CI {[}-0.07, 0.00{]}, \(p\) = .039). This effect is due to significant differences between grandfathers and male parent controls in the shift immediately after the transition (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.11, 95\% CI {[}-0.17, -0.06{]}, \(p\) \textless{} .001). There is suggestive evidence that grandmothers in the LISS increased more strongly in openness before the transition to grandparenthood than female controls (difference in \emph{before} parameter; parents: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.02, 95\% CI {[}0.00, 0.03{]}, \(p\) = .036; nonparents: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.02, 95\% CI {[}0.00, 0.04{]}, \(p\) = .009).\\
+Performing paid work moderated grandparents' trajectories in subtle ways (see Tables \ref{tab:H1-open-work-tab} \& \ref{tab:H1-open-work-contrasts} and Figure \ref{fig:H1-open-work-fig}): Non-working grandparents increased more strongly in openness post-transition than non-working controls (parents: \(\hat{\gamma}_{21} = 0.05\), 95\% CI \([0.02, 0.07]\), \(p\) \textless{} .001; nonparents: \(\hat{\gamma}_{21} = 0.04\), 95\% CI \([0.02, 0.06]\), \(p\) \textless{} .001). Further, there is suggestive evidence that openness of non-working grandparents shifted downwards directly after the transition compared to non-working controls (difference in \emph{shift} parameter; parents: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.09, 95\% CI {[}-0.15, -0.02{]}, \(p\) = .007; nonparents: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.07, 95\% CI {[}-0.13, -0.01{]}, \(p\) = .014). However, compared to non-working grandparents, working grandparents shifted upwards in openness directly after the transition (difference in \emph{shift} parameter; parents: {[}\(\hat{\gamma}_{22}\) + \(\hat{\gamma}_{32}\) + \(\hat{\gamma}_{23}\) + \(\hat{\gamma}_{33}\){]} = 0.08, 95\% CI {[}0.00, 0.15{]}, \(p\) = .038; nonparents: {[}\(\hat{\gamma}_{22}\) + \(\hat{\gamma}_{32}\) + \(\hat{\gamma}_{23}\) + \(\hat{\gamma}_{33}\){]} = 0.08, 95\% CI {[}0.01, 0.14{]}, \(p\) = .023) and decreased afterwards (difference in \emph{after} parameter; parents: {[}\(\hat{\gamma}_{22}\) + \(\hat{\gamma}_{23}\){]} = -0.04, 95\% CI {[}-0.07, -0.01{]}, \(p\) = .016; nonparents: {[}\(\hat{\gamma}_{22}\) + \(\hat{\gamma}_{23}\){]} = -0.04, 95\% CI {[}-0.07, -0.01{]}, \(p\) = .007). The analysis of moderation by grandchild care (see Tables \ref{tab:H1-open-care-tab} \& \ref{tab:H1-open-care-contrasts} and Figure \ref{fig:H1-open-care-fig}) reveals that grandparents providing substantial grandchild care increased more strongly in openness after the transition to grandparenthood than the matched nonparent controls (difference in \emph{after} parameter: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.04, 95\% CI {[}0.01, 0.06{]}, \(p\) = .002; suggestive evidence in the parent sample: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.04, 95\% CI {[}0.01, 0.07{]}, \(p\) = .005). At the same time, a look at the plotted trajectories demonstrates that the described moderation effects for openness were all quite small.
 
 \hypertarget{life-satisfaction-1}{%
 \subsubsection{Life Satisfaction}\label{life-satisfaction-1}}
 
-The basic model for life satisfaction (see Tables \ref{tab:H1-swls-tab} \& \ref{tab:H1-swls-contrasts} and Figure \ref{fig:H1-swls-fig}) provides suggestive evidence that grandparents in the HRS increased more strongly in their life satisfaction before the transition to grandparenthood than matched parent controls, \(\hat{\gamma}_{11} = 0.12\), 95\% CI \([0.03, 0.21]\), \(t = 2.58\), \(p\) = .010. Grandparents in the LISS increased more strongly in life satisfaction directly after the transition compared to the nonparent controls, (\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\)) = 0.18, \(\chi^2\) (1) = 8.25, \(p\) = .004. There is evidence in the models including the gender interaction (see Tables \ref{tab:H1-swls-gender-tab} \& \ref{tab:H1-swls-gender-contrasts} and Figure \ref{fig:H1-swls-fig}) that grandmothers in the LISS increased more strongly in life satisfaction directly post-transition than female nonparent controls (\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\) + \(\hat{\gamma}_{23}\) + \(\hat{\gamma}_{33}\)) = 0.24, \(\chi^2\) (1) = 8.27, \(p\) = .004. Further, grandmothers in the HRS increased in life satisfaction before the transition to grandparenthood compared to female parent controls (\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\)) = 0.21, \(\chi^2\) (1) = 12.04, \(p\) \textless{} .001. The models of the moderation by paid work give suggestive evidence that working grandparents increase in life satisfaction before the transition to grandparenthood compared to working parent controls, (\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\)) = 0.11, \(\chi^2\) (1) = 3.95, \(p\) = .047 (see Tables \ref{tab:H1-swls-work-tab} \& \ref{tab:H1-swls-work-contrasts} and Figure \ref{fig:H1-swls-work-fig}). There is no evidence for a moderation by grandchild care (see Tables \ref{tab:H1-swls-care-tab} \& \ref{tab:H1-swls-care-contrasts} and Figure \ref{fig:H1-swls-care-fig}).
+The basic model for life satisfaction (see Tables \ref{tab:H1-swls-tab} \& \ref{tab:H1-swls-contrasts} and Figure \ref{fig:H1-swls-fig}) provides suggestive evidence that grandparents in the HRS increased more strongly in their life satisfaction before the transition to grandparenthood than matched parent controls, \(\hat{\gamma}_{11} = 0.12\), 95\% CI \([0.03, 0.21]\), \(p\) = .010. Grandparents in the LISS increased more strongly in life satisfaction directly after the transition compared to the nonparent controls (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = 0.18, 95\% CI {[}0.06, 0.30{]}, \(p\) = .004). There is evidence in the models including the gender interaction (see Tables \ref{tab:H1-swls-gender-tab} \& \ref{tab:H1-swls-gender-contrasts} and Figure \ref{fig:H1-swls-fig}) that grandmothers in the LISS increased more strongly in life satisfaction directly post-transition than female nonparent controls (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\) + \(\hat{\gamma}_{23}\) + \(\hat{\gamma}_{33}\){]} = 0.24, 95\% CI {[}0.08, 0.41{]}, \(p\) = .004). Further, grandmothers in the HRS increased in life satisfaction before the transition to grandparenthood compared to female parent controls (difference in \emph{before} parameter: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.21, 95\% CI {[}0.09, 0.33{]}, \(p\) \textless{} .001).\\
+The models of the moderation by paid work give suggestive evidence that working grandparents increased in life satisfaction before the transition to grandparenthood compared to working parent controls (difference in \emph{before} parameter: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.11, 95\% CI {[}0.00, 0.21{]}, \(p\) = .047; see Tables \ref{tab:H1-swls-work-tab} \& \ref{tab:H1-swls-work-contrasts} and Figure \ref{fig:H1-swls-work-fig}). There is no evidence for a moderation by grandchild care (see Tables \ref{tab:H1-swls-care-tab} \& \ref{tab:H1-swls-care-contrasts} and Figure \ref{fig:H1-swls-care-fig}).
 
 \hypertarget{interindividual-differences-in-change}{%
 \subsection{Interindividual Differences in Change}\label{interindividual-differences-in-change}}
 
+First, we conducted comparisons of model fit between the random-intercept models reported previously and models where a random slope variance was estimated, separately for each change parameter. These comparisons showed a substantial amount of interindividual differences in change for all random slopes in all models as indicated by increases in model fit significant at \(p\) \textless{} .001.\\
+Second, we estimated models with heterogeneous random slope variances between the grandparents and each control group in order to test whether interindividual differences in change were significantly larger in the grandparents. Contrary to hypothesis H2, for agreeableness, conscientiousness, and extraversion, interindividual differences in intraindividual change were greater in the control group for all tested effects (see Tables \ref{tab:H2-hetvar-tab-agree}, \ref{tab:H2-hetvar-tab-con}, \& \ref{tab:H2-hetvar-tab-extra}). In the two HRS samples, assuming group heterogeneity in the random slope variances lead to a significant improvement in model fit in all model comparisons. In the two LISS samples, this was the case for around half the tests.\\
+Interindividual differences in changes in neuroticism before the transition to grandparenthood (random slope variance of the \emph{before} parameter) were significantly greater in the HRS grandparents than the nonparent controls, \emph{likelihood ratio} = 73.45, \(p\) \textless{} .001. However, this was not the case in the comparison of grandparents with parent controls in the HRS or either control group in the LISS (see Table \ref{tab:H2-hetvar-tab-neur}). The other parameters of change in neuroticism did not differ significantly between groups in their random slope variances or---in the HRS---displayed significantly larger random slope variances in the respective control group.\\
+For openness, interindividual differences in changes before the transition to grandparenthood (random slope variance of the \emph{before} parameter) were significantly greater in the LISS grandparents than the nonparent controls, \emph{likelihood ratio} = 25.90, \(p\) \textless{} .001. Again, this result could not be replicated in the other three samples, and the other parameters of change did either not differ between groups in their random slope variances or had significantly larger random slope variances in the respective control group (see Table \ref{tab:H2-hetvar-tab-open}).\\
+We found partial evidence for larger interindividual differences in grandparents' changes in life satisfaction (see Table \ref{tab:H2-hetvar-tab-swls}): In the LISS, grandparents' changes before the transition to grandparenthood varied to a larger extent interindividually compared to the parent controls (random slope variance of the \emph{before} parameter), \emph{likelihood ratio} = 41.47, \(p\) \textless{} .001, and in the HRS compared to the nonparent controls, \emph{likelihood ratio} = 111.97, \(p\) \textless{} .001. We found suggestive evidence for larger interindividual differences in grandparents' linear post-transition changes compared to the parent controls (random slope variance of the \emph{after} parameter), \emph{likelihood ratio} = 11.74, \(p\) = .008, and in sudden shifts directly after the transition was first reported (random slope variance of the \emph{shift} parameter), \emph{likelihood ratio} = 10.00, \(p\) = .019. Still, the majority of tests for heterogeneous random slope variance in life satisfaction indicated either non-significant differences or significantly larger random slope variances in the control sample.
+
 \hypertarget{rank-order-stability}{%
 \subsection{Rank-Order Stability}\label{rank-order-stability}}
+
+We computed test-retest correlations for the Big Five and life satisfaction for the matched sample, as well as separately for grandparents only and controls only (see Table \ref{tab:H3-rankorder-tab}). In 17 out of 24 comparisons grandparents' test-retest correlation was larger than that of the respective control group. There was only one significant difference between grandparents and matched controls in their rank-order stability, namely the rank-order stability of agreeableness in the LISS which was larger in the grandparents than the matched nonparent controls, \(p\) = .005. Further, we found suggestive evidence that rank-order stability in the HRS was larger in the grandparents for extraversion than in either parent, \(p\) = .007, or nonparent controls, \(p\) = .029, and that for openness it was larger in the grandparents than in the parent controls, \(p\) = .015. Overall, there was no evidence in support of hypothesis H3.
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
@@ -927,7 +936,7 @@ Yap, S., Anusic, I., \& Lucas, R. E. (2012). Does personality moderate reaction 
 \begin{center}
 \begin{threeparttable}
 
-\caption{\label{tab:icc-table}Intra-Class Correlations}
+\caption{\label{tab:icc-table}Intra-Class Correlations of Grandparents and Matched Controls in the Four Analysis Samples.}
 
 \begin{tabular}{lcccccc}
 \toprule
@@ -954,7 +963,7 @@ HRS: Nonparent controls &  &  &  &  &  & \\
 \end{tabular}
 
 \begin{tablenotes}[para]
-\normalsize{\textit{Note.} A = agreeableness, C = conscientiousness, E = extraversion, N = neuroticism, O = openness, LS = life satisfaction. Intra-class correlations are the proportion of total variation that is explained by the respective blocking factor. $ICC_{pid}$ is the proportion of total variance explained by nesting in respondents which corresponds to the correlation between two randomly selected observations from the same respondent. $ICC_{hid}$ is the proportion of total variance explained by nesting in households which corresponds to the correlation between two randomly selected observations from the same household. $ICC_{pid/hid}$ is the proportion of total variance explained by nesting in respondents and in households which corresponds to the correlation between two randomly selected observations from the same respondent and the same household.}
+\normalsize{\textit{Note.} A = agreeableness, C = conscientiousness, E = extraversion, N = neuroticism, O = openness, LS = life satisfaction. Intra-class correlations are the proportion of total variation that is explained by the respective nesting factor. $ICC_{pid}$ is the proportion of total variance explained by nesting in participants which corresponds to the correlation between two randomly selected observations from the same participant. $ICC_{hid}$ is the proportion of total variance explained by nesting in households which corresponds to the correlation between two randomly selected observations from the same household. $ICC_{pid/hid}$ is the proportion of total variance explained by nesting in participants and in households which corresponds to the correlation between two randomly selected observations from the same participant and the same household.}
 \end{tablenotes}
 
 \end{threeparttable}
@@ -1040,16 +1049,16 @@ HRS: Coding scheme &  &  &  &  &  &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Standard deviation shown in brackets; \(time=0\)
-marks the first year where the transition to grandparenthood has been
-reported.}
+\normalsize{\textit{Note.} Standard deviations shown in brackets;
+\(time=0\) marks the first year where the transition to grandparenthood
+was reported.}
 \end{TableNotes}
 
 \small{
 
 \begin{longtable}{lccccccccccccc}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
-\caption{\label{tab:descriptives-liss}Mean and Standard Deviation of the Big Five
-and Life Satisfaction over Time in the LISS Panel.}\\
+\caption{\label{tab:descriptives-liss}Means and Standard Deviations of the Big
+Five and Life Satisfaction over Time in the LISS Panel.}\\
 \toprule
 & \multicolumn{6}{c}{Pre-transition years} & \multicolumn{7}{c}{Post-transition years} \\
 \cmidrule(r){2-7} \cmidrule(r){8-14}
@@ -1120,15 +1129,15 @@ Life satisfaction &  &  &  &  &  &  &  &  &  &  &  &  & \\
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} Standard deviation shown in brackets; \(time=0\)
-marks the first year where the transition to grandparenthood has been
-reported.}
+\normalsize{\textit{Note.} Standard deviations shown in brackets;
+\(time=0\) marks the first year where the transition to grandparenthood
+was reported.}
 \end{TableNotes}
 
 \small{
 
 \begin{longtable}{lccccccccccccc}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
-\caption{\label{tab:descriptives-hrs}Mean and Standard Deviation of the Big Five
+\caption{\label{tab:descriptives-hrs}Means and Standard Deviations of the Big Five
 and Life Satisfaction over Time in the HRS.}\\
 \toprule
 & \multicolumn{6}{c}{Pre-transition years} & \multicolumn{7}{c}{Post-transition years} \\
@@ -5144,12 +5153,14 @@ HRS &  &  &  &  &  &  &  & \\
 \centering
 \includegraphics{Figs/H1-agree-fig-1.pdf}
 \caption{\label{fig:H1-agree-fig}Change trajectories of agreeableness based on the
-basic models (1st column) and the models with the gender interaction
-(2nd column). The error bars are 95\% confidence intervals of the
-predicted values which only account for the fixed-effects portion of the
-model. The vertical line indicates the approximate time of the
+basic models (left column) and the models including the gender
+interaction (right column). The error bars are 95\% confidence intervals
+of the predicted values which only account for the fixed-effects portion
+of the model. The vertical line indicates the approximate time of the
 transition to grandparenthood.}
 \end{figure}
+
+
 
 
 
@@ -5166,9 +5177,10 @@ on the models of moderation by paid work (see Table
 \ref{tab:H1-agree-work-tab}). The error bars are 95\% confidence
 intervals of the predicted values which only account for the
 fixed-effects portion of the model. The vertical line indicates the
-approximate time of the transition to grandparenthood.}
+approximate time of the transition to grandparenthood. The plots in the
+left column are the same as in Figure \ref{fig:H1-agree-fig} (basic
+models) and added here for better comparability.}
 \end{figure}
-
 
 
 
@@ -5186,9 +5198,8 @@ on the models of moderation by grandchild care (see Table
 \ref{tab:H1-agree-care-tab}). The error bars are 95\% confidence
 intervals of the predicted values which only account for the
 fixed-effects portion of the model. The plots in the left column are the
-same as in Figures \ref{fig:H1-agree-fig} and
-\ref{fig:H1-agree-work-fig} but restricted to the post-transition period
-for better comparability.}
+same as in Figure \ref{fig:H1-agree-fig} (basic models) but restricted
+to the post-transition period for better comparability.}
 \end{figure}
 
 
@@ -5202,12 +5213,14 @@ for better comparability.}
 \centering
 \includegraphics{Figs/H1-con-fig-1.pdf}
 \caption{\label{fig:H1-con-fig}Change trajectories of conscientiousness based on
-the basic models (1st column) and the models with the gender interaction
-(2nd column). The error bars are 95\% confidence intervals of the
-predicted values which only account for the fixed-effects portion of the
-model. The vertical line indicates the approximate time of the
+the basic models (left column) and the models including the gender
+interaction (right column). The error bars are 95\% confidence intervals
+of the predicted values which only account for the fixed-effects portion
+of the model. The vertical line indicates the approximate time of the
 transition to grandparenthood.}
 \end{figure}
+
+
 
 
 
@@ -5224,7 +5237,9 @@ on the models of moderation by paid work (see Table
 \ref{tab:H1-con-work-tab}). The error bars are 95\% confidence intervals
 of the predicted values which only account for the fixed-effects portion
 of the model. The vertical line indicates the approximate time of the
-transition to grandparenthood.}
+transition to grandparenthood. The plots in the left column are the same
+as in Figure \ref{fig:H1-con-fig} (basic models) and added here for
+better comparability.}
 \end{figure}
 
 
@@ -5242,8 +5257,8 @@ transition to grandparenthood.}
 on the models of moderation by grandchild care (see Table
 \ref{tab:H1-con-care-tab}). The error bars are 95\% confidence intervals
 of the predicted values which only account for the fixed-effects portion
-of the model. The plots in the left column are the same as in Figures
-\ref{fig:H1-con-fig} and \ref{fig:H1-con-work-fig} but restricted to the
+of the model. The plots in the left column are the same as in Figure
+\ref{fig:H1-con-fig} (basic models) but restricted to the
 post-transition period for better comparability.}
 \end{figure}
 
@@ -5258,12 +5273,14 @@ post-transition period for better comparability.}
 \centering
 \includegraphics{Figs/H1-extra-fig-1.pdf}
 \caption{\label{fig:H1-extra-fig}Change trajectories of extraversion based on the
-basic models (1st column) and the models with the gender interaction
-(2nd column). The error bars are 95\% confidence intervals of the
-predicted values which only account for the fixed-effects portion of the
-model. The vertical line indicates the approximate time of the
+basic models (left column) and the models including the gender
+interaction (right column). The error bars are 95\% confidence intervals
+of the predicted values which only account for the fixed-effects portion
+of the model. The vertical line indicates the approximate time of the
 transition to grandparenthood.}
 \end{figure}
+
+
 
 
 
@@ -5280,9 +5297,10 @@ the models of moderation by paid work (see Table
 \ref{tab:H1-extra-work-tab}). The error bars are 95\% confidence
 intervals of the predicted values which only account for the
 fixed-effects portion of the model. The vertical line indicates the
-approximate time of the transition to grandparenthood.}
+approximate time of the transition to grandparenthood. The plots in the
+left column are the same as in Figure \ref{fig:H1-extra-fig} (basic
+models) and added here for better comparability.}
 \end{figure}
-
 
 
 
@@ -5300,9 +5318,8 @@ the models of moderation by grandchild care (see Table
 \ref{tab:H1-extra-care-tab}). The error bars are 95\% confidence
 intervals of the predicted values which only account for the
 fixed-effects portion of the model. The plots in the left column are the
-same as in Figures \ref{fig:H1-extra-fig} and
-\ref{fig:H1-extra-work-fig} but restricted to the post-transition period
-for better comparability.}
+same as in Figure \ref{fig:H1-extra-fig} (basic models) but restricted
+to the post-transition period for better comparability.}
 \end{figure}
 
 
@@ -5316,12 +5333,14 @@ for better comparability.}
 \centering
 \includegraphics{Figs/H1-neur-fig-1.pdf}
 \caption{\label{fig:H1-neur-fig}Change trajectories of neuroticism based on the
-basic models (1st column) and the models with the gender interaction
-(2nd column). The error bars are 95\% confidence intervals of the
-predicted values which only account for the fixed-effects portion of the
-model. The vertical line indicates the approximate time of the
+basic models (left column) and the models including the gender
+interaction (right column). The error bars are 95\% confidence intervals
+of the predicted values which only account for the fixed-effects portion
+of the model. The vertical line indicates the approximate time of the
 transition to grandparenthood.}
 \end{figure}
+
+
 
 
 
@@ -5338,7 +5357,9 @@ the models of moderation by paid work (see Table
 \ref{tab:H1-neur-work-tab}). The error bars are 95\% confidence
 intervals of the predicted values which only account for the
 fixed-effects portion of the model. The vertical line indicates the
-approximate time of the transition to grandparenthood.}
+approximate time of the transition to grandparenthood. The plots in the
+left column are the same as in Figure \ref{fig:H1-neur-fig} (basic
+models) and added here for better comparability.}
 \end{figure}
 
 
@@ -5357,8 +5378,8 @@ the models of moderation by grandchild care (see Table
 \ref{tab:H1-neur-care-tab}). The error bars are 95\% confidence
 intervals of the predicted values which only account for the
 fixed-effects portion of the model. The plots in the left column are the
-same as in Figures \ref{fig:H1-neur-fig} and \ref{fig:H1-neur-work-fig}
-but restricted to the post-transition period for better comparability.}
+same as in Figure \ref{fig:H1-neur-fig} (basic models) but restricted to
+the post-transition period for better comparability.}
 \end{figure}
 
 
@@ -5372,12 +5393,14 @@ but restricted to the post-transition period for better comparability.}
 \centering
 \includegraphics{Figs/H1-open-fig-1.pdf}
 \caption{\label{fig:H1-open-fig}Change trajectories of openness based on the basic
-models (1st column) and the models with the gender interaction (2nd
-column). The error bars are 95\% confidence intervals of the predicted
-values which only account for the fixed-effects portion of the model.
-The vertical line indicates the approximate time of the transition to
-grandparenthood.}
+models (left column) and the models including the gender interaction
+(right column). The error bars are 95\% confidence intervals of the
+predicted values which only account for the fixed-effects portion of the
+model. The vertical line indicates the approximate time of the
+transition to grandparenthood.}
 \end{figure}
+
+
 
 
 
@@ -5394,7 +5417,9 @@ models of moderation by paid work (see Table
 \ref{tab:H1-open-work-tab}). The error bars are 95\% confidence
 intervals of the predicted values which only account for the
 fixed-effects portion of the model. The vertical line indicates the
-approximate time of the transition to grandparenthood.}
+approximate time of the transition to grandparenthood. The plots in the
+left column are the same as in Figure \ref{fig:H1-open-fig} (basic
+models) and added here for better comparability.}
 \end{figure}
 
 
@@ -5413,8 +5438,8 @@ models of moderation by grandchild care (see Table
 \ref{tab:H1-open-care-tab}). The error bars are 95\% confidence
 intervals of the predicted values which only account for the
 fixed-effects portion of the model. The plots in the left column are the
-same as in Figures \ref{fig:H1-open-fig} and \ref{fig:H1-open-work-fig}
-but restricted to the post-transition period for better comparability.}
+same as in Figure \ref{fig:H1-open-fig} (basic models) but restricted to
+the post-transition period for better comparability.}
 \end{figure}
 
 
@@ -5428,12 +5453,14 @@ but restricted to the post-transition period for better comparability.}
 \centering
 \includegraphics{Figs/H1-swls-fig-1.pdf}
 \caption{\label{fig:H1-swls-fig}Change trajectories of life satisfaction based on
-the basic models (1st column) and the models with the gender interaction
-(2nd column). The error bars are 95\% confidence intervals of the
-predicted values which only account for the fixed-effects portion of the
-model. The vertical line indicates the approximate time of the
+the basic models (left column) and the models including the gender
+interaction (right column). The error bars are 95\% confidence intervals
+of the predicted values which only account for the fixed-effects portion
+of the model. The vertical line indicates the approximate time of the
 transition to grandparenthood.}
 \end{figure}
+
+
 
 
 
@@ -5450,7 +5477,9 @@ based on the models of moderation by paid work (see Table
 \ref{tab:H1-swls-work-tab}). The error bars are 95\% confidence
 intervals of the predicted values which only account for the
 fixed-effects portion of the model. The vertical line indicates the
-approximate time of the transition to grandparenthood.}
+approximate time of the transition to grandparenthood. The plots in the
+left column are the same as in Figure \ref{fig:H1-swls-fig} (basic
+models) and added here for better comparability.}
 \end{figure}
 
 
@@ -5469,8 +5498,8 @@ based on the models of moderation by grandchild care (see Table
 \ref{tab:H1-swls-care-tab}). The error bars are 95\% confidence
 intervals of the predicted values which only account for the
 fixed-effects portion of the model. The plots in the left column are the
-same as in Figures \ref{fig:H1-swls-fig} and \ref{fig:H1-swls-work-fig}
-but restricted to the post-transition period for better comparability.}
+same as in Figure \ref{fig:H1-swls-fig} (basic models) but restricted to
+the post-transition period for better comparability.}
 \end{figure}
 
 \newpage
@@ -5492,18 +5521,22 @@ Team, 2020), \emph{ggplot2} (Version 3.3.4; Wickham, 2016),
 2.1.1; Long, 2020), \emph{knitr} (Version 1.30; Xie, 2015), \emph{lme4}
 (Version 1.1.26; Bates et al., 2015), \emph{lmerTest} (Version 3.1.3;
 Kuznetsova et al., 2017), \emph{magick} (Version 2.6.0; Ooms, 2021),
-\emph{MatchIt} (Version 4.1.0; Ho et al., 2020), \emph{Matrix} (Version
-1.3.2; Bates \& Maechler, 2021), \emph{papaja} (Version 0.1.0.9997; Aust
-\& Barth, 2020), \emph{patchwork} (Version 1.1.0.9000; Pedersen, 2020),
-\emph{png} (Version 0.1.7; Urbanek, 2013), \emph{psych} (Version 2.0.9;
-Revelle, 2020), \emph{purrr} (Version 0.3.4; Henry \& Wickham, 2020),
-\emph{readr} (Version 1.4.0; Wickham \& Hester, 2020), \emph{robustlmm}
-(Version 2.3; Koller, 2016), \emph{scales} (Version 1.1.1; Wickham \&
-Seidel, 2020), \emph{stringr} (Version 1.4.0; Wickham, 2019),
-\emph{tibble} (Version 3.1.2; Müller \& Wickham, 2020), \emph{tidyr}
-(Version 1.1.2; Wickham, 2020b), \emph{tidyverse} (Version 1.3.0;
-Wickham, Averick, et al., 2019), and \emph{tinylabels} (Version 0.1.0;
-Barth, 2020) for data wrangling, analyses, and plots.\\
+\emph{MASS} (Version 7.3.53; Venables \& Ripley, 2002), \emph{MatchIt}
+(Version 4.1.0; Ho et al., 2020), \emph{Matrix} (Version 1.3.2; Bates \&
+Maechler, 2021), \emph{multcomp} (Version 1.4.17; Hothorn et al., 2008),
+\emph{mvtnorm} (Version 1.1.1; Genz \& Bretz, 2009), \emph{papaja}
+(Version 0.1.0.9997; Aust \& Barth, 2020), \emph{patchwork} (Version
+1.1.0.9000; Pedersen, 2020), \emph{png} (Version 0.1.7; Urbanek, 2013),
+\emph{psych} (Version 2.0.9; Revelle, 2020), \emph{purrr} (Version
+0.3.4; Henry \& Wickham, 2020), \emph{readr} (Version 1.4.0; Wickham \&
+Hester, 2020), \emph{robustlmm} (Version 2.3; Koller, 2016),
+\emph{scales} (Version 1.1.1; Wickham \& Seidel, 2020), \emph{stringr}
+(Version 1.4.0; Wickham, 2019), \emph{survival} (Version 3.2.7; Terry M.
+Therneau \& Patricia M. Grambsch, 2000), \emph{TH.data} (Version 1.0.10;
+Hothorn, 2019), \emph{tibble} (Version 3.1.2; Müller \& Wickham, 2020),
+\emph{tidyr} (Version 1.1.2; Wickham, 2020b), \emph{tidyverse} (Version
+1.3.0; Wickham, Averick, et al., 2019), and \emph{tinylabels} (Version
+0.1.0; Barth, 2020) for data wrangling, analyses, and plots.\\
 The following is the output of R's \emph{sessionInfo()} command, which
 shows information to aid analytic reproducibility of the analyses.
 
@@ -5528,7 +5561,9 @@ scales\_1.1.1\\
 {[}10{]} forcats\_0.5.0 stringr\_1.4.0 dplyr\_1.0.2\\
 {[}13{]} purrr\_0.3.4 readr\_1.4.0 tidyr\_1.1.2\\
 {[}16{]} tibble\_3.1.2 ggplot2\_3.3.4 tidyverse\_1.3.0\\
-{[}19{]} citr\_0.3.2 papaja\_0.1.0.9997 tinylabels\_0.1.0
+{[}19{]} multcomp\_1.4-17 TH.data\_1.0-10 MASS\_7.3-53\\
+{[}22{]} survival\_3.2-7 mvtnorm\_1.1-1 citr\_0.3.2\\
+{[}25{]} papaja\_0.1.0.9997 tinylabels\_0.1.0
 
 loaded via a namespace (and not attached): {[}1{]} nlme\_3.1-152
 fs\_1.5.0 lubridate\_1.7.9.2\\
@@ -5537,27 +5572,27 @@ fs\_1.5.0 lubridate\_1.7.9.2\\
 {[}10{]} DBI\_1.1.0 colorspace\_2.0-1 withr\_2.4.2\\
 {[}13{]} tidyselect\_1.1.0 mnormt\_2.0.2 curl\_4.3.1\\
 {[}16{]} compiler\_4.0.4 cli\_2.5.0 rvest\_0.3.6\\
-{[}19{]} xml2\_1.3.2 bookdown\_0.21 digest\_0.6.27\\
-{[}22{]} foreign\_0.8-81 minqa\_1.2.4 rmarkdown\_2.5\\
-{[}25{]} rio\_0.5.16 base64enc\_0.1-3 pkgconfig\_2.0.3\\
-{[}28{]} htmltools\_0.5.0 dbplyr\_1.4.4 fastmap\_1.0.1\\
-{[}31{]} rlang\_0.4.11 readxl\_1.3.1 rstudioapi\_0.13\\
-{[}34{]} shiny\_1.5.0 generics\_0.1.0 jsonlite\_1.7.2\\
-{[}37{]} zip\_2.1.1 magrittr\_2.0.1 Rcpp\_1.0.6\\
-{[}40{]} munsell\_0.5.0 fansi\_0.5.0 abind\_1.4-5\\
-{[}43{]} lifecycle\_1.0.0 stringi\_1.5.3 yaml\_2.2.1\\
-{[}46{]} MASS\_7.3-53 grid\_4.0.4 blob\_1.2.1\\
-{[}49{]} parallel\_4.0.4 promises\_1.1.1 crayon\_1.4.1\\
-{[}52{]} miniUI\_0.1.1.1 lattice\_0.20-41 haven\_2.3.1\\
-{[}55{]} splines\_4.0.4 hms\_0.5.3 tmvnsim\_1.0-2\\
-{[}58{]} knitr\_1.30 pillar\_1.6.1 boot\_1.3-26\\
-{[}61{]} reprex\_0.3.0 glue\_1.4.2 evaluate\_0.14\\
-{[}64{]} data.table\_1.13.2 modelr\_0.1.8 vctrs\_0.3.8\\
-{[}67{]} nloptr\_1.2.2.2 httpuv\_1.5.4 cellranger\_1.1.0\\
-{[}70{]} gtable\_0.3.0 assertthat\_0.2.1 openxlsx\_4.2.3\\
-{[}73{]} xfun\_0.19 mime\_0.9 xtable\_1.8-4\\
-{[}76{]} broom\_0.7.6 later\_1.1.0.1 statmod\_1.4.35\\
-{[}79{]} ellipsis\_0.3.2
+{[}19{]} xml2\_1.3.2 sandwich\_3.0-0 bookdown\_0.21\\
+{[}22{]} digest\_0.6.27 foreign\_0.8-81 minqa\_1.2.4\\
+{[}25{]} rmarkdown\_2.5 rio\_0.5.16 base64enc\_0.1-3\\
+{[}28{]} pkgconfig\_2.0.3 htmltools\_0.5.0 dbplyr\_1.4.4\\
+{[}31{]} fastmap\_1.0.1 rlang\_0.4.11 readxl\_1.3.1\\
+{[}34{]} rstudioapi\_0.13 shiny\_1.5.0 generics\_0.1.0\\
+{[}37{]} zoo\_1.8-8 jsonlite\_1.7.2 zip\_2.1.1\\
+{[}40{]} magrittr\_2.0.1 Rcpp\_1.0.6 munsell\_0.5.0\\
+{[}43{]} fansi\_0.5.0 abind\_1.4-5 lifecycle\_1.0.0\\
+{[}46{]} stringi\_1.5.3 yaml\_2.2.1 grid\_4.0.4\\
+{[}49{]} blob\_1.2.1 parallel\_4.0.4 promises\_1.1.1\\
+{[}52{]} crayon\_1.4.1 miniUI\_0.1.1.1 lattice\_0.20-41\\
+{[}55{]} haven\_2.3.1 splines\_4.0.4 hms\_0.5.3\\
+{[}58{]} tmvnsim\_1.0-2 knitr\_1.30 pillar\_1.6.1\\
+{[}61{]} boot\_1.3-26 codetools\_0.2-18 reprex\_0.3.0\\
+{[}64{]} glue\_1.4.2 evaluate\_0.14 data.table\_1.13.2\\
+{[}67{]} modelr\_0.1.8 nloptr\_1.2.2.2 vctrs\_0.3.8\\
+{[}70{]} httpuv\_1.5.4 cellranger\_1.1.0 gtable\_0.3.0\\
+{[}73{]} assertthat\_0.2.1 openxlsx\_4.2.3 xfun\_0.19\\
+{[}76{]} mime\_0.9 xtable\_1.8-4 broom\_0.7.6\\
+{[}79{]} later\_1.1.0.1 statmod\_1.4.35 ellipsis\_0.3.2
 
 \newpage
 
@@ -5631,6 +5666,10 @@ Fox, J., Weisberg, S., \& Price, B. (2020b). \emph{CarData: Companion to
 applied regression data sets}.
 \url{https://CRAN.R-project.org/package=carData}
 
+\leavevmode\hypertarget{ref-R-mvtnorm}{}%
+Genz, A., \& Bretz, F. (2009). \emph{Computation of multivariate normal
+and t probabilities}. Springer-Verlag.
+
 \leavevmode\hypertarget{ref-R-purrr}{}%
 Henry, L., \& Wickham, H. (2020). \emph{Purrr: Functional programming
 tools}. \url{https://CRAN.R-project.org/package=purrr}
@@ -5639,6 +5678,15 @@ tools}. \url{https://CRAN.R-project.org/package=purrr}
 Ho, D., Imai, K., King, G., Stuart, E., \& Greifer, N. (2020).
 \emph{MatchIt: Nonparametric preprocessing for parametric causal
 inference} {[}Manual{]}.
+
+\leavevmode\hypertarget{ref-R-TH.data}{}%
+Hothorn, T. (2019). \emph{TH.data: TH's data archive}.
+\url{https://CRAN.R-project.org/package=TH.data}
+
+\leavevmode\hypertarget{ref-R-multcomp}{}%
+Hothorn, T., Bretz, F., \& Westfall, P. (2008). Simultaneous inference
+in general parametric models. \emph{Biometrical Journal}, \emph{50}(3),
+346--363.
 
 \leavevmode\hypertarget{ref-R-robustlmm}{}%
 Koller, M. (2016). robustlmm: An R package for robust estimation of
@@ -5692,9 +5740,18 @@ and a look forward. \emph{Statistical Science: A Review Journal of the
 Institute of Mathematical Statistics}, \emph{25}(1), 1--21.
 \url{https://doi.org/10.1214/09-STS313}
 
+\leavevmode\hypertarget{ref-R-survival-book}{}%
+Terry M. Therneau, \& Patricia M. Grambsch. (2000). \emph{Modeling
+survival data: Extending the Cox model}. Springer.
+
 \leavevmode\hypertarget{ref-R-png}{}%
 Urbanek, S. (2013). \emph{Png: Read and write png images}.
 \url{https://CRAN.R-project.org/package=png}
+
+\leavevmode\hypertarget{ref-R-MASS}{}%
+Venables, W. N., \& Ripley, B. D. (2002). \emph{Modern applied
+statistics with s} (Fourth). Springer.
+\url{http://www.stats.ox.ac.uk/pub/MASS4/}
 
 \leavevmode\hypertarget{ref-R-corrplot2017}{}%
 Wei, T., \& Simko, V. (2017). \emph{R package "corrplot": Visualization

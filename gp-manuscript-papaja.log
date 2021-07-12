@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  10 JUL 2021 16:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  12 JUL 2021 19:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1196,15 +1196,24 @@ Underfull \vbox (badness 3965) has occurred while \output is active []
 [24]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[25] [26]
+[25] [26] [27] [28]
 Underfull \vbox (badness 3965) has occurred while \output is active []
 
-[27] [28]
+[29]
+Underfull \vbox (badness 3965) has occurred while \output is active []
+
+[30]
+Underfull \vbox (badness 3965) has occurred while \output is active []
+
+[31]
+Underfull \vbox (badness 3965) has occurred while \output is active []
+
+[32]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[29] [30] [31] [32] [33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44]
-[45] [46] [47] [48] [49] [50] [51] [52] [53] [54] [55]
-Overfull \hbox (24.72507pt too wide) in paragraph at lines 929--961
+[33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44] [45] [46] [47] [48]
+[49] [50] [51] [52] [53] [54] [55] [56] [57]
+Overfull \hbox (24.72507pt too wide) in paragraph at lines 938--970
  [] 
  []
 
@@ -1212,39 +1221,39 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.974 \begin{lltable}
+l.983 \begin{lltable}
                       [1
 
 
 ]
-Overfull \hbox (5.06787pt too wide) in paragraph at lines 988--988
+Overfull \hbox (5.06787pt too wide) in paragraph at lines 997--997
 [] [] 
  []
 
 
-Overfull \hbox (10.13573pt too wide) in alignment at lines 985--994
+Overfull \hbox (10.13573pt too wide) in alignment at lines 994--1003
  [] [] [] [] [] [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (5.06787pt too wide) in paragraph at lines 995--995
+Overfull \hbox (5.06787pt too wide) in paragraph at lines 1004--1004
 [] [] 
  []
 
 
-Overfull \hbox (10.13573pt too wide) in alignment at lines 994--1001
+Overfull \hbox (10.13573pt too wide) in alignment at lines 1003--1010
  [] [] [] [] [] [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (10.13573pt too wide) in alignment at lines 1001--1022
+Overfull \hbox (10.13573pt too wide) in alignment at lines 1010--1031
  [] [] [] [] [] [] [] [] [] [] [] [] [] [] 
  []
 
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 1026.
+(Font)              <10.95> on input line 1035.
 
-Overfull \hbox (10.13573pt too wide) in alignment at lines 1022--1027
+Overfull \hbox (10.13573pt too wide) in alignment at lines 1031--1036
  [] [] [] [] [] [] [] [] [] [] [] [] [] [] 
  []
 
@@ -1252,14 +1261,14 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1031 \end{lltable}
+l.1040 \end{lltable}
                      [2
 
 ]pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1111 \end{longtable}
+l.1120 \end{longtable}
                        [3
 
 
@@ -1267,12 +1276,12 @@ l.1111 \end{longtable}
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1115 \end{lltable}
+l.1124 \end{lltable}
                      [4]pdfTeX warning (ext4): destination with the same identi
 fier (name{page.5}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1191 \end{longtable}
+l.1200 \end{longtable}
                        [5
 
 
@@ -1280,29 +1289,29 @@ l.1191 \end{longtable}
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1195 \end{lltable}
+l.1204 \end{lltable}
                      [6]
-Overfull \hbox (0.9331pt too wide) in alignment at lines 1223--1232
+Overfull \hbox (0.9331pt too wide) in alignment at lines 1232--1241
  [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (0.9331pt too wide) in alignment at lines 1232--1239
+Overfull \hbox (0.9331pt too wide) in alignment at lines 1241--1248
  [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (0.9331pt too wide) in alignment at lines 1239--1260
+Overfull \hbox (0.9331pt too wide) in alignment at lines 1248--1269
  [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (0.9331pt too wide) in alignment at lines 1260--1280
+Overfull \hbox (0.9331pt too wide) in alignment at lines 1269--1289
  [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (0.9331pt too wide) in alignment at lines 1280--1285
+Overfull \hbox (0.9331pt too wide) in alignment at lines 1289--1294
  [] [] [] [] [] [] [] 
  []
 
@@ -1310,7 +1319,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.7}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1285 \end{longtable}
+l.1294 \end{longtable}
                        [7
 
 
@@ -1318,39 +1327,39 @@ l.1285 \end{longtable}
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1289 \end{lltable}
+l.1298 \end{lltable}
                      [8]
-Overfull \hbox (1.54973pt too wide) in paragraph at lines 1312--1312
+Overfull \hbox (1.54973pt too wide) in paragraph at lines 1321--1321
 [] [] 
  []
 
 
-Overfull \hbox (3.09946pt too wide) in alignment at lines 1309--1318
+Overfull \hbox (3.09946pt too wide) in alignment at lines 1318--1327
  [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (1.54973pt too wide) in paragraph at lines 1319--1319
+Overfull \hbox (1.54973pt too wide) in paragraph at lines 1328--1328
 [] [] 
  []
 
 
-Overfull \hbox (3.09946pt too wide) in alignment at lines 1318--1325
+Overfull \hbox (3.09946pt too wide) in alignment at lines 1327--1334
  [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (3.09946pt too wide) in alignment at lines 1325--1346
+Overfull \hbox (3.09946pt too wide) in alignment at lines 1334--1355
  [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (3.09946pt too wide) in alignment at lines 1346--1366
+Overfull \hbox (3.09946pt too wide) in alignment at lines 1355--1375
  [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (3.09946pt too wide) in alignment at lines 1366--1381
+Overfull \hbox (3.09946pt too wide) in alignment at lines 1375--1390
  [] [] [] [] [] [] [] 
  []
 
@@ -1358,7 +1367,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.9}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1381 \end{longtable}
+l.1390 \end{longtable}
                        [9
 
 
@@ -1366,12 +1375,12 @@ l.1381 \end{longtable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1385 \end{lltable}
+l.1394 \end{lltable}
                      [10]pdfTeX warning (ext4): destination with the same ident
 ifier (name{page.11}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1447 \end{lltable}
+l.1456 \end{lltable}
                      [11
 
 
@@ -1379,7 +1388,7 @@ l.1447 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1516 \end{lltable}
+l.1525 \end{lltable}
                      [12
 
 
@@ -1387,7 +1396,7 @@ l.1516 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1589 \end{longtable}
+l.1598 \end{longtable}
                        [13
 
 
@@ -1395,12 +1404,12 @@ l.1589 \end{longtable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1593 \end{lltable}
+l.1602 \end{lltable}
                      [14]pdfTeX warning (ext4): destination with the same ident
 ifier (name{page.15}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1699 \end{lltable}
+l.1708 \end{lltable}
                      [15
 
 
@@ -1408,7 +1417,7 @@ l.1699 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1759 \end{lltable}
+l.1768 \end{lltable}
                      [16
 
 
@@ -1416,7 +1425,7 @@ l.1759 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1832 \end{lltable}
+l.1841 \end{lltable}
                      [17
 
 
@@ -1424,7 +1433,7 @@ l.1832 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1884 \end{lltable}
+l.1893 \end{lltable}
                      [18
 
 
@@ -1432,7 +1441,7 @@ l.1884 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1929 \end{lltable}
+l.1938 \end{lltable}
                      [19
 
 
@@ -1440,7 +1449,7 @@ l.1929 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1991 \end{lltable}
+l.2000 \end{lltable}
                      [20
 
 
@@ -1448,7 +1457,7 @@ l.1991 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.2060 \end{lltable}
+l.2069 \end{lltable}
                      [21
 
 
@@ -1456,7 +1465,7 @@ l.2060 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.2133 \end{longtable}
+l.2142 \end{longtable}
                        [22
 
 
@@ -1464,12 +1473,12 @@ l.2133 \end{longtable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.2137 \end{lltable}
+l.2146 \end{lltable}
                      [23]pdfTeX warning (ext4): destination with the same ident
 ifier (name{page.24}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.2243 \end{lltable}
+l.2252 \end{lltable}
                      [24
 
 
@@ -1477,7 +1486,7 @@ l.2243 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.2303 \end{lltable}
+l.2312 \end{lltable}
                      [25
 
 
@@ -1485,7 +1494,7 @@ l.2303 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.2376 \end{lltable}
+l.2385 \end{lltable}
                      [26
 
 
@@ -1493,7 +1502,7 @@ l.2376 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.2428 \end{lltable}
+l.2437 \end{lltable}
                      [27
 
 
@@ -1501,7 +1510,7 @@ l.2428 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.2473 \end{lltable}
+l.2482 \end{lltable}
                      [28
 
 
@@ -1509,7 +1518,7 @@ l.2473 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.2535 \end{lltable}
+l.2544 \end{lltable}
                      [29
 
 
@@ -1517,7 +1526,7 @@ l.2535 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.2604 \end{lltable}
+l.2613 \end{lltable}
                      [30
 
 
@@ -1525,7 +1534,7 @@ l.2604 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.2677 \end{longtable}
+l.2686 \end{longtable}
                        [31
 
 
@@ -1533,12 +1542,12 @@ l.2677 \end{longtable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.2681 \end{lltable}
+l.2690 \end{lltable}
                      [32]pdfTeX warning (ext4): destination with the same ident
 ifier (name{page.33}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.2787 \end{lltable}
+l.2796 \end{lltable}
                      [33
 
 
@@ -1546,7 +1555,7 @@ l.2787 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.2847 \end{lltable}
+l.2856 \end{lltable}
                      [34
 
 
@@ -1554,7 +1563,7 @@ l.2847 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.2920 \end{lltable}
+l.2929 \end{lltable}
                      [35
 
 
@@ -1562,7 +1571,7 @@ l.2920 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.2972 \end{lltable}
+l.2981 \end{lltable}
                      [36
 
 
@@ -1570,7 +1579,7 @@ l.2972 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.3017 \end{lltable}
+l.3026 \end{lltable}
                      [37
 
 
@@ -1578,7 +1587,7 @@ l.3017 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.3079 \end{lltable}
+l.3088 \end{lltable}
                      [38
 
 
@@ -1586,7 +1595,7 @@ l.3079 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.3148 \end{lltable}
+l.3157 \end{lltable}
                      [39
 
 
@@ -1594,7 +1603,7 @@ l.3148 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.3221 \end{longtable}
+l.3230 \end{longtable}
                        [40
 
 
@@ -1602,12 +1611,12 @@ l.3221 \end{longtable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.3225 \end{lltable}
+l.3234 \end{lltable}
                      [41]pdfTeX warning (ext4): destination with the same ident
 ifier (name{page.42}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.3331 \end{lltable}
+l.3340 \end{lltable}
                      [42
 
 
@@ -1615,7 +1624,7 @@ l.3331 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.3391 \end{lltable}
+l.3400 \end{lltable}
                      [43
 
 
@@ -1623,7 +1632,7 @@ l.3391 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.3464 \end{lltable}
+l.3473 \end{lltable}
                      [44
 
 
@@ -1631,7 +1640,7 @@ l.3464 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.3516 \end{lltable}
+l.3525 \end{lltable}
                      [45
 
 
@@ -1639,7 +1648,7 @@ l.3516 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.3561 \end{lltable}
+l.3570 \end{lltable}
                      [46
 
 
@@ -1647,7 +1656,7 @@ l.3561 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.3623 \end{lltable}
+l.3632 \end{lltable}
                      [47
 
 
@@ -1655,7 +1664,7 @@ l.3623 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.3692 \end{lltable}
+l.3701 \end{lltable}
                      [48
 
 
@@ -1663,7 +1672,7 @@ l.3692 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.3765 \end{longtable}
+l.3774 \end{longtable}
                        [49
 
 
@@ -1671,12 +1680,12 @@ l.3765 \end{longtable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.3769 \end{lltable}
+l.3778 \end{lltable}
                      [50]pdfTeX warning (ext4): destination with the same ident
 ifier (name{page.51}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.3875 \end{lltable}
+l.3884 \end{lltable}
                      [51
 
 
@@ -1684,7 +1693,7 @@ l.3875 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.3935 \end{lltable}
+l.3944 \end{lltable}
                      [52
 
 
@@ -1692,7 +1701,7 @@ l.3935 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.4008 \end{lltable}
+l.4017 \end{lltable}
                      [53
 
 
@@ -1700,7 +1709,7 @@ l.4008 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.4060 \end{lltable}
+l.4069 \end{lltable}
                      [54
 
 
@@ -1708,14 +1717,24 @@ l.4060 \end{lltable}
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.4105 \end{lltable}
+l.4114 \end{lltable}
                      [55
 
 
-] [56
+]pdfTeX warning (ext4): destination with the same identifier (name{page.56}) ha
+s been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.4176 \end{lltable}
+                     [56
 
 
-] [57
+]pdfTeX warning (ext4): destination with the same identifier (name{page.57}) ha
+s been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.4245 \end{lltable}
+                     [57
 
 
 ] [58
@@ -1761,117 +1780,117 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 ] [72]
-<Figs/H1-agree-fig-1.pdf, id=1245, 505.89pt x 650.43pt>
+<Figs/H1-agree-fig-1.pdf, id=1260, 505.89pt x 650.43pt>
 File: Figs/H1-agree-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-agree-fig-1.pdf>
-Package pdftex.def Info: Figs/H1-agree-fig-1.pdf  used on input line 5145.
+Package pdftex.def Info: Figs/H1-agree-fig-1.pdf  used on input line 5154.
 (pdftex.def)             Requested size: 469.76265pt x 603.98058pt.
 
-LaTeX Warning: Float too large for page by 66.28012pt on input line 5152.
+LaTeX Warning: Float too large for page by 66.28012pt on input line 5161.
 
-<Figs/H1-agree-work-fig-1.pdf, id=1246, 505.89pt x 433.62pt>
+<Figs/H1-agree-work-fig-1.pdf, id=1261, 505.89pt x 433.62pt>
 File: Figs/H1-agree-work-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-agree-work-fig-1.pdf>
-Package pdftex.def Info: Figs/H1-agree-work-fig-1.pdf  used on input line 5163.
+Package pdftex.def Info: Figs/H1-agree-work-fig-1.pdf  used on input line 5174.
 
 (pdftex.def)             Requested size: 469.76265pt x 402.65372pt.
-<Figs/H1-agree-care-fig-1.pdf, id=1248, 505.89pt x 433.62pt>
+<Figs/H1-agree-care-fig-1.pdf, id=1264, 505.89pt x 433.62pt>
 File: Figs/H1-agree-care-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-agree-care-fig-1.pdf>
-Package pdftex.def Info: Figs/H1-agree-care-fig-1.pdf  used on input line 5183.
+Package pdftex.def Info: Figs/H1-agree-care-fig-1.pdf  used on input line 5195.
 
 (pdftex.def)             Requested size: 469.76265pt x 402.65372pt.
-<Figs/H1-con-fig-1.pdf, id=1252, 505.89pt x 650.43pt>
+<Figs/H1-con-fig-1.pdf, id=1267, 505.89pt x 650.43pt>
 File: Figs/H1-con-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-con-fig-1.pdf>
-Package pdftex.def Info: Figs/H1-con-fig-1.pdf  used on input line 5203.
+Package pdftex.def Info: Figs/H1-con-fig-1.pdf  used on input line 5214.
 (pdftex.def)             Requested size: 469.76265pt x 603.98058pt.
 
-LaTeX Warning: Float too large for page by 66.28012pt on input line 5210.
+LaTeX Warning: Float too large for page by 66.28012pt on input line 5221.
 
-<Figs/H1-con-work-fig-1.pdf, id=1253, 505.89pt x 433.62pt>
+<Figs/H1-con-work-fig-1.pdf, id=1268, 505.89pt x 433.62pt>
 File: Figs/H1-con-work-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-con-work-fig-1.pdf>
-Package pdftex.def Info: Figs/H1-con-work-fig-1.pdf  used on input line 5221.
+Package pdftex.def Info: Figs/H1-con-work-fig-1.pdf  used on input line 5234.
 (pdftex.def)             Requested size: 469.76265pt x 402.65372pt.
-<Figs/H1-con-care-fig-1.pdf, id=1255, 505.89pt x 433.62pt>
+<Figs/H1-con-care-fig-1.pdf, id=1271, 505.89pt x 433.62pt>
 File: Figs/H1-con-care-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-con-care-fig-1.pdf>
-Package pdftex.def Info: Figs/H1-con-care-fig-1.pdf  used on input line 5240.
+Package pdftex.def Info: Figs/H1-con-care-fig-1.pdf  used on input line 5255.
 (pdftex.def)             Requested size: 469.76265pt x 402.65372pt.
-<Figs/H1-extra-fig-1.pdf, id=1259, 505.89pt x 650.43pt>
+<Figs/H1-extra-fig-1.pdf, id=1274, 505.89pt x 650.43pt>
 File: Figs/H1-extra-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-extra-fig-1.pdf>
-Package pdftex.def Info: Figs/H1-extra-fig-1.pdf  used on input line 5259.
+Package pdftex.def Info: Figs/H1-extra-fig-1.pdf  used on input line 5274.
 (pdftex.def)             Requested size: 469.76265pt x 603.98058pt.
 
-LaTeX Warning: Float too large for page by 66.28012pt on input line 5266.
+LaTeX Warning: Float too large for page by 66.28012pt on input line 5281.
 
-<Figs/H1-extra-work-fig-1.pdf, id=1260, 505.89pt x 433.62pt>
+<Figs/H1-extra-work-fig-1.pdf, id=1275, 505.89pt x 433.62pt>
 File: Figs/H1-extra-work-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-extra-work-fig-1.pdf>
-Package pdftex.def Info: Figs/H1-extra-work-fig-1.pdf  used on input line 5277.
+Package pdftex.def Info: Figs/H1-extra-work-fig-1.pdf  used on input line 5294.
 
 (pdftex.def)             Requested size: 469.76265pt x 402.65372pt.
-<Figs/H1-extra-care-fig-1.pdf, id=1262, 505.89pt x 433.62pt>
+<Figs/H1-extra-care-fig-1.pdf, id=1278, 505.89pt x 433.62pt>
 File: Figs/H1-extra-care-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-extra-care-fig-1.pdf>
-Package pdftex.def Info: Figs/H1-extra-care-fig-1.pdf  used on input line 5297.
+Package pdftex.def Info: Figs/H1-extra-care-fig-1.pdf  used on input line 5315.
 
 (pdftex.def)             Requested size: 469.76265pt x 402.65372pt.
-<Figs/H1-neur-fig-1.pdf, id=1266, 505.89pt x 650.43pt>
+<Figs/H1-neur-fig-1.pdf, id=1281, 505.89pt x 650.43pt>
 File: Figs/H1-neur-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-neur-fig-1.pdf>
-Package pdftex.def Info: Figs/H1-neur-fig-1.pdf  used on input line 5317.
+Package pdftex.def Info: Figs/H1-neur-fig-1.pdf  used on input line 5334.
 (pdftex.def)             Requested size: 469.76265pt x 603.98058pt.
 
-LaTeX Warning: Float too large for page by 66.28012pt on input line 5324.
+LaTeX Warning: Float too large for page by 66.28012pt on input line 5341.
 
-<Figs/H1-neur-work-fig-1.pdf, id=1267, 505.89pt x 433.62pt>
+<Figs/H1-neur-work-fig-1.pdf, id=1282, 505.89pt x 433.62pt>
 File: Figs/H1-neur-work-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-neur-work-fig-1.pdf>
-Package pdftex.def Info: Figs/H1-neur-work-fig-1.pdf  used on input line 5335.
+Package pdftex.def Info: Figs/H1-neur-work-fig-1.pdf  used on input line 5354.
 (pdftex.def)             Requested size: 469.76265pt x 402.65372pt.
-<Figs/H1-neur-care-fig-1.pdf, id=1269, 505.89pt x 433.62pt>
+<Figs/H1-neur-care-fig-1.pdf, id=1285, 505.89pt x 433.62pt>
 File: Figs/H1-neur-care-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-neur-care-fig-1.pdf>
-Package pdftex.def Info: Figs/H1-neur-care-fig-1.pdf  used on input line 5354.
+Package pdftex.def Info: Figs/H1-neur-care-fig-1.pdf  used on input line 5375.
 (pdftex.def)             Requested size: 469.76265pt x 402.65372pt.
-<Figs/H1-open-fig-1.pdf, id=1273, 505.89pt x 650.43pt>
+<Figs/H1-open-fig-1.pdf, id=1288, 505.89pt x 650.43pt>
 File: Figs/H1-open-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-open-fig-1.pdf>
-Package pdftex.def Info: Figs/H1-open-fig-1.pdf  used on input line 5373.
+Package pdftex.def Info: Figs/H1-open-fig-1.pdf  used on input line 5394.
 (pdftex.def)             Requested size: 469.76265pt x 603.98058pt.
 
-LaTeX Warning: Float too large for page by 66.28012pt on input line 5380.
+LaTeX Warning: Float too large for page by 66.28012pt on input line 5401.
 
-<Figs/H1-open-work-fig-1.pdf, id=1274, 505.89pt x 433.62pt>
+<Figs/H1-open-work-fig-1.pdf, id=1289, 505.89pt x 433.62pt>
 File: Figs/H1-open-work-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-open-work-fig-1.pdf>
-Package pdftex.def Info: Figs/H1-open-work-fig-1.pdf  used on input line 5391.
+Package pdftex.def Info: Figs/H1-open-work-fig-1.pdf  used on input line 5414.
 (pdftex.def)             Requested size: 469.76265pt x 402.65372pt.
-<Figs/H1-open-care-fig-1.pdf, id=1276, 505.89pt x 433.62pt>
+<Figs/H1-open-care-fig-1.pdf, id=1292, 505.89pt x 433.62pt>
 File: Figs/H1-open-care-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-open-care-fig-1.pdf>
-Package pdftex.def Info: Figs/H1-open-care-fig-1.pdf  used on input line 5410.
+Package pdftex.def Info: Figs/H1-open-care-fig-1.pdf  used on input line 5435.
 (pdftex.def)             Requested size: 469.76265pt x 402.65372pt.
-<Figs/H1-swls-fig-1.pdf, id=1280, 505.89pt x 650.43pt>
+<Figs/H1-swls-fig-1.pdf, id=1295, 505.89pt x 650.43pt>
 File: Figs/H1-swls-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-swls-fig-1.pdf>
-Package pdftex.def Info: Figs/H1-swls-fig-1.pdf  used on input line 5429.
+Package pdftex.def Info: Figs/H1-swls-fig-1.pdf  used on input line 5454.
 (pdftex.def)             Requested size: 469.76265pt x 603.98058pt.
 
-LaTeX Warning: Float too large for page by 66.28012pt on input line 5436.
+LaTeX Warning: Float too large for page by 66.28012pt on input line 5461.
 
-<Figs/H1-swls-work-fig-1.pdf, id=1281, 505.89pt x 433.62pt>
+<Figs/H1-swls-work-fig-1.pdf, id=1296, 505.89pt x 433.62pt>
 File: Figs/H1-swls-work-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-swls-work-fig-1.pdf>
-Package pdftex.def Info: Figs/H1-swls-work-fig-1.pdf  used on input line 5447.
+Package pdftex.def Info: Figs/H1-swls-work-fig-1.pdf  used on input line 5474.
 (pdftex.def)             Requested size: 469.76265pt x 402.65372pt.
-<Figs/H1-swls-care-fig-1.pdf, id=1283, 505.89pt x 433.62pt>
+<Figs/H1-swls-care-fig-1.pdf, id=1299, 505.89pt x 433.62pt>
 File: Figs/H1-swls-care-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-swls-care-fig-1.pdf>
-Package pdftex.def Info: Figs/H1-swls-care-fig-1.pdf  used on input line 5466.
+Package pdftex.def Info: Figs/H1-swls-care-fig-1.pdf  used on input line 5495.
 (pdftex.def)             Requested size: 469.76265pt x 402.65372pt.
 [73
 
@@ -1883,68 +1902,65 @@ g-1.pdf>] [81 <./Figs/H1-extra-work-fig-1.pdf>] [82 <./Figs/H1-extra-care-fig-1
  <./Figs/H1-neur-care-fig-1.pdf>] [86 <./Figs/H1-open-fig-1.pdf>] [87 <./Figs/H
 1-open-work-fig-1.pdf>] [88 <./Figs/H1-open-care-fig-1.pdf>] [89 <./Figs/H1-swl
 s-fig-1.pdf>] [90 <./Figs/H1-swls-work-fig-1.pdf>] [91 <./Figs/H1-swls-care-fig
--1.pdf>]
-Underfull \vbox (badness 3977) has occurred while \output is active []
-
-[92] [93] [94]pdfTeX warning (ext4): destination with the same identifier (name
-{refs}) has been already used, duplicate ignored
+-1.pdf>] [92] [93] [94]pdfTeX warning (ext4): destination with the same identif
+ier (name{refs}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.5570 \hypertarget{refs}{}
+l.5605 \hypertarget{refs}{}
                            pdfTeX warning (ext4): destination with the same ide
 ntifier (name{ref-R-papaja}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.5575 \leavevmode\hypertarget{ref-R-papaja}{}
+l.5610 \leavevmode\hypertarget{ref-R-papaja}{}
                                               %pdfTeX warning (ext4): destinati
 on with the same identifier (name{ref-austinIntroductionPropensityScore2011}) h
 as been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.5579 ...austinIntroductionPropensityScore2011}{}
+l.5614 ...austinIntroductionPropensityScore2011}{}
                                                   %pdfTeX warning (ext4): desti
 nation with the same identifier (name{ref-R-lme4}) has been already used, dupli
 cate ignored
 <to be read again> 
                    \relax 
-l.5593 \leavevmode\hypertarget{ref-R-lme4}{}
+l.5628 \leavevmode\hypertarget{ref-R-lme4}{}
                                             % [95]pdfTeX warning (ext4): destin
 ation with the same identifier (name{ref-car2019}) has been already used, dupli
 cate ignored
 <to be read again> 
                    \relax 
-l.5621 \leavevmode\hypertarget{ref-car2019}{}
+l.5656 \leavevmode\hypertarget{ref-car2019}{}
                                              %pdfTeX warning (ext4): destinatio
 n with the same identifier (name{ref-R-lmerTest}) has been already used, duplic
 ate ignored
 <to be read again> 
                    \relax 
-l.5648 \leavevmode\hypertarget{ref-R-lmerTest}{}
+l.5696 \leavevmode\hypertarget{ref-R-lmerTest}{}
                                                 % [96]pdfTeX warning (ext4): de
 stination with the same identifier (name{ref-R-base}) has been already used, du
 plicate ignored
 <to be read again> 
                    \relax 
-l.5679 \leavevmode\hypertarget{ref-R-base}{}
+l.5727 \leavevmode\hypertarget{ref-R-base}{}
                                             %pdfTeX warning (ext4): destination
  with the same identifier (name{ref-stuartMatchingMethodsCausal2010}) has been 
 already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.5689 ...t{ref-stuartMatchingMethodsCausal2010}{}
+l.5737 ...t{ref-stuartMatchingMethodsCausal2010}{}
                                                   % [97] AED endfloat: Processi
 ng end Figures and Tables [98] (./gp-manuscript-papaja.aux)
 Package rerunfilecheck Info: File `gp-manuscript-papaja.out' has not changed.
 (rerunfilecheck)             Checksum: 6AD41EFFB21607D457B8F0BCBEA21599;4033.
  ) 
 Here is how much of TeX's memory you used:
- 25582 strings out of 480962
- 465865 string characters out of 5906169
- 833396 words of memory out of 5000000
+ 25587 strings out of 480962
+ 465934 string characters out of 5906169
+ 836185 words of memory out of 5000000
  41811 multiletter control sequences out of 15000+600000
  496100 words of font info for 104 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 102i,12n,103p,2163b,768s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 102i,12n,103p,2488b,768s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{Hfootnote.12} has been referenced but does not ex
 ist, replaced by a fixed one
 
@@ -2001,10 +2017,10 @@ ts/type1/public/lm/lmri10.pfb></Users/michaelkramer/Library/TinyTeX/texmf-dist/
 fonts/type1/public/lm/lmri12.pfb></Users/michaelkramer/Library/TinyTeX/texmf-di
 st/fonts/type1/public/lm/lmss8.pfb></Users/michaelkramer/Library/TinyTeX/texmf-
 dist/fonts/type1/public/lm/lmsy10.pfb>
-Output written on gp-manuscript-papaja.pdf (153 pages, 877732 bytes).
+Output written on gp-manuscript-papaja.pdf (155 pages, 884667 bytes).
 PDF statistics:
- 1727 PDF objects out of 1728 (max. 8388607)
- 1457 compressed objects within 15 object streams
- 448 named destinations out of 1000 (max. 500000)
+ 1750 PDF objects out of 2073 (max. 8388607)
+ 1478 compressed objects within 15 object streams
+ 453 named destinations out of 1000 (max. 500000)
  343 words of extra memory for PDF output out of 10000 (max. 10000000)
 
