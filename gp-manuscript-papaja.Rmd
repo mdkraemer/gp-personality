@@ -1829,9 +1829,9 @@ The models of the moderation by paid work give suggestive evidence that working 
 ## Interindividual Differences in Change
 
 First, we conducted comparisons of model fit between the random-intercept models reported previously and models where a random slope variance was estimated, separately for each change parameter. These comparisons showed a substantial amount of interindividual differences in change for all random slopes in all models as indicated by increases in model fit significant at `r anova_summaries$agree_lissanalysis_parents_comp$p[1]`.  
-Second, we estimated models with heterogeneous random slope variances between the grandparents and each control group in order to test whether interindividual differences in change were significantly larger in the grandparents. Contrary to hypothesis H2, for agreeableness, conscientiousness, and extraversion, interindividual differences in intraindividual change were greater in the control group for all tested effects (see Tables \@ref(tab:H2-hetvar-tab-agree), \@ref(tab:H2-hetvar-tab-con), & \@ref(tab:H2-hetvar-tab-extra)). In the two HRS samples, assuming group heterogeneity in the random slope variances lead to a significant improvement in model fit in all model comparisons. In the two LISS samples, this was the case for around half the tests.  
-Interindividual differences in changes in neuroticism before the transition to grandparenthood (random slope variance of the *before* parameter) were significantly greater in the HRS grandparents than the nonparent controls, *likelihood ratio* = `r hetvar_summaries$neur_hrsanalysis_nonparents_hetvar$lratio[1]`, `r hetvar_summaries$neur_hrsanalysis_nonparents_hetvar$p[1]`. However, this was not the case in the comparison of grandparents with parent controls in the HRS or either control group in the LISS (see Table \@ref(tab:H2-hetvar-tab-neur)). The other parameters of change in neuroticism did not differ significantly between groups in their random slope variances or---in the HRS---displayed significantly larger random slope variances in the respective control group.  
-For openness, interindividual differences in changes before the transition to grandparenthood (random slope variance of the *before* parameter) were significantly greater in the LISS grandparents than the nonparent controls, *likelihood ratio* = `r hetvar_summaries$open_lissanalysis_nonparents_hetvar$lratio[1]`, `r hetvar_summaries$open_lissanalysis_nonparents_hetvar$p[1]`. Again, this result could not be replicated in the other three samples, and the other parameters of change did either not differ between groups in their random slope variances or had significantly larger random slope variances in the respective control group (see Table \@ref(tab:H2-hetvar-tab-open)).  
+Second, we estimated models with heterogeneous random slope variances between the grandparents and each control group in order to test whether interindividual differences in change were significantly larger in the grandparents. Contrary to hypothesis H2, for agreeableness, conscientiousness, and extraversion, interindividual differences in intraindividual change were greater in the control group for all tested effects (see Tables \@ref(tab:H2-hetvar-tab-agree), \@ref(tab:H2-hetvar-tab-con), & \@ref(tab:H2-hetvar-tab-extra)). In the two HRS samples, assuming group heterogeneity in the random slope variances lead to significant improvements in model fit in all model comparisons. In the two LISS samples, this was the case for around half the tests.  
+Interindividual differences in changes in neuroticism before the transition to grandparenthood were significantly greater in the HRS grandparents than the nonparent controls (random slope variance of the *before* parameter), *likelihood ratio* = `r hetvar_summaries$neur_hrsanalysis_nonparents_hetvar$lratio[1]`, `r hetvar_summaries$neur_hrsanalysis_nonparents_hetvar$p[1]`. However, this was not the case in the comparison of grandparents with parent controls in the HRS or either control group in the LISS (see Table \@ref(tab:H2-hetvar-tab-neur)). The other parameters of change in neuroticism did not differ significantly between groups in their random slope variances or---in the HRS---displayed significantly larger random slope variances in the respective control group.  
+For openness, interindividual differences in changes before the transition to grandparenthood were significantly greater in the LISS grandparents than the nonparent controls (random slope variance of the *before* parameter), *likelihood ratio* = `r hetvar_summaries$open_lissanalysis_nonparents_hetvar$lratio[1]`, `r hetvar_summaries$open_lissanalysis_nonparents_hetvar$p[1]`. Again, this result could not be replicated in the other three samples, and the other parameters of change did either not differ between groups in their random slope variances or had significantly larger random slope variances in the respective control group (see Table \@ref(tab:H2-hetvar-tab-open)).  
 We found partial evidence for larger interindividual differences in grandparents' changes in life satisfaction (see Table \@ref(tab:H2-hetvar-tab-swls)): In the LISS, grandparents' changes before the transition to grandparenthood varied to a larger extent interindividually compared to the parent controls (random slope variance of the *before* parameter), *likelihood ratio* = `r hetvar_summaries$swls_lissanalysis_parents_hetvar$lratio[1]`, `r hetvar_summaries$swls_lissanalysis_parents_hetvar$p[1]`, and in the HRS compared to the nonparent controls, *likelihood ratio* = `r hetvar_summaries$swls_hrsanalysis_nonparents_hetvar$lratio[1]`, `r hetvar_summaries$swls_hrsanalysis_nonparents_hetvar$p[1]`. We found suggestive evidence for larger interindividual differences in grandparents' linear post-transition changes compared to the parent controls (random slope variance of the *after* parameter), *likelihood ratio* = `r hetvar_summaries$swls_lissanalysis_parents_hetvar$lratio[4]`, `r hetvar_summaries$swls_lissanalysis_parents_hetvar$p[4]`, and in sudden shifts directly after the transition was first reported (random slope variance of the *shift* parameter), *likelihood ratio* = `r hetvar_summaries$swls_lissanalysis_parents_hetvar$lratio[7]`, `r hetvar_summaries$swls_lissanalysis_parents_hetvar$p[7]`. Still, the majority of tests for heterogeneous random slope variance in life satisfaction indicated either non-significant differences or significantly larger random slope variances in the control sample.  
 
 ## Rank-Order Stability 
@@ -1841,43 +1841,39 @@ We computed test-retest correlations for the Big Five and life satisfaction for 
 # Discussion
 Based on  
 
-- personality maturation cross-culturally: [@bleidornPersonalityMaturationWorld2013; @chopikPersonalityChangeLife2018]
+Further avenues / follow-ups (?)  
+- personality maturation cross-culturally: [@bleidornPersonalityMaturationWorld2013; @chopikPersonalityChangeLife2018]  
+- other countries with different childcare systems: [@bordonePatternsGrandparentalChild2017]; "in countries with scarce publicly funded daycare services and parental leave grandparental care is often provided on a daily basis"; [@hankGrandparentsCaringTheir2009]  
+- facets / nuances [@mottusDevelopmentDetailsAge2021]  
 
-- facets / nuances [@mottusDevelopmentDetailsAge2021]
+related grandparenthood research  
+- arrival of grandchild associated with retirement decisions [@lumsdaineRetirementTimingWomen2015]; pers X WB interaction over retirement [@henningRolePersonalitySubjective2017];  
+- Does the Transition to Grandparenthood Deter Gray Divorce? A Test of the Braking Hypothesis [@brownDoesTransitionGrandparenthood2021]  
+- prolonged period of grandparenthood? [@margolisHealthyGrandparenthoodHow2017]  
+- subjective experience of aging [@bordoneGrandchildrenInfluenceHow2015]  
 
-- arrival of grandchild associated with retirement decisions [@lumsdaineRetirementTimingWomen2015]; pers X WB interaction over retirement [@henningRolePersonalitySubjective2017];
+grandparent role / grandparental investment  
+- "refutes the central claim of role theory according to which salient roles are more beneficial to the psychological well-being of the individual than are other roles, especially in old age. It also questions the theoretical framework of grandparent role meaning that is commonly cited in the literature" [@mullerGrandparentingWellbeingHow2011]  
+--> see also [@condonFirstTimeGrandparentsRole2019]: First-Time Grandparents’ Role Satisfaction and Its Determinants  
+- "Older grandparents tended to provide financial assistance and more strongly identified with the role. When their grandchildren were younger, grandparents tended to interact more with them, share more activities, provide baby-sitting, and receive more symbolic rewards from the grandparent role." [@silversteinHowAmericansEnact2001]  
+- “maternal grandmothers tend to invest the most in their grandchildren, followed by maternal grandfathers, then paternal grandmothers, with paternal grandfathers investing the least“ -> also: call for causally informed designs! [@coallGrandparentalInvestmentRelic2011] --> discusses grandparental role investment from an evolutionary perspective --> see also [@danielsbackaGrandparentalChildCare2011]  
+- factors determining grandparental investement: [@coallPredictorsGrandparentalInvestment2014]  
+- relation to well-being: [@danielsbackaAssociationGrandparentalInvestment2016]  
 
-- Does the Transition to Grandparenthood Deter Gray Divorce? A Test of the Braking Hypothesis [@brownDoesTransitionGrandparenthood2021]
+demographic changes  
+- “Over the last two decades, the share of U.S. children under age 18 who live in a multigenerational household (with a grandparent and parent) has increased dramatically“   [@pilkauskasHistoricalTrendsChildren2020] --> for Germany: "on the basis of the DEAS data, the share of grandparents who take care of their grandchildren increased between 2008 and 2014" [@mahneZwischenEnkelgluckUnd2017]  
 
-- prolonged period of grandparenthood? [@margolisHealthyGrandparenthoodHow2017]
+why is personality important?  
+- policy relevance of personality [@bleidornPolicyRelevancePersonality2019], e.g., health outcomes [@turianoPersonalityTraitLevel2012], but not really evidence for healthy neuroticism [@turianoHealthyNeuroticismAssociated2020]  
 
-- subjective experience of aging [@bordoneGrandchildrenInfluenceHow2015]
-
-- policy relevance of personality [@bleidornPolicyRelevancePersonality2019], e.g., health outcomes [@turianoPersonalityTraitLevel2012], but not really evidence for healthy neuroticism [@turianoHealthyNeuroticismAssociated2020]
-
-- mortality & grandparenthood[@christiansenAssociationGrandparenthoodMortality2014]; moderated by race? [@choiGrandparentingMortalityHow2020]; but see HRS -> “Grandparenthood overall was unassociated with mortality risk in both women and men” [@ellwardtGrandparenthoodRiskMortality2021]
---> [@hilbrandCaregivingFamilyAssociated2017]: "Survival analyses based on data from the Berlin Aging Study revealed that mortality hazards for grandparents who provided non-custodial childcare were 37% lower than for grandparents who did not provide childcare and for non-grandparents. These associations held after controlling for physical health, age, socioeconomic status and various characteristics of the children and grandchildren."
-
-- "Older grandparents tended to provide financial assistance and more strongly identified with the role. When their grandchildren were younger, grandparents tended to interact more with them, share more activities, provide baby-sitting, and receive more symbolic rewards from the grandparent role." [@silversteinHowAmericansEnact2001]
-
-- "refutes the central claim of role theory according to which salient roles are more beneficial to the psychological well-being of the individual than are other roles, especially in old age. It also questions the theoretical framework of grandparent role meaning that is commonly cited in the literature" [@mullerGrandparentingWellbeingHow2011]
---> see also [@condonFirstTimeGrandparentsRole2019]: First-Time Grandparents’ Role Satisfaction and Its Determinants
-
-- “maternal grandmothers tend to invest the most in their grandchildren, followed by maternal grandfathers, then paternal grandmothers, with paternal grandfathers investing the least“ -> also: call for causally informed designs! [@coallGrandparentalInvestmentRelic2011] --> discusses grandparental role investment from an evolutionary perspective --> see also [@danielsbackaGrandparentalChildCare2011]
-- factors determining grandparental investement: [@coallPredictorsGrandparentalInvestment2014]
-- relation to well-being: [@danielsbackaAssociationGrandparentalInvestment2016]
-
-- “Over the last two decades, the share of U.S. children under age 18 who live in a multigenerational household (with a grandparent and parent) has increased dramatically“ [@pilkauskasHistoricalTrendsChildren2020] --> for Germany: "on the basis of the DEAS data, the share of grandparents who take care of their grandchildren increased between 2008 and 2014" [@mahneZwischenEnkelgluckUnd2017]
-
-- other countries with different childcare systems: [@bordonePatternsGrandparentalChild2017]; "in countries with scarce publicly funded daycare services and parental leave grandparental care is often provided on a daily basis"; [@hankGrandparentsCaringTheir2009]
-
-- differences in Big Five assessment: HRS adjectives vs. LISS statements 
-
-<!-- add something about shifting nature of grandparenthood? -->  
+- mortality & grandparenthood [@christiansenAssociationGrandparenthoodMortality2014]; moderated by race? [@choiGrandparentingMortalityHow2020]; but see HRS -> “Grandparenthood overall was unassociated with mortality risk in both women and men” [@ellwardtGrandparenthoodRiskMortality2021]  
+--> [@hilbrandCaregivingFamilyAssociated2017]: "Survival analyses based on data from the Berlin Aging Study revealed that mortality hazards for grandparents who provided non-custodial childcare were 37% lower than for grandparents who did not provide childcare and for non-grandparents. These associations held after controlling for physical health, age, socioeconomic status and various characteristics of the children and grandchildren."  
 
 ## Limitations
 
 Despite  
+
+- differences in Big Five assessment: HRS adjectives vs. LISS statements 
 
 ## Conclusions
 Our  

@@ -104,7 +104,7 @@ rownames(sample_time_and_coding) <- c("Grandparents: obs. \\textcolor{white}{L}"
                           "Nonparent controls: obs. \\textcolor{white}{L}", 
                           "Nonparent controls: \\% women \\textcolor{white}{L}", 
                           "Before-slope \\textcolor{white}{L}", "After-slope \\textcolor{white}{L}",
-                          "Jump \\textcolor{white}{L}", 
+                          "Shift \\textcolor{white}{L}", 
                           "Grandparents: obs. \\textcolor{white}{H}",
                           "Grandparents: \\% women \\textcolor{white}{H}", 
                           "Parent controls: obs. \\textcolor{white}{H}", 
@@ -112,7 +112,7 @@ rownames(sample_time_and_coding) <- c("Grandparents: obs. \\textcolor{white}{L}"
                           "Nonparent controls: obs. \\textcolor{white}{H}", 
                           "Nonparent controls: \\% women \\textcolor{white}{H}",
                           "Before-slope \\textcolor{white}{H}", "After-slope \\textcolor{white}{H}",
-                          "Jump \\textcolor{white}{H}")
+                          "Shift \\textcolor{white}{H}")
 
 apa_table(
   sample_time_and_coding
