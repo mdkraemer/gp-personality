@@ -529,7 +529,7 @@ str(liss_data_parents)
 liss_data_parents <- liss_data_parents %>% group_by(subclass) %>% 
   mutate(time = ifelse(is.na(time), max(time, na.rm = T), time),
          valid = ifelse(is.na(valid), max(valid, na.rm = T), valid)) %>% ungroup %>% 
-  ungroup() %>% select(-subclass, -weights, -id)
+  ungroup() %>% select(-weights, -id) # -subclass,  -- need subclass later 
 
 # "with replacement" in two ways: 
 # - the same control observation appearing multiple times in the matched data 
@@ -557,10 +557,10 @@ liss_data_parents <- left_join(liss_data_parents, lissimp_parents_ps_1,
 
 # for balance assessment (at the time of matching - using the variables containing imputed values)
 liss_bal_parents <- liss_data_parents %>%
-  select(nomem_encr, grandparent, pscore, female, everything(), -time, -valid) # -year, 
+  select(nomem_encr, grandparent, pscore, female, everything(), -time, -valid, -subclass) # -year, 
 
 liss_data_parents <- liss_data_parents %>% 
-  select(nomem_encr, year, grandparent, time, valid, pscore) %>% 
+  select(nomem_encr, year, grandparent, time, valid, pscore, subclass) %>% 
   rename(match_year = year, time_match = time, valid_match = valid) %>% 
   mutate(match_number = row_number()) # if we allow duplicate matches, we need an unambiguous identifier for later
 
@@ -648,7 +648,7 @@ str(liss_data_nonparents)
 liss_data_nonparents <- liss_data_nonparents %>% group_by(subclass) %>% 
   mutate(time = ifelse(is.na(time), max(time, na.rm = T), time),
          valid = ifelse(is.na(valid), max(valid, na.rm = T), valid)) %>% ungroup %>% 
-  ungroup() %>% select(-subclass, -weights, -id)
+  ungroup() %>% select(-weights, -id) # -subclass,  -- need subclass later for recoding of moderator care
 
 # "with replacement" in two ways: 
 # - the same control observation appearing multiple times in the matched data 
@@ -677,10 +677,10 @@ liss_data_nonparents <- left_join(liss_data_nonparents, lissimp_nonparents_ps_1,
 
 # for balance assessment (at the time of matching - using the variables containing imputed values)
 liss_bal_nonparents <- liss_data_nonparents %>%
-  select(nomem_encr, grandparent, pscore, female, everything(), -time, -valid) # -year, 
+  select(nomem_encr, grandparent, pscore, female, everything(), -time, -valid, -subclass) # -year, 
 
 liss_data_nonparents <- liss_data_nonparents %>% 
-  select(nomem_encr, year, grandparent, time, valid, pscore) %>% 
+  select(nomem_encr, year, grandparent, time, valid, pscore, subclass) %>% 
   rename(match_year = year, time_match = time, valid_match = valid) %>% 
   mutate(match_number = row_number()) # if we allow duplicate matches, we need an unambiguous identifier for later
 

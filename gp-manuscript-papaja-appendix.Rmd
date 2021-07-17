@@ -3611,10 +3611,9 @@ apa_table(
 )
 ```
 
+(ref:H3-rankorder-tab-cap) Rank-Order Stability.
 
-(ref:H3-rankorder-tab-cap) Rank-order stability.
-
-(ref:H3-rankorder-tab-note) Correlations as indicators of rank-order stability and p-values of the interactions between each outcome at the last pre-transition assessment and the *grandparent* variable in regression models predicting the first available post-transition assessment. The average time lags in years between these two assessments are `r printnum(mean(lissanalysis_parents_rank$yr_lag))` ($SD$ = `r printnum(sd(lissanalysis_parents_rank$yr_lag))`) for the LISS parent sample, `r printnum(mean(lissanalysis_nonparents_rank$yr_lag))` ($SD$ = `r printnum(sd(lissanalysis_nonparents_rank$yr_lag))`) for the LISS nonparent sample, `r printnum(mean(hrsanalysis_parents_rank$yr_lag))` ($SD$ = `r printnum(sd(hrsanalysis_parents_rank$yr_lag))`) for the HRS parent sample, and `r printnum(mean(hrsanalysis_nonparents_rank$yr_lag))` ($SD$ = `r printnum(sd(hrsanalysis_nonparents_rank$yr_lag))`) for the HRS nonparent sample. $Cor_{all}$ = rank-order stability; $Cor_{GP}$ = rank-order stability (only grandparents); $Cor_{con}$ = rank-order stability (only controls).
+(ref:H3-rankorder-tab-note) Test-retest correlations as indicators of rank-order stability, and p-values indicating significant group differences therein between grandparents and each control group. The average retest intervals in years are `r printnum(mean(lissanalysis_parents_rank$yr_lag))` ($SD$ = `r printnum(sd(lissanalysis_parents_rank$yr_lag))`) for the LISS parent sample, `r printnum(mean(lissanalysis_nonparents_rank$yr_lag))` ($SD$ = `r printnum(sd(lissanalysis_nonparents_rank$yr_lag))`) for the LISS nonparent sample, `r printnum(mean(hrsanalysis_parents_rank$yr_lag))` ($SD$ = `r printnum(sd(hrsanalysis_parents_rank$yr_lag))`) for the HRS parent sample, and `r printnum(mean(hrsanalysis_nonparents_rank$yr_lag))` ($SD$ = `r printnum(sd(hrsanalysis_nonparents_rank$yr_lag))`) for the HRS nonparent sample. $Cor$ = correlation; $GP$ = grandparents; $con$ = controls.
 
 ```{r H3-rankorder-tab, results="asis"}
 rank_order_df_ordered <- rbind(
@@ -3649,8 +3648,125 @@ apa_table(
 )
 ```
 
+(ref:H3-rankordermax-tab-cap) Rank-Order Stability With Maximal Retest Interval.
+
+(ref:H3-rankordermax-tab-note) Test-retest correlations as indicators of rank-order stability, and p-values indicating significant group differences therein between grandparents and each control group. The average retest intervals in years are `r printnum(mean(lissanalysis_parents_rank_max$yr_lag))` ($SD$ = `r printnum(sd(lissanalysis_parents_rank_max$yr_lag))`) for the LISS parent sample, `r printnum(mean(lissanalysis_nonparents_rank_max$yr_lag))` ($SD$ = `r printnum(sd(lissanalysis_nonparents_rank_max$yr_lag))`) for the LISS nonparent sample, `r printnum(mean(hrsanalysis_parents_rank_max$yr_lag))` ($SD$ = `r printnum(sd(hrsanalysis_parents_rank_max$yr_lag))`) for the HRS parent sample, and `r printnum(mean(hrsanalysis_nonparents_rank_max$yr_lag))` ($SD$ = `r printnum(sd(hrsanalysis_nonparents_rank_max$yr_lag))`) for the HRS nonparent sample. $Cor$ = correlation; $GP$ = grandparents; $con$ = controls.
+
+```{r H3-rankordermax-tab, results="asis"}
+rank_order_df_max_ordered <- rbind(
+  cbind(rank_order_df_max[seq(1, 24, 4), ], # LISS parents
+        rank_order_df_max[seq(2, 24, 4), ]), # LISS nonparents
+  cbind(rank_order_df_max[seq(3, 24, 4), ], # HRS parents
+        rank_order_df_max[seq(4, 24, 4), ]) # HRS nonparents
+)
+
+rownames(rank_order_df_max_ordered) <- rownames_rank_order_df # as above
+
+apa_table(
+  rank_order_df_max_ordered
+  , caption = "(ref:H3-rankordermax-tab-cap)"
+  , note = "(ref:H3-rankordermax-tab-note)"
+  , col.names = c("Outcome", 
+                  "$Cor_{all}$", "$Cor_{GP}$", "$Cor_{con}$", "$p$", 
+                  "$Cor_{all}$", "$Cor_{GP}$", "$Cor_{con}$", "$p$")
+  , align = c("l", "r", "r", "r", "r", "r", "r", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  , escape = F
+  , landscape = T
+  , font_size = "small"
+  , stub_indents = list("LISS" = 1:6, "HRS" = 7:12)
+  , placement = "H"
+)
+```
+
+(ref:H3-rankorderuni-tab-cap) Rank-Order Stability Excluding Duplicate Control Observations.
+
+(ref:H3-rankorderuni-tab-note) Test-retest correlations as indicators of rank-order stability, and p-values indicating significant group differences therein between grandparents and each control group. The average retest intervals in years are `r printnum(mean(lissanalysis_parents_rank_uni$yr_lag))` ($SD$ = `r printnum(sd(lissanalysis_parents_rank_uni$yr_lag))`) for the LISS parent sample, `r printnum(mean(lissanalysis_nonparents_rank_uni$yr_lag))` ($SD$ = `r printnum(sd(lissanalysis_nonparents_rank_uni$yr_lag))`) for the LISS nonparent sample, `r printnum(mean(hrsanalysis_parents_rank_uni$yr_lag))` ($SD$ = `r printnum(sd(hrsanalysis_parents_rank_uni$yr_lag))`) for the HRS parent sample, and `r printnum(mean(hrsanalysis_nonparents_rank_uni$yr_lag))` ($SD$ = `r printnum(sd(hrsanalysis_nonparents_rank_uni$yr_lag))`) for the HRS nonparent sample. $Cor$ = correlation; $GP$ = grandparents; $con$ = controls.
+
+```{r H3-rankorderuni-tab, results="asis"}
+rank_order_df_uni_ordered <- rbind(
+  cbind(rank_order_df_uni[seq(1, 24, 4), ], # LISS parents
+        rank_order_df_uni[seq(2, 24, 4), ]), # LISS nonparents
+  cbind(rank_order_df_uni[seq(3, 24, 4), ], # HRS parents
+        rank_order_df_uni[seq(4, 24, 4), ]) # HRS nonparents
+)
+
+rownames(rank_order_df_uni_ordered) <- rownames_rank_order_df # as above
+
+apa_table(
+  rank_order_df_uni_ordered
+  , caption = "(ref:H3-rankorderuni-tab-cap)"
+  , note = "(ref:H3-rankorderuni-tab-note)"
+  , col.names = c("Outcome", 
+                  "$Cor_{all}$", "$Cor_{GP}$", "$Cor_{con}$", "$p$", 
+                  "$Cor_{all}$", "$Cor_{GP}$", "$Cor_{con}$", "$p$")
+  , align = c("l", "r", "r", "r", "r", "r", "r", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  , escape = F
+  , landscape = T
+  , font_size = "small"
+  , stub_indents = list("LISS" = 1:6, "HRS" = 7:12)
+  , placement = "H"
+)
+```
+
 \noindent
 **Supplemental Figures**  
+
+(ref:loess-agree-cap) Violin Plots and LOESS Line of `r df_outcomes["agree", "maj"]`.
+
+```{r loess-agree, fig.cap = "(ref:loess-agree-cap)", fig.height=7, fig.width=7, cache=T}
+title_liss <- ggdraw() + 
+  draw_label("LISS", fontface = 'bold', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_HRS <- ggdraw() + 
+  draw_label("HRS", fontface = 'bold', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+# print final object
+plot_grid(title_liss, loess_plot_agree_liss, title_HRS, loess_plot_agree_hrs, 
+          ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
+```
+
+(ref:loess-con-cap) Violin Plots and LOESS Line of `r df_outcomes["con", "maj"]`.
+
+```{r loess-con, fig.cap = "(ref:loess-con-cap)", fig.height=7, fig.width=7, cache=T}
+plot_grid(title_liss, loess_plot_con_liss, title_HRS, loess_plot_con_hrs, 
+          ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
+```
+
+(ref:loess-extra-cap) Violin Plots and LOESS Line of `r df_outcomes["extra", "maj"]`.
+
+```{r loess-extra, fig.cap = "(ref:loess-extra-cap)", fig.height=7, fig.width=7, cache=T}
+plot_grid(title_liss, loess_plot_extra_liss, title_HRS, loess_plot_extra_hrs, 
+          ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
+```
+
+(ref:loess-neur-cap) Violin Plots and LOESS Line of `r df_outcomes["neur", "maj"]`.
+
+```{r loess-neur, fig.cap = "(ref:loess-neur-cap)", fig.height=7, fig.width=7, cache=T}
+plot_grid(title_liss, loess_plot_neur_liss, title_HRS, loess_plot_neur_hrs, 
+          ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
+```
+
+(ref:loess-open-cap) Violin Plots and LOESS Line of `r df_outcomes["open", "maj"]`.
+
+```{r loess-open, fig.cap = "(ref:loess-open-cap)", fig.height=7, fig.width=7, cache=T}
+plot_grid(title_liss, loess_plot_open_liss, title_HRS, loess_plot_open_hrs, 
+          ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
+```
+
+(ref:loess-swls-cap) Violin Plots and LOESS Line of `r df_outcomes["swls", "maj"]`.
+
+```{r loess-swls, fig.cap = "(ref:loess-swls-cap)", fig.height=7, fig.width=7, cache=T}
+plot_grid(title_liss, loess_plot_swls_liss, title_HRS, loess_plot_swls_hrs, 
+          ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
+```
 
 (ref:H1-agree-fig-cap) Change trajectories of `r df_outcomes["agree", "min"]` based on the basic models (left column) and the models including the gender interaction (right column). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
 

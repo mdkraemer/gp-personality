@@ -492,9 +492,9 @@ hrsanalysis_nonparents$hid <- as.numeric(gsub('.{3}$', '', hrsanalysis_nonparent
 
 # harmonize variable names
 hrsanalysis_parents <- hrsanalysis_parents %>% mutate(female = gender - 1) %>% 
-  rename(pid = HHIDPN)
+  rename(pid = HHIDPN,  matchtime = time_match)
 hrsanalysis_nonparents <- hrsanalysis_nonparents %>% mutate(female = gender - 1) %>% 
-  rename(pid = HHIDPN)
+  rename(pid = HHIDPN, matchtime = time_match)
 lissanalysis_parents <- lissanalysis_parents %>% rename(pid = nomem_encr, hid = nohouse_encr)
 lissanalysis_nonparents <- lissanalysis_nonparents %>% rename(pid = nomem_encr, hid = nohouse_encr)
 
@@ -536,6 +536,128 @@ df_outcomes <- rbind(cbind(maj="Agreeableness", min="agreeableness"),
                      cbind(maj="Openness", min="openness"),
                      cbind(maj="Life Satisfaction", min="life satisfaction"))
 rownames(df_outcomes) <- c("agree", "con", "extra", "neur", "open", "swls")
+```
+
+```{r descriptive-plots, include=FALSE, cache=T}
+# first, construct combined datasets with all 3 groups
+lissanalysis_allgroups <- bind_rows(
+  lissanalysis_nonparents %>% 
+    filter(grandparent==0) %>% 
+    mutate(group = factor(0, labels="Nonparent Controls")) %>% 
+    select(-grandparent),
+  lissanalysis_parents %>% 
+    mutate(group = factor(grandparent, labels=c("Parent Controls","Grandparents"))) %>% 
+    select(-grandparent)
+    )
+hrsanalysis_allgroups <- bind_rows(
+  hrsanalysis_nonparents %>% 
+    filter(grandparent==0) %>% 
+    mutate(group = factor(0, labels="Nonparent Controls")) %>% 
+    select(-grandparent),
+  hrsanalysis_parents %>% 
+    mutate(group = factor(grandparent, labels=c("Parent Controls","Grandparents"))) %>% 
+    select(-grandparent)
+)
+# for loop did not work for some reason
+# LISS
+loess_plot_agree_liss <- ggplot(subset(lissanalysis_allgroups, !is.na(agree)), 
+                                aes(factor(time), agree)) +
+  geom_violin() +
+  geom_smooth(span = 0.8, aes(group=1), method="loess") +
+  facet_wrap(~group) + 
+  ylab(df_outcomes["agree", "maj"]) +
+  scale_x_discrete(name = "Time (in Years)") +
+  theme(strip.text = element_text(size = 12))
+loess_plot_con_liss <- ggplot(subset(lissanalysis_allgroups, !is.na(con)), 
+                                aes(factor(time), con)) +
+  geom_violin() +
+  geom_smooth(span = 0.8, aes(group=1), method="loess") +
+  facet_wrap(~group) + 
+  ylab(df_outcomes["con", "maj"]) +
+  scale_x_discrete(name = "Time (in Years)") +
+  theme(strip.text = element_text(size = 12))
+loess_plot_extra_liss <- ggplot(subset(lissanalysis_allgroups, !is.na(extra)), 
+                                aes(factor(time), extra)) +
+  geom_violin() +
+  geom_smooth(span = 0.8, aes(group=1), method="loess") +
+  facet_wrap(~group) + 
+  ylab(df_outcomes["extra", "maj"]) +
+  scale_x_discrete(name = "Time (in Years)") +
+  theme(strip.text = element_text(size = 12))
+loess_plot_neur_liss <- ggplot(subset(lissanalysis_allgroups, !is.na(neur)), 
+                                aes(factor(time), neur)) +
+  geom_violin() +
+  geom_smooth(span = 0.8, aes(group=1), method="loess") +
+  facet_wrap(~group) + 
+  ylab(df_outcomes["neur", "maj"]) +
+  scale_x_discrete(name = "Time (in Years)") +
+  theme(strip.text = element_text(size = 12))
+loess_plot_open_liss <- ggplot(subset(lissanalysis_allgroups, !is.na(open)), 
+                                aes(factor(time), open)) +
+  geom_violin() +
+  geom_smooth(span = 0.8, aes(group=1), method="loess") +
+  facet_wrap(~group) + 
+  ylab(df_outcomes["open", "maj"]) +
+  scale_x_discrete(name = "Time (in Years)") +
+  theme(strip.text = element_text(size = 12))
+loess_plot_swls_liss <- ggplot(subset(lissanalysis_allgroups, !is.na(swls)), 
+                                aes(factor(time), swls)) +
+  geom_violin() +
+  geom_smooth(span = 0.8, aes(group=1), method="loess") +
+  facet_wrap(~group) + 
+  ylab(df_outcomes["swls", "maj"]) +
+  scale_x_discrete(name = "Time (in Years)") +
+  theme(strip.text = element_text(size = 12))
+
+# HRS
+loess_plot_agree_hrs <- ggplot(subset(hrsanalysis_allgroups, !is.na(agree)), 
+                                aes(factor(time), agree)) +
+  geom_violin() +
+  geom_smooth(span = 0.8, aes(group=1), method="loess") +
+  facet_wrap(~group) + 
+  ylab(df_outcomes["agree", "maj"]) +
+  scale_x_discrete(name = "Time (in Years)") +
+  theme(strip.text = element_text(size = 12))
+loess_plot_con_hrs <- ggplot(subset(hrsanalysis_allgroups, !is.na(con)), 
+                                aes(factor(time), con)) +
+  geom_violin() +
+  geom_smooth(span = 0.8, aes(group=1), method="loess") +
+  facet_wrap(~group) + 
+  ylab(df_outcomes["con", "maj"]) +
+  scale_x_discrete(name = "Time (in Years)") +
+  theme(strip.text = element_text(size = 12))
+loess_plot_extra_hrs <- ggplot(subset(hrsanalysis_allgroups, !is.na(extra)), 
+                                aes(factor(time), extra)) +
+  geom_violin() +
+  geom_smooth(span = 0.8, aes(group=1), method="loess") +
+  facet_wrap(~group) + 
+  ylab(df_outcomes["extra", "maj"]) +
+  scale_x_discrete(name = "Time (in Years)") +
+  theme(strip.text = element_text(size = 12))
+loess_plot_neur_hrs <- ggplot(subset(hrsanalysis_allgroups, !is.na(neur)), 
+                                aes(factor(time), neur)) +
+  geom_violin() +
+  geom_smooth(span = 0.8, aes(group=1), method="loess") +
+  facet_wrap(~group) + 
+  ylab(df_outcomes["neur", "maj"]) +
+  scale_x_discrete(name = "Time (in Years)") +
+  theme(strip.text = element_text(size = 12))
+loess_plot_open_hrs <- ggplot(subset(hrsanalysis_allgroups, !is.na(open)), 
+                                aes(factor(time), open)) +
+  geom_violin() +
+  geom_smooth(span = 0.8, aes(group=1), method="loess") +
+  facet_wrap(~group) + 
+  ylab(df_outcomes["open", "maj"]) +
+  scale_x_discrete(name = "Time (in Years)") +
+  theme(strip.text = element_text(size = 12))
+loess_plot_swls_hrs <- ggplot(subset(hrsanalysis_allgroups, !is.na(swls)), 
+                                aes(factor(time), swls)) +
+  geom_violin() +
+  geom_smooth(span = 0.8, aes(group=1), method="loess") +
+  facet_wrap(~group) + 
+  ylab(df_outcomes["swls", "maj"]) +
+  scale_x_discrete(name = "Time (in Years)") +
+  theme(strip.text = element_text(size = 12))
 ```
 
 ```{r H1-run-models, include=FALSE, cache=T}
@@ -1724,10 +1846,10 @@ for (i in 1:length(outcomes)){
 ```{r H3-rank-order-stab, include=FALSE, cache=T}
 # H3: rank-order stability
 
-# construct data sets with the last pre- and the first post-transition assessment (within-person)
+# construct data sets with the time point of matching and the first post-transition assessment (within-person)
 draw_below <- function(x) { 
   x %>% 
-    filter(time<0) %>% group_by(match_number) %>% slice_max(time) %>% ungroup() %>%
+    filter(time==matchtime) %>% 
     select(match_number, grandparent, time_pre = time, # using match_number instead of pid
            agree_pre = agree, con_pre = con, extra_pre = extra, 
            neur_pre = neur, open_pre = open, swls_pre = swls) }
@@ -1789,6 +1911,145 @@ for (i in 1:length(outcomes)){
     rownames(rank_order_df)[pos + j] <- paste0(outcomes[i], "_", datasets_short[j], "_rank")
   }
 }
+
+# alternatively: 
+# construct data sets with the first pre- and the last post-transition assessment (within-person)
+# -> maximally large gap for retest
+draw_below_max <- function(x) { 
+  x %>% 
+    filter(time<0) %>% group_by(match_number) %>% slice_min(time) %>% ungroup() %>%
+    select(match_number, grandparent, time_pre = time, # using match_number instead of pid
+           agree_pre = agree, con_pre = con, extra_pre = extra, 
+           neur_pre = neur, open_pre = open, swls_pre = swls) }
+draw_above_max <- function(x) { 
+  x %>% 
+  filter(time>=0) %>% group_by(match_number) %>% slice_max(time) %>% ungroup() %>% 
+  select(match_number, grandparent, time, all_of(outcomes)) }
+
+list_below_max <- list(lissanalysis_parents, lissanalysis_nonparents,
+                       hrsanalysis_parents, hrsanalysis_nonparents) %>% lapply(draw_below_max)
+list_above_max <- list(lissanalysis_parents, lissanalysis_nonparents,
+                       hrsanalysis_parents, hrsanalysis_nonparents) %>% lapply(draw_above_max)
+names(list_below_max) <- paste0(datasets, "_rank_below_max")
+names(list_above_max) <- paste0(datasets, "_rank_above_max")
+
+list2env(c(list_below_max, list_above_max), .GlobalEnv)
+
+# liss
+lissanalysis_parents_rank_max <- left_join(lissanalysis_parents_rank_above_max, 
+                                           lissanalysis_parents_rank_below_max) %>% 
+  mutate(yr_lag = time - time_pre)
+lissanalysis_nonparents_rank_max <- left_join(lissanalysis_nonparents_rank_above_max, 
+                                              lissanalysis_nonparents_rank_below_max) %>% 
+  mutate(yr_lag = time - time_pre)
+# hrs
+hrsanalysis_parents_rank_max <- left_join(hrsanalysis_parents_rank_above_max, 
+                                          hrsanalysis_parents_rank_below_max) %>% 
+  mutate(yr_lag = time - time_pre)
+hrsanalysis_nonparents_rank_max <- left_join(hrsanalysis_nonparents_rank_above_max, 
+                                             hrsanalysis_nonparents_rank_below_max) %>% 
+  mutate(yr_lag = time - time_pre)
+
+rm(list = ls(pattern = paste0(c("_below_max", "_above_max"), collapse="|")))
+
+rank_order_df_max <- as.data.frame(
+  cbind(cor_all = rep(NA, 24), cor_gp = rep(NA, 24), cor_con = rep(NA, 24), p = rep(NA, 24)))
+
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  pos = seq(from = 0, to = 20, by = 4)[i]
+  for (j in 1:length(datasets)){
+    dataset = paste0(datasets[j], "_rank_max")
+    # simple correlations
+    cor_all <- as.numeric(get(dataset) %>% 
+      filter(!is.na(get(outcome)) & !is.na(get(paste0(outcome, "_pre")))) %>% 
+      summarise(cor(get(outcome), get(paste0(outcome, "_pre")))))
+    cor_gp <-  as.numeric(get(dataset) %>% 
+      filter(grandparent==1 & !is.na(get(outcome)) & !is.na(get(paste0(outcome, "_pre")))) %>% 
+      summarise(cor(get(outcome), get(paste0(outcome, "_pre")))))
+    cor_con <- as.numeric(get(dataset) %>% 
+      filter(grandparent==0 & !is.na(get(outcome)) & !is.na(get(paste0(outcome, "_pre")))) %>% 
+      summarise(cor(get(outcome), get(paste0(outcome, "_pre")))))
+    # interaction model as significance test for group differences
+    formula_rank <- formula(paste(outcome, paste0(outcome, "_pre*grandparent"), sep = "~"))
+    rank_order_int_max <- lm(formula = formula_rank, data = get(dataset))
+    # save in df
+    rank_order_df_max[pos + j, ] <- 
+      c(cor_all, cor_gp, cor_con, summary(rank_order_int_max)$coef[4, 4]) # interaction p-val. 
+    rownames(rank_order_df_max)[pos + j] <- paste0(outcomes[i], "_", datasets_short[j], "_rank")
+  }
+}
+
+# third alternative: unique pid's
+# remove pid duplicates resulting from matching with replacement 
+# (might bias results towards greater stability in the controls)
+draw_below_uni <- function(x) { 
+  x %>% 
+  group_by(pid) %>% 
+  filter(time==matchtime) %>% arrange(desc(time)) %>% # match time closest to transition 
+  slice(n=1) %>% ungroup() %>% # only 1 row per pid
+  select(pid, grandparent, time_pre = time, 
+         agree_pre = agree, con_pre = con, extra_pre = extra, 
+         neur_pre = neur, open_pre = open, swls_pre = swls) }
+draw_above_uni <- function(x) { 
+  x %>% 
+  filter(time>=0) %>% group_by(match_number) %>% slice_min(time) %>% ungroup() %>% 
+  group_by(pid) %>% slice(n=1) %>% ungroup() %>% # 1 row per pid (closest to transition)
+  select(pid, grandparent, time, all_of(outcomes)) }
+
+list_below_uni <- list(lissanalysis_parents, lissanalysis_nonparents,
+                       hrsanalysis_parents, hrsanalysis_nonparents) %>% lapply(draw_below_uni)
+list_above_uni <- list(lissanalysis_parents, lissanalysis_nonparents,
+                       hrsanalysis_parents, hrsanalysis_nonparents) %>% lapply(draw_above_uni)
+names(list_below_uni) <- paste0(datasets, "_rank_below_uni")
+names(list_above_uni) <- paste0(datasets, "_rank_above_uni")
+
+list2env(c(list_below_uni, list_above_uni), .GlobalEnv)
+
+# liss
+lissanalysis_parents_rank_uni <- left_join(lissanalysis_parents_rank_above_uni, 
+                                           lissanalysis_parents_rank_below_uni) %>% 
+  mutate(yr_lag = time - time_pre)
+lissanalysis_nonparents_rank_uni <- left_join(lissanalysis_nonparents_rank_above_uni, 
+                                              lissanalysis_nonparents_rank_below_uni) %>% 
+  mutate(yr_lag = time - time_pre)
+# hrs
+hrsanalysis_parents_rank_uni <- left_join(hrsanalysis_parents_rank_above_uni, 
+                                          hrsanalysis_parents_rank_below_uni) %>% 
+  mutate(yr_lag = time - time_pre)
+hrsanalysis_nonparents_rank_uni <- left_join(hrsanalysis_nonparents_rank_above_uni, 
+                                             hrsanalysis_nonparents_rank_below_uni) %>% 
+  mutate(yr_lag = time - time_pre)
+
+rm(list = ls(pattern = paste0(c("_below_uni", "_above_uni"), collapse="|")))
+
+rank_order_df_uni <- as.data.frame(
+  cbind(cor_all = rep(NA, 24), cor_gp = rep(NA, 24), cor_con = rep(NA, 24), p = rep(NA, 24)))
+
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  pos = seq(from = 0, to = 20, by = 4)[i]
+  for (j in 1:length(datasets)){
+    dataset = paste0(datasets[j], "_rank_uni")
+    # simple correlations
+    cor_all <- as.numeric(get(dataset) %>% 
+      filter(!is.na(get(outcome)) & !is.na(get(paste0(outcome, "_pre")))) %>% 
+      summarise(cor(get(outcome), get(paste0(outcome, "_pre")))))
+    cor_gp <-  as.numeric(get(dataset) %>% 
+      filter(grandparent==1 & !is.na(get(outcome)) & !is.na(get(paste0(outcome, "_pre")))) %>% 
+      summarise(cor(get(outcome), get(paste0(outcome, "_pre")))))
+    cor_con <- as.numeric(get(dataset) %>% 
+      filter(grandparent==0 & !is.na(get(outcome)) & !is.na(get(paste0(outcome, "_pre")))) %>% 
+      summarise(cor(get(outcome), get(paste0(outcome, "_pre")))))
+    # interaction model as significance test for group differences
+    formula_rank <- formula(paste(outcome, paste0(outcome, "_pre*grandparent"), sep = "~"))
+    rank_order_int_uni <- lm(formula = formula_rank, data = get(dataset))
+    # save in df
+    rank_order_df_uni[pos + j, ] <- 
+      c(cor_all, cor_gp, cor_con, summary(rank_order_int_uni)$coef[4, 4]) # interaction p-val. 
+    rownames(rank_order_df_uni)[pos + j] <- paste0(outcomes[i], "_", datasets_short[j], "_rank")
+  }
+}
 ```
 
 ## Descriptive Results
@@ -1836,10 +2097,31 @@ We found partial evidence for larger interindividual differences in grandparents
 
 ## Rank-Order Stability 
 
-We computed test-retest correlations for the Big Five and life satisfaction for the matched sample, as well as separately for grandparents only and controls only (see Table \@ref(tab:H3-rankorder-tab)). In `r rank_order_df %>% filter(cor_gp>cor_con) %>% summarise(n())` out of `r rank_order_df %>% summarise(n())` comparisons grandparents' test-retest correlation was larger than that of the respective control group. There was only one significant difference between grandparents and matched controls in their rank-order stability, namely the rank-order stability of agreeableness in the LISS which was larger in the grandparents than the matched nonparent controls, `r gsub(scales::pvalue(rank_order_df["agree_liss_nonparents_rank", "p"], prefix = c("$p$ < ", "$p$ = ", "$p$ > ")), pattern="0\\.", replacement="\\.")`. Further, we found suggestive evidence that rank-order stability in the HRS was larger in the grandparents for extraversion than in either parent, `r gsub(scales::pvalue(rank_order_df["extra_hrs_parents_rank", "p"], prefix = c("$p$ < ", "$p$ = ", "$p$ > ")), pattern="0\\.", replacement="\\.")`, or nonparent controls, `r gsub(scales::pvalue(rank_order_df["extra_hrs_nonparents_rank", "p"], prefix = c("$p$ < ", "$p$ = ", "$p$ > ")), pattern="0\\.", replacement="\\.")`, and that for openness it was larger in the grandparents than in the parent controls, `r gsub(scales::pvalue(rank_order_df["open_hrs_parents_rank", "p"], prefix = c("$p$ < ", "$p$ = ", "$p$ > ")), pattern="0\\.", replacement="\\.")`. Overall, there was no evidence in support of hypothesis H3.  
+As indicators of rank-order stability, we computed test-retest correlations for the Big Five and life satisfaction for the matched sample, as well as separately for grandparents only and controls only (see Table \@ref(tab:H3-rankorder-tab)). In `r rank_order_df %>% filter(cor_gp<cor_con) %>% summarise(n())` out of `r rank_order_df %>% summarise(n())` comparisons grandparents' test-retest correlation was lower than that of the respective control group. However, differences in rank-order stability between the grandparents and control participants did not reach significance in any of these comparisons.  
+We found suggestive evidence that rank-order stability in the HRS was higher in the grandparents for extraversion than in either parent, `r gsub(scales::pvalue(rank_order_df["extra_hrs_parents_rank", "p"], prefix = c("$p$ < ", "$p$ = ", "$p$ > ")), pattern="0\\.", replacement="\\.")`, or nonparent controls, `r gsub(scales::pvalue(rank_order_df["extra_hrs_nonparents_rank", "p"], prefix = c("$p$ < ", "$p$ = ", "$p$ > ")), pattern="0\\.", replacement="\\.")`, and that for openness it was larger in the grandparents than in the parent controls, `r gsub(scales::pvalue(rank_order_df["open_hrs_parents_rank", "p"], prefix = c("$p$ < ", "$p$ = ", "$p$ > ")), pattern="0\\.", replacement="\\.")`. In the LISS, there was suggestive evidence that grandparents' rank-order stability in agreeableness was higher than that of the nonparent controls, `r gsub(scales::pvalue(rank_order_df["agree_liss_nonparents_rank", "p"], prefix = c("$p$ < ", "$p$ = ", "$p$ > ")), pattern="0\\.", replacement="\\.")`. Overall, we found no evidence in support of hypothesis H3.[^f14]  
+
+[^f14]: In addition to the preregistered retest interval, we have also computed a maximally large retest interval between the first available pre-transition assessment and the last available post-transition assessment within the observation period. Here, `r rank_order_df_max %>% filter(cor_gp<cor_con) %>% summarise(n())` out of `r rank_order_df_max %>% summarise(n())` comparisons indicated that rank-order stability was lower in the grandparents, and we found one significant difference in rank-order stability in accordance with our hypothesis: in the HRS, grandparents' rank-order stability in openness was lower than that of the nonparents, `r gsub(scales::pvalue(rank_order_df_max["extra_hrs_nonparents_rank", "p"], prefix = c("$p$ < ", "$p$ = ", "$p$ > ")), pattern="0\\.", replacement="\\.")` (see Table \@ref(tab:H3-rankordermax-tab)). In another analysis, we followed the preregistered approach but excluded any duplicate control participants resulting from matching with replacement who might bias results towards greater stability in the controls: `r rank_order_df_uni %>% filter(cor_gp<cor_con) %>% summarise(n())` out of `r rank_order_df_uni %>% summarise(n())` comparisons showed lower rank-order stability in the grandparents compared to either control group (see Table \@ref(tab:H3-rankorderuni-tab)). However, differences between the groups were nonsignificant throughout.  
+
+<!-- move suggestive evidence to own section? -->
+<!-- whats going on with the within-person variation? maybe look at Dore & Bolger again? -->
+<!-- compare within-person variation in the before-slope with the after-slope (only GPs) -->
+<!-- build simple LOESS-type plots -->
+
 
 # Discussion
-Based on  
+
+In an analysis of first-time grandparents in comparison with both parent and nonparent matched control subjects we found pronounced stability in the Big Five and life satisfaction over the transition to grandparenthood. There were a few isolated effects in line with our hypotheses on mean-level change (H1), however, they were too small in size to be practically meaningful and also not consistent over the two analyzed samples---LISS and HRS. We did not find convincing evidence of a moderation of the mean-level trajectories by either paid work or grandchild care. Although interindividual differences in change were present for all parameters, they were only greater in the grandparents in a stark minority of conducted model comparisons (H2). Lastly, rank-order stability did mostly not differ between grandparents and either controls group, or was larger in the control group---contrary to expectations (H3).
+
+meaningfulness of small effects in psychology (citation?)
+
+agreeableness: compare with literature on generativity (Erikson)  
+
+strength: internal cross-study replication
+
+Big Five
+Social investment / grandparent role / role conflict
+LS
+In contrast to earlier research
 
 Further avenues / follow-ups (?)  
 - personality maturation cross-culturally: [@bleidornPersonalityMaturationWorld2013; @chopikPersonalityChangeLife2018]  
@@ -1872,6 +2154,9 @@ why is personality important?
 ## Limitations
 
 Despite  
+
+- Were we able to capture truly socially invested grandparents? a) subjective meaning of life events (Luhmann), b) constraints on investment (physical distance, role conflict (time demands), relationship quality)
+-> follow-up: latent class analysis / mixture models 
 
 - differences in Big Five assessment: HRS adjectives vs. LISS statements 
 

@@ -2047,10 +2047,10 @@ for (i in 1:length(outcomes)){
 
 #### H3: rank-order stability ####
 
-# construct data set with the last pre- and the first post-transition assessment (within-person)
+# construct data set with the time of matching and the first post-transition assessment (within-person)
 lissanalysis_parents_rank_below <- lissanalysis_parents %>% 
-  filter(time<0) %>% group_by(match_number) %>% slice_max(time) %>% ungroup() %>%
-  select(match_number, grandparent, time_pre = time, # using match_number instead of pid
+  filter(time==matchtime) %>% 
+  select(match_number, grandparent, time_pre = time, # using match_number for join instead of pid
          agree_pre = agree, con_pre = con, extra_pre = extra, 
          neur_pre = neur, open_pre = open, swls_pre = swls)
   
@@ -2061,6 +2061,26 @@ lissanalysis_parents_rank_above <- lissanalysis_parents %>%
 
 lissanalysis_parents_rank <- left_join(lissanalysis_parents_rank_above, lissanalysis_parents_rank_below)
 lissanalysis_parents_rank <- lissanalysis_parents_rank %>% mutate(yr_lag = time - time_pre)
+
+# alternative coding:
+# remove pid duplicates resulting from matching with replacement 
+# (might bias results towards greater stability in the controls)
+lissanalysis_parents_rank_below <- lissanalysis_parents %>% 
+  group_by(pid) %>% 
+  filter(time==matchtime) %>% arrange(desc(time)) %>% 
+  slice(n=1) %>% ungroup() %>% 
+  select(pid, grandparent, time_pre = time, 
+         agree_pre = agree, con_pre = con, extra_pre = extra, 
+         neur_pre = neur, open_pre = open, swls_pre = swls)
+
+lissanalysis_parents_rank_above <- lissanalysis_parents %>% 
+  filter(time>=0) %>% group_by(match_number) %>% slice_min(time) %>% ungroup() %>% 
+  group_by(pid) %>% slice(n=1) %>% ungroup() %>% 
+  select(pid, grandparent, time, all_of(outcomes))
+
+lissanalysis_parents_rank <- left_join(lissanalysis_parents_rank_above, lissanalysis_parents_rank_below)
+lissanalysis_parents_rank <- lissanalysis_parents_rank %>% mutate(yr_lag = time - time_pre)
+
 
 draw_below <- function(x) { 
   x %>% 
@@ -2134,5 +2154,43 @@ for (i in 1:length(outcomes)){
     rownames(rank_order_df)[pos + j] <- paste0(outcomes[i], "_", datasets_short[j], "_rank")
   }
 }
+
+#### LOESS-type plots ####
+
+lissanalysis_allgroups <- bind_rows(
+  lissanalysis_nonparents %>% 
+    filter(grandparent==0) %>% 
+    mutate(group = factor(0, labels="Nonparent Controls")) %>% 
+    select(-grandparent),
+  lissanalysis_parents %>% 
+    mutate(group = factor(grandparent, labels=c("Parent Controls","Grandparents"))) %>% 
+    select(-grandparent)
+    )
+
+hrsanalysis_allgroups <- bind_rows(
+  hrsanalysis_nonparents %>% 
+    filter(grandparent==0) %>% 
+    mutate(group = factor(0, labels="Nonparent Controls")) %>% 
+    select(-grandparent),
+  hrsanalysis_parents %>% 
+    mutate(group = factor(grandparent, labels=c("Parent Controls","Grandparents"))) %>% 
+    select(-grandparent)
+)
+
+loess_agree_lissparents <- ggplot(lissanalysis_allgroups, aes(factor(time), agree)) +
+  geom_violin() +
+  geom_smooth(span = 0.8, aes(group=1), method="loess") +
+  facet_wrap(~group) + 
+  scale_y_continuous(name="Agreeableness") +
+  scale_x_discrete(name="Time (in Years)")
+
+loess_agree_hrsparents <- ggplot(hrsanalysis_allgroups %>% filter(!is.na(agree)), 
+                                 aes(factor(time), agree)) +
+  geom_violin() +
+  geom_smooth(span = 0.8, aes(group=1), method="loess") +
+  #stat_summary(fun=mean, colour="blue", geom="line", size = 3) +
+  facet_wrap(~group) + 
+  scale_y_continuous(name="Agreeableness") +
+  scale_x_discrete(name="Time (in Years)")
 
 
