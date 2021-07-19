@@ -2193,4 +2193,20 @@ loess_agree_hrsparents <- ggplot(hrsanalysis_allgroups %>% filter(!is.na(agree))
   scale_y_continuous(name="Agreeableness") +
   scale_x_discrete(name="Time (in Years)")
 
+loess_neur_lissparents <- ggplot(lissanalysis_allgroups, aes(factor(time), neur)) +
+  geom_violin() +
+  geom_smooth(span = 0.75, aes(group=1), method="loess") +
+  facet_wrap(~group) + 
+  scale_y_continuous(name="Neuroticism") +
+  scale_x_discrete(name="Time (in Years)")
+loess_neur_lissparents
 
+loess_neur_hrsparents <- ggplot(hrsanalysis_allgroups %>% filter(!is.na(neur)), 
+                                 aes(factor(time), neur)) +
+  geom_violin() +
+  geom_smooth(span = 0.9, aes(group=1), method="loess") +
+  facet_wrap(~group) + 
+  scale_y_continuous(name="Neuroticism") +
+  scale_x_discrete(name="Time (in Years)") +
+  stat_summary(fun=mean, geom="point", shape=23, size=1.5, color="blue")
+loess_neur_hrsparents

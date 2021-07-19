@@ -308,19 +308,21 @@ After matching, each matched control observation received the same value as thei
 \hypertarget{analytical-strategy}{%
 \subsection{Analytical Strategy}\label{analytical-strategy}}
 
-We used R (Version 4.0.4; R Core Team, 2021) and the R-packages \emph{lme4} (Version 1.1.26; Bates et al., 2015), and \emph{lmerTest} (Version 3.1.3; Kuznetsova et al., 2017) for multilevel modeling, as well as \emph{tidyverse} (Wickham et al., 2019) for data wrangling, and \emph{papaja} (Aust \& Barth, 2020) for reproducible manuscript production. Additional modeling details and a list of all software we used is provided in the Supplemental Material. Scripts for data wrangling, analyses, and to reproduce this manuscript can be found on the OSF (\url{https://osf.io/75a4r/?view_only=ac929a2c41fb4afd9d1a64a3909848d0}) and on GitHub ({[}blinded for review{]}). In line with Benjamin et al.~(2018), we set the \(\alpha\)-level for all confirmatory analyses to \(.005\).\\
+We used R (Version 4.0.4; R Core Team, 2021) and the R-packages \emph{lme4} (Version 1.1.26; Bates et al., 2015), and \emph{lmerTest} (Version 3.1.3; Kuznetsova et al., 2017) for multilevel modeling, as well as \emph{tidyverse} (Wickham et al., 2019) for data wrangling, and \emph{papaja} (Aust \& Barth, 2020) for reproducible manuscript production. Additional modeling details and a list of all software we used is provided in the Supplemental Material. Scripts for data wrangling, analyses, and to reproduce this manuscript can be found on the OSF (\url{https://osf.io/75a4r/?view_only=ac929a2c41fb4afd9d1a64a3909848d0}) and on GitHub (\url{https://github.com/} {[}blinded for review{]}). Following Benjamin et al.~(2018), we set the \(\alpha\)-level for all confirmatory analyses to \(.005\).\\
 Our design can be referred to as an interrupted time-series with a \enquote{nonequivalent no-treatment control group} (Shadish et al., 2002, p. 182) where treatment, that is, the transition to grandparenthood, is not deliberately manipulated. First, to analyze mean-level changes, we used linear piecewise regression coefficients in multilevel regression models with person-year observations nested within participants and households (Hoffman, 2015). To model change over time in relation to the birth of the first grandchild, we coded three piecewise regression coefficients: a \emph{before-slope} representing linear change in the years leading up to the transition to grandparenthood, an \emph{after-slope} representing linear change in the years after the transition, and a \emph{shift} coefficient shifting the intercept directly after the transition was first reported, thus representing sudden changes that go beyond changes already modeled by the \emph{after-slope} (see Table \ref{tab:piecewise-coding-scheme} for the coding scheme of these coefficients; Hoffman, 2015). Other studies of personality development have recently adopted similar piecewise growth-curve models (e.g., Bleidorn \& Schwaba, 2018; Krämer \& Rodgers, 2020; Schwaba \& Bleidorn, 2019; van Scheppingen \& Leopold, 2020).\\
-All effects of the transition to grandparenthood on the Big Five and life satisfaction were modeled as deviations from patterns in the matched control groups by interacting the three piecewise coefficients with the binary treatment variable (0 = \emph{control}, 1 = \emph{grandparent}). In additional models, we interacted these coefficients with the binary moderator variables resulting in two- or three-way interactions. To test differences in the growth parameters between two groups in cases where these differences were represented by multiple fixed-effects coefficients, we defined linear contrasts using the \emph{linearHypothesis} command from the \emph{car} R package (Fox \& Weisberg, 2019). All models of mean-level changes were estimated using maximum likelihood and included random intercepts but no random slopes of the piecewise regression coefficients. We included the propensity score as a level-2 covariate for a double-robust approach (Austin, 2017).\\
+All effects of the transition to grandparenthood on the Big Five and life satisfaction were modeled as deviations from patterns in the matched control groups by interacting the three piecewise coefficients with the binary treatment variable (0 = \emph{control}, 1 = \emph{grandparent}). In additional models, we interacted these coefficients with the binary moderator variables resulting in two- or three-way interactions. To test differences in the growth parameters between two groups in cases where these differences were represented by multiple fixed-effects coefficients, we defined linear contrasts using the \emph{linearHypothesis} command from the \emph{car} R package (Fox \& Weisberg, 2019). All models of mean-level changes were estimated using maximum likelihood and included random intercepts but no random slopes of the piecewise regression coefficients. We included the propensity score as a level-2 covariate for a double-robust approach (Austin, 2017). The model equations of the basic model and the moderation models can be found in the \emph{Supplemental Material}.\\
 Second, to assess interindividual differences in intraindividual change in the Big Five and life satisfaction we added random slopes to the models assessing mean-level changes (see Denissen et al., 2019 for a similar approach). In other words, we allowed for differences between individuals in their trajectories of change to be modeled, that is, differences in the \emph{before-slope}, \emph{after-slope}, and \emph{shift} coefficients. Because multiple simultaneous random slopes are often not computationally feasible, we added random slopes one at a time and used likelihood ratio test to determine whether the addition of the respective random slope led to a significant improvement in model fit. We plotted distributions of random slopes (for a similar approach, see Denissen et al., 2019; Doré \& Bolger, 2018). To statistically test differences in the random slope variance between the grandparent group and each control group, we respecified the multilevel models as heterogeneous variance models using the \emph{nlme} R package (Pinheiro et al., 2021), which allows for separate random slope variances to be estimated in the grandparent group and the control group within the same model. Model fit of these heterogeneous variance models was compared to the corresponding models with a homogeneous (single) random slope variance via likelihood ratio tests. This was also done separately for the parent and nonparent control groups.\\
 Third, to examine rank-order stability in the Big Five and life satisfaction over the transition to grandparenthood, we computed the test-retest correlation of measurements prior to the transition to grandparenthood (at the time of matching) with the first available measurement after the transition. To test the difference in test-retest stability between grandparents and either of the control groups, we then entered the pre-treatment measure as well as the treatment variable (0 = \emph{control}, 1 = \emph{grandparent}) and their interaction into multiple regression models predicting the Big Five and life satisfaction. These interactions test for significant differences in the test-retest stability between those who experienced the transition to grandparenthood and those who did not (for a similar approach, see Denissen et al., 2019; McCrae, 1993).
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
 
+Throughout the results section, we referred to results of statistical tests with \(.005 < p < .05\) as \emph{suggestive evidence} as stated in our preregistration.
+
 \hypertarget{descriptive-results}{%
 \subsection{Descriptive Results}\label{descriptive-results}}
 
-Means and standard deviations of the Big Five and life satisfaction over the analyzed time points are presented in Tables \ref{tab:descriptives-liss} and \ref{tab:descriptives-hrs}. In both the LISS and the HRS, all six outcomes display marked stability over time. Standard deviations for life satisfaction are considerably larger than those of the Big Five. Intra-class correlations (see Table \ref{tab:icc-table}) show that for the Big Five large portions of the total variance could be explained by nesting in participants (\emph{median} = 0.75), while nesting in households only accounted for minor portions (\emph{median} = 0.03). For outcome--subsample combinations with an \(ICC_{hid}\) below \(.05\) we omitted the household nesting factor from all models because this frequently lead to computational errors---a small deviation from our preregistration. For life satisfaction the nesting in households accounted for slightly larger portions of the total variance (\emph{median} = 0.36) than nesting in participants (\emph{median} = 0.32). For all outcomes, the proportion of variance due to within-person factors was relatively low (\emph{median} = 0.22).
+Means and standard deviations of the Big Five and life satisfaction over the analyzed time points are presented in Tables \ref{tab:descriptives-liss} and \ref{tab:descriptives-hrs}. Visually represented (see Fig. \ref{fig:loess-agree}-\ref{fig:loess-swls}), all six outcomes display marked stability over time in both LISS and HRS. Intra-class correlations (see Table \ref{tab:icc-table}) show that large portions of the total variance in the Big Five could be explained by nesting in participants (\emph{median} = 0.75), while nesting in households only accounted for minor portions (\emph{median} = 0.03). For outcome--subsample combinations with an \(ICC_{hid}\) below \(.05\) we omitted the household nesting factor from all models because the nesting otherwise frequently lead to computational errors---a small deviation from our preregistration. For life satisfaction the nesting in households accounted for slightly larger portions of the total variance (\emph{median} = 0.36) than nesting in participants (\emph{median} = 0.32). Over all outcomes, the proportion of variance due to within-person factors was relatively low (\emph{median} = 0.22).
 
 \hypertarget{mean-level-changes}{%
 \subsection{Mean-Level Changes}\label{mean-level-changes}}
@@ -328,37 +330,37 @@ Means and standard deviations of the Big Five and life satisfaction over the ana
 \hypertarget{agreeableness}{%
 \subsubsection{Agreeableness}\label{agreeableness}}
 
-In the basic models (see Tables \ref{tab:H1-agree-tab} \& \ref{tab:H1-agree-contrasts} and Figure \ref{fig:H1-agree-fig}), grandparents in the LISS increased slightly in agreeableness in the years after the transition to grandparenthood as compared to the parent controls, \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.01, 0.03]\), \(p\) = .003. However, this effect was quite small in magnitude and not significant when compared against the nonparent controls, or against either control sample in the HRS sample (suggestive evidence in the HRS nonparents: \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.01, 0.04]\), \(p\) = .006). The models including the gender interaction (see Tables \ref{tab:H1-agree-gender-tab} \& \ref{tab:H1-agree-gender-contrasts} and Figure \ref{fig:H1-agree-fig}) suggest that this difference was due to grandfathers' post-transition increases in agreeableness as compared to parent (LISS: \(\hat{\gamma}_{21} = 0.03\), 95\% CI \([0.01, 0.05]\), \(p\) \textless{} .001; HRS: \(\hat{\gamma}_{21} = 0.04\), 95\% CI \([0.01, 0.06]\), \(p\) = .003) and nonparent controls (HRS: \(\hat{\gamma}_{21} = 0.03\), 95\% CI \([0.01, 0.05]\), \(p\) = .004).\\
-There is only suggestive evidence for a moderation by paid work (see Tables \ref{tab:H1-agree-work-tab} \& \ref{tab:H1-agree-work-contrasts} and Figure \ref{fig:H1-agree-work-fig}): non-working grandparents increased more in agreeableness than working grandparents in anticipation of the transition to grandparenthood (difference in \emph{before} parameter; parents: {[}\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\){]} = -0.07, 95\% CI {[}-0.12, -0.01{]}, \(p\) = .013; nonparents: {[}\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\){]} = -0.07, 95\% CI {[}-0.12, -0.02{]}, \(p\) = .009). Grandparents providing substantial grandchild care increased in agreeableness after the transition to grandparenthood as compared to matched nonparent controls (difference in \emph{after} parameter: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.04, 95\% CI {[}0.01, 0.06{]}, \(p\) = .002; suggestive evidence in the parent sample: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.04, 95\% CI {[}0.01, 0.06{]}, \(p\) = .006; see Tables \ref{tab:H1-agree-care-tab} \& \ref{tab:H1-agree-care-contrasts} and Figure \ref{fig:H1-agree-care-fig}). Again, the effects are very small and the differences between caring and non-caring grandparents are not significant in either sample (see Table \ref{tab:H1-agree-care-contrasts}).
+In the basic models (see Tables \ref{tab:H1-agree-tab} \& \ref{tab:H1-agree-contrasts} and Figure \ref{fig:H1-agree-fig}), grandparents in the LISS increased slightly in agreeableness in the years after the transition to grandparenthood as compared to the parent controls, \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.01, 0.03]\), \(p\) = .003. However, this effect was quite small and not significant when compared against the nonparent controls, or against either control sample in the HRS sample (suggestive evidence in the HRS nonparents: \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.01, 0.04]\), \(p\) = .006). The models including the gender interaction (see Tables \ref{tab:H1-agree-gender-tab} \& \ref{tab:H1-agree-gender-contrasts} and Figure \ref{fig:H1-agree-fig}) indicate that grandfathers' post-transition increases in agreeableness were more pronounced as compared to parent (LISS: \(\hat{\gamma}_{21} = 0.03\), 95\% CI \([0.01, 0.05]\), \(p\) \textless{} .001; HRS: \(\hat{\gamma}_{21} = 0.04\), 95\% CI \([0.01, 0.06]\), \(p\) = .003) and nonparent controls (HRS: \(\hat{\gamma}_{21} = 0.03\), 95\% CI \([0.01, 0.05]\), \(p\) = .004), whereas grandmothers did not differ from female controls.\\
+There is suggestive evidence for a moderation by paid work (see Tables \ref{tab:H1-agree-work-tab} \& \ref{tab:H1-agree-work-contrasts} and Figure \ref{fig:H1-agree-work-fig}): non-working grandparents increased more in agreeableness than working grandparents in anticipation of the transition to grandparenthood (difference in \emph{before} parameter; parents: {[}\(\hat{\gamma}_{30}\) + \(\hat{\gamma}_{31}\){]} = -0.07, 95\% CI {[}-0.12, -0.01{]}, \(p\) = .013; nonparents: {[}\(\hat{\gamma}_{30}\) + \(\hat{\gamma}_{31}\){]} = -0.07, 95\% CI {[}-0.12, -0.02{]}, \(p\) = .009). Grandparents providing substantial grandchild care increased in agreeableness after the transition to grandparenthood compared to matched nonparent controls (difference in \emph{after} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = 0.04, 95\% CI {[}0.01, 0.06{]}, \(p\) = .002; suggestive evidence in the parent sample: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = 0.04, 95\% CI {[}0.01, 0.06{]}, \(p\) = .006; see Tables \ref{tab:H1-agree-care-tab} \& \ref{tab:H1-agree-care-contrasts} and Figure \ref{fig:H1-agree-care-fig}). However, differences between caring and non-caring grandparents---as specified in hypothesis H1b---are not significant in either sample.
 
 \hypertarget{conscientiousness}{%
 \subsubsection{Conscientiousness}\label{conscientiousness}}
 
-For conscientiousness (see Tables \ref{tab:H1-con-tab} \& \ref{tab:H1-con-contrasts} and Figure \ref{fig:H1-con-fig}), there is evidence for a slight post-transition increase in the grandparents as compared to the controls in the HRS (parents: \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.01, 0.04]\), \(p\) = .002; nonparents: \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.01, 0.04]\), \(p\) = .003; suggestive evidence in the LISS parent sample: \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.00, 0.03]\), \(p\) = .006). Grandparents' conscientiousness trajectories were not significantly moderated by gender (see Tables \ref{tab:H1-con-gender-tab} \& \ref{tab:H1-con-gender-contrasts} and Figure \ref{fig:H1-con-fig}).\\
-However, there were significant differences depending on grandparents' work status (see Tables \ref{tab:H1-con-work-tab} \& \ref{tab:H1-con-work-contrasts} and Figure \ref{fig:H1-con-work-fig}): non-working grandparents saw more pronounced increases in conscientiousness in the years before the transition to grandparenthood compared to non-working parent, \(\hat{\gamma}_{11} = 0.08\), 95\% CI \([0.04, 0.13]\), \(p\) \textless{} .001, and nonparent controls, \(\hat{\gamma}_{11} = 0.07\), 95\% CI \([0.03, 0.12]\), \(p\) = .002, and compared to working grandparents (difference in \emph{before} parameter; parents: {[}\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\){]} = -0.08, 95\% CI {[}-0.13, -0.03{]}, \(p\) = .002; nonparents: {[}\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\){]} = -0.08, 95\% CI {[}-0.12, -0.03{]}, \(p\) = .001). There is suggestive evidence that grandparents who provided substantial grandchild care increased more strongly in conscientiousness after the transition compared to grandparents who did not (difference in \emph{after} parameter; parents: {[}\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\){]} = 0.03, 95\% CI {[}0.00, 0.06{]}, \(p\) = .034; nonparents: {[}\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\){]} = 0.03, 95\% CI {[}0.00, 0.06{]}, \(p\) = .022; see Tables \ref{tab:H1-con-care-tab} \& \ref{tab:H1-con-care-contrasts} and Figure \ref{fig:H1-con-care-fig}).
+We found a slight post-transition increase in grandparents' conscientiousness in comparison to the controls in the HRS (parents: \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.01, 0.04]\), \(p\) = .002; nonparents: \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.01, 0.04]\), \(p\) = .003; suggestive evidence in the LISS parent sample: \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.00, 0.03]\), \(p\) = .006; see Tables \ref{tab:H1-con-tab} \& \ref{tab:H1-con-contrasts} and Figure \ref{fig:H1-con-fig}). Grandparents' conscientiousness trajectories were not significantly moderated by gender (see Tables \ref{tab:H1-con-gender-tab} \& \ref{tab:H1-con-gender-contrasts} and Figure \ref{fig:H1-con-fig}).\\
+However, there were significant differences in conscientiousness depending on grandparents' work status (see Tables \ref{tab:H1-con-work-tab} \& \ref{tab:H1-con-work-contrasts} and Figure \ref{fig:H1-con-work-fig}): non-working grandparents saw more pronounced increases in conscientiousness in the years before the transition to grandparenthood compared to non-working parent, \(\hat{\gamma}_{21} = 0.08\), 95\% CI \([0.04, 0.13]\), \(p\) \textless{} .001, and nonparent controls, \(\hat{\gamma}_{21} = 0.07\), 95\% CI \([0.03, 0.12]\), \(p\) = .002, and compared to working grandparents (difference in \emph{before} parameter; parents: {[}\(\hat{\gamma}_{30}\) + \(\hat{\gamma}_{31}\){]} = -0.08, 95\% CI {[}-0.13, -0.03{]}, \(p\) = .002; nonparents: {[}\(\hat{\gamma}_{30}\) + \(\hat{\gamma}_{31}\){]} = -0.08, 95\% CI {[}-0.12, -0.03{]}, \(p\) = .001). There is suggestive evidence that grandparents who provided substantial grandchild care increased more strongly in conscientiousness after the transition compared to grandparents who did not (difference in \emph{after} parameter; parents: {[}\(\hat{\gamma}_{30}\) + \(\hat{\gamma}_{31}\){]} = 0.03, 95\% CI {[}0.00, 0.06{]}, \(p\) = .034; nonparents: {[}\(\hat{\gamma}_{30}\) + \(\hat{\gamma}_{31}\){]} = 0.03, 95\% CI {[}0.00, 0.06{]}, \(p\) = .022; see Tables \ref{tab:H1-con-care-tab} \& \ref{tab:H1-con-care-contrasts} and Figure \ref{fig:H1-con-care-fig}).
 
 \hypertarget{extraversion}{%
 \subsubsection{Extraversion}\label{extraversion}}
 
-The trajectories of grandparents' extraversion closely follow those of the matched controls. There are no significant effects indicating differences between grandparents and controls in the basic models (see Tables \ref{tab:H1-extra-tab} \& \ref{tab:H1-extra-contrasts} and Figure \ref{fig:H1-extra-fig}), the models including the gender interaction (see Tables \ref{tab:H1-extra-gender-tab} \& \ref{tab:H1-extra-gender-contrasts} and Figure \ref{fig:H1-extra-fig}), or the models of moderation by paid work (see Tables \ref{tab:H1-extra-work-tab} \& \ref{tab:H1-extra-work-contrasts} and Figure \ref{fig:H1-extra-work-fig}). In the analysis of moderation by grandchild care (see Tables \ref{tab:H1-extra-care-tab} \& \ref{tab:H1-extra-care-contrasts} and Figure \ref{fig:H1-extra-care-fig}) it can be seen that compared to matched parent controls caring grandparents increased slightly more strongly in extraversion after the transition to grandparenthood (difference in \emph{after} parameter: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.04, 95\% CI {[}0.02, 0.07{]}, \(p\) = .001; suggestive evidence in the nonparent sample: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.04, 95\% CI {[}0.01, 0.06{]}, \(p\) = .007).
+The trajectories of grandparents' extraversion closely followed those of the matched controls. There were no significant effects indicating differences between grandparents and controls in the basic models (see Tables \ref{tab:H1-extra-tab} \& \ref{tab:H1-extra-contrasts} and Figure \ref{fig:H1-extra-fig}), the models including the gender interaction (see Tables \ref{tab:H1-extra-gender-tab} \& \ref{tab:H1-extra-gender-contrasts} and Figure \ref{fig:H1-extra-fig}), or the models of moderation by paid work (see Tables \ref{tab:H1-extra-work-tab} \& \ref{tab:H1-extra-work-contrasts} and Figure \ref{fig:H1-extra-work-fig}). The only significant effect for extraversion is found in the analysis of moderation by grandchild care (see Tables \ref{tab:H1-extra-care-tab} \& \ref{tab:H1-extra-care-contrasts} and Figure \ref{fig:H1-extra-care-fig}): compared to matched parent controls grandparents providing substantial grandchild care increased slightly more strongly in extraversion after the transition to grandparenthood (difference in \emph{after} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = 0.04, 95\% CI {[}0.02, 0.07{]}, \(p\) = .001; suggestive evidence in the nonparent sample: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = 0.04, 95\% CI {[}0.01, 0.06{]}, \(p\) = .007).
 
 \hypertarget{neuroticism}{%
 \subsubsection{Neuroticism}\label{neuroticism}}
 
-The basic models for neuroticism (see Tables \ref{tab:H1-neur-tab} \& \ref{tab:H1-neur-contrasts} and Figure \ref{fig:H1-neur-fig}) only show minor differences between grandparents and matched controls. Compared to the parent controls, grandparents in the HRS shifted slightly downward in their neuroticism immediately after the transition to grandparenthood (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.08, 95\% CI {[}-0.12, -0.03{]}, \(p\) \textless{} .001). However, this was not the case in the three other samples (HRS nonparents, LISS parents, and LISS nonparents). Further, in the HRS there is suggestive evidence that grandparents increased in neuroticism before the transition to grandparenthood compared to the nonparent controls, \(\hat{\gamma}_{11} = 0.04\), 95\% CI \([0.01, 0.07]\), \(p\) = .016. The models including the gender interaction (see Tables \ref{tab:H1-neur-gender-tab} \& \ref{tab:H1-neur-gender-contrasts} and Figure \ref{fig:H1-neur-fig}) only show one significant effect in the comparison of grandparents and controls: In the HRS, grandfathers, as compared to male parent controls, shifted downwards in neuroticism in the year immediately after the transition to grandparenthood (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.16, 95\% CI {[}-0.22, -0.09{]}, \(p\) \textless{} .001; suggestive evidence in the nonparent sample: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.07, 95\% CI {[}-0.14, -0.01{]}, \(p\) = .024). There is also suggestive evidence that grandfathers in the HRS increased more strongly in neuroticism before the transition than the male controls (parent controls: \(\hat{\gamma}_{11} = 0.06\), 95\% CI \([0.01, 0.10]\), \(p\) = .024; nonparent controls: \(\hat{\gamma}_{11} = 0.06\), 95\% CI \([0.02, 0.11]\), \(p\) = .007). Thus, effects present in the basic models seem to be mostly due to differences in the grandfathers (vs.~male controls).\\
-Grandparents' trajectories of neuroticism as compared to the controls were significantly moderated by paid work (see Tables \ref{tab:H1-neur-work-tab} \& \ref{tab:H1-neur-work-contrasts} and Figure \ref{fig:H1-neur-work-fig}): Compared to working nonparent controls, working grandparents increased more strongly in neuroticism in the years before the transition to grandparenthood (difference in \emph{before} parameter: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.06, 95\% CI {[}0.03, 0.10{]}, \(p\) \textless{} .001; suggestive evidence in the parent sample: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.05, 95\% CI {[}0.01, 0.08{]}, \(p\) = .015). At the first post-transition assessment, working grandparents shifted downward in neuroticism compared to working parent controls (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\) + \(\hat{\gamma}_{23}\) + \(\hat{\gamma}_{33}\){]} = -0.08, 95\% CI {[}-0.14, -0.03{]}, \(p\) = .004; suggestive evidence in the nonparent sample: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\) + \(\hat{\gamma}_{23}\) + \(\hat{\gamma}_{33}\){]} = -0.06, 95\% CI {[}-0.11, 0.00{]}, \(p\) = .034). There is suggestive evidence that grandparents providing substantial grandchild care decreased more strongly in neuroticism after the transition to grandparenthood than grandparents who did not (difference in \emph{after} parameter; parents: {[}\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\){]} = -0.04, 95\% CI {[}-0.07, 0.00{]}, \(p\) = .044; nonparents: {[}\(\hat{\gamma}_{12}\) + \(\hat{\gamma}_{13}\){]} = -0.04, 95\% CI {[}-0.07, 0.00{]}, \(p\) = .048; see Tables \ref{tab:H1-neur-care-tab} \& \ref{tab:H1-neur-care-contrasts} and Figure \ref{fig:H1-neur-care-fig}).
+The basic models for neuroticism (see Tables \ref{tab:H1-neur-tab} \& \ref{tab:H1-neur-contrasts} and Figure \ref{fig:H1-neur-fig}) show only minor differences between grandparents and matched controls: Compared to the parent controls, grandparents in the HRS shifted slightly downward in their neuroticism immediately after the transition to grandparenthood (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.08, 95\% CI {[}-0.12, -0.03{]}, \(p\) \textless{} .001), which was not the case in the three other samples (HRS nonparents, LISS parents, and LISS nonparents). Further, in the HRS there is suggestive evidence that grandparents increased in neuroticism before the transition to grandparenthood compared to the nonparent controls, \(\hat{\gamma}_{11} = 0.04\), 95\% CI \([0.01, 0.07]\), \(p\) = .016. The models including the gender interaction (see Tables \ref{tab:H1-neur-gender-tab} \& \ref{tab:H1-neur-gender-contrasts} and Figure \ref{fig:H1-neur-fig}) show one significant effect in the comparison of grandparents and controls: In the HRS, grandfathers, as compared to male parent controls, shifted downward in neuroticism directly after the transition to grandparenthood (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.16, 95\% CI {[}-0.22, -0.09{]}, \(p\) \textless{} .001; suggestive evidence in the nonparent sample: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.07, 95\% CI {[}-0.14, -0.01{]}, \(p\) = .024). There is suggestive evidence that grandfathers in the HRS increased more strongly in neuroticism before the transition than the male controls (parent controls: \(\hat{\gamma}_{11} = 0.06\), 95\% CI \([0.01, 0.10]\), \(p\) = .024; nonparent controls: \(\hat{\gamma}_{11} = 0.06\), 95\% CI \([0.02, 0.11]\), \(p\) = .007). Thus, effects present in the basic models seem to be mostly due to differences in the grandfathers (vs.~male controls).\\
+Grandparents' trajectories of neuroticism as compared to the controls were significantly moderated by paid work (see Tables \ref{tab:H1-neur-work-tab} \& \ref{tab:H1-neur-work-contrasts} and Figure \ref{fig:H1-neur-work-fig}): Compared to working nonparent controls, working grandparents increased more strongly in neuroticism in the years before the transition to grandparenthood (difference in \emph{before} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = 0.06, 95\% CI {[}0.03, 0.10{]}, \(p\) \textless{} .001; suggestive evidence in the parent sample: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = 0.05, 95\% CI {[}0.01, 0.08{]}, \(p\) = .015). At the first post-transition assessment, working grandparents shifted downward in neuroticism compared to working parent controls (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{41}\) + \(\hat{\gamma}_{61}\) + \(\hat{\gamma}_{51}\) + \(\hat{\gamma}_{71}\){]} = -0.08, 95\% CI {[}-0.14, -0.03{]}, \(p\) = .004; suggestive evidence in the nonparent sample: {[}\(\hat{\gamma}_{41}\) + \(\hat{\gamma}_{61}\) + \(\hat{\gamma}_{51}\) + \(\hat{\gamma}_{71}\){]} = -0.06, 95\% CI {[}-0.11, 0.00{]}, \(p\) = .034). There is suggestive evidence that grandparents providing substantial grandchild care decreased more strongly in neuroticism after the transition to grandparenthood than grandparents who did not (difference in \emph{after} parameter; parents: {[}\(\hat{\gamma}_{30}\) + \(\hat{\gamma}_{31}\){]} = -0.04, 95\% CI {[}-0.07, 0.00{]}, \(p\) = .044; nonparents: {[}\(\hat{\gamma}_{30}\) + \(\hat{\gamma}_{31}\){]} = -0.04, 95\% CI {[}-0.07, 0.00{]}, \(p\) = .048; see Tables \ref{tab:H1-neur-care-tab} \& \ref{tab:H1-neur-care-contrasts} and Figure \ref{fig:H1-neur-care-fig}).
 
 \hypertarget{openness}{%
 \subsubsection{Openness}\label{openness}}
 
-For openness, there is also a high degree of similarity between the grandparents and the matched control subjects in their trajectories based on the basic models (see Tables \ref{tab:H1-open-tab} \& \ref{tab:H1-open-contrasts} and Figure \ref{fig:H1-open-fig}) and models including the gender interaction (see Tables \ref{tab:H1-open-gender-tab} \& \ref{tab:H1-open-gender-contrasts} and Figure \ref{fig:H1-open-fig}). Grandparents in the HRS shifted downwards in openness in the first assessment after the transition to grandparenthood compared to the parent controls (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.05, 95\% CI {[}-0.09, -0.02{]}, \(p\) = .004; suggestive evidence in the nonparent sample: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.04, 95\% CI {[}-0.07, 0.00{]}, \(p\) = .039). This effect is due to significant differences between grandfathers and male parent controls in the shift immediately after the transition (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.11, 95\% CI {[}-0.17, -0.06{]}, \(p\) \textless{} .001). There is suggestive evidence that grandmothers in the LISS increased more strongly in openness before the transition to grandparenthood than female controls (difference in \emph{before} parameter; parents: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.02, 95\% CI {[}0.00, 0.03{]}, \(p\) = .036; nonparents: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.02, 95\% CI {[}0.00, 0.04{]}, \(p\) = .009).\\
-Performing paid work moderated grandparents' trajectories in subtle ways (see Tables \ref{tab:H1-open-work-tab} \& \ref{tab:H1-open-work-contrasts} and Figure \ref{fig:H1-open-work-fig}): Non-working grandparents increased more strongly in openness post-transition than non-working controls (parents: \(\hat{\gamma}_{21} = 0.05\), 95\% CI \([0.02, 0.07]\), \(p\) \textless{} .001; nonparents: \(\hat{\gamma}_{21} = 0.04\), 95\% CI \([0.02, 0.06]\), \(p\) \textless{} .001). Further, there is suggestive evidence that openness of non-working grandparents shifted downwards directly after the transition compared to non-working controls (difference in \emph{shift} parameter; parents: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.09, 95\% CI {[}-0.15, -0.02{]}, \(p\) = .007; nonparents: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.07, 95\% CI {[}-0.13, -0.01{]}, \(p\) = .014). However, compared to non-working grandparents, working grandparents shifted upwards in openness directly after the transition (difference in \emph{shift} parameter; parents: {[}\(\hat{\gamma}_{22}\) + \(\hat{\gamma}_{32}\) + \(\hat{\gamma}_{23}\) + \(\hat{\gamma}_{33}\){]} = 0.08, 95\% CI {[}0.00, 0.15{]}, \(p\) = .038; nonparents: {[}\(\hat{\gamma}_{22}\) + \(\hat{\gamma}_{32}\) + \(\hat{\gamma}_{23}\) + \(\hat{\gamma}_{33}\){]} = 0.08, 95\% CI {[}0.01, 0.14{]}, \(p\) = .023) and decreased afterwards (difference in \emph{after} parameter; parents: {[}\(\hat{\gamma}_{22}\) + \(\hat{\gamma}_{23}\){]} = -0.04, 95\% CI {[}-0.07, -0.01{]}, \(p\) = .016; nonparents: {[}\(\hat{\gamma}_{22}\) + \(\hat{\gamma}_{23}\){]} = -0.04, 95\% CI {[}-0.07, -0.01{]}, \(p\) = .007). The analysis of moderation by grandchild care (see Tables \ref{tab:H1-open-care-tab} \& \ref{tab:H1-open-care-contrasts} and Figure \ref{fig:H1-open-care-fig}) reveals that grandparents providing substantial grandchild care increased more strongly in openness after the transition to grandparenthood than the matched nonparent controls (difference in \emph{after} parameter: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.04, 95\% CI {[}0.01, 0.06{]}, \(p\) = .002; suggestive evidence in the parent sample: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.04, 95\% CI {[}0.01, 0.07{]}, \(p\) = .005). At the same time, a look at the plotted trajectories demonstrates that the described moderation effects for openness were all quite small.
+For openness, we also found a high degree of similarity between the grandparents and the matched control subjects in their trajectories based on the basic models (see Tables \ref{tab:H1-open-tab} \& \ref{tab:H1-open-contrasts} and Figure \ref{fig:H1-open-fig}) and models including the gender interaction (see Tables \ref{tab:H1-open-gender-tab} \& \ref{tab:H1-open-gender-contrasts} and Figure \ref{fig:H1-open-fig}). Grandparents in the HRS shifted downward in openness in the first assessment after the transition to grandparenthood compared to the parent controls (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.05, 95\% CI {[}-0.09, -0.02{]}, \(p\) = .004; suggestive evidence in the nonparent sample: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.04, 95\% CI {[}-0.07, 0.00{]}, \(p\) = .039), which is due to significant differences between grandfathers and male parent controls (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.11, 95\% CI {[}-0.17, -0.06{]}, \(p\) \textless{} .001). There is suggestive evidence that grandmothers in the LISS increased more strongly in openness before the transition to grandparenthood than female controls (difference in \emph{before} parameter; parents: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.02, 95\% CI {[}0.00, 0.03{]}, \(p\) = .036; nonparents: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.02, 95\% CI {[}0.00, 0.04{]}, \(p\) = .009).\\
+Performing paid work moderated grandparents' trajectories in subtle ways (see Tables \ref{tab:H1-open-work-tab} \& \ref{tab:H1-open-work-contrasts} and Figure \ref{fig:H1-open-work-fig}): Non-working grandparents increased more strongly in openness post-transition than non-working controls (parents: \(\hat{\gamma}_{41} = 0.05\), 95\% CI \([0.02, 0.07]\), \(p\) \textless{} .001; nonparents: \(\hat{\gamma}_{41} = 0.04\), 95\% CI \([0.02, 0.06]\), \(p\) \textless{} .001). Further, there is suggestive evidence that openness of non-working grandparents shifted downward directly after the transition compared to non-working controls (difference in \emph{shift} parameter; parents: {[}\(\hat{\gamma}_{41}\) + \(\hat{\gamma}_{61}\){]} = -0.09, 95\% CI {[}-0.15, -0.02{]}, \(p\) = .007; nonparents: {[}\(\hat{\gamma}_{41}\) + \(\hat{\gamma}_{61}\){]} = -0.07, 95\% CI {[}-0.13, -0.01{]}, \(p\) = .014). However, compared to non-working grandparents, working grandparents shifted upward in openness directly after the transition (suggestive evidence for difference in \emph{shift} parameter; parents: {[}\(\hat{\gamma}_{50}\) + \(\hat{\gamma}_{70}\) + \(\hat{\gamma}_{51}\) + \(\hat{\gamma}_{71}\){]} = 0.08, 95\% CI {[}0.00, 0.15{]}, \(p\) = .038; nonparents: {[}\(\hat{\gamma}_{50}\) + \(\hat{\gamma}_{70}\) + \(\hat{\gamma}_{51}\) + \(\hat{\gamma}_{71}\){]} = 0.08, 95\% CI {[}0.01, 0.14{]}, \(p\) = .023) and decreased afterwards (suggestive evidence for difference in \emph{after} parameter; parents: {[}\(\hat{\gamma}_{50}\) + \(\hat{\gamma}_{51}\){]} = -0.04, 95\% CI {[}-0.07, -0.01{]}, \(p\) = .016; nonparents: {[}\(\hat{\gamma}_{50}\) + \(\hat{\gamma}_{51}\){]} = -0.04, 95\% CI {[}-0.07, -0.01{]}, \(p\) = .007). The analysis of moderation by grandchild care (see Tables \ref{tab:H1-open-care-tab} \& \ref{tab:H1-open-care-contrasts} and Figure \ref{fig:H1-open-care-fig}) reveals that grandparents providing substantial grandchild care increased more strongly in openness after the transition to grandparenthood than the matched nonparent controls (difference in \emph{after} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = 0.04, 95\% CI {[}0.01, 0.06{]}, \(p\) = .002; suggestive evidence in the parent sample: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = 0.04, 95\% CI {[}0.01, 0.07{]}, \(p\) = .005). At the same time, the plotted trajectories demonstrate that the described moderation effects for openness were all quite small.
 
 \hypertarget{life-satisfaction-1}{%
 \subsubsection{Life Satisfaction}\label{life-satisfaction-1}}
 
-The basic model for life satisfaction (see Tables \ref{tab:H1-swls-tab} \& \ref{tab:H1-swls-contrasts} and Figure \ref{fig:H1-swls-fig}) provides suggestive evidence that grandparents in the HRS increased more strongly in their life satisfaction before the transition to grandparenthood than matched parent controls, \(\hat{\gamma}_{11} = 0.12\), 95\% CI \([0.03, 0.21]\), \(p\) = .010. Grandparents in the LISS increased more strongly in life satisfaction directly after the transition compared to the nonparent controls (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = 0.18, 95\% CI {[}0.06, 0.30{]}, \(p\) = .004). There is evidence in the models including the gender interaction (see Tables \ref{tab:H1-swls-gender-tab} \& \ref{tab:H1-swls-gender-contrasts} and Figure \ref{fig:H1-swls-fig}) that grandmothers in the LISS increased more strongly in life satisfaction directly post-transition than female nonparent controls (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\) + \(\hat{\gamma}_{23}\) + \(\hat{\gamma}_{33}\){]} = 0.24, 95\% CI {[}0.08, 0.41{]}, \(p\) = .004). Further, grandmothers in the HRS increased in life satisfaction before the transition to grandparenthood compared to female parent controls (difference in \emph{before} parameter: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.21, 95\% CI {[}0.09, 0.33{]}, \(p\) \textless{} .001).\\
-The models of the moderation by paid work give suggestive evidence that working grandparents increased in life satisfaction before the transition to grandparenthood compared to working parent controls (difference in \emph{before} parameter: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.11, 95\% CI {[}0.00, 0.21{]}, \(p\) = .047; see Tables \ref{tab:H1-swls-work-tab} \& \ref{tab:H1-swls-work-contrasts} and Figure \ref{fig:H1-swls-work-fig}). There is no evidence for a moderation by grandchild care (see Tables \ref{tab:H1-swls-care-tab} \& \ref{tab:H1-swls-care-contrasts} and Figure \ref{fig:H1-swls-care-fig}).
+The basic models for life satisfaction (see Tables \ref{tab:H1-swls-tab} \& \ref{tab:H1-swls-contrasts} and Figure \ref{fig:H1-swls-fig}) show that grandparents in the LISS increased more strongly in life satisfaction directly following the transition compared to nonparent controls (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = 0.18, 95\% CI {[}0.06, 0.30{]}, \(p\) = .004). In the HRS, there is suggestive evidence that grandparents increased more strongly in life satisfaction before the transition to grandparenthood than matched parent controls, \(\hat{\gamma}_{11} = 0.12\), 95\% CI \([0.03, 0.21]\), \(p\) = .010. There is evidence in the models including the gender interaction (see Tables \ref{tab:H1-swls-gender-tab} \& \ref{tab:H1-swls-gender-contrasts} and Figure \ref{fig:H1-swls-fig}) that these differences were due to grandmothers, who increased more strongly in life satisfaction directly following the transition to grandparenthood than female nonparent controls in the LISS (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\) + \(\hat{\gamma}_{23}\) + \(\hat{\gamma}_{33}\){]} = 0.24, 95\% CI {[}0.08, 0.41{]}, \(p\) = .004) and increased more strongly before the transition to grandparenthood compared to female parent controls in the HRS (difference in \emph{before} parameter: {[}\(\hat{\gamma}_{11}\) + \(\hat{\gamma}_{13}\){]} = 0.21, 95\% CI {[}0.09, 0.33{]}, \(p\) \textless{} .001).\\
+The models of moderation by paid work give suggestive evidence that working grandparents increased in life satisfaction before the transition to grandparenthood compared to working parent controls (difference in \emph{before} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = 0.11, 95\% CI {[}0.00, 0.21{]}, \(p\) = .047; see Tables \ref{tab:H1-swls-work-tab} \& \ref{tab:H1-swls-work-contrasts} and Figure \ref{fig:H1-swls-work-fig}). There is no evidence for a moderation by grandchild care (see Tables \ref{tab:H1-swls-care-tab} \& \ref{tab:H1-swls-care-contrasts} and Figure \ref{fig:H1-swls-care-fig}).
 
 \hypertarget{interindividual-differences-in-change}{%
 \subsection{Interindividual Differences in Change}\label{interindividual-differences-in-change}}
@@ -367,29 +369,42 @@ First, we conducted comparisons of model fit between the random-intercept models
 Second, we estimated models with heterogeneous random slope variances between the grandparents and each control group in order to test whether interindividual differences in change were significantly larger in the grandparents. Contrary to hypothesis H2, for agreeableness, conscientiousness, and extraversion, interindividual differences in intraindividual change were greater in the control group for all tested effects (see Tables \ref{tab:H2-hetvar-tab-agree}, \ref{tab:H2-hetvar-tab-con}, \& \ref{tab:H2-hetvar-tab-extra}). In the two HRS samples, assuming group heterogeneity in the random slope variances lead to significant improvements in model fit in all model comparisons. In the two LISS samples, this was the case for around half the tests.\\
 Interindividual differences in changes in neuroticism before the transition to grandparenthood were significantly greater in the HRS grandparents than the nonparent controls (random slope variance of the \emph{before} parameter), \emph{likelihood ratio} = 73.45, \(p\) \textless{} .001. However, this was not the case in the comparison of grandparents with parent controls in the HRS or either control group in the LISS (see Table \ref{tab:H2-hetvar-tab-neur}). The other parameters of change in neuroticism did not differ significantly between groups in their random slope variances or---in the HRS---displayed significantly larger random slope variances in the respective control group.\\
 For openness, interindividual differences in changes before the transition to grandparenthood were significantly greater in the LISS grandparents than the nonparent controls (random slope variance of the \emph{before} parameter), \emph{likelihood ratio} = 25.90, \(p\) \textless{} .001. Again, this result could not be replicated in the other three samples, and the other parameters of change did either not differ between groups in their random slope variances or had significantly larger random slope variances in the respective control group (see Table \ref{tab:H2-hetvar-tab-open}).\\
-We found partial evidence for larger interindividual differences in grandparents' changes in life satisfaction (see Table \ref{tab:H2-hetvar-tab-swls}): In the LISS, grandparents' changes before the transition to grandparenthood varied to a larger extent interindividually compared to the parent controls (random slope variance of the \emph{before} parameter), \emph{likelihood ratio} = 41.47, \(p\) \textless{} .001, and in the HRS compared to the nonparent controls, \emph{likelihood ratio} = 111.97, \(p\) \textless{} .001. We found suggestive evidence for larger interindividual differences in grandparents' linear post-transition changes compared to the parent controls (random slope variance of the \emph{after} parameter), \emph{likelihood ratio} = 11.74, \(p\) = .008, and in sudden shifts directly after the transition was first reported (random slope variance of the \emph{shift} parameter), \emph{likelihood ratio} = 10.00, \(p\) = .019. Still, the majority of tests for heterogeneous random slope variance in life satisfaction indicated either non-significant differences or significantly larger random slope variances in the control sample.
+We found partial evidence for larger interindividual differences in grandparents' changes in life satisfaction (see Table \ref{tab:H2-hetvar-tab-swls}): In the LISS, grandparents' changes before the transition to grandparenthood varied interindividually to a larger extent compared to the parent controls (random slope variance of the \emph{before} parameter), \emph{likelihood ratio} = 41.47, \(p\) \textless{} .001, and in the HRS compared to the nonparent controls, \emph{likelihood ratio} = 111.97, \(p\) \textless{} .001. We found suggestive evidence for larger interindividual differences in grandparents' linear post-transition changes compared to the parent controls (random slope variance of the \emph{after} parameter), \emph{likelihood ratio} = 11.74, \(p\) = .008, and in sudden shifts directly after the transition was first reported (random slope variance of the \emph{shift} parameter), \emph{likelihood ratio} = 10.00, \(p\) = .019. Still, the majority of tests for heterogeneous random slope variance in life satisfaction indicated either non-significant differences or significantly larger random slope variances in the control sample.
 
 \hypertarget{rank-order-stability}{%
 \subsection{Rank-Order Stability}\label{rank-order-stability}}
 
-As indicators of rank-order stability, we computed test-retest correlations for the Big Five and life satisfaction for the matched sample, as well as separately for grandparents only and controls only (see Table \ref{tab:H3-rankorder-tab}). In 6 out of 24 comparisons grandparents' test-retest correlation was lower than that of the respective control group. However, differences in rank-order stability between the grandparents and control participants did not reach significance in any of these comparisons.\\
-We found suggestive evidence that rank-order stability in the HRS was higher in the grandparents for extraversion than in either parent, \(p\) = .007, or nonparent controls, \(p\) = .029, and that for openness it was larger in the grandparents than in the parent controls, \(p\) = .015. In the LISS, there was suggestive evidence that grandparents' rank-order stability in agreeableness was higher than that of the nonparent controls, \(p\) = .009. Overall, we found no evidence in support of hypothesis H3.\footnote{In addition to the preregistered retest interval, we have also computed a maximally large retest interval between the first available pre-transition assessment and the last available post-transition assessment within the observation period. Here, 5 out of 24 comparisons indicated that rank-order stability was lower in the grandparents, and we found one significant difference in rank-order stability in accordance with our hypothesis: in the HRS, grandparents' rank-order stability in openness was lower than that of the nonparents, \(p\) = .038 (see Table \ref{tab:H3-rankordermax-tab}). In another analysis, we followed the preregistered approach but excluded any duplicate control participants resulting from matching with replacement who might bias results towards greater stability in the controls: 14 out of 24 comparisons showed lower rank-order stability in the grandparents compared to either control group (see Table \ref{tab:H3-rankorderuni-tab}). However, differences between the groups were nonsignificant throughout.}
+As indicators of rank-order stability, we computed test-retest correlations for the Big Five and life satisfaction for the matched sample, as well as separately for grandparents only and controls only (see Table \ref{tab:H3-rankorder-tab}). In 6 out of 24 comparisons grandparents' test-retest correlation was lower than that of the respective control group. However, differences in rank-order stability between the grandparents and control participants did not reach significance in any of these comparisons. We found suggestive evidence that rank-order stability in the HRS was higher in the grandparents for extraversion than in either parent, \(p\) = .007, or nonparent controls, \(p\) = .029, and that for openness it was larger in the grandparents than in the parent controls, \(p\) = .015. In the LISS, there was suggestive evidence that grandparents' rank-order stability in agreeableness was higher than that of the nonparent controls, \(p\) = .009.\\
+Overall, we found no confirmatory evidence in support of hypothesis H3.\footnote{In addition to the preregistered retest interval, we have also computed a maximally large retest interval between the first available pre-transition assessment and the last available post-transition assessment within the observation period. Here, 5 out of 24 comparisons indicated that rank-order stability was lower in the grandparents, and we found one significant difference in rank-order stability in accordance with our hypothesis: in the HRS, grandparents' rank-order stability in openness was lower than that of the nonparents, \(p\) \textless{} .001 (see Table \ref{tab:H3-rankordermax-tab}). In another analysis, we followed the preregistered approach but excluded any duplicate control participants resulting from matching with replacement who might bias results towards greater stability in the controls: 14 out of 24 comparisons showed lower rank-order stability in the grandparents compared to either control group (see Table \ref{tab:H3-rankorderuni-tab}). However, differences between the groups were nonsignificant throughout.}
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
 
-In an analysis of first-time grandparents in comparison with both parent and nonparent matched control subjects we found pronounced stability in the Big Five and life satisfaction over the transition to grandparenthood. There were a few isolated effects in line with our hypotheses on mean-level change (H1), however, they were too small in size to be practically meaningful and also not consistent over the two analyzed samples---LISS and HRS. We did not find convincing evidence of a moderation of the mean-level trajectories by either paid work or grandchild care. Although interindividual differences in change were present for all parameters, they were only greater in the grandparents in a stark minority of conducted model comparisons (H2). Lastly, rank-order stability did mostly not differ between grandparents and either controls group, or was larger in the control group---contrary to expectations (H3).
+In an analysis of first-time grandparents in comparison with both parent and nonparent matched control subjects we found pronounced stability in the Big Five and life satisfaction over the transition to grandparenthood. Although there were a few isolated effects in line with our hypotheses on mean-level changes (H1), they were too small in size to be practically meaningful and also not consistent over the two analyzed panel studies---LISS and HRS. We found partial evidence for moderation of the mean-level trajectories of conscientiousness, neuroticism, and openness by performing paid work, and of extraversion and openness by providing substantial grandchild care (contrary to H1b). While interindividual differences in change were present for all parameters of change, they were only greater in the grandparents in a stark minority of conducted model comparisons (H2). Lastly, rank-order stability did not differ between grandparents and either controls group, or was larger in the control group---contrary to expectations (H3).
+
+\hypertarget{social-investment-principle}{%
+\subsection{Social Investment Principle}\label{social-investment-principle}}
+
+We conducted a robust, multi-comparison, and cross-study test of the social investment principle (Lodi-Smith \& Roberts, 2007; Roberts \& Wood, 2006) in middle adulthood and old age where the transition to grandparenthood has been put forward as an important developmental task driving lifespan personality development of the Big Five (Hutteman et al., 2014). Across all analyzed traits, we found \ldots{} . In total, evidence in favor of the social investment principle is thin. This is in line with other recent tests of the principle in the context of parenthood and ?? (Asselmann \& Specht, 2020; van Scheppingen et al., 2016). asselmann -\textgreater{} romantic??
+
+Big Five
+Social investment / grandparent role / role conflict
+- average -\textgreater{} not enough investment -\textgreater{} sub-group analysis in larger dataset (not enough waves of pers?)
+
+LS
+In contrast to earlier research
+
+\hypertarget{interindividual-differences-in-change-1}{%
+\subsection{Interindividual Differences in Change}\label{interindividual-differences-in-change-1}}
+
+\hypertarget{rank-order-stability-1}{%
+\subsection{Rank-Order Stability}\label{rank-order-stability-1}}
 
 meaningfulness of small effects in psychology (citation?)
 
 agreeableness: compare with literature on generativity (Erikson)
 
 strength: internal cross-study replication
-
-Big Five
-Social investment / grandparent role / role conflict
-LS
-In contrast to earlier research
 
 Further avenues / follow-ups (?)\\
 - personality maturation cross-culturally: (Bleidorn et al., 2013; Chopik \& Kitayama, 2018)\\
@@ -943,6 +958,74 @@ Yap, S., Anusic, I., \& Lucas, R. E. (2012). Does personality moderate reaction 
 \renewcommand{\thetable}{S\arabic{table}} \setcounter{table}{0}
 
 \setcounter{page}{1}
+
+\noindent \textbf{Model Equations}
+
+Model equation for the basic models (ignoring the additional nesting in
+households applied to the majority of models): \begin{equation}
+\begin{split}
+y_{ti} =& \beta_{0i} + \beta_{1i}before_{ti} + \beta_{2i}after_{ti} + \beta_{3i}shift_{ti} + e_{ti} \\
+& \beta_{0i} = \gamma_{00} + \gamma_{01}grandparent_i + \gamma_{02}pscore_i + \upsilon_{0i} \\
+& \beta_{1i} = \gamma_{10} + \gamma_{11}grandparent_i \\
+& \beta_{2i} = \gamma_{20} + \gamma_{21}grandparent_i \\
+& \beta_{3i} = \gamma_{30} + \gamma_{31}grandparent_i\ ,
+\end{split}
+\label{eq:mlm1}
+\end{equation} where at time \(t\) for person \(i\)
+\(e_{ti} \sim N(0, \sigma_e^2)\) and
+\(\upsilon_{0i} \sim N(0, \tau_{00})\). \(y_{ti}\) represented either
+one of the Big Five or life satisfaction. Separate models were computed
+for LISS and HRS samples, and for parent and nonparent matched
+controls.\\
+Model equation for the models including the gender interaction
+(moderator variable \(female_i\)): \begin{equation}
+\begin{split}
+y_{ti} =& \beta_{0i} + \beta_{1i}before_{ti} + \beta_{2i}after_{ti} + \beta_{3i}shift_{ti} + e_{ti} \\
+& \beta_{0i} = \gamma_{00} + \gamma_{01}grandparent_i + \gamma_{02}female_i + \gamma_{03}grandparent_{i}female_{i} \\
+& \hphantom{{}=\beta_{0i}}+ \gamma_{04}pscore_i + \upsilon_{0i} \\
+& \beta_{1i} = \gamma_{10} + \gamma_{11}grandparent_i + \gamma_{12}female_i + \gamma_{13}grandparent_{i}female_{i} \\
+& \beta_{2i} = \gamma_{20} + \gamma_{21}grandparent_i + \gamma_{22}female_i + \gamma_{23}grandparent_{i}female_{i} \\
+& \beta_{3i} = \gamma_{30} + \gamma_{31}grandparent_i + \gamma_{32}female_i + \gamma_{33}grandparent_{i}female_{i}\ ,
+\end{split}
+\label{eq:mlm2}
+\end{equation} where \(e_{ti} \sim N(0, \sigma_e^2)\) and
+\(\upsilon_{0i} \sim N(0, \tau_{00})\). Again, we estimated separate
+models for each sample (LISS, HRS) and each comparison group (parents,
+nonparents).\\
+Model equation for the models including the interaction by paid work
+(moderator variable \(working_{ti}\)): \begin{equation}
+\begin{split}
+y_{ti} =& \beta_{0i} + \beta_{1i}working_{ti} + \beta_{2i}before_{ti} + \beta_{3i}before_{ti}working_{ti} + \beta_{4i}after_{ti} \\
+& + \beta_{5i}after_{ti}working_{ti} + \beta_{6i}shift_{ti} + \beta_{7i}shift_{ti}working_{ti} + e_{ti} \\
+& \beta_{0i} = \gamma_{00} + \gamma_{01}grandparent_i + \gamma_{02}pscore_i + \upsilon_{0i} \\
+& \beta_{1i} = \gamma_{10} + \gamma_{11}grandparent_i \\
+& \beta_{2i} = \gamma_{20} + \gamma_{21}grandparent_i \\
+& \beta_{3i} = \gamma_{30} + \gamma_{31}grandparent_i \\
+& \beta_{4i} = \gamma_{40} + \gamma_{41}grandparent_i \\
+& \beta_{5i} = \gamma_{50} + \gamma_{51}grandparent_i \\
+& \beta_{6i} = \gamma_{60} + \gamma_{61}grandparent_i \\
+& \beta_{7i} = \gamma_{70} + \gamma_{71}grandparent_i\ ,
+\end{split}
+\label{eq:mlm3}
+\end{equation} where \(e_{ti} \sim N(0, \sigma_e^2)\) and
+\(\upsilon_{0i} \sim N(0, \tau_{00})\). We estimated separate models for
+each comparison group (parents, nonparents) in the HRS.\\
+Model equation for the models including the interaction by grandchild
+care (moderator variable \(caring_{ti}\)): \begin{equation}
+\begin{split}
+y_{ti} =& \beta_{0i} + \beta_{1i}caring_{ti} + \beta_{2i}after_{ti} + \beta_{3i}after_{ti}caring_{ti} + e_{ti} \\
+& \beta_{0i} = \gamma_{00} + \gamma_{01}grandparent_i + \gamma_{02}pscore_i + \upsilon_{0i} \\
+& \beta_{1i} = \gamma_{10} + \gamma_{11}grandparent_i \\
+& \beta_{2i} = \gamma_{20} + \gamma_{21}grandparent_i \\
+& \beta_{3i} = \gamma_{30} + \gamma_{31}grandparent_i\ ,
+\end{split}
+\label{eq:mlm4}
+\end{equation} where \(e_{ti} \sim N(0, \sigma_e^2)\) and
+\(\upsilon_{0i} \sim N(0, \tau_{00})\). Restricted to the HRS
+post-transition period, we estimated separate models for each comparison
+group (parents, nonparents).
+
+\newpage
 
 \noindent \textbf{Supplemental Tables}
 
@@ -1757,22 +1840,22 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 \midrule
 \endhead
 Intercept, $\hat{\gamma}_{00}$ & 3.50 & [3.45, 3.54] & 157.26 & < .001 & 3.48 & [3.43, 3.52] & 138.40 & < .001\\
-Propensity score, $\hat{\gamma}_{04}$ & 0.09 & [0.03, 0.15] & 2.93 & .003 & 0.04 & [-0.03, 0.10] & 1.14 & .253\\
-Before-slope, $\hat{\gamma}_{10}$ & 0.01 & [-0.01, 0.03] & 0.91 & .363 & 0.00 & [-0.02, 0.02] & -0.23 & .819\\
-After-slope, $\hat{\gamma}_{20}$ & -0.02 & [-0.03, -0.01] & -4.07 & < .001 & -0.03 & [-0.04, -0.02] & -5.38 & < .001\\
-Shift, $\hat{\gamma}_{30}$ & -0.01 & [-0.04, 0.02] & -0.53 & .594 & 0.07 & [0.03, 0.10] & 3.93 & < .001\\
+Propensity score, $\hat{\gamma}_{02}$ & 0.09 & [0.03, 0.15] & 2.93 & .003 & 0.04 & [-0.03, 0.10] & 1.14 & .253\\
+Before-slope, $\hat{\gamma}_{20}$ & 0.01 & [-0.01, 0.03] & 0.91 & .363 & 0.00 & [-0.02, 0.02] & -0.23 & .819\\
+After-slope, $\hat{\gamma}_{40}$ & -0.02 & [-0.03, -0.01] & -4.07 & < .001 & -0.03 & [-0.04, -0.02] & -5.38 & < .001\\
+Shift, $\hat{\gamma}_{60}$ & -0.01 & [-0.04, 0.02] & -0.53 & .594 & 0.07 & [0.03, 0.10] & 3.93 & < .001\\
 Grandparent, $\hat{\gamma}_{01}$ & -0.11 & [-0.20, -0.02] & -2.33 & .020 & -0.07 & [-0.16, 0.02] & -1.49 & .137\\
-Working, $\hat{\gamma}_{02}$ & -0.06 & [-0.10, -0.02] & -2.77 & .006 & 0.01 & [-0.03, 0.05] & 0.61 & .540\\
-Before-slope * Grandparent, $\hat{\gamma}_{11}$ & 0.04 & [-0.01, 0.09] & 1.55 & .121 & 0.05 & [0.00, 0.10] & 2.09 & .037\\
-After-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.02 & [0.00, 0.05] & 1.96 & .050 & 0.03 & [0.01, 0.05] & 2.68 & .007\\
-Shift * Grandparent, $\hat{\gamma}_{31}$ & 0.00 & [-0.08, 0.07] & -0.07 & .947 & -0.08 & [-0.15, -0.01] & -2.17 & .030\\
-Before-slope * Working, $\hat{\gamma}_{12}$ & 0.00 & [-0.03, 0.02] & -0.30 & .767 & 0.00 & [-0.03, 0.02] & -0.37 & .712\\
-After-slope * Working, $\hat{\gamma}_{22}$ & 0.02 & [0.01, 0.04] & 2.87 & .004 & 0.02 & [0.01, 0.03] & 2.83 & .005\\
-Shift * Working, $\hat{\gamma}_{32}$ & 0.02 & [-0.03, 0.06] & 0.77 & .441 & -0.04 & [-0.08, 0.00] & -1.87 & .061\\
-Grandparent * Working, $\hat{\gamma}_{03}$ & 0.18 & [0.08, 0.28] & 3.68 & < .001 & 0.11 & [0.02, 0.20] & 2.40 & .017\\
-Before-slope * Grandparent * Working, $\hat{\gamma}_{13}$ & -0.06 & [-0.12, -0.01] & -2.15 & .032 & -0.06 & [-0.12, -0.01] & -2.22 & .026\\
-After-slope * Grandparent * Working, $\hat{\gamma}_{23}$ & -0.02 & [-0.05, 0.02] & -0.97 & .333 & -0.01 & [-0.05, 0.02] & -0.94 & .347\\
-Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & -0.01 & [-0.10, 0.09] & -0.11 & .914 & 0.05 & [-0.04, 0.14] & 1.08 & .282\\
+Working, $\hat{\gamma}_{10}$ & -0.06 & [-0.10, -0.02] & -2.77 & .006 & 0.01 & [-0.03, 0.05] & 0.61 & .540\\
+Before-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.04 & [-0.01, 0.09] & 1.55 & .121 & 0.05 & [0.00, 0.10] & 2.09 & .037\\
+After-slope * Grandparent, $\hat{\gamma}_{41}$ & 0.02 & [0.00, 0.05] & 1.96 & .050 & 0.03 & [0.01, 0.05] & 2.68 & .007\\
+Shift * Grandparent, $\hat{\gamma}_{61}$ & 0.00 & [-0.08, 0.07] & -0.07 & .947 & -0.08 & [-0.15, -0.01] & -2.17 & .030\\
+Before-slope * Working, $\hat{\gamma}_{30}$ & 0.00 & [-0.03, 0.02] & -0.30 & .767 & 0.00 & [-0.03, 0.02] & -0.37 & .712\\
+After-slope * Working, $\hat{\gamma}_{50}$ & 0.02 & [0.01, 0.04] & 2.87 & .004 & 0.02 & [0.01, 0.03] & 2.83 & .005\\
+Shift * Working, $\hat{\gamma}_{70}$ & 0.02 & [-0.03, 0.06] & 0.77 & .441 & -0.04 & [-0.08, 0.00] & -1.87 & .061\\
+Grandparent * Working, $\hat{\gamma}_{11}$ & 0.18 & [0.08, 0.28] & 3.68 & < .001 & 0.11 & [0.02, 0.20] & 2.40 & .017\\
+Before-slope * Grandparent * Working, $\hat{\gamma}_{31}$ & -0.06 & [-0.12, -0.01] & -2.15 & .032 & -0.06 & [-0.12, -0.01] & -2.22 & .026\\
+After-slope * Grandparent * Working, $\hat{\gamma}_{51}$ & -0.02 & [-0.05, 0.02] & -0.97 & .333 & -0.01 & [-0.05, 0.02] & -0.94 & .347\\
+Shift * Grandparent * Working, $\hat{\gamma}_{71}$ & -0.01 & [-0.10, 0.09] & -0.11 & .914 & 0.05 & [-0.04, 0.14] & 1.08 & .282\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -1815,37 +1898,37 @@ Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\c
 Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
-Shift of not-working controls vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$) & -0.03 & 5.08 & .024 & 0.04 & 7.79 & .005\\
-Shift of working controls vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
-$\hat{\gamma}_{32}$) & 0.01 & 0.52 & .472 & 0.02 & 3.86 & .049\\
-Shift of not-working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
-$\hat{\gamma}_{31}$) & -0.01 & 0.14 & .713 & -0.01 & 0.15 & .699\\
-Shift of working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
-$\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
-$\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
-$\hat{\gamma}_{33}$) & 0.01 & 0.10 & .755 & 0.01 & 0.09 & .768\\
+Shift of not-working controls vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$) & -0.03 & 5.08 & .024 & 0.04 & 7.79 & .005\\
+Shift of working controls vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$ + $\hat{\gamma}_{50}$ + 
+$\hat{\gamma}_{70}$) & 0.01 & 0.52 & .472 & 0.02 & 3.86 & .049\\
+Shift of not-working grandparents vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$ + $\hat{\gamma}_{41}$ + 
+$\hat{\gamma}_{61}$) & -0.01 & 0.14 & .713 & -0.01 & 0.15 & .699\\
+Shift of working grandparents vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$ + $\hat{\gamma}_{41}$ + 
+$\hat{\gamma}_{61}$ + $\hat{\gamma}_{50}$ + 
+$\hat{\gamma}_{70}$ + $\hat{\gamma}_{51}$ +
+$\hat{\gamma}_{71}$) & 0.01 & 0.10 & .755 & 0.01 & 0.09 & .768\\
 Shift of not-working controls vs. not-working grandparents 
-($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & 0.02 & 0.44 & .505 & -0.05 & 2.76 & .097\\
+($\hat{\gamma}_{41}$ + $\hat{\gamma}_{61}$) & 0.02 & 0.44 & .505 & -0.05 & 2.76 & .097\\
 Before-slope of working controls vs. working grandparents 
-($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & -0.02 & 2.73 & .099 & -0.01 & 0.76 & .383\\
+($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & -0.02 & 2.73 & .099 & -0.01 & 0.76 & .383\\
 After-slope of working controls vs. working grandparents 
-($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) & 0.01 & 0.36 & .548 & 0.02 & 2.00 & .157\\
+($\hat{\gamma}_{41}$ + $\hat{\gamma}_{51}$) & 0.01 & 0.36 & .548 & 0.02 & 2.00 & .157\\
 Shift of working controls vs. working grandparents 
-($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
-$\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & 0.00 & 0.00 & .966 & -0.01 & 0.35 & .553\\
+($\hat{\gamma}_{41}$ + $\hat{\gamma}_{61}$ + 
+$\hat{\gamma}_{51}$ + $\hat{\gamma}_{71}$) & 0.00 & 0.00 & .966 & -0.01 & 0.35 & .553\\
 Shift of not-working controls vs. working controls 
-($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) & 0.04 & 4.89 & .027 & -0.02 & 1.43 & .232\\
+($\hat{\gamma}_{50}$ + $\hat{\gamma}_{70}$) & 0.04 & 4.89 & .027 & -0.02 & 1.43 & .232\\
 Before-slope of not-working grandparents vs. working grandparents 
-($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & -0.07 & 6.12 & .013 & -0.07 & 6.87 & .009\\
+($\hat{\gamma}_{30}$ + $\hat{\gamma}_{31}$) & -0.07 & 6.12 & .013 & -0.07 & 6.87 & .009\\
 After-slope of not-working grandparents vs. working grandparents 
-($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) & 0.01 & 0.12 & .734 & 0.01 & 0.13 & .714\\
+($\hat{\gamma}_{50}$ + $\hat{\gamma}_{51}$) & 0.01 & 0.12 & .734 & 0.01 & 0.13 & .714\\
 Shift of not-working grandparents vs. working grandparents 
-($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
-$\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & 0.02 & 0.22 & .637 & 0.02 & 0.23 & .633\\
+($\hat{\gamma}_{50}$ + $\hat{\gamma}_{70}$ + 
+$\hat{\gamma}_{51}$ + $\hat{\gamma}_{71}$) & 0.02 & 0.22 & .637 & 0.02 & 0.23 & .633\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -1890,14 +1973,14 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 \midrule
 \endhead
 Intercept, $\hat{\gamma}_{00}$ & 3.47 & [3.43, 3.52] & 155.84 & < .001 & 3.47 & [3.42, 3.53] & 130.92 & < .001\\
-Propensity score, $\hat{\gamma}_{04}$ & 0.16 & [0.08, 0.24] & 3.91 & < .001 & 0.15 & [0.07, 0.23] & 3.67 & < .001\\
-After-slope, $\hat{\gamma}_{10}$ & -0.02 & [-0.03, -0.01] & -4.36 & < .001 & -0.02 & [-0.03, -0.01] & -3.63 & < .001\\
+Propensity score, $\hat{\gamma}_{02}$ & 0.16 & [0.08, 0.24] & 3.91 & < .001 & 0.15 & [0.07, 0.23] & 3.67 & < .001\\
+After-slope, $\hat{\gamma}_{20}$ & -0.02 & [-0.03, -0.01] & -4.36 & < .001 & -0.02 & [-0.03, -0.01] & -3.63 & < .001\\
 Grandparent, $\hat{\gamma}_{01}$ & -0.04 & [-0.11, 0.03] & -1.16 & .246 & -0.05 & [-0.12, 0.02] & -1.49 & .137\\
-Caring, $\hat{\gamma}_{02}$ & 0.00 & [-0.04, 0.03] & -0.27 & .784 & 0.02 & [-0.01, 0.05] & 1.09 & .276\\
-After-slope * Grandparent, $\hat{\gamma}_{11}$ & 0.03 & [0.00, 0.05] & 2.36 & .018 & 0.02 & [0.00, 0.04] & 2.02 & .044\\
-After-slope * Caring, $\hat{\gamma}_{12}$ & 0.00 & [-0.01, 0.02] & 0.29 & .773 & 0.00 & [-0.02, 0.01] & -0.60 & .550\\
-Grandparent * Caring, $\hat{\gamma}_{03}$ & 0.02 & [-0.07, 0.11] & 0.46 & .645 & 0.00 & [-0.09, 0.08] & -0.09 & .925\\
-After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & 0.01 & [-0.02, 0.04] & 0.57 & .572 & 0.02 & [-0.02, 0.05] & 1.00 & .319\\
+Caring, $\hat{\gamma}_{10}$ & 0.00 & [-0.04, 0.03] & -0.27 & .784 & 0.02 & [-0.01, 0.05] & 1.09 & .276\\
+After-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.03 & [0.00, 0.05] & 2.36 & .018 & 0.02 & [0.00, 0.04] & 2.02 & .044\\
+After-slope * Caring, $\hat{\gamma}_{30}$ & 0.00 & [-0.01, 0.02] & 0.29 & .773 & 0.00 & [-0.02, 0.01] & -0.60 & .550\\
+Grandparent * Caring, $\hat{\gamma}_{11}$ & 0.02 & [-0.07, 0.11] & 0.46 & .645 & 0.00 & [-0.09, 0.08] & -0.09 & .925\\
+After-slope * Grandparent * Caring, $\hat{\gamma}_{31}$ & 0.01 & [-0.02, 0.04] & 0.57 & .572 & 0.02 & [-0.02, 0.05] & 1.00 & .319\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -1940,9 +2023,9 @@ Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\c
 \midrule
 \endhead
 After-slope of caring controls vs. caring grandparents 
-($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & 0.04 & 7.62 & .006 & 0.04 & 9.15 & .002\\
+($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & 0.04 & 7.62 & .006 & 0.04 & 9.15 & .002\\
 After-slope of not-caring grandparents vs. caring grandparents 
-($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & 0.01 & 0.61 & .434 & 0.01 & 0.66 & .415\\
+($\hat{\gamma}_{30}$ + $\hat{\gamma}_{31}$) & 0.01 & 0.61 & .434 & 0.01 & 0.66 & .415\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -2301,22 +2384,22 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 \midrule
 \endhead
 Intercept, $\hat{\gamma}_{00}$ & 3.41 & [3.37, 3.45] & 165.13 & < .001 & 3.37 & [3.33, 3.42] & 146.02 & < .001\\
-Propensity score, $\hat{\gamma}_{04}$ & 0.06 & [0.00, 0.12] & 2.13 & .033 & 0.14 & [0.09, 0.20] & 4.83 & < .001\\
-Before-slope, $\hat{\gamma}_{10}$ & -0.01 & [-0.03, 0.00] & -1.55 & .121 & 0.00 & [-0.02, 0.02] & -0.28 & .779\\
-After-slope, $\hat{\gamma}_{20}$ & -0.02 & [-0.03, -0.01] & -3.55 & < .001 & -0.02 & [-0.03, -0.01] & -4.10 & < .001\\
-Shift, $\hat{\gamma}_{30}$ & 0.02 & [-0.01, 0.05] & 1.49 & .137 & -0.02 & [-0.05, 0.01] & -1.30 & .193\\
+Propensity score, $\hat{\gamma}_{02}$ & 0.06 & [0.00, 0.12] & 2.13 & .033 & 0.14 & [0.09, 0.20] & 4.83 & < .001\\
+Before-slope, $\hat{\gamma}_{20}$ & -0.01 & [-0.03, 0.00] & -1.55 & .121 & 0.00 & [-0.02, 0.02] & -0.28 & .779\\
+After-slope, $\hat{\gamma}_{40}$ & -0.02 & [-0.03, -0.01] & -3.55 & < .001 & -0.02 & [-0.03, -0.01] & -4.10 & < .001\\
+Shift, $\hat{\gamma}_{60}$ & 0.02 & [-0.01, 0.05] & 1.49 & .137 & -0.02 & [-0.05, 0.01] & -1.30 & .193\\
 Grandparent, $\hat{\gamma}_{01}$ & -0.09 & [-0.18, -0.01] & -2.19 & .029 & -0.10 & [-0.18, -0.01] & -2.30 & .022\\
-Working, $\hat{\gamma}_{02}$ & 0.01 & [-0.03, 0.05] & 0.45 & .650 & -0.03 & [-0.06, 0.01] & -1.60 & .109\\
-Before-slope * Grandparent, $\hat{\gamma}_{11}$ & 0.08 & [0.04, 0.13] & 3.54 & < .001 & 0.07 & [0.03, 0.12] & 3.16 & .002\\
-After-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.03 & [0.01, 0.05] & 2.66 & .008 & 0.03 & [0.01, 0.05] & 2.96 & .003\\
-Shift * Grandparent, $\hat{\gamma}_{31}$ & -0.09 & [-0.16, -0.02] & -2.64 & .008 & -0.05 & [-0.11, 0.02] & -1.46 & .145\\
-Before-slope * Working, $\hat{\gamma}_{12}$ & 0.02 & [0.00, 0.05] & 2.21 & .027 & 0.01 & [-0.01, 0.03] & 0.91 & .362\\
-After-slope * Working, $\hat{\gamma}_{22}$ & 0.01 & [0.00, 0.03] & 1.92 & .055 & 0.02 & [0.01, 0.03] & 2.96 & .003\\
-Shift * Working, $\hat{\gamma}_{32}$ & -0.01 & [-0.05, 0.03] & -0.45 & .653 & 0.03 & [-0.01, 0.06] & 1.30 & .194\\
-Grandparent * Working, $\hat{\gamma}_{03}$ & 0.14 & [0.05, 0.23] & 3.16 & .002 & 0.17 & [0.09, 0.26] & 4.05 & < .001\\
-Before-slope * Grandparent * Working, $\hat{\gamma}_{13}$ & -0.10 & [-0.16, -0.05] & -3.69 & < .001 & -0.09 & [-0.14, -0.04] & -3.31 & .001\\
-After-slope * Grandparent * Working, $\hat{\gamma}_{23}$ & -0.01 & [-0.04, 0.02] & -0.76 & .449 & -0.02 & [-0.05, 0.01] & -1.17 & .240\\
-Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & 0.06 & [-0.03, 0.15] & 1.31 & .191 & 0.02 & [-0.06, 0.11] & 0.56 & .578\\
+Working, $\hat{\gamma}_{10}$ & 0.01 & [-0.03, 0.05] & 0.45 & .650 & -0.03 & [-0.06, 0.01] & -1.60 & .109\\
+Before-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.08 & [0.04, 0.13] & 3.54 & < .001 & 0.07 & [0.03, 0.12] & 3.16 & .002\\
+After-slope * Grandparent, $\hat{\gamma}_{41}$ & 0.03 & [0.01, 0.05] & 2.66 & .008 & 0.03 & [0.01, 0.05] & 2.96 & .003\\
+Shift * Grandparent, $\hat{\gamma}_{61}$ & -0.09 & [-0.16, -0.02] & -2.64 & .008 & -0.05 & [-0.11, 0.02] & -1.46 & .145\\
+Before-slope * Working, $\hat{\gamma}_{30}$ & 0.02 & [0.00, 0.05] & 2.21 & .027 & 0.01 & [-0.01, 0.03] & 0.91 & .362\\
+After-slope * Working, $\hat{\gamma}_{50}$ & 0.01 & [0.00, 0.03] & 1.92 & .055 & 0.02 & [0.01, 0.03] & 2.96 & .003\\
+Shift * Working, $\hat{\gamma}_{70}$ & -0.01 & [-0.05, 0.03] & -0.45 & .653 & 0.03 & [-0.01, 0.06] & 1.30 & .194\\
+Grandparent * Working, $\hat{\gamma}_{11}$ & 0.14 & [0.05, 0.23] & 3.16 & .002 & 0.17 & [0.09, 0.26] & 4.05 & < .001\\
+Before-slope * Grandparent * Working, $\hat{\gamma}_{31}$ & -0.10 & [-0.16, -0.05] & -3.69 & < .001 & -0.09 & [-0.14, -0.04] & -3.31 & .001\\
+After-slope * Grandparent * Working, $\hat{\gamma}_{51}$ & -0.01 & [-0.04, 0.02] & -0.76 & .449 & -0.02 & [-0.05, 0.01] & -1.17 & .240\\
+Shift * Grandparent * Working, $\hat{\gamma}_{71}$ & 0.06 & [-0.03, 0.15] & 1.31 & .191 & 0.02 & [-0.06, 0.11] & 0.56 & .578\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -2359,37 +2442,37 @@ Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\c
 Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
-Shift of not-working controls vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$) & 0.01 & 0.23 & .635 & -0.04 & 9.72 & .002\\
-Shift of working controls vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
-$\hat{\gamma}_{32}$) & 0.01 & 1.06 & .304 & 0.00 & 0.28 & .598\\
-Shift of not-working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
-$\hat{\gamma}_{31}$) & -0.06 & 5.20 & .023 & -0.06 & 5.93 & .015\\
-Shift of working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
-$\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
-$\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
-$\hat{\gamma}_{33}$) & -0.01 & 0.09 & .768 & -0.01 & 0.13 & .717\\
+Shift of not-working controls vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$) & 0.01 & 0.23 & .635 & -0.04 & 9.72 & .002\\
+Shift of working controls vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$ + $\hat{\gamma}_{50}$ + 
+$\hat{\gamma}_{70}$) & 0.01 & 1.06 & .304 & 0.00 & 0.28 & .598\\
+Shift of not-working grandparents vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$ + $\hat{\gamma}_{41}$ + 
+$\hat{\gamma}_{61}$) & -0.06 & 5.20 & .023 & -0.06 & 5.93 & .015\\
+Shift of working grandparents vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$ + $\hat{\gamma}_{41}$ + 
+$\hat{\gamma}_{61}$ + $\hat{\gamma}_{50}$ + 
+$\hat{\gamma}_{70}$ + $\hat{\gamma}_{51}$ +
+$\hat{\gamma}_{71}$) & -0.01 & 0.09 & .768 & -0.01 & 0.13 & .717\\
 Shift of not-working controls vs. not-working grandparents 
-($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & -0.06 & 5.09 & .024 & -0.02 & 0.46 & .498\\
+($\hat{\gamma}_{41}$ + $\hat{\gamma}_{61}$) & -0.06 & 5.09 & .024 & -0.02 & 0.46 & .498\\
 Before-slope of working controls vs. working grandparents 
-($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & -0.02 & 1.75 & .185 & -0.02 & 1.50 & .221\\
+($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & -0.02 & 1.75 & .185 & -0.02 & 1.50 & .221\\
 After-slope of working controls vs. working grandparents 
-($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) & 0.02 & 2.59 & .107 & 0.01 & 1.83 & .176\\
+($\hat{\gamma}_{41}$ + $\hat{\gamma}_{51}$) & 0.02 & 2.59 & .107 & 0.01 & 1.83 & .176\\
 Shift of working controls vs. working grandparents 
-($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
-$\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & -0.02 & 0.52 & .469 & -0.01 & 0.31 & .578\\
+($\hat{\gamma}_{41}$ + $\hat{\gamma}_{61}$ + 
+$\hat{\gamma}_{51}$ + $\hat{\gamma}_{71}$) & -0.02 & 0.52 & .469 & -0.01 & 0.31 & .578\\
 Shift of not-working controls vs. working controls 
-($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) & 0.00 & 0.06 & .809 & 0.04 & 8.10 & .004\\
+($\hat{\gamma}_{50}$ + $\hat{\gamma}_{70}$) & 0.00 & 0.06 & .809 & 0.04 & 8.10 & .004\\
 Before-slope of not-working grandparents vs. working grandparents 
-($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & -0.08 & 9.38 & .002 & -0.08 & 10.44 & .001\\
+($\hat{\gamma}_{30}$ + $\hat{\gamma}_{31}$) & -0.08 & 9.38 & .002 & -0.08 & 10.44 & .001\\
 After-slope of not-working grandparents vs. working grandparents 
-($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) & 0.00 & 0.01 & .920 & 0.00 & 0.02 & .879\\
+($\hat{\gamma}_{50}$ + $\hat{\gamma}_{51}$) & 0.00 & 0.01 & .920 & 0.00 & 0.02 & .879\\
 Shift of not-working grandparents vs. working grandparents 
-($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
-$\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & 0.05 & 2.62 & .106 & 0.05 & 2.89 & .089\\
+($\hat{\gamma}_{50}$ + $\hat{\gamma}_{70}$ + 
+$\hat{\gamma}_{51}$ + $\hat{\gamma}_{71}$) & 0.05 & 2.62 & .106 & 0.05 & 2.89 & .089\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -2434,14 +2517,14 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 \midrule
 \endhead
 Intercept, $\hat{\gamma}_{00}$ & 3.44 & [3.40, 3.48] & 168.69 & < .001 & 3.34 & [3.30, 3.39] & 138.33 & < .001\\
-Propensity score, $\hat{\gamma}_{04}$ & 0.08 & [0.00, 0.15] & 2.03 & .042 & 0.29 & [0.22, 0.37] & 7.78 & < .001\\
-After-slope, $\hat{\gamma}_{10}$ & -0.02 & [-0.03, -0.01] & -3.80 & < .001 & -0.01 & [-0.02, 0.00] & -2.74 & .006\\
+Propensity score, $\hat{\gamma}_{02}$ & 0.08 & [0.00, 0.15] & 2.03 & .042 & 0.29 & [0.22, 0.37] & 7.78 & < .001\\
+After-slope, $\hat{\gamma}_{20}$ & -0.02 & [-0.03, -0.01] & -3.80 & < .001 & -0.01 & [-0.02, 0.00] & -2.74 & .006\\
 Grandparent, $\hat{\gamma}_{01}$ & -0.02 & [-0.08, 0.05] & -0.51 & .610 & -0.02 & [-0.09, 0.04] & -0.74 & .462\\
-Caring, $\hat{\gamma}_{02}$ & 0.00 & [-0.03, 0.03] & 0.03 & .972 & 0.02 & [0.00, 0.05] & 1.64 & .102\\
-After-slope * Grandparent, $\hat{\gamma}_{11}$ & 0.01 & [-0.01, 0.03] & 1.37 & .170 & 0.01 & [-0.01, 0.02] & 0.73 & .468\\
-After-slope * Caring, $\hat{\gamma}_{12}$ & 0.00 & [-0.01, 0.01] & 0.01 & .993 & -0.01 & [-0.02, 0.00] & -1.72 & .085\\
-Grandparent * Caring, $\hat{\gamma}_{03}$ & -0.04 & [-0.12, 0.04] & -0.93 & .355 & -0.07 & [-0.14, 0.01] & -1.74 & .081\\
-After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & 0.03 & [0.00, 0.06] & 1.88 & .060 & 0.04 & [0.01, 0.07] & 2.82 & .005\\
+Caring, $\hat{\gamma}_{10}$ & 0.00 & [-0.03, 0.03] & 0.03 & .972 & 0.02 & [0.00, 0.05] & 1.64 & .102\\
+After-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.01 & [-0.01, 0.03] & 1.37 & .170 & 0.01 & [-0.01, 0.02] & 0.73 & .468\\
+After-slope * Caring, $\hat{\gamma}_{30}$ & 0.00 & [-0.01, 0.01] & 0.01 & .993 & -0.01 & [-0.02, 0.00] & -1.72 & .085\\
+Grandparent * Caring, $\hat{\gamma}_{11}$ & -0.04 & [-0.12, 0.04] & -0.93 & .355 & -0.07 & [-0.14, 0.01] & -1.74 & .081\\
+After-slope * Grandparent * Caring, $\hat{\gamma}_{31}$ & 0.03 & [0.00, 0.06] & 1.88 & .060 & 0.04 & [0.01, 0.07] & 2.82 & .005\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -2484,9 +2567,9 @@ Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\c
 \midrule
 \endhead
 After-slope of caring controls vs. caring grandparents 
-($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & 0.04 & 13.75 & < .001 & 0.05 & 19.49 & < .001\\
+($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & 0.04 & 13.75 & < .001 & 0.05 & 19.49 & < .001\\
 After-slope of not-caring grandparents vs. caring grandparents 
-($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & 0.03 & 4.48 & .034 & 0.03 & 5.28 & .022\\
+($\hat{\gamma}_{30}$ + $\hat{\gamma}_{31}$) & 0.03 & 4.48 & .034 & 0.03 & 5.28 & .022\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -2845,22 +2928,22 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 \midrule
 \endhead
 Intercept, $\hat{\gamma}_{00}$ & 3.18 & [3.13, 3.23] & 129.04 & < .001 & 3.12 & [3.07, 3.17] & 112.49 & < .001\\
-Propensity score, $\hat{\gamma}_{04}$ & 0.01 & [-0.06, 0.08] & 0.31 & .757 & 0.03 & [-0.04, 0.10] & 0.77 & .439\\
-Before-slope, $\hat{\gamma}_{10}$ & 0.02 & [0.00, 0.04] & 1.69 & .091 & 0.00 & [-0.02, 0.02] & 0.09 & .927\\
-After-slope, $\hat{\gamma}_{20}$ & 0.00 & [-0.01, 0.01] & 0.12 & .901 & -0.01 & [-0.02, 0.00] & -1.24 & .213\\
-Shift, $\hat{\gamma}_{30}$ & -0.04 & [-0.08, -0.01] & -2.48 & .013 & 0.02 & [-0.02, 0.05] & 0.91 & .364\\
+Propensity score, $\hat{\gamma}_{02}$ & 0.01 & [-0.06, 0.08] & 0.31 & .757 & 0.03 & [-0.04, 0.10] & 0.77 & .439\\
+Before-slope, $\hat{\gamma}_{20}$ & 0.02 & [0.00, 0.04] & 1.69 & .091 & 0.00 & [-0.02, 0.02] & 0.09 & .927\\
+After-slope, $\hat{\gamma}_{40}$ & 0.00 & [-0.01, 0.01] & 0.12 & .901 & -0.01 & [-0.02, 0.00] & -1.24 & .213\\
+Shift, $\hat{\gamma}_{60}$ & -0.04 & [-0.08, -0.01] & -2.48 & .013 & 0.02 & [-0.02, 0.05] & 0.91 & .364\\
 Grandparent, $\hat{\gamma}_{01}$ & -0.06 & [-0.16, 0.04] & -1.23 & .217 & -0.01 & [-0.11, 0.09] & -0.18 & .853\\
-Working, $\hat{\gamma}_{02}$ & 0.03 & [-0.02, 0.07] & 1.19 & .232 & 0.00 & [-0.05, 0.04] & -0.12 & .902\\
-Before-slope * Grandparent, $\hat{\gamma}_{11}$ & 0.02 & [-0.03, 0.07] & 0.74 & .460 & 0.04 & [-0.02, 0.09] & 1.38 & .169\\
-After-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.02 & [0.00, 0.04] & 1.65 & .099 & 0.03 & [0.00, 0.05] & 2.32 & .021\\
-Shift * Grandparent, $\hat{\gamma}_{31}$ & -0.02 & [-0.10, 0.06] & -0.46 & .643 & -0.08 & [-0.16, 0.00] & -2.02 & .044\\
-Before-slope * Working, $\hat{\gamma}_{12}$ & -0.03 & [-0.05, -0.01] & -2.38 & .017 & 0.01 & [-0.02, 0.03] & 0.59 & .556\\
-After-slope * Working, $\hat{\gamma}_{22}$ & 0.00 & [-0.02, 0.01] & -0.19 & .848 & 0.01 & [0.00, 0.03] & 1.79 & .074\\
-Shift * Working, $\hat{\gamma}_{32}$ & 0.10 & [0.05, 0.14] & 4.18 & < .001 & -0.01 & [-0.06, 0.04] & -0.43 & .667\\
-Grandparent * Working, $\hat{\gamma}_{03}$ & 0.08 & [-0.02, 0.18] & 1.53 & .126 & 0.11 & [0.01, 0.21] & 2.13 & .034\\
-Before-slope * Grandparent * Working, $\hat{\gamma}_{13}$ & -0.01 & [-0.08, 0.05] & -0.46 & .646 & -0.05 & [-0.11, 0.01] & -1.69 & .092\\
-After-slope * Grandparent * Working, $\hat{\gamma}_{23}$ & -0.01 & [-0.05, 0.02] & -0.80 & .425 & -0.03 & [-0.06, 0.00] & -1.69 & .090\\
-Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & -0.03 & [-0.13, 0.08] & -0.49 & .623 & 0.08 & [-0.02, 0.18] & 1.57 & .115\\
+Working, $\hat{\gamma}_{10}$ & 0.03 & [-0.02, 0.07] & 1.19 & .232 & 0.00 & [-0.05, 0.04] & -0.12 & .902\\
+Before-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.02 & [-0.03, 0.07] & 0.74 & .460 & 0.04 & [-0.02, 0.09] & 1.38 & .169\\
+After-slope * Grandparent, $\hat{\gamma}_{41}$ & 0.02 & [0.00, 0.04] & 1.65 & .099 & 0.03 & [0.00, 0.05] & 2.32 & .021\\
+Shift * Grandparent, $\hat{\gamma}_{61}$ & -0.02 & [-0.10, 0.06] & -0.46 & .643 & -0.08 & [-0.16, 0.00] & -2.02 & .044\\
+Before-slope * Working, $\hat{\gamma}_{30}$ & -0.03 & [-0.05, -0.01] & -2.38 & .017 & 0.01 & [-0.02, 0.03] & 0.59 & .556\\
+After-slope * Working, $\hat{\gamma}_{50}$ & 0.00 & [-0.02, 0.01] & -0.19 & .848 & 0.01 & [0.00, 0.03] & 1.79 & .074\\
+Shift * Working, $\hat{\gamma}_{70}$ & 0.10 & [0.05, 0.14] & 4.18 & < .001 & -0.01 & [-0.06, 0.04] & -0.43 & .667\\
+Grandparent * Working, $\hat{\gamma}_{11}$ & 0.08 & [-0.02, 0.18] & 1.53 & .126 & 0.11 & [0.01, 0.21] & 2.13 & .034\\
+Before-slope * Grandparent * Working, $\hat{\gamma}_{31}$ & -0.01 & [-0.08, 0.05] & -0.46 & .646 & -0.05 & [-0.11, 0.01] & -1.69 & .092\\
+After-slope * Grandparent * Working, $\hat{\gamma}_{51}$ & -0.01 & [-0.05, 0.02] & -0.80 & .425 & -0.03 & [-0.06, 0.00] & -1.69 & .090\\
+Shift * Grandparent * Working, $\hat{\gamma}_{71}$ & -0.03 & [-0.13, 0.08] & -0.49 & .623 & 0.08 & [-0.02, 0.18] & 1.57 & .115\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -2903,37 +2986,37 @@ Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\c
 Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
-Shift of not-working controls vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$) & -0.04 & 9.28 & .002 & 0.01 & 0.42 & .515\\
-Shift of working controls vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
-$\hat{\gamma}_{32}$) & 0.05 & 22.76 & < .001 & 0.01 & 1.67 & .196\\
-Shift of not-working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
-$\hat{\gamma}_{31}$) & -0.04 & 2.05 & .152 & -0.04 & 2.20 & .138\\
-Shift of working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
-$\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
-$\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
-$\hat{\gamma}_{33}$) & 0.01 & 0.40 & .526 & 0.01 & 0.42 & .517\\
+Shift of not-working controls vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$) & -0.04 & 9.28 & .002 & 0.01 & 0.42 & .515\\
+Shift of working controls vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$ + $\hat{\gamma}_{50}$ + 
+$\hat{\gamma}_{70}$) & 0.05 & 22.76 & < .001 & 0.01 & 1.67 & .196\\
+Shift of not-working grandparents vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$ + $\hat{\gamma}_{41}$ + 
+$\hat{\gamma}_{61}$) & -0.04 & 2.05 & .152 & -0.04 & 2.20 & .138\\
+Shift of working grandparents vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$ + $\hat{\gamma}_{41}$ + 
+$\hat{\gamma}_{61}$ + $\hat{\gamma}_{50}$ + 
+$\hat{\gamma}_{70}$ + $\hat{\gamma}_{51}$ +
+$\hat{\gamma}_{71}$) & 0.01 & 0.40 & .526 & 0.01 & 0.42 & .517\\
 Shift of not-working controls vs. not-working grandparents 
-($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & 0.00 & 0.00 & .957 & -0.05 & 2.60 & .107\\
+($\hat{\gamma}_{41}$ + $\hat{\gamma}_{61}$) & 0.00 & 0.00 & .957 & -0.05 & 2.60 & .107\\
 Before-slope of working controls vs. working grandparents 
-($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & 0.01 & 0.12 & .729 & -0.02 & 1.06 & .303\\
+($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & 0.01 & 0.12 & .729 & -0.02 & 1.06 & .303\\
 After-slope of working controls vs. working grandparents 
-($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) & 0.01 & 0.28 & .598 & 0.00 & 0.00 & .948\\
+($\hat{\gamma}_{41}$ + $\hat{\gamma}_{51}$) & 0.01 & 0.28 & .598 & 0.00 & 0.00 & .948\\
 Shift of working controls vs. working grandparents 
-($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
-$\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & -0.04 & 2.46 & .117 & 0.00 & 0.00 & .987\\
+($\hat{\gamma}_{41}$ + $\hat{\gamma}_{61}$ + 
+$\hat{\gamma}_{51}$ + $\hat{\gamma}_{71}$) & -0.04 & 2.46 & .117 & 0.00 & 0.00 & .987\\
 Shift of not-working controls vs. working controls 
-($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) & 0.10 & 27.75 & < .001 & 0.00 & 0.04 & .852\\
+($\hat{\gamma}_{50}$ + $\hat{\gamma}_{70}$) & 0.10 & 27.75 & < .001 & 0.00 & 0.04 & .852\\
 Before-slope of not-working grandparents vs. working grandparents 
-($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & -0.04 & 2.34 & .126 & -0.04 & 2.52 & .113\\
+($\hat{\gamma}_{30}$ + $\hat{\gamma}_{31}$) & -0.04 & 2.34 & .126 & -0.04 & 2.52 & .113\\
 After-slope of not-working grandparents vs. working grandparents 
-($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) & -0.02 & 0.97 & .325 & -0.02 & 1.01 & .314\\
+($\hat{\gamma}_{50}$ + $\hat{\gamma}_{51}$) & -0.02 & 0.97 & .325 & -0.02 & 1.01 & .314\\
 Shift of not-working grandparents vs. working grandparents 
-($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
-$\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & 0.06 & 2.24 & .135 & 0.06 & 2.38 & .123\\
+($\hat{\gamma}_{50}$ + $\hat{\gamma}_{70}$ + 
+$\hat{\gamma}_{51}$ + $\hat{\gamma}_{71}$) & 0.06 & 2.24 & .135 & 0.06 & 2.38 & .123\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -2978,14 +3061,14 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 \midrule
 \endhead
 Intercept, $\hat{\gamma}_{00}$ & 3.19 & [3.14, 3.24] & 128.26 & < .001 & 3.12 & [3.06, 3.18] & 102.87 & < .001\\
-Propensity score, $\hat{\gamma}_{04}$ & 0.13 & [0.04, 0.22] & 2.98 & .003 & 0.08 & [-0.01, 0.17] & 1.67 & .096\\
-After-slope, $\hat{\gamma}_{10}$ & -0.01 & [-0.03, 0.00] & -2.61 & .009 & 0.00 & [-0.01, 0.01] & -0.39 & .694\\
+Propensity score, $\hat{\gamma}_{02}$ & 0.13 & [0.04, 0.22] & 2.98 & .003 & 0.08 & [-0.01, 0.17] & 1.67 & .096\\
+After-slope, $\hat{\gamma}_{20}$ & -0.01 & [-0.03, 0.00] & -2.61 & .009 & 0.00 & [-0.01, 0.01] & -0.39 & .694\\
 Grandparent, $\hat{\gamma}_{01}$ & -0.04 & [-0.11, 0.03] & -1.05 & .296 & 0.04 & [-0.04, 0.12] & 1.06 & .288\\
-Caring, $\hat{\gamma}_{02}$ & 0.00 & [-0.03, 0.04] & 0.23 & .815 & 0.02 & [-0.02, 0.05] & 0.86 & .391\\
-After-slope * Grandparent, $\hat{\gamma}_{11}$ & 0.02 & [-0.01, 0.04] & 1.32 & .186 & 0.00 & [-0.02, 0.02] & 0.30 & .767\\
-After-slope * Caring, $\hat{\gamma}_{12}$ & 0.00 & [-0.02, 0.02] & -0.04 & .965 & 0.00 & [-0.02, 0.01] & -0.42 & .676\\
-Grandparent * Caring, $\hat{\gamma}_{03}$ & -0.04 & [-0.13, 0.06] & -0.74 & .461 & -0.05 & [-0.14, 0.04] & -1.04 & .299\\
-After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & 0.03 & [-0.01, 0.06] & 1.56 & .119 & 0.03 & [0.00, 0.07] & 1.83 & .067\\
+Caring, $\hat{\gamma}_{10}$ & 0.00 & [-0.03, 0.04] & 0.23 & .815 & 0.02 & [-0.02, 0.05] & 0.86 & .391\\
+After-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.02 & [-0.01, 0.04] & 1.32 & .186 & 0.00 & [-0.02, 0.02] & 0.30 & .767\\
+After-slope * Caring, $\hat{\gamma}_{30}$ & 0.00 & [-0.02, 0.02] & -0.04 & .965 & 0.00 & [-0.02, 0.01] & -0.42 & .676\\
+Grandparent * Caring, $\hat{\gamma}_{11}$ & -0.04 & [-0.13, 0.06] & -0.74 & .461 & -0.05 & [-0.14, 0.04] & -1.04 & .299\\
+After-slope * Grandparent * Caring, $\hat{\gamma}_{31}$ & 0.03 & [-0.01, 0.06] & 1.56 & .119 & 0.03 & [0.00, 0.07] & 1.83 & .067\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -3028,9 +3111,9 @@ Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\c
 \midrule
 \endhead
 After-slope of caring controls vs. caring grandparents 
-($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & 0.04 & 10.45 & .001 & 0.04 & 7.39 & .007\\
+($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & 0.04 & 10.45 & .001 & 0.04 & 7.39 & .007\\
 After-slope of not-caring grandparents vs. caring grandparents 
-($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & 0.03 & 2.98 & .084 & 0.03 & 3.37 & .066\\
+($\hat{\gamma}_{30}$ + $\hat{\gamma}_{31}$) & 0.03 & 2.98 & .084 & 0.03 & 3.37 & .066\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -3389,22 +3472,22 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 \midrule
 \endhead
 Intercept, $\hat{\gamma}_{00}$ & 2.02 & [1.96, 2.07] & 72.21 & < .001 & 2.02 & [1.96, 2.08] & 63.73 & < .001\\
-Propensity score, $\hat{\gamma}_{04}$ & 0.00 & [-0.08, 0.08] & 0.01 & .993 & 0.15 & [0.06, 0.23] & 3.46 & .001\\
-Before-slope, $\hat{\gamma}_{10}$ & 0.00 & [-0.02, 0.03] & 0.18 & .860 & -0.01 & [-0.04, 0.02] & -0.84 & .400\\
-After-slope, $\hat{\gamma}_{20}$ & -0.01 & [-0.02, 0.01] & -0.79 & .429 & -0.01 & [-0.02, 0.00] & -1.41 & .159\\
-Shift, $\hat{\gamma}_{30}$ & 0.04 & [0.00, 0.08] & 1.91 & .056 & -0.03 & [-0.07, 0.01] & -1.32 & .188\\
+Propensity score, $\hat{\gamma}_{02}$ & 0.00 & [-0.08, 0.08] & 0.01 & .993 & 0.15 & [0.06, 0.23] & 3.46 & .001\\
+Before-slope, $\hat{\gamma}_{20}$ & 0.00 & [-0.02, 0.03] & 0.18 & .860 & -0.01 & [-0.04, 0.02] & -0.84 & .400\\
+After-slope, $\hat{\gamma}_{40}$ & -0.01 & [-0.02, 0.01] & -0.79 & .429 & -0.01 & [-0.02, 0.00] & -1.41 & .159\\
+Shift, $\hat{\gamma}_{60}$ & 0.04 & [0.00, 0.08] & 1.91 & .056 & -0.03 & [-0.07, 0.01] & -1.32 & .188\\
 Grandparent, $\hat{\gamma}_{01}$ & 0.13 & [0.02, 0.25] & 2.28 & .022 & 0.07 & [-0.04, 0.19] & 1.27 & .203\\
-Working, $\hat{\gamma}_{02}$ & 0.08 & [0.03, 0.13] & 2.94 & .003 & 0.07 & [0.02, 0.12] & 2.63 & .009\\
-Before-slope * Grandparent, $\hat{\gamma}_{11}$ & -0.07 & [-0.13, 0.00] & -2.04 & .042 & -0.06 & [-0.12, 0.01] & -1.73 & .084\\
-After-slope * Grandparent, $\hat{\gamma}_{21}$ & -0.02 & [-0.05, 0.01] & -1.55 & .122 & -0.02 & [-0.05, 0.01] & -1.37 & .170\\
-Shift * Grandparent, $\hat{\gamma}_{31}$ & -0.05 & [-0.15, 0.05] & -1.03 & .303 & 0.02 & [-0.07, 0.11] & 0.45 & .655\\
-Before-slope * Working, $\hat{\gamma}_{12}$ & -0.02 & [-0.05, 0.01] & -1.43 & .153 & -0.02 & [-0.05, 0.01] & -1.54 & .123\\
-After-slope * Working, $\hat{\gamma}_{22}$ & 0.00 & [-0.02, 0.02] & -0.23 & .820 & -0.01 & [-0.02, 0.01] & -0.73 & .463\\
-Shift * Working, $\hat{\gamma}_{32}$ & -0.05 & [-0.11, 0.00] & -1.90 & .058 & 0.00 & [-0.05, 0.06] & 0.13 & .893\\
-Grandparent * Working, $\hat{\gamma}_{03}$ & -0.25 & [-0.38, -0.13] & -4.08 & < .001 & -0.25 & [-0.37, -0.13] & -4.20 & < .001\\
-Before-slope * Grandparent * Working, $\hat{\gamma}_{13}$ & 0.11 & [0.04, 0.19] & 2.95 & .003 & 0.12 & [0.04, 0.19] & 3.13 & .002\\
-After-slope * Grandparent * Working, $\hat{\gamma}_{23}$ & 0.01 & [-0.03, 0.05] & 0.51 & .613 & 0.02 & [-0.02, 0.06] & 0.75 & .451\\
-Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & -0.02 & [-0.15, 0.10] & -0.33 & .740 & -0.08 & [-0.20, 0.04] & -1.23 & .217\\
+Working, $\hat{\gamma}_{10}$ & 0.08 & [0.03, 0.13] & 2.94 & .003 & 0.07 & [0.02, 0.12] & 2.63 & .009\\
+Before-slope * Grandparent, $\hat{\gamma}_{21}$ & -0.07 & [-0.13, 0.00] & -2.04 & .042 & -0.06 & [-0.12, 0.01] & -1.73 & .084\\
+After-slope * Grandparent, $\hat{\gamma}_{41}$ & -0.02 & [-0.05, 0.01] & -1.55 & .122 & -0.02 & [-0.05, 0.01] & -1.37 & .170\\
+Shift * Grandparent, $\hat{\gamma}_{61}$ & -0.05 & [-0.15, 0.05] & -1.03 & .303 & 0.02 & [-0.07, 0.11] & 0.45 & .655\\
+Before-slope * Working, $\hat{\gamma}_{30}$ & -0.02 & [-0.05, 0.01] & -1.43 & .153 & -0.02 & [-0.05, 0.01] & -1.54 & .123\\
+After-slope * Working, $\hat{\gamma}_{50}$ & 0.00 & [-0.02, 0.02] & -0.23 & .820 & -0.01 & [-0.02, 0.01] & -0.73 & .463\\
+Shift * Working, $\hat{\gamma}_{70}$ & -0.05 & [-0.11, 0.00] & -1.90 & .058 & 0.00 & [-0.05, 0.06] & 0.13 & .893\\
+Grandparent * Working, $\hat{\gamma}_{11}$ & -0.25 & [-0.38, -0.13] & -4.08 & < .001 & -0.25 & [-0.37, -0.13] & -4.20 & < .001\\
+Before-slope * Grandparent * Working, $\hat{\gamma}_{31}$ & 0.11 & [0.04, 0.19] & 2.95 & .003 & 0.12 & [0.04, 0.19] & 3.13 & .002\\
+After-slope * Grandparent * Working, $\hat{\gamma}_{51}$ & 0.01 & [-0.03, 0.05] & 0.51 & .613 & 0.02 & [-0.02, 0.06] & 0.75 & .451\\
+Shift * Grandparent * Working, $\hat{\gamma}_{71}$ & -0.02 & [-0.15, 0.10] & -0.33 & .740 & -0.08 & [-0.20, 0.04] & -1.23 & .217\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -3447,37 +3530,37 @@ Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\c
 Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
-Shift of not-working controls vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$) & 0.04 & 4.30 & .038 & -0.04 & 4.61 & .032\\
-Shift of working controls vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
-$\hat{\gamma}_{32}$) & -0.02 & 2.18 & .140 & -0.04 & 11.64 & .001\\
-Shift of not-working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
-$\hat{\gamma}_{31}$) & -0.04 & 1.12 & .290 & -0.04 & 1.24 & .266\\
-Shift of working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
-$\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
-$\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
-$\hat{\gamma}_{33}$) & -0.10 & 15.38 & < .001 & -0.10 & 16.09 & < .001\\
+Shift of not-working controls vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$) & 0.04 & 4.30 & .038 & -0.04 & 4.61 & .032\\
+Shift of working controls vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$ + $\hat{\gamma}_{50}$ + 
+$\hat{\gamma}_{70}$) & -0.02 & 2.18 & .140 & -0.04 & 11.64 & .001\\
+Shift of not-working grandparents vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$ + $\hat{\gamma}_{41}$ + 
+$\hat{\gamma}_{61}$) & -0.04 & 1.12 & .290 & -0.04 & 1.24 & .266\\
+Shift of working grandparents vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$ + $\hat{\gamma}_{41}$ + 
+$\hat{\gamma}_{61}$ + $\hat{\gamma}_{50}$ + 
+$\hat{\gamma}_{70}$ + $\hat{\gamma}_{51}$ +
+$\hat{\gamma}_{71}$) & -0.10 & 15.38 & < .001 & -0.10 & 16.09 & < .001\\
 Shift of not-working controls vs. not-working grandparents 
-($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & -0.07 & 3.47 & .063 & 0.00 & 0.00 & .974\\
+($\hat{\gamma}_{41}$ + $\hat{\gamma}_{61}$) & -0.07 & 3.47 & .063 & 0.00 & 0.00 & .974\\
 Before-slope of working controls vs. working grandparents 
-($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & 0.05 & 5.89 & .015 & 0.06 & 11.29 & .001\\
+($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & 0.05 & 5.89 & .015 & 0.06 & 11.29 & .001\\
 After-slope of working controls vs. working grandparents 
-($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) & -0.01 & 0.72 & .396 & 0.00 & 0.11 & .743\\
+($\hat{\gamma}_{41}$ + $\hat{\gamma}_{51}$) & -0.01 & 0.72 & .396 & 0.00 & 0.11 & .743\\
 Shift of working controls vs. working grandparents 
-($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
-$\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & -0.08 & 8.11 & .004 & -0.06 & 4.48 & .034\\
+($\hat{\gamma}_{41}$ + $\hat{\gamma}_{61}$ + 
+$\hat{\gamma}_{51}$ + $\hat{\gamma}_{71}$) & -0.08 & 8.11 & .004 & -0.06 & 4.48 & .034\\
 Shift of not-working controls vs. working controls 
-($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) & -0.06 & 6.36 & .012 & 0.00 & 0.02 & .895\\
+($\hat{\gamma}_{50}$ + $\hat{\gamma}_{70}$) & -0.06 & 6.36 & .012 & 0.00 & 0.02 & .895\\
 Before-slope of not-working grandparents vs. working grandparents 
-($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & 0.09 & 6.73 & .009 & 0.09 & 7.45 & .006\\
+($\hat{\gamma}_{30}$ + $\hat{\gamma}_{31}$) & 0.09 & 6.73 & .009 & 0.09 & 7.45 & .006\\
 After-slope of not-working grandparents vs. working grandparents 
-($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) & 0.01 & 0.20 & .651 & 0.01 & 0.23 & .634\\
+($\hat{\gamma}_{50}$ + $\hat{\gamma}_{51}$) & 0.01 & 0.20 & .651 & 0.01 & 0.23 & .634\\
 Shift of not-working grandparents vs. working grandparents 
-($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
-$\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & -0.07 & 2.14 & .143 & -0.06 & 2.17 & .141\\
+($\hat{\gamma}_{50}$ + $\hat{\gamma}_{70}$ + 
+$\hat{\gamma}_{51}$ + $\hat{\gamma}_{71}$) & -0.07 & 2.14 & .143 & -0.06 & 2.17 & .141\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -3522,14 +3605,14 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 \midrule
 \endhead
 Intercept, $\hat{\gamma}_{00}$ & 2.04 & [1.99, 2.09] & 75.41 & < .001 & 1.97 & [1.91, 2.04] & 59.05 & < .001\\
-Propensity score, $\hat{\gamma}_{04}$ & -0.02 & [-0.12, 0.07] & -0.45 & .652 & 0.14 & [0.03, 0.24] & 2.59 & .010\\
-After-slope, $\hat{\gamma}_{10}$ & 0.00 & [-0.01, 0.01] & -0.02 & .982 & -0.02 & [-0.03, 0.00] & -2.67 & .008\\
+Propensity score, $\hat{\gamma}_{02}$ & -0.02 & [-0.12, 0.07] & -0.45 & .652 & 0.14 & [0.03, 0.24] & 2.59 & .010\\
+After-slope, $\hat{\gamma}_{20}$ & 0.00 & [-0.01, 0.01] & -0.02 & .982 & -0.02 & [-0.03, 0.00] & -2.67 & .008\\
 Grandparent, $\hat{\gamma}_{01}$ & -0.10 & [-0.18, -0.02] & -2.45 & .014 & -0.11 & [-0.20, -0.02] & -2.43 & .015\\
-Caring, $\hat{\gamma}_{02}$ & 0.01 & [-0.04, 0.05] & 0.33 & .740 & 0.00 & [-0.04, 0.04] & -0.09 & .930\\
-After-slope * Grandparent, $\hat{\gamma}_{11}$ & 0.00 & [-0.03, 0.02] & -0.17 & .865 & 0.01 & [-0.01, 0.04] & 1.06 & .291\\
-After-slope * Caring, $\hat{\gamma}_{12}$ & -0.01 & [-0.03, 0.01] & -1.01 & .311 & 0.01 & [-0.01, 0.03] & 0.68 & .494\\
-Grandparent * Caring, $\hat{\gamma}_{03}$ & 0.09 & [-0.02, 0.20] & 1.57 & .117 & 0.09 & [-0.02, 0.21] & 1.67 & .095\\
-After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & -0.03 & [-0.07, 0.01] & -1.34 & .182 & -0.04 & [-0.09, 0.00] & -2.07 & .038\\
+Caring, $\hat{\gamma}_{10}$ & 0.01 & [-0.04, 0.05] & 0.33 & .740 & 0.00 & [-0.04, 0.04] & -0.09 & .930\\
+After-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.00 & [-0.03, 0.02] & -0.17 & .865 & 0.01 & [-0.01, 0.04] & 1.06 & .291\\
+After-slope * Caring, $\hat{\gamma}_{30}$ & -0.01 & [-0.03, 0.01] & -1.01 & .311 & 0.01 & [-0.01, 0.03] & 0.68 & .494\\
+Grandparent * Caring, $\hat{\gamma}_{11}$ & 0.09 & [-0.02, 0.20] & 1.57 & .117 & 0.09 & [-0.02, 0.21] & 1.67 & .095\\
+After-slope * Grandparent * Caring, $\hat{\gamma}_{31}$ & -0.03 & [-0.07, 0.01] & -1.34 & .182 & -0.04 & [-0.09, 0.00] & -2.07 & .038\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -3572,9 +3655,9 @@ Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\c
 \midrule
 \endhead
 After-slope of caring controls vs. caring grandparents 
-($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & -0.03 & 3.78 & .052 & -0.03 & 3.60 & .058\\
+($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & -0.03 & 3.78 & .052 & -0.03 & 3.60 & .058\\
 After-slope of not-caring grandparents vs. caring grandparents 
-($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & -0.04 & 4.06 & .044 & -0.04 & 3.90 & .048\\
+($\hat{\gamma}_{30}$ + $\hat{\gamma}_{31}$) & -0.04 & 4.06 & .044 & -0.04 & 3.90 & .048\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -3933,22 +4016,22 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 \midrule
 \endhead
 Intercept, $\hat{\gamma}_{00}$ & 3.02 & [2.97, 3.06] & 121.17 & < .001 & 3.03 & [2.97, 3.08] & 111.81 & < .001\\
-Propensity score, $\hat{\gamma}_{04}$ & 0.01 & [-0.06, 0.07] & 0.25 & .800 & -0.01 & [-0.08, 0.05] & -0.39 & .693\\
-Before-slope, $\hat{\gamma}_{10}$ & -0.01 & [-0.03, 0.01] & -1.03 & .303 & -0.01 & [-0.03, 0.01] & -0.96 & .339\\
-After-slope, $\hat{\gamma}_{20}$ & -0.03 & [-0.04, -0.02] & -5.25 & < .001 & -0.02 & [-0.03, -0.01] & -4.51 & < .001\\
-Shift, $\hat{\gamma}_{30}$ & 0.06 & [0.02, 0.09] & 3.20 & .001 & 0.04 & [0.00, 0.07] & 2.21 & .027\\
+Propensity score, $\hat{\gamma}_{02}$ & 0.01 & [-0.06, 0.07] & 0.25 & .800 & -0.01 & [-0.08, 0.05] & -0.39 & .693\\
+Before-slope, $\hat{\gamma}_{20}$ & -0.01 & [-0.03, 0.01] & -1.03 & .303 & -0.01 & [-0.03, 0.01] & -0.96 & .339\\
+After-slope, $\hat{\gamma}_{40}$ & -0.03 & [-0.04, -0.02] & -5.25 & < .001 & -0.02 & [-0.03, -0.01] & -4.51 & < .001\\
+Shift, $\hat{\gamma}_{60}$ & 0.06 & [0.02, 0.09] & 3.20 & .001 & 0.04 & [0.00, 0.07] & 2.21 & .027\\
 Grandparent, $\hat{\gamma}_{01}$ & -0.05 & [-0.15, 0.05] & -1.04 & .299 & -0.06 & [-0.15, 0.04] & -1.17 & .243\\
-Working, $\hat{\gamma}_{02}$ & 0.05 & [0.01, 0.09] & 2.26 & .024 & -0.02 & [-0.06, 0.02] & -0.88 & .378\\
-Before-slope * Grandparent, $\hat{\gamma}_{11}$ & 0.04 & [-0.02, 0.09] & 1.30 & .194 & 0.03 & [-0.01, 0.08] & 1.38 & .167\\
-After-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.05 & [0.02, 0.07] & 3.86 & < .001 & 0.04 & [0.02, 0.06] & 3.73 & < .001\\
-Shift * Grandparent, $\hat{\gamma}_{31}$ & -0.14 & [-0.22, -0.06] & -3.37 & .001 & -0.12 & [-0.19, -0.04] & -3.14 & .002\\
-Before-slope * Working, $\hat{\gamma}_{12}$ & -0.01 & [-0.04, 0.01] & -0.86 & .389 & 0.01 & [-0.01, 0.03] & 0.82 & .414\\
-After-slope * Working, $\hat{\gamma}_{22}$ & 0.02 & [0.01, 0.04] & 2.94 & .003 & 0.02 & [0.00, 0.03] & 2.15 & .031\\
-Shift * Working, $\hat{\gamma}_{32}$ & -0.01 & [-0.06, 0.04] & -0.44 & .661 & -0.01 & [-0.05, 0.03] & -0.52 & .606\\
-Grandparent * Working, $\hat{\gamma}_{03}$ & 0.04 & [-0.06, 0.14] & 0.79 & .429 & 0.11 & [0.02, 0.20] & 2.33 & .020\\
-Before-slope * Grandparent * Working, $\hat{\gamma}_{13}$ & -0.02 & [-0.08, 0.04] & -0.56 & .578 & -0.04 & [-0.10, 0.02] & -1.34 & .179\\
-After-slope * Grandparent * Working, $\hat{\gamma}_{23}$ & -0.06 & [-0.10, -0.03] & -3.46 & .001 & -0.05 & [-0.08, -0.02] & -3.35 & .001\\
-Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & 0.13 & [0.02, 0.23] & 2.37 & .018 & 0.12 & [0.03, 0.22] & 2.62 & .009\\
+Working, $\hat{\gamma}_{10}$ & 0.05 & [0.01, 0.09] & 2.26 & .024 & -0.02 & [-0.06, 0.02] & -0.88 & .378\\
+Before-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.04 & [-0.02, 0.09] & 1.30 & .194 & 0.03 & [-0.01, 0.08] & 1.38 & .167\\
+After-slope * Grandparent, $\hat{\gamma}_{41}$ & 0.05 & [0.02, 0.07] & 3.86 & < .001 & 0.04 & [0.02, 0.06] & 3.73 & < .001\\
+Shift * Grandparent, $\hat{\gamma}_{61}$ & -0.14 & [-0.22, -0.06] & -3.37 & .001 & -0.12 & [-0.19, -0.04] & -3.14 & .002\\
+Before-slope * Working, $\hat{\gamma}_{30}$ & -0.01 & [-0.04, 0.01] & -0.86 & .389 & 0.01 & [-0.01, 0.03] & 0.82 & .414\\
+After-slope * Working, $\hat{\gamma}_{50}$ & 0.02 & [0.01, 0.04] & 2.94 & .003 & 0.02 & [0.00, 0.03] & 2.15 & .031\\
+Shift * Working, $\hat{\gamma}_{70}$ & -0.01 & [-0.06, 0.04] & -0.44 & .661 & -0.01 & [-0.05, 0.03] & -0.52 & .606\\
+Grandparent * Working, $\hat{\gamma}_{11}$ & 0.04 & [-0.06, 0.14] & 0.79 & .429 & 0.11 & [0.02, 0.20] & 2.33 & .020\\
+Before-slope * Grandparent * Working, $\hat{\gamma}_{31}$ & -0.02 & [-0.08, 0.04] & -0.56 & .578 & -0.04 & [-0.10, 0.02] & -1.34 & .179\\
+After-slope * Grandparent * Working, $\hat{\gamma}_{51}$ & -0.06 & [-0.10, -0.03] & -3.46 & .001 & -0.05 & [-0.08, -0.02] & -3.35 & .001\\
+Shift * Grandparent * Working, $\hat{\gamma}_{71}$ & 0.13 & [0.02, 0.23] & 2.37 & .018 & 0.12 & [0.03, 0.22] & 2.62 & .009\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -3991,37 +4074,37 @@ Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\c
 Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
-Shift of not-working controls vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$) & 0.03 & 3.80 & .051 & 0.01 & 1.06 & .303\\
-Shift of working controls vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
-$\hat{\gamma}_{32}$) & 0.04 & 13.84 & < .001 & 0.02 & 3.72 & .054\\
-Shift of not-working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
-$\hat{\gamma}_{31}$) & -0.06 & 4.22 & .040 & -0.06 & 5.04 & .025\\
-Shift of working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
-$\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
-$\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
-$\hat{\gamma}_{33}$) & 0.02 & 0.61 & .433 & 0.02 & 0.75 & .385\\
+Shift of not-working controls vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$) & 0.03 & 3.80 & .051 & 0.01 & 1.06 & .303\\
+Shift of working controls vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$ + $\hat{\gamma}_{50}$ + 
+$\hat{\gamma}_{70}$) & 0.04 & 13.84 & < .001 & 0.02 & 3.72 & .054\\
+Shift of not-working grandparents vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$ + $\hat{\gamma}_{41}$ + 
+$\hat{\gamma}_{61}$) & -0.06 & 4.22 & .040 & -0.06 & 5.04 & .025\\
+Shift of working grandparents vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$ + $\hat{\gamma}_{41}$ + 
+$\hat{\gamma}_{61}$ + $\hat{\gamma}_{50}$ + 
+$\hat{\gamma}_{70}$ + $\hat{\gamma}_{51}$ +
+$\hat{\gamma}_{71}$) & 0.02 & 0.61 & .433 & 0.02 & 0.75 & .385\\
 Shift of not-working controls vs. not-working grandparents 
-($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & -0.09 & 7.30 & .007 & -0.07 & 6.07 & .014\\
+($\hat{\gamma}_{41}$ + $\hat{\gamma}_{61}$) & -0.09 & 7.30 & .007 & -0.07 & 6.07 & .014\\
 Before-slope of working controls vs. working grandparents 
-($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & 0.02 & 1.23 & .267 & 0.00 & 0.10 & .751\\
+($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & 0.02 & 1.23 & .267 & 0.00 & 0.10 & .751\\
 After-slope of working controls vs. working grandparents 
-($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) & -0.01 & 1.08 & .299 & -0.01 & 1.00 & .317\\
+($\hat{\gamma}_{41}$ + $\hat{\gamma}_{51}$) & -0.01 & 1.08 & .299 & -0.01 & 1.00 & .317\\
 Shift of working controls vs. working grandparents 
-($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
-$\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & -0.02 & 0.93 & .336 & 0.00 & 0.00 & .951\\
+($\hat{\gamma}_{41}$ + $\hat{\gamma}_{61}$ + 
+$\hat{\gamma}_{51}$ + $\hat{\gamma}_{71}$) & -0.02 & 0.93 & .336 & 0.00 & 0.00 & .951\\
 Shift of not-working controls vs. working controls 
-($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) & 0.01 & 0.48 & .487 & 0.00 & 0.05 & .818\\
+($\hat{\gamma}_{50}$ + $\hat{\gamma}_{70}$) & 0.01 & 0.48 & .487 & 0.00 & 0.05 & .818\\
 Before-slope of not-working grandparents vs. working grandparents 
-($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & -0.03 & 0.96 & .327 & -0.03 & 1.22 & .270\\
+($\hat{\gamma}_{30}$ + $\hat{\gamma}_{31}$) & -0.03 & 0.96 & .327 & -0.03 & 1.22 & .270\\
 After-slope of not-working grandparents vs. working grandparents 
-($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) & -0.04 & 5.78 & .016 & -0.04 & 7.17 & .007\\
+($\hat{\gamma}_{50}$ + $\hat{\gamma}_{51}$) & -0.04 & 5.78 & .016 & -0.04 & 7.17 & .007\\
 Shift of not-working grandparents vs. working grandparents 
-($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
-$\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & 0.08 & 4.30 & .038 & 0.08 & 5.16 & .023\\
+($\hat{\gamma}_{50}$ + $\hat{\gamma}_{70}$ + 
+$\hat{\gamma}_{51}$ + $\hat{\gamma}_{71}$) & 0.08 & 4.30 & .038 & 0.08 & 5.16 & .023\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -4066,14 +4149,14 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 \midrule
 \endhead
 Intercept, $\hat{\gamma}_{00}$ & 3.06 & [3.01, 3.10] & 125.52 & < .001 & 3.00 & [2.95, 3.06] & 103.68 & < .001\\
-Propensity score, $\hat{\gamma}_{04}$ & 0.08 & [-0.01, 0.16] & 1.81 & .070 & 0.22 & [0.13, 0.30] & 5.00 & < .001\\
-After-slope, $\hat{\gamma}_{10}$ & -0.04 & [-0.05, -0.03] & -6.73 & < .001 & -0.02 & [-0.03, -0.01] & -4.90 & < .001\\
+Propensity score, $\hat{\gamma}_{02}$ & 0.08 & [-0.01, 0.16] & 1.81 & .070 & 0.22 & [0.13, 0.30] & 5.00 & < .001\\
+After-slope, $\hat{\gamma}_{20}$ & -0.04 & [-0.05, -0.03] & -6.73 & < .001 & -0.02 & [-0.03, -0.01] & -4.90 & < .001\\
 Grandparent, $\hat{\gamma}_{01}$ & -0.06 & [-0.14, 0.01] & -1.74 & .082 & -0.08 & [-0.16, -0.01] & -2.21 & .027\\
-Caring, $\hat{\gamma}_{02}$ & -0.02 & [-0.06, 0.02] & -1.09 & .275 & 0.01 & [-0.02, 0.04] & 0.67 & .503\\
-After-slope * Grandparent, $\hat{\gamma}_{11}$ & 0.02 & [0.00, 0.05] & 2.10 & .036 & 0.01 & [-0.01, 0.03] & 0.88 & .377\\
-After-slope * Caring, $\hat{\gamma}_{12}$ & 0.01 & [0.00, 0.03] & 1.52 & .129 & 0.00 & [-0.02, 0.01] & -0.24 & .807\\
-Grandparent * Caring, $\hat{\gamma}_{03}$ & 0.00 & [-0.10, 0.10] & 0.02 & .985 & -0.04 & [-0.12, 0.05] & -0.79 & .432\\
-After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & 0.01 & [-0.02, 0.05] & 0.74 & .457 & 0.03 & [0.00, 0.06] & 1.73 & .084\\
+Caring, $\hat{\gamma}_{10}$ & -0.02 & [-0.06, 0.02] & -1.09 & .275 & 0.01 & [-0.02, 0.04] & 0.67 & .503\\
+After-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.02 & [0.00, 0.05] & 2.10 & .036 & 0.01 & [-0.01, 0.03] & 0.88 & .377\\
+After-slope * Caring, $\hat{\gamma}_{30}$ & 0.01 & [0.00, 0.03] & 1.52 & .129 & 0.00 & [-0.02, 0.01] & -0.24 & .807\\
+Grandparent * Caring, $\hat{\gamma}_{11}$ & 0.00 & [-0.10, 0.10] & 0.02 & .985 & -0.04 & [-0.12, 0.05] & -0.79 & .432\\
+After-slope * Grandparent * Caring, $\hat{\gamma}_{31}$ & 0.01 & [-0.02, 0.05] & 0.74 & .457 & 0.03 & [0.00, 0.06] & 1.73 & .084\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -4116,9 +4199,9 @@ Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\c
 \midrule
 \endhead
 After-slope of caring controls vs. caring grandparents 
-($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & 0.04 & 7.78 & .005 & 0.04 & 9.46 & .002\\
+($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & 0.04 & 7.78 & .005 & 0.04 & 9.46 & .002\\
 After-slope of not-caring grandparents vs. caring grandparents 
-($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & 0.03 & 2.58 & .108 & 0.03 & 3.26 & .071\\
+($\hat{\gamma}_{30}$ + $\hat{\gamma}_{31}$) & 0.03 & 2.58 & .108 & 0.03 & 3.26 & .071\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -4477,22 +4560,22 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 \midrule
 \endhead
 Intercept, $\hat{\gamma}_{00}$ & 4.78 & [4.63, 4.93] & 62.86 & < .001 & 4.55 & [4.38, 4.71] & 53.96 & < .001\\
-Propensity score, $\hat{\gamma}_{04}$ & 0.36 & [0.15, 0.57] & 3.33 & .001 & 0.28 & [0.06, 0.50] & 2.50 & .012\\
-Before-slope, $\hat{\gamma}_{10}$ & -0.06 & [-0.13, 0.01] & -1.77 & .077 & -0.02 & [-0.09, 0.05] & -0.51 & .613\\
-After-slope, $\hat{\gamma}_{20}$ & -0.03 & [-0.07, 0.00] & -1.73 & .083 & 0.08 & [0.04, 0.12] & 4.32 & < .001\\
-Shift, $\hat{\gamma}_{30}$ & 0.13 & [0.01, 0.25] & 2.11 & .034 & 0.07 & [-0.05, 0.19] & 1.17 & .243\\
+Propensity score, $\hat{\gamma}_{02}$ & 0.36 & [0.15, 0.57] & 3.33 & .001 & 0.28 & [0.06, 0.50] & 2.50 & .012\\
+Before-slope, $\hat{\gamma}_{20}$ & -0.06 & [-0.13, 0.01] & -1.77 & .077 & -0.02 & [-0.09, 0.05] & -0.51 & .613\\
+After-slope, $\hat{\gamma}_{40}$ & -0.03 & [-0.07, 0.00] & -1.73 & .083 & 0.08 & [0.04, 0.12] & 4.32 & < .001\\
+Shift, $\hat{\gamma}_{60}$ & 0.13 & [0.01, 0.25] & 2.11 & .034 & 0.07 & [-0.05, 0.19] & 1.17 & .243\\
 Grandparent, $\hat{\gamma}_{01}$ & -0.02 & [-0.33, 0.30] & -0.09 & .925 & 0.22 & [-0.09, 0.53] & 1.37 & .169\\
-Working, $\hat{\gamma}_{02}$ & 0.07 & [-0.07, 0.22] & 0.99 & .324 & 0.12 & [-0.02, 0.25] & 1.64 & .102\\
-Before-slope * Grandparent, $\hat{\gamma}_{11}$ & 0.14 & [-0.04, 0.32] & 1.50 & .134 & 0.10 & [-0.07, 0.27] & 1.12 & .264\\
-After-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.07 & [-0.02, 0.15] & 1.57 & .116 & -0.05 & [-0.12, 0.03] & -1.20 & .231\\
-Shift * Grandparent, $\hat{\gamma}_{31}$ & -0.04 & [-0.31, 0.22] & -0.31 & .755 & 0.01 & [-0.24, 0.27] & 0.10 & .917\\
-Before-slope * Working, $\hat{\gamma}_{12}$ & 0.05 & [-0.03, 0.14] & 1.21 & .225 & 0.09 & [0.00, 0.17] & 1.99 & .047\\
-After-slope * Working, $\hat{\gamma}_{22}$ & 0.10 & [0.05, 0.15] & 3.83 & < .001 & -0.08 & [-0.13, -0.03] & -3.16 & .002\\
-Shift * Working, $\hat{\gamma}_{32}$ & -0.20 & [-0.35, -0.04] & -2.50 & .012 & -0.15 & [-0.30, 0.00] & -1.94 & .052\\
-Grandparent * Working, $\hat{\gamma}_{03}$ & -0.02 & [-0.36, 0.32] & -0.11 & .912 & -0.07 & [-0.39, 0.25] & -0.42 & .676\\
-Before-slope * Grandparent * Working, $\hat{\gamma}_{13}$ & -0.03 & [-0.24, 0.18] & -0.28 & .777 & -0.06 & [-0.26, 0.13] & -0.63 & .527\\
-After-slope * Grandparent * Working, $\hat{\gamma}_{23}$ & -0.08 & [-0.20, 0.03] & -1.40 & .161 & 0.10 & [-0.01, 0.21] & 1.79 & .073\\
-Shift * Grandparent * Working, $\hat{\gamma}_{33}$ & -0.03 & [-0.38, 0.32] & -0.18 & .859 & -0.09 & [-0.42, 0.24] & -0.54 & .590\\
+Working, $\hat{\gamma}_{10}$ & 0.07 & [-0.07, 0.22] & 0.99 & .324 & 0.12 & [-0.02, 0.25] & 1.64 & .102\\
+Before-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.14 & [-0.04, 0.32] & 1.50 & .134 & 0.10 & [-0.07, 0.27] & 1.12 & .264\\
+After-slope * Grandparent, $\hat{\gamma}_{41}$ & 0.07 & [-0.02, 0.15] & 1.57 & .116 & -0.05 & [-0.12, 0.03] & -1.20 & .231\\
+Shift * Grandparent, $\hat{\gamma}_{61}$ & -0.04 & [-0.31, 0.22] & -0.31 & .755 & 0.01 & [-0.24, 0.27] & 0.10 & .917\\
+Before-slope * Working, $\hat{\gamma}_{30}$ & 0.05 & [-0.03, 0.14] & 1.21 & .225 & 0.09 & [0.00, 0.17] & 1.99 & .047\\
+After-slope * Working, $\hat{\gamma}_{50}$ & 0.10 & [0.05, 0.15] & 3.83 & < .001 & -0.08 & [-0.13, -0.03] & -3.16 & .002\\
+Shift * Working, $\hat{\gamma}_{70}$ & -0.20 & [-0.35, -0.04] & -2.50 & .012 & -0.15 & [-0.30, 0.00] & -1.94 & .052\\
+Grandparent * Working, $\hat{\gamma}_{11}$ & -0.02 & [-0.36, 0.32] & -0.11 & .912 & -0.07 & [-0.39, 0.25] & -0.42 & .676\\
+Before-slope * Grandparent * Working, $\hat{\gamma}_{31}$ & -0.03 & [-0.24, 0.18] & -0.28 & .777 & -0.06 & [-0.26, 0.13] & -0.63 & .527\\
+After-slope * Grandparent * Working, $\hat{\gamma}_{51}$ & -0.08 & [-0.20, 0.03] & -1.40 & .161 & 0.10 & [-0.01, 0.21] & 1.79 & .073\\
+Shift * Grandparent * Working, $\hat{\gamma}_{71}$ & -0.03 & [-0.38, 0.32] & -0.18 & .859 & -0.09 & [-0.42, 0.24] & -0.54 & .590\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -4535,37 +4618,37 @@ Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\c
 Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$\\
 \midrule
 \endhead
-Shift of not-working controls vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$) & 0.10 & 3.85 & .050 & 0.15 & 9.24 & .002\\
-Shift of working controls vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$ + $\hat{\gamma}_{22}$ + 
-$\hat{\gamma}_{32}$) & 0.00 & 0.00 & .969 & -0.08 & 5.03 & .025\\
-Shift of not-working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
-$\hat{\gamma}_{31}$) & 0.12 & 1.47 & .226 & 0.12 & 1.63 & .201\\
-Shift of working grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
-$\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
-$\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
-$\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
-$\hat{\gamma}_{33}$) & -0.09 & 1.57 & .210 & -0.10 & 2.13 & .144\\
+Shift of not-working controls vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$) & 0.10 & 3.85 & .050 & 0.15 & 9.24 & .002\\
+Shift of working controls vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$ + $\hat{\gamma}_{50}$ + 
+$\hat{\gamma}_{70}$) & 0.00 & 0.00 & .969 & -0.08 & 5.03 & .025\\
+Shift of not-working grandparents vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$ + $\hat{\gamma}_{41}$ + 
+$\hat{\gamma}_{61}$) & 0.12 & 1.47 & .226 & 0.12 & 1.63 & .201\\
+Shift of working grandparents vs. 0 ($\hat{\gamma}_{40}$ + 
+$\hat{\gamma}_{60}$ + $\hat{\gamma}_{41}$ + 
+$\hat{\gamma}_{61}$ + $\hat{\gamma}_{50}$ + 
+$\hat{\gamma}_{70}$ + $\hat{\gamma}_{51}$ +
+$\hat{\gamma}_{71}$) & -0.09 & 1.57 & .210 & -0.10 & 2.13 & .144\\
 Shift of not-working controls vs. not-working grandparents 
-($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & 0.02 & 0.04 & .834 & -0.03 & 0.10 & .746\\
+($\hat{\gamma}_{41}$ + $\hat{\gamma}_{61}$) & 0.02 & 0.04 & .834 & -0.03 & 0.10 & .746\\
 Before-slope of working controls vs. working grandparents 
-($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & 0.11 & 3.95 & .047 & 0.03 & 0.44 & .505\\
+($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & 0.11 & 3.95 & .047 & 0.03 & 0.44 & .505\\
 After-slope of working controls vs. working grandparents 
-($\hat{\gamma}_{21}$ + $\hat{\gamma}_{23}$) & -0.02 & 0.17 & .676 & 0.05 & 1.82 & .178\\
+($\hat{\gamma}_{41}$ + $\hat{\gamma}_{51}$) & -0.02 & 0.17 & .676 & 0.05 & 1.82 & .178\\
 Shift of working controls vs. working grandparents 
-($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$ + 
-$\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & -0.09 & 1.21 & .270 & -0.03 & 0.11 & .746\\
+($\hat{\gamma}_{41}$ + $\hat{\gamma}_{61}$ + 
+$\hat{\gamma}_{51}$ + $\hat{\gamma}_{71}$) & -0.09 & 1.21 & .270 & -0.03 & 0.11 & .746\\
 Shift of not-working controls vs. working controls 
-($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$) & -0.10 & 2.47 & .116 & -0.23 & 13.96 & < .001\\
+($\hat{\gamma}_{50}$ + $\hat{\gamma}_{70}$) & -0.10 & 2.47 & .116 & -0.23 & 13.96 & < .001\\
 Before-slope of not-working grandparents vs. working grandparents 
-($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & 0.02 & 0.05 & .823 & 0.02 & 0.05 & .818\\
+($\hat{\gamma}_{30}$ + $\hat{\gamma}_{31}$) & 0.02 & 0.05 & .823 & 0.02 & 0.05 & .818\\
 After-slope of not-working grandparents vs. working grandparents 
-($\hat{\gamma}_{22}$ + $\hat{\gamma}_{23}$) & 0.02 & 0.12 & .727 & 0.02 & 0.17 & .678\\
+($\hat{\gamma}_{50}$ + $\hat{\gamma}_{51}$) & 0.02 & 0.12 & .727 & 0.02 & 0.17 & .678\\
 Shift of not-working grandparents vs. working grandparents 
-($\hat{\gamma}_{22}$ + $\hat{\gamma}_{32}$ + 
-$\hat{\gamma}_{23}$ + $\hat{\gamma}_{33}$) & -0.21 & 2.87 & .090 & -0.22 & 3.48 & .062\\
+($\hat{\gamma}_{50}$ + $\hat{\gamma}_{70}$ + 
+$\hat{\gamma}_{51}$ + $\hat{\gamma}_{71}$) & -0.21 & 2.87 & .090 & -0.22 & 3.48 & .062\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -4610,14 +4693,14 @@ Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t
 \midrule
 \endhead
 Intercept, $\hat{\gamma}_{00}$ & 4.86 & [4.72, 5.00] & 67.71 & < .001 & 4.75 & [4.58, 4.92] & 55.25 & < .001\\
-Propensity score, $\hat{\gamma}_{04}$ & 0.27 & [0.01, 0.53] & 2.05 & .040 & 0.05 & [-0.21, 0.31] & 0.35 & .728\\
-After-slope, $\hat{\gamma}_{10}$ & 0.00 & [-0.04, 0.03] & -0.02 & .986 & 0.03 & [0.00, 0.06] & 1.99 & .047\\
+Propensity score, $\hat{\gamma}_{02}$ & 0.27 & [0.01, 0.53] & 2.05 & .040 & 0.05 & [-0.21, 0.31] & 0.35 & .728\\
+After-slope, $\hat{\gamma}_{20}$ & 0.00 & [-0.04, 0.03] & -0.02 & .986 & 0.03 & [0.00, 0.06] & 1.99 & .047\\
 Grandparent, $\hat{\gamma}_{01}$ & 0.00 & [-0.22, 0.21] & -0.04 & .967 & 0.17 & [-0.06, 0.40] & 1.45 & .148\\
-Caring, $\hat{\gamma}_{02}$ & -0.10 & [-0.22, 0.02] & -1.67 & .094 & 0.02 & [-0.09, 0.12] & 0.34 & .738\\
-After-slope * Grandparent, $\hat{\gamma}_{11}$ & 0.07 & [0.00, 0.14] & 1.85 & .065 & 0.04 & [-0.02, 0.11] & 1.24 & .216\\
-After-slope * Caring, $\hat{\gamma}_{12}$ & 0.04 & [-0.01, 0.10] & 1.70 & .089 & -0.01 & [-0.06, 0.03] & -0.59 & .557\\
-Grandparent * Caring, $\hat{\gamma}_{03}$ & 0.32 & [0.02, 0.62] & 2.08 & .038 & 0.21 & [-0.07, 0.48] & 1.45 & .147\\
-After-slope * Grandparent * Caring, $\hat{\gamma}_{13}$ & -0.08 & [-0.19, 0.03] & -1.40 & .162 & -0.03 & [-0.13, 0.08] & -0.51 & .613\\
+Caring, $\hat{\gamma}_{10}$ & -0.10 & [-0.22, 0.02] & -1.67 & .094 & 0.02 & [-0.09, 0.12] & 0.34 & .738\\
+After-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.07 & [0.00, 0.14] & 1.85 & .065 & 0.04 & [-0.02, 0.11] & 1.24 & .216\\
+After-slope * Caring, $\hat{\gamma}_{30}$ & 0.04 & [-0.01, 0.10] & 1.70 & .089 & -0.01 & [-0.06, 0.03] & -0.59 & .557\\
+Grandparent * Caring, $\hat{\gamma}_{11}$ & 0.32 & [0.02, 0.62] & 2.08 & .038 & 0.21 & [-0.07, 0.48] & 1.45 & .147\\
+After-slope * Grandparent * Caring, $\hat{\gamma}_{31}$ & -0.08 & [-0.19, 0.03] & -1.40 & .162 & -0.03 & [-0.13, 0.08] & -0.51 & .613\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -4660,9 +4743,9 @@ Linear Contrast & $\hat{\gamma}_{c}$ & $\chi^2$ & $p$ & $\hat{\gamma}_{c}$ & $\c
 \midrule
 \endhead
 After-slope of caring controls vs. caring grandparents 
-($\hat{\gamma}_{11}$ + $\hat{\gamma}_{13}$) & -0.01 & 0.10 & .751 & 0.01 & 0.13 & .722\\
+($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & -0.01 & 0.10 & .751 & 0.01 & 0.13 & .722\\
 After-slope of not-caring grandparents vs. caring grandparents 
-($\hat{\gamma}_{12}$ + $\hat{\gamma}_{13}$) & -0.04 & 0.49 & .486 & -0.04 & 0.73 & .392\\
+($\hat{\gamma}_{30}$ + $\hat{\gamma}_{31}$) & -0.04 & 0.49 & .486 & -0.04 & 0.73 & .392\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -4697,9 +4780,9 @@ one), the heterogeneous variance models estimate two additional random
 intercept/slope covariances. Both models estimate heterogeneous random
 intercept variances for the grandparent and control groups. \emph{Var.}
 = random slope variance; \emph{SD} = standard deviation; \emph{LR} =
-likelihood ratio; \emph{p} = p-value (of the LR test); \emph{GP greater}
-= indicating if the random slope variance of the grandparents is larger
-than that of either control group.}
+likelihood ratio; \emph{p} = \emph{p}-value (of the LR test); \emph{GP
+greater} = indicating if the random slope variance of the grandparents
+is larger than that of either control group.}
 \end{TableNotes}
 
 \scriptsize{
@@ -4764,9 +4847,9 @@ one), the heterogeneous variance models estimate two additional random
 intercept/slope covariances. Both models estimate heterogeneous random
 intercept variances for the grandparent and control groups. \emph{Var.}
 = random slope variance; \emph{SD} = standard deviation; \emph{LR} =
-likelihood ratio; \emph{p} = p-value (of the LR test); \emph{GP greater}
-= indicating if the random slope variance of the grandparents is larger
-than that of either control group.}
+likelihood ratio; \emph{p} = \emph{p}-value (of the LR test); \emph{GP
+greater} = indicating if the random slope variance of the grandparents
+is larger than that of either control group.}
 \end{TableNotes}
 
 \scriptsize{
@@ -4831,9 +4914,9 @@ one), the heterogeneous variance models estimate two additional random
 intercept/slope covariances. Both models estimate heterogeneous random
 intercept variances for the grandparent and control groups. \emph{Var.}
 = random slope variance; \emph{SD} = standard deviation; \emph{LR} =
-likelihood ratio; \emph{p} = p-value (of the LR test); \emph{GP greater}
-= indicating if the random slope variance of the grandparents is larger
-than that of either control group.}
+likelihood ratio; \emph{p} = \emph{p}-value (of the LR test); \emph{GP
+greater} = indicating if the random slope variance of the grandparents
+is larger than that of either control group.}
 \end{TableNotes}
 
 \scriptsize{
@@ -4898,9 +4981,9 @@ one), the heterogeneous variance models estimate two additional random
 intercept/slope covariances. Both models estimate heterogeneous random
 intercept variances for the grandparent and control groups. \emph{Var.}
 = random slope variance; \emph{SD} = standard deviation; \emph{LR} =
-likelihood ratio; \emph{p} = p-value (of the LR test); \emph{GP greater}
-= indicating if the random slope variance of the grandparents is larger
-than that of either control group.}
+likelihood ratio; \emph{p} = \emph{p}-value (of the LR test); \emph{GP
+greater} = indicating if the random slope variance of the grandparents
+is larger than that of either control group.}
 \end{TableNotes}
 
 \scriptsize{
@@ -4965,9 +5048,9 @@ one), the heterogeneous variance models estimate two additional random
 intercept/slope covariances. Both models estimate heterogeneous random
 intercept variances for the grandparent and control groups. \emph{Var.}
 = random slope variance; \emph{SD} = standard deviation; \emph{LR} =
-likelihood ratio; \emph{p} = p-value (of the LR test); \emph{GP greater}
-= indicating if the random slope variance of the grandparents is larger
-than that of either control group.}
+likelihood ratio; \emph{p} = \emph{p}-value (of the LR test); \emph{GP
+greater} = indicating if the random slope variance of the grandparents
+is larger than that of either control group.}
 \end{TableNotes}
 
 \scriptsize{
@@ -5032,9 +5115,9 @@ one), the heterogeneous variance models estimate two additional random
 intercept/slope covariances. Both models estimate heterogeneous random
 intercept variances for the grandparent and control groups. \emph{Var.}
 = random slope variance; \emph{SD} = standard deviation; \emph{LR} =
-likelihood ratio; \emph{p} = p-value (of the LR test); \emph{GP greater}
-= indicating if the random slope variance of the grandparents is larger
-than that of either control group.}
+likelihood ratio; \emph{p} = \emph{p}-value (of the LR test); \emph{GP
+greater} = indicating if the random slope variance of the grandparents
+is larger than that of either control group.}
 \end{TableNotes}
 
 \scriptsize{
@@ -5285,50 +5368,62 @@ HRS &  &  &  &  &  &  &  & \\
 
 
 
+
 \begin{figure}
 \centering
 \includegraphics{Figs/loess-agree-1.pdf}
-\caption{\label{fig:loess-agree}Violin Plots and LOESS Line of Agreeableness.}
+\caption{\label{fig:loess-agree}Violin Plots for Agreeableness Including Means
+Over Time and LOESS Line.}
 \end{figure}
+
 
 
 
 \begin{figure}
 \centering
 \includegraphics{Figs/loess-con-1.pdf}
-\caption{\label{fig:loess-con}Violin Plots and LOESS Line of Conscientiousness.}
+\caption{\label{fig:loess-con}Violin Plots for Conscientiousness Including Means
+Over Time and LOESS Line.}
 \end{figure}
+
 
 
 
 \begin{figure}
 \centering
 \includegraphics{Figs/loess-extra-1.pdf}
-\caption{\label{fig:loess-extra}Violin Plots and LOESS Line of Extraversion.}
+\caption{\label{fig:loess-extra}Violin Plots for Extraversion Including Means Over
+Time and LOESS Line.}
 \end{figure}
+
 
 
 
 \begin{figure}
 \centering
 \includegraphics{Figs/loess-neur-1.pdf}
-\caption{\label{fig:loess-neur}Violin Plots and LOESS Line of Neuroticism.}
+\caption{\label{fig:loess-neur}Violin Plots for Neuroticism Including Means Over
+Time and LOESS Line.}
 \end{figure}
+
 
 
 
 \begin{figure}
 \centering
 \includegraphics{Figs/loess-open-1.pdf}
-\caption{\label{fig:loess-open}Violin Plots and LOESS Line of Openness.}
+\caption{\label{fig:loess-open}Violin Plots for Openness Including Means Over Time
+and LOESS Line.}
 \end{figure}
+
 
 
 
 \begin{figure}
 \centering
 \includegraphics{Figs/loess-swls-1.pdf}
-\caption{\label{fig:loess-swls}Violin Plots and LOESS Line of Life Satisfaction.}
+\caption{\label{fig:loess-swls}Violin Plots for Life Satisfaction Including Means
+Over Time and LOESS Line.}
 \end{figure}
 
 
@@ -5758,32 +5853,30 @@ loaded via a namespace (and not attached): {[}1{]} nlme\_3.1-152
 fs\_1.5.0 lubridate\_1.7.9.2\\
 {[}4{]} httr\_1.4.2 numDeriv\_2016.8-1.1 tools\_4.0.4\\
 {[}7{]} backports\_1.2.1 utf8\_1.2.1 R6\_2.5.0\\
-{[}10{]} mgcv\_1.8-33 DBI\_1.1.0 colorspace\_2.0-1\\
-{[}13{]} withr\_2.4.2 tidyselect\_1.1.0 mnormt\_2.0.2\\
-{[}16{]} curl\_4.3.1 compiler\_4.0.4 cli\_2.5.0\\
-{[}19{]} rvest\_0.3.6 xml2\_1.3.2 sandwich\_3.0-0\\
-{[}22{]} labeling\_0.4.2 bookdown\_0.21 digest\_0.6.27\\
-{[}25{]} foreign\_0.8-81 minqa\_1.2.4 rmarkdown\_2.5\\
-{[}28{]} rio\_0.5.16 base64enc\_0.1-3 pkgconfig\_2.0.3\\
-{[}31{]} htmltools\_0.5.0 highr\_0.8 dbplyr\_1.4.4\\
-{[}34{]} fastmap\_1.0.1 rlang\_0.4.11 readxl\_1.3.1\\
-{[}37{]} rstudioapi\_0.13 shiny\_1.5.0 farver\_2.1.0\\
-{[}40{]} generics\_0.1.0 zoo\_1.8-8 jsonlite\_1.7.2\\
-{[}43{]} zip\_2.1.1 magrittr\_2.0.1 Rcpp\_1.0.6\\
-{[}46{]} munsell\_0.5.0 fansi\_0.5.0 abind\_1.4-5\\
-{[}49{]} lifecycle\_1.0.0 stringi\_1.5.3 yaml\_2.2.1\\
-{[}52{]} grid\_4.0.4 blob\_1.2.1 parallel\_4.0.4\\
-{[}55{]} promises\_1.1.1 crayon\_1.4.1 miniUI\_0.1.1.1\\
-{[}58{]} lattice\_0.20-41 haven\_2.3.1 splines\_4.0.4\\
-{[}61{]} hms\_0.5.3 tmvnsim\_1.0-2 knitr\_1.30\\
-{[}64{]} pillar\_1.6.1 boot\_1.3-26 codetools\_0.2-18\\
-{[}67{]} reprex\_0.3.0 glue\_1.4.2 evaluate\_0.14\\
-{[}70{]} data.table\_1.13.2 modelr\_0.1.8 nloptr\_1.2.2.2\\
-{[}73{]} vctrs\_0.3.8 httpuv\_1.5.4 cellranger\_1.1.0\\
-{[}76{]} gtable\_0.3.0 assertthat\_0.2.1 openxlsx\_4.2.3\\
-{[}79{]} xfun\_0.19 mime\_0.9 xtable\_1.8-4\\
-{[}82{]} broom\_0.7.6 later\_1.1.0.1 statmod\_1.4.35\\
-{[}85{]} ellipsis\_0.3.2
+{[}10{]} DBI\_1.1.0 colorspace\_2.0-1 withr\_2.4.2\\
+{[}13{]} tidyselect\_1.1.0 mnormt\_2.0.2 curl\_4.3.1\\
+{[}16{]} compiler\_4.0.4 cli\_2.5.0 rvest\_0.3.6\\
+{[}19{]} xml2\_1.3.2 sandwich\_3.0-0 bookdown\_0.21\\
+{[}22{]} digest\_0.6.27 foreign\_0.8-81 minqa\_1.2.4\\
+{[}25{]} rmarkdown\_2.5 rio\_0.5.16 base64enc\_0.1-3\\
+{[}28{]} pkgconfig\_2.0.3 htmltools\_0.5.0 dbplyr\_1.4.4\\
+{[}31{]} fastmap\_1.0.1 rlang\_0.4.11 readxl\_1.3.1\\
+{[}34{]} rstudioapi\_0.13 shiny\_1.5.0 generics\_0.1.0\\
+{[}37{]} zoo\_1.8-8 jsonlite\_1.7.2 zip\_2.1.1\\
+{[}40{]} magrittr\_2.0.1 Rcpp\_1.0.6 munsell\_0.5.0\\
+{[}43{]} fansi\_0.5.0 abind\_1.4-5 lifecycle\_1.0.0\\
+{[}46{]} stringi\_1.5.3 yaml\_2.2.1 grid\_4.0.4\\
+{[}49{]} blob\_1.2.1 parallel\_4.0.4 promises\_1.1.1\\
+{[}52{]} crayon\_1.4.1 miniUI\_0.1.1.1 lattice\_0.20-41\\
+{[}55{]} haven\_2.3.1 splines\_4.0.4 hms\_0.5.3\\
+{[}58{]} tmvnsim\_1.0-2 knitr\_1.30 pillar\_1.6.1\\
+{[}61{]} boot\_1.3-26 codetools\_0.2-18 reprex\_0.3.0\\
+{[}64{]} glue\_1.4.2 evaluate\_0.14 data.table\_1.13.2\\
+{[}67{]} modelr\_0.1.8 nloptr\_1.2.2.2 vctrs\_0.3.8\\
+{[}70{]} httpuv\_1.5.4 cellranger\_1.1.0 gtable\_0.3.0\\
+{[}73{]} assertthat\_0.2.1 openxlsx\_4.2.3 xfun\_0.19\\
+{[}76{]} mime\_0.9 xtable\_1.8-4 broom\_0.7.6\\
+{[}79{]} later\_1.1.0.1 statmod\_1.4.35 ellipsis\_0.3.2
 
 \newpage
 

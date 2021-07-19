@@ -7,6 +7,85 @@
 \setcounter{page}{1} <!-- to reset page numbering -->
 
 \noindent
+**Model Equations**
+
+Model equation for the basic models (ignoring the additional nesting in households applied to the majority of models):
+\begin{equation}
+\begin{split}
+y_{ti} =& \beta_{0i} + \beta_{1i}before_{ti} + \beta_{2i}after_{ti} + \beta_{3i}shift_{ti} + e_{ti} \\
+ & \beta_{0i} = \gamma_{00} + \gamma_{01}grandparent_i + \gamma_{02}pscore_i + \upsilon_{0i} \\
+ & \beta_{1i} = \gamma_{10} + \gamma_{11}grandparent_i \\
+ & \beta_{2i} = \gamma_{20} + \gamma_{21}grandparent_i \\
+ & \beta_{3i} = \gamma_{30} + \gamma_{31}grandparent_i\ ,
+\end{split}
+(\#eq:mlm1)
+\end{equation}
+<!-- \begin{equation}\tag*{(Reduced-form)}
+\begin{split}
+ y_{ti} =& \gamma_{00} + \gamma_{01}grandparent_i + \gamma_{02}pscore_i + \gamma_{10}before_{ti} \\
+         & + \gamma_{11}before_{ti}grandparent_i + \gamma_{20}after_{ti} \\
+         & + \gamma_{21}after_{ti}grandparent_i + \gamma_{30}shift_{ti} \\
+         & + \gamma_{31}shift_{ti}grandparent_i + \upsilon_{0i} + e_{ti}\ ,
+\end{split}
+\end{equation} -->
+where at time $t$ for person $i$ $e_{ti} \sim N(0, \sigma_e^2)$ and $\upsilon_{0i} \sim N(0, \tau_{00})$. $y_{ti}$ represented either one of the Big Five or life satisfaction. Separate models were computed for LISS and HRS samples, and for parent and nonparent matched controls.  
+Model equation for the models including the gender interaction (moderator variable $female_i$):
+\begin{equation}
+\begin{split}
+y_{ti} =& \beta_{0i} + \beta_{1i}before_{ti} + \beta_{2i}after_{ti} + \beta_{3i}shift_{ti} + e_{ti} \\
+ & \beta_{0i} = \gamma_{00} + \gamma_{01}grandparent_i + \gamma_{02}female_i + \gamma_{03}grandparent_{i}female_{i} \\
+ & \hphantom{{}=\beta_{0i}}+ \gamma_{04}pscore_i + \upsilon_{0i} \\
+ & \beta_{1i} = \gamma_{10} + \gamma_{11}grandparent_i + \gamma_{12}female_i + \gamma_{13}grandparent_{i}female_{i} \\
+ & \beta_{2i} = \gamma_{20} + \gamma_{21}grandparent_i + \gamma_{22}female_i + \gamma_{23}grandparent_{i}female_{i} \\
+ & \beta_{3i} = \gamma_{30} + \gamma_{31}grandparent_i + \gamma_{32}female_i + \gamma_{33}grandparent_{i}female_{i}\ ,
+\end{split}
+  (\#eq:mlm2)
+\end{equation}
+<!-- \begin{equation}\tag*{(Reduced-form)}
+\begin{split}
+ y_{ti} =& \gamma_{00} + \gamma_{01}grandparent_i + \gamma_{02}female_i + \gamma_{03}grandparent_{i}female_{i} \\
+ & + \gamma_{04}pscore_i + \gamma_{10}before_{ti} + \gamma_{11}before_{ti}grandparent_i \\
+ & + \gamma_{12}before_{ti}female_i + \gamma_{13}before_{ti}grandparent_{i}female_{i} \\
+ & + \gamma_{20}after_{ti} + \gamma_{21}after_{ti}grandparent_i + \gamma_{22}after_{ti}female_i \\
+ & + \gamma_{23}after_{ti}grandparent_{i}female_{i} + \gamma_{30}shift_{ti} \\ 
+ & + \gamma_{31}shift_{ti}grandparent_i + \gamma_{32}shift_{ti}female_i \\
+ & + \gamma_{33}shift_{ti}grandparent_{i}female_{i} + \upsilon_{0i} + e_{ti}\ ,
+\end{split}
+\end{equation} -->
+where $e_{ti} \sim N(0, \sigma_e^2)$ and $\upsilon_{0i} \sim N(0, \tau_{00})$. Again, we estimated separate models for each sample (LISS, HRS) and each comparison group (parents, nonparents).  
+Model equation for the models including the interaction by paid work (moderator variable $working_{ti}$):
+\begin{equation}
+\begin{split}
+y_{ti} =& \beta_{0i} + \beta_{1i}working_{ti} + \beta_{2i}before_{ti} + \beta_{3i}before_{ti}working_{ti} + \beta_{4i}after_{ti} \\
+ & + \beta_{5i}after_{ti}working_{ti} + \beta_{6i}shift_{ti} + \beta_{7i}shift_{ti}working_{ti} + e_{ti} \\
+ & \beta_{0i} = \gamma_{00} + \gamma_{01}grandparent_i + \gamma_{02}pscore_i + \upsilon_{0i} \\
+ & \beta_{1i} = \gamma_{10} + \gamma_{11}grandparent_i \\
+ & \beta_{2i} = \gamma_{20} + \gamma_{21}grandparent_i \\
+ & \beta_{3i} = \gamma_{30} + \gamma_{31}grandparent_i \\
+ & \beta_{4i} = \gamma_{40} + \gamma_{41}grandparent_i \\
+ & \beta_{5i} = \gamma_{50} + \gamma_{51}grandparent_i \\
+ & \beta_{6i} = \gamma_{60} + \gamma_{61}grandparent_i \\
+ & \beta_{7i} = \gamma_{70} + \gamma_{71}grandparent_i\ ,
+\end{split}
+  (\#eq:mlm3)
+\end{equation}
+where $e_{ti} \sim N(0, \sigma_e^2)$ and $\upsilon_{0i} \sim N(0, \tau_{00})$. We estimated separate models for each comparison group (parents, nonparents) in the HRS.  
+Model equation for the models including the interaction by grandchild care (moderator variable $caring_{ti}$):
+\begin{equation}
+\begin{split}
+y_{ti} =& \beta_{0i} + \beta_{1i}caring_{ti} + \beta_{2i}after_{ti} + \beta_{3i}after_{ti}caring_{ti} + e_{ti} \\
+ & \beta_{0i} = \gamma_{00} + \gamma_{01}grandparent_i + \gamma_{02}pscore_i + \upsilon_{0i} \\
+ & \beta_{1i} = \gamma_{10} + \gamma_{11}grandparent_i \\
+ & \beta_{2i} = \gamma_{20} + \gamma_{21}grandparent_i \\
+ & \beta_{3i} = \gamma_{30} + \gamma_{31}grandparent_i\ ,
+\end{split}
+  (\#eq:mlm4)
+\end{equation}
+where $e_{ti} \sim N(0, \sigma_e^2)$ and $\upsilon_{0i} \sim N(0, \tau_{00})$. Restricted to the HRS post-transition period, we estimated separate models for each comparison group (parents, nonparents).  
+
+\newpage
+
+\noindent
 **Supplemental Tables**  
 
 ```{r icc-table, results="asis"}
@@ -678,24 +757,24 @@ agree_work_df <-
 
 colnames(agree_work_df)[c(4,8)] <- c("p", "p")
 
-rownames_agree_work_df <- c("Intercept, $\\hat{\\gamma}_{00}$",
-                      "Propensity score, $\\hat{\\gamma}_{04}$", 
-                      "Before-slope, $\\hat{\\gamma}_{10}$", 
-                      "After-slope, $\\hat{\\gamma}_{20}$", 
-                      "Shift, $\\hat{\\gamma}_{30}$",
+rownames_work <- c("Intercept, $\\hat{\\gamma}_{00}$",
+                      "Propensity score, $\\hat{\\gamma}_{02}$", 
+                      "Before-slope, $\\hat{\\gamma}_{20}$", 
+                      "After-slope, $\\hat{\\gamma}_{40}$", 
+                      "Shift, $\\hat{\\gamma}_{60}$",
                       "Grandparent, $\\hat{\\gamma}_{01}$", 
-                      "Working, $\\hat{\\gamma}_{02}$", 
-                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
-                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$", 
-                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$",
-                      "Before-slope * Working, $\\hat{\\gamma}_{12}$", 
-                      "After-slope * Working, $\\hat{\\gamma}_{22}$", 
-                      "Shift * Working, $\\hat{\\gamma}_{32}$",
-                      "Grandparent * Working, $\\hat{\\gamma}_{03}$", 
-                      "Before-slope * Grandparent * Working, $\\hat{\\gamma}_{13}$", 
-                      "After-slope * Grandparent * Working, $\\hat{\\gamma}_{23}$", 
-                      "Shift * Grandparent * Working, $\\hat{\\gamma}_{33}$")
-rownames(agree_work_df) <- rownames_agree_work_df
+                      "Working, $\\hat{\\gamma}_{10}$", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{21}$", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{41}$", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{61}$",
+                      "Before-slope * Working, $\\hat{\\gamma}_{30}$", 
+                      "After-slope * Working, $\\hat{\\gamma}_{50}$", 
+                      "Shift * Working, $\\hat{\\gamma}_{70}$",
+                      "Grandparent * Working, $\\hat{\\gamma}_{11}$", 
+                      "Before-slope * Grandparent * Working, $\\hat{\\gamma}_{31}$", 
+                      "After-slope * Grandparent * Working, $\\hat{\\gamma}_{51}$", 
+                      "Shift * Grandparent * Working, $\\hat{\\gamma}_{71}$")
+rownames(agree_work_df) <- rownames_work
 
 apa_table(
   agree_work_df
@@ -725,38 +804,38 @@ apa_table(
 tabcon_agree_work <- cbind(contrasts_work_agree[[1]][, c(1, 2, 4)],  # parents
                            contrasts_work_agree[[2]][, c(1, 2, 4)])  # nonparents
 
-rownames_tabcon_agree_work <- c("Shift of not-working controls vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$)", 
-                           "Shift of working controls vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{22}$ + 
-                              $\\hat{\\gamma}_{32}$)",
-                           "Shift of not-working grandparents vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{21}$ + 
-                              $\\hat{\\gamma}_{31}$)",
-                           "Shift of working grandparents vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{21}$ + 
-                              $\\hat{\\gamma}_{31}$ + $\\hat{\\gamma}_{22}$ + 
-                              $\\hat{\\gamma}_{32}$ + $\\hat{\\gamma}_{23}$ +
-                              $\\hat{\\gamma}_{33}$)",
+rownames_tabcon_work <- c("Shift of not-working controls vs. 0 ($\\hat{\\gamma}_{40}$ + 
+                              $\\hat{\\gamma}_{60}$)", 
+                           "Shift of working controls vs. 0 ($\\hat{\\gamma}_{40}$ + 
+                              $\\hat{\\gamma}_{60}$ + $\\hat{\\gamma}_{50}$ + 
+                              $\\hat{\\gamma}_{70}$)",
+                           "Shift of not-working grandparents vs. 0 ($\\hat{\\gamma}_{40}$ + 
+                              $\\hat{\\gamma}_{60}$ + $\\hat{\\gamma}_{41}$ + 
+                              $\\hat{\\gamma}_{61}$)",
+                           "Shift of working grandparents vs. 0 ($\\hat{\\gamma}_{40}$ + 
+                              $\\hat{\\gamma}_{60}$ + $\\hat{\\gamma}_{41}$ + 
+                              $\\hat{\\gamma}_{61}$ + $\\hat{\\gamma}_{50}$ + 
+                              $\\hat{\\gamma}_{70}$ + $\\hat{\\gamma}_{51}$ +
+                              $\\hat{\\gamma}_{71}$)",
                            "Shift of not-working controls vs. not-working grandparents 
-                              ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{31}$)",
+                              ($\\hat{\\gamma}_{41}$ + $\\hat{\\gamma}_{61}$)",
                            "Before-slope of working controls vs. working grandparents 
-                              ($\\hat{\\gamma}_{11}$ + $\\hat{\\gamma}_{13}$)",
+                              ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{31}$)",
                            "After-slope of working controls vs. working grandparents 
-                              ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{23}$)",
+                              ($\\hat{\\gamma}_{41}$ + $\\hat{\\gamma}_{51}$)",
                            "Shift of working controls vs. working grandparents 
-                              ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{31}$ + 
-                              $\\hat{\\gamma}_{23}$ + $\\hat{\\gamma}_{33}$)",
+                              ($\\hat{\\gamma}_{41}$ + $\\hat{\\gamma}_{61}$ + 
+                              $\\hat{\\gamma}_{51}$ + $\\hat{\\gamma}_{71}$)",
                            "Shift of not-working controls vs. working controls 
-                              ($\\hat{\\gamma}_{22}$ + $\\hat{\\gamma}_{32}$)",
+                              ($\\hat{\\gamma}_{50}$ + $\\hat{\\gamma}_{70}$)",
                            "Before-slope of not-working grandparents vs. working grandparents 
-                              ($\\hat{\\gamma}_{12}$ + $\\hat{\\gamma}_{13}$)",
+                              ($\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{31}$)",
                            "After-slope of not-working grandparents vs. working grandparents 
-                              ($\\hat{\\gamma}_{22}$ + $\\hat{\\gamma}_{23}$)",
+                              ($\\hat{\\gamma}_{50}$ + $\\hat{\\gamma}_{51}$)",
                            "Shift of not-working grandparents vs. working grandparents 
-                              ($\\hat{\\gamma}_{22}$ + $\\hat{\\gamma}_{32}$ + 
-                              $\\hat{\\gamma}_{23}$ + $\\hat{\\gamma}_{33}$)")
-rownames(tabcon_agree_work) <- rownames_tabcon_agree_work
+                              ($\\hat{\\gamma}_{50}$ + $\\hat{\\gamma}_{70}$ + 
+                              $\\hat{\\gamma}_{51}$ + $\\hat{\\gamma}_{71}$)")
+rownames(tabcon_agree_work) <- rownames_tabcon_work
 
 apa_table(
   tabcon_agree_work
@@ -789,16 +868,16 @@ agree_care_df <-
 
 colnames(agree_care_df)[c(4,8)] <- c("p", "p")
 
-rownames_agree_care_df <- c("Intercept, $\\hat{\\gamma}_{00}$",
-                      "Propensity score, $\\hat{\\gamma}_{04}$", 
-                      "After-slope, $\\hat{\\gamma}_{10}$", 
+rownames_care_df <- c("Intercept, $\\hat{\\gamma}_{00}$",
+                      "Propensity score, $\\hat{\\gamma}_{02}$", 
+                      "After-slope, $\\hat{\\gamma}_{20}$", 
                       "Grandparent, $\\hat{\\gamma}_{01}$", 
-                      "Caring, $\\hat{\\gamma}_{02}$", 
-                      "After-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
-                      "After-slope * Caring, $\\hat{\\gamma}_{12}$", 
-                      "Grandparent * Caring, $\\hat{\\gamma}_{03}$", 
-                      "After-slope * Grandparent * Caring, $\\hat{\\gamma}_{13}$")
-rownames(agree_care_df) <- rownames_agree_care_df
+                      "Caring, $\\hat{\\gamma}_{10}$", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$", 
+                      "After-slope * Caring, $\\hat{\\gamma}_{30}$", 
+                      "Grandparent * Caring, $\\hat{\\gamma}_{11}$", 
+                      "After-slope * Grandparent * Caring, $\\hat{\\gamma}_{31}$")
+rownames(agree_care_df) <- rownames_care_df
 
 apa_table(
   agree_care_df
@@ -826,11 +905,11 @@ apa_table(
 tabcon_agree_care <- cbind(contrasts_care_agree[[1]][, c(1, 2, 4)],  # parents
                            contrasts_care_agree[[2]][, c(1, 2, 4)])  # nonparents
 
-rownames_tabcon_agree_care <- c("After-slope of caring controls vs. caring grandparents 
-                                  ($\\hat{\\gamma}_{11}$ + $\\hat{\\gamma}_{13}$)",
-                                "After-slope of not-caring grandparents vs. caring grandparents 
-                                  ($\\hat{\\gamma}_{12}$ + $\\hat{\\gamma}_{13}$)")
-rownames(tabcon_agree_care) <- rownames_tabcon_agree_care
+rownames_tabcon_care <- c("After-slope of caring controls vs. caring grandparents 
+                          ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{31}$)",
+                          "After-slope of not-caring grandparents vs. caring grandparents 
+                          ($\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{31}$)")
+rownames(tabcon_agree_care) <- rownames_tabcon_care
 
 apa_table(
   tabcon_agree_care
@@ -1160,24 +1239,7 @@ con_work_df <-
 
 colnames(con_work_df)[c(4,8)] <- c("p", "p")
 
-rownames_con_work_df <- c("Intercept, $\\hat{\\gamma}_{00}$",
-                      "Propensity score, $\\hat{\\gamma}_{04}$", 
-                      "Before-slope, $\\hat{\\gamma}_{10}$", 
-                      "After-slope, $\\hat{\\gamma}_{20}$", 
-                      "Shift, $\\hat{\\gamma}_{30}$",
-                      "Grandparent, $\\hat{\\gamma}_{01}$", 
-                      "Working, $\\hat{\\gamma}_{02}$", 
-                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
-                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$", 
-                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$",
-                      "Before-slope * Working, $\\hat{\\gamma}_{12}$", 
-                      "After-slope * Working, $\\hat{\\gamma}_{22}$", 
-                      "Shift * Working, $\\hat{\\gamma}_{32}$",
-                      "Grandparent * Working, $\\hat{\\gamma}_{03}$", 
-                      "Before-slope * Grandparent * Working, $\\hat{\\gamma}_{13}$", 
-                      "After-slope * Grandparent * Working, $\\hat{\\gamma}_{23}$", 
-                      "Shift * Grandparent * Working, $\\hat{\\gamma}_{33}$")
-rownames(con_work_df) <- rownames_con_work_df
+rownames(con_work_df) <- rownames_work # defined above (agree)
 
 apa_table(
   con_work_df
@@ -1207,38 +1269,7 @@ apa_table(
 tabcon_con_work <- cbind(contrasts_work_con[[1]][, c(1, 2, 4)],  # parents
                            contrasts_work_con[[2]][, c(1, 2, 4)])  # nonparents
 
-rownames_tabcon_con_work <- c("Shift of not-working controls vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$)", 
-                           "Shift of working controls vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{22}$ + 
-                              $\\hat{\\gamma}_{32}$)",
-                           "Shift of not-working grandparents vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{21}$ + 
-                              $\\hat{\\gamma}_{31}$)",
-                           "Shift of working grandparents vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{21}$ + 
-                              $\\hat{\\gamma}_{31}$ + $\\hat{\\gamma}_{22}$ + 
-                              $\\hat{\\gamma}_{32}$ + $\\hat{\\gamma}_{23}$ +
-                              $\\hat{\\gamma}_{33}$)",
-                           "Shift of not-working controls vs. not-working grandparents 
-                              ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{31}$)",
-                           "Before-slope of working controls vs. working grandparents 
-                              ($\\hat{\\gamma}_{11}$ + $\\hat{\\gamma}_{13}$)",
-                           "After-slope of working controls vs. working grandparents 
-                              ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{23}$)",
-                           "Shift of working controls vs. working grandparents 
-                              ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{31}$ + 
-                              $\\hat{\\gamma}_{23}$ + $\\hat{\\gamma}_{33}$)",
-                           "Shift of not-working controls vs. working controls 
-                              ($\\hat{\\gamma}_{22}$ + $\\hat{\\gamma}_{32}$)",
-                           "Before-slope of not-working grandparents vs. working grandparents 
-                              ($\\hat{\\gamma}_{12}$ + $\\hat{\\gamma}_{13}$)",
-                           "After-slope of not-working grandparents vs. working grandparents 
-                              ($\\hat{\\gamma}_{22}$ + $\\hat{\\gamma}_{23}$)",
-                           "Shift of not-working grandparents vs. working grandparents 
-                              ($\\hat{\\gamma}_{22}$ + $\\hat{\\gamma}_{32}$ + 
-                              $\\hat{\\gamma}_{23}$ + $\\hat{\\gamma}_{33}$)")
-rownames(tabcon_con_work) <- rownames_tabcon_con_work
+rownames(tabcon_con_work) <- rownames_tabcon_work # defined above (agree)
 
 apa_table(
   tabcon_con_work
@@ -1271,16 +1302,7 @@ con_care_df <-
 
 colnames(con_care_df)[c(4,8)] <- c("p", "p")
 
-rownames_con_care_df <- c("Intercept, $\\hat{\\gamma}_{00}$",
-                      "Propensity score, $\\hat{\\gamma}_{04}$", 
-                      "After-slope, $\\hat{\\gamma}_{10}$", 
-                      "Grandparent, $\\hat{\\gamma}_{01}$", 
-                      "Caring, $\\hat{\\gamma}_{02}$", 
-                      "After-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
-                      "After-slope * Caring, $\\hat{\\gamma}_{12}$", 
-                      "Grandparent * Caring, $\\hat{\\gamma}_{03}$", 
-                      "After-slope * Grandparent * Caring, $\\hat{\\gamma}_{13}$")
-rownames(con_care_df) <- rownames_con_care_df
+rownames(con_care_df) <- rownames_care_df # defined above (agree)
 
 apa_table(
   con_care_df
@@ -1308,11 +1330,7 @@ apa_table(
 tabcon_con_care <- cbind(contrasts_care_con[[1]][, c(1, 2, 4)],  # parents
                            contrasts_care_con[[2]][, c(1, 2, 4)])  # nonparents
 
-rownames_tabcon_con_care <- c("After-slope of caring controls vs. caring grandparents 
-                                  ($\\hat{\\gamma}_{11}$ + $\\hat{\\gamma}_{13}$)",
-                                "After-slope of not-caring grandparents vs. caring grandparents 
-                                  ($\\hat{\\gamma}_{12}$ + $\\hat{\\gamma}_{13}$)")
-rownames(tabcon_con_care) <- rownames_tabcon_con_care
+rownames(tabcon_con_care) <- rownames_tabcon_care # defined above (agree)
 
 apa_table(
   tabcon_con_care
@@ -1642,24 +1660,7 @@ extra_work_df <-
 
 colnames(extra_work_df)[c(4,8)] <- c("p", "p")
 
-rownames_extra_work_df <- c("Intercept, $\\hat{\\gamma}_{00}$",
-                      "Propensity score, $\\hat{\\gamma}_{04}$", 
-                      "Before-slope, $\\hat{\\gamma}_{10}$", 
-                      "After-slope, $\\hat{\\gamma}_{20}$", 
-                      "Shift, $\\hat{\\gamma}_{30}$",
-                      "Grandparent, $\\hat{\\gamma}_{01}$", 
-                      "Working, $\\hat{\\gamma}_{02}$", 
-                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
-                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$", 
-                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$",
-                      "Before-slope * Working, $\\hat{\\gamma}_{12}$", 
-                      "After-slope * Working, $\\hat{\\gamma}_{22}$", 
-                      "Shift * Working, $\\hat{\\gamma}_{32}$",
-                      "Grandparent * Working, $\\hat{\\gamma}_{03}$", 
-                      "Before-slope * Grandparent * Working, $\\hat{\\gamma}_{13}$", 
-                      "After-slope * Grandparent * Working, $\\hat{\\gamma}_{23}$", 
-                      "Shift * Grandparent * Working, $\\hat{\\gamma}_{33}$")
-rownames(extra_work_df) <- rownames_extra_work_df
+rownames(extra_work_df) <- rownames_work # defined above (agree)
 
 apa_table(
   extra_work_df
@@ -1689,38 +1690,7 @@ apa_table(
 tabcon_extra_work <- cbind(contrasts_work_extra[[1]][, c(1, 2, 4)],  # parents
                            contrasts_work_extra[[2]][, c(1, 2, 4)])  # nonparents
 
-rownames_tabcon_extra_work <- c("Shift of not-working controls vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$)", 
-                           "Shift of working controls vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{22}$ + 
-                              $\\hat{\\gamma}_{32}$)",
-                           "Shift of not-working grandparents vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{21}$ + 
-                              $\\hat{\\gamma}_{31}$)",
-                           "Shift of working grandparents vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{21}$ + 
-                              $\\hat{\\gamma}_{31}$ + $\\hat{\\gamma}_{22}$ + 
-                              $\\hat{\\gamma}_{32}$ + $\\hat{\\gamma}_{23}$ +
-                              $\\hat{\\gamma}_{33}$)",
-                           "Shift of not-working controls vs. not-working grandparents 
-                              ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{31}$)",
-                           "Before-slope of working controls vs. working grandparents 
-                              ($\\hat{\\gamma}_{11}$ + $\\hat{\\gamma}_{13}$)",
-                           "After-slope of working controls vs. working grandparents 
-                              ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{23}$)",
-                           "Shift of working controls vs. working grandparents 
-                              ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{31}$ + 
-                              $\\hat{\\gamma}_{23}$ + $\\hat{\\gamma}_{33}$)",
-                           "Shift of not-working controls vs. working controls 
-                              ($\\hat{\\gamma}_{22}$ + $\\hat{\\gamma}_{32}$)",
-                           "Before-slope of not-working grandparents vs. working grandparents 
-                              ($\\hat{\\gamma}_{12}$ + $\\hat{\\gamma}_{13}$)",
-                           "After-slope of not-working grandparents vs. working grandparents 
-                              ($\\hat{\\gamma}_{22}$ + $\\hat{\\gamma}_{23}$)",
-                           "Shift of not-working grandparents vs. working grandparents 
-                              ($\\hat{\\gamma}_{22}$ + $\\hat{\\gamma}_{32}$ + 
-                              $\\hat{\\gamma}_{23}$ + $\\hat{\\gamma}_{33}$)")
-rownames(tabcon_extra_work) <- rownames_tabcon_extra_work
+rownames(tabcon_extra_work) <- rownames_tabcon_work # defined above (agree)
 
 apa_table(
   tabcon_extra_work
@@ -1753,16 +1723,7 @@ extra_care_df <-
 
 colnames(extra_care_df)[c(4,8)] <- c("p", "p")
 
-rownames_extra_care_df <- c("Intercept, $\\hat{\\gamma}_{00}$",
-                      "Propensity score, $\\hat{\\gamma}_{04}$", 
-                      "After-slope, $\\hat{\\gamma}_{10}$", 
-                      "Grandparent, $\\hat{\\gamma}_{01}$", 
-                      "Caring, $\\hat{\\gamma}_{02}$", 
-                      "After-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
-                      "After-slope * Caring, $\\hat{\\gamma}_{12}$", 
-                      "Grandparent * Caring, $\\hat{\\gamma}_{03}$", 
-                      "After-slope * Grandparent * Caring, $\\hat{\\gamma}_{13}$")
-rownames(extra_care_df) <- rownames_extra_care_df
+rownames(extra_care_df) <- rownames_care_df # defined above (agree)
 
 apa_table(
   extra_care_df
@@ -1790,11 +1751,7 @@ apa_table(
 tabcon_extra_care <- cbind(contrasts_care_extra[[1]][, c(1, 2, 4)],  # parents
                            contrasts_care_extra[[2]][, c(1, 2, 4)])  # nonparents
 
-rownames_tabcon_extra_care <- c("After-slope of caring controls vs. caring grandparents 
-                                  ($\\hat{\\gamma}_{11}$ + $\\hat{\\gamma}_{13}$)",
-                                "After-slope of not-caring grandparents vs. caring grandparents 
-                                  ($\\hat{\\gamma}_{12}$ + $\\hat{\\gamma}_{13}$)")
-rownames(tabcon_extra_care) <- rownames_tabcon_extra_care
+rownames(tabcon_extra_care) <- rownames_tabcon_care # defined above (agree)
 
 apa_table(
   tabcon_extra_care
@@ -2124,24 +2081,7 @@ neur_work_df <-
 
 colnames(neur_work_df)[c(4,8)] <- c("p", "p")
 
-rownames_neur_work_df <- c("Intercept, $\\hat{\\gamma}_{00}$",
-                      "Propensity score, $\\hat{\\gamma}_{04}$", 
-                      "Before-slope, $\\hat{\\gamma}_{10}$", 
-                      "After-slope, $\\hat{\\gamma}_{20}$", 
-                      "Shift, $\\hat{\\gamma}_{30}$",
-                      "Grandparent, $\\hat{\\gamma}_{01}$", 
-                      "Working, $\\hat{\\gamma}_{02}$", 
-                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
-                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$", 
-                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$",
-                      "Before-slope * Working, $\\hat{\\gamma}_{12}$", 
-                      "After-slope * Working, $\\hat{\\gamma}_{22}$", 
-                      "Shift * Working, $\\hat{\\gamma}_{32}$",
-                      "Grandparent * Working, $\\hat{\\gamma}_{03}$", 
-                      "Before-slope * Grandparent * Working, $\\hat{\\gamma}_{13}$", 
-                      "After-slope * Grandparent * Working, $\\hat{\\gamma}_{23}$", 
-                      "Shift * Grandparent * Working, $\\hat{\\gamma}_{33}$")
-rownames(neur_work_df) <- rownames_neur_work_df
+rownames(neur_work_df) <- rownames_work # defined above (agree)
 
 apa_table(
   neur_work_df
@@ -2171,38 +2111,7 @@ apa_table(
 tabcon_neur_work <- cbind(contrasts_work_neur[[1]][, c(1, 2, 4)],  # parents
                            contrasts_work_neur[[2]][, c(1, 2, 4)])  # nonparents
 
-rownames_tabcon_neur_work <- c("Shift of not-working controls vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$)", 
-                           "Shift of working controls vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{22}$ + 
-                              $\\hat{\\gamma}_{32}$)",
-                           "Shift of not-working grandparents vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{21}$ + 
-                              $\\hat{\\gamma}_{31}$)",
-                           "Shift of working grandparents vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{21}$ + 
-                              $\\hat{\\gamma}_{31}$ + $\\hat{\\gamma}_{22}$ + 
-                              $\\hat{\\gamma}_{32}$ + $\\hat{\\gamma}_{23}$ +
-                              $\\hat{\\gamma}_{33}$)",
-                           "Shift of not-working controls vs. not-working grandparents 
-                              ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{31}$)",
-                           "Before-slope of working controls vs. working grandparents 
-                              ($\\hat{\\gamma}_{11}$ + $\\hat{\\gamma}_{13}$)",
-                           "After-slope of working controls vs. working grandparents 
-                              ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{23}$)",
-                           "Shift of working controls vs. working grandparents 
-                              ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{31}$ + 
-                              $\\hat{\\gamma}_{23}$ + $\\hat{\\gamma}_{33}$)",
-                           "Shift of not-working controls vs. working controls 
-                              ($\\hat{\\gamma}_{22}$ + $\\hat{\\gamma}_{32}$)",
-                           "Before-slope of not-working grandparents vs. working grandparents 
-                              ($\\hat{\\gamma}_{12}$ + $\\hat{\\gamma}_{13}$)",
-                           "After-slope of not-working grandparents vs. working grandparents 
-                              ($\\hat{\\gamma}_{22}$ + $\\hat{\\gamma}_{23}$)",
-                           "Shift of not-working grandparents vs. working grandparents 
-                              ($\\hat{\\gamma}_{22}$ + $\\hat{\\gamma}_{32}$ + 
-                              $\\hat{\\gamma}_{23}$ + $\\hat{\\gamma}_{33}$)")
-rownames(tabcon_neur_work) <- rownames_tabcon_neur_work
+rownames(tabcon_neur_work) <- rownames_tabcon_work # defined above (agree)
 
 apa_table(
   tabcon_neur_work
@@ -2235,16 +2144,7 @@ neur_care_df <-
 
 colnames(neur_care_df)[c(4,8)] <- c("p", "p")
 
-rownames_neur_care_df <- c("Intercept, $\\hat{\\gamma}_{00}$",
-                      "Propensity score, $\\hat{\\gamma}_{04}$", 
-                      "After-slope, $\\hat{\\gamma}_{10}$", 
-                      "Grandparent, $\\hat{\\gamma}_{01}$", 
-                      "Caring, $\\hat{\\gamma}_{02}$", 
-                      "After-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
-                      "After-slope * Caring, $\\hat{\\gamma}_{12}$", 
-                      "Grandparent * Caring, $\\hat{\\gamma}_{03}$", 
-                      "After-slope * Grandparent * Caring, $\\hat{\\gamma}_{13}$")
-rownames(neur_care_df) <- rownames_neur_care_df
+rownames(neur_care_df) <- rownames_care_df # defined above (agree)
 
 apa_table(
   neur_care_df
@@ -2272,11 +2172,7 @@ apa_table(
 tabcon_neur_care <- cbind(contrasts_care_neur[[1]][, c(1, 2, 4)],  # parents
                            contrasts_care_neur[[2]][, c(1, 2, 4)])  # nonparents
 
-rownames_tabcon_neur_care <- c("After-slope of caring controls vs. caring grandparents 
-                                  ($\\hat{\\gamma}_{11}$ + $\\hat{\\gamma}_{13}$)",
-                                "After-slope of not-caring grandparents vs. caring grandparents 
-                                  ($\\hat{\\gamma}_{12}$ + $\\hat{\\gamma}_{13}$)")
-rownames(tabcon_neur_care) <- rownames_tabcon_neur_care
+rownames(tabcon_neur_care) <- rownames_tabcon_care # defined above (agree)
 
 apa_table(
   tabcon_neur_care
@@ -2606,24 +2502,7 @@ open_work_df <-
 
 colnames(open_work_df)[c(4,8)] <- c("p", "p")
 
-rownames_open_work_df <- c("Intercept, $\\hat{\\gamma}_{00}$",
-                      "Propensity score, $\\hat{\\gamma}_{04}$", 
-                      "Before-slope, $\\hat{\\gamma}_{10}$", 
-                      "After-slope, $\\hat{\\gamma}_{20}$", 
-                      "Shift, $\\hat{\\gamma}_{30}$",
-                      "Grandparent, $\\hat{\\gamma}_{01}$", 
-                      "Working, $\\hat{\\gamma}_{02}$", 
-                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
-                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$", 
-                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$",
-                      "Before-slope * Working, $\\hat{\\gamma}_{12}$", 
-                      "After-slope * Working, $\\hat{\\gamma}_{22}$", 
-                      "Shift * Working, $\\hat{\\gamma}_{32}$",
-                      "Grandparent * Working, $\\hat{\\gamma}_{03}$", 
-                      "Before-slope * Grandparent * Working, $\\hat{\\gamma}_{13}$", 
-                      "After-slope * Grandparent * Working, $\\hat{\\gamma}_{23}$", 
-                      "Shift * Grandparent * Working, $\\hat{\\gamma}_{33}$")
-rownames(open_work_df) <- rownames_open_work_df
+rownames(open_work_df) <- rownames_work # defined above (agree)
 
 apa_table(
   open_work_df
@@ -2653,38 +2532,7 @@ apa_table(
 tabcon_open_work <- cbind(contrasts_work_open[[1]][, c(1, 2, 4)],  # parents
                            contrasts_work_open[[2]][, c(1, 2, 4)])  # nonparents
 
-rownames_tabcon_open_work <- c("Shift of not-working controls vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$)", 
-                           "Shift of working controls vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{22}$ + 
-                              $\\hat{\\gamma}_{32}$)",
-                           "Shift of not-working grandparents vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{21}$ + 
-                              $\\hat{\\gamma}_{31}$)",
-                           "Shift of working grandparents vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{21}$ + 
-                              $\\hat{\\gamma}_{31}$ + $\\hat{\\gamma}_{22}$ + 
-                              $\\hat{\\gamma}_{32}$ + $\\hat{\\gamma}_{23}$ +
-                              $\\hat{\\gamma}_{33}$)",
-                           "Shift of not-working controls vs. not-working grandparents 
-                              ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{31}$)",
-                           "Before-slope of working controls vs. working grandparents 
-                              ($\\hat{\\gamma}_{11}$ + $\\hat{\\gamma}_{13}$)",
-                           "After-slope of working controls vs. working grandparents 
-                              ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{23}$)",
-                           "Shift of working controls vs. working grandparents 
-                              ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{31}$ + 
-                              $\\hat{\\gamma}_{23}$ + $\\hat{\\gamma}_{33}$)",
-                           "Shift of not-working controls vs. working controls 
-                              ($\\hat{\\gamma}_{22}$ + $\\hat{\\gamma}_{32}$)",
-                           "Before-slope of not-working grandparents vs. working grandparents 
-                              ($\\hat{\\gamma}_{12}$ + $\\hat{\\gamma}_{13}$)",
-                           "After-slope of not-working grandparents vs. working grandparents 
-                              ($\\hat{\\gamma}_{22}$ + $\\hat{\\gamma}_{23}$)",
-                           "Shift of not-working grandparents vs. working grandparents 
-                              ($\\hat{\\gamma}_{22}$ + $\\hat{\\gamma}_{32}$ + 
-                              $\\hat{\\gamma}_{23}$ + $\\hat{\\gamma}_{33}$)")
-rownames(tabcon_open_work) <- rownames_tabcon_open_work
+rownames(tabcon_open_work) <- rownames_tabcon_work # defined above (agree)
 
 apa_table(
   tabcon_open_work
@@ -2717,16 +2565,7 @@ open_care_df <-
 
 colnames(open_care_df)[c(4,8)] <- c("p", "p")
 
-rownames_open_care_df <- c("Intercept, $\\hat{\\gamma}_{00}$",
-                      "Propensity score, $\\hat{\\gamma}_{04}$", 
-                      "After-slope, $\\hat{\\gamma}_{10}$", 
-                      "Grandparent, $\\hat{\\gamma}_{01}$", 
-                      "Caring, $\\hat{\\gamma}_{02}$", 
-                      "After-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
-                      "After-slope * Caring, $\\hat{\\gamma}_{12}$", 
-                      "Grandparent * Caring, $\\hat{\\gamma}_{03}$", 
-                      "After-slope * Grandparent * Caring, $\\hat{\\gamma}_{13}$")
-rownames(open_care_df) <- rownames_open_care_df
+rownames(open_care_df) <- rownames_care_df # defined above (agree)
 
 apa_table(
   open_care_df
@@ -2754,11 +2593,7 @@ apa_table(
 tabcon_open_care <- cbind(contrasts_care_open[[1]][, c(1, 2, 4)],  # parents
                            contrasts_care_open[[2]][, c(1, 2, 4)])  # nonparents
 
-rownames_tabcon_open_care <- c("After-slope of caring controls vs. caring grandparents 
-                                  ($\\hat{\\gamma}_{11}$ + $\\hat{\\gamma}_{13}$)",
-                                "After-slope of not-caring grandparents vs. caring grandparents 
-                                  ($\\hat{\\gamma}_{12}$ + $\\hat{\\gamma}_{13}$)")
-rownames(tabcon_open_care) <- rownames_tabcon_open_care
+rownames(tabcon_open_care) <- rownames_tabcon_care # defined above (agree)
 
 apa_table(
   tabcon_open_care
@@ -3088,24 +2923,7 @@ swls_work_df <-
 
 colnames(swls_work_df)[c(4,8)] <- c("p", "p")
 
-rownames_swls_work_df <- c("Intercept, $\\hat{\\gamma}_{00}$",
-                      "Propensity score, $\\hat{\\gamma}_{04}$", 
-                      "Before-slope, $\\hat{\\gamma}_{10}$", 
-                      "After-slope, $\\hat{\\gamma}_{20}$", 
-                      "Shift, $\\hat{\\gamma}_{30}$",
-                      "Grandparent, $\\hat{\\gamma}_{01}$", 
-                      "Working, $\\hat{\\gamma}_{02}$", 
-                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
-                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$", 
-                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$",
-                      "Before-slope * Working, $\\hat{\\gamma}_{12}$", 
-                      "After-slope * Working, $\\hat{\\gamma}_{22}$", 
-                      "Shift * Working, $\\hat{\\gamma}_{32}$",
-                      "Grandparent * Working, $\\hat{\\gamma}_{03}$", 
-                      "Before-slope * Grandparent * Working, $\\hat{\\gamma}_{13}$", 
-                      "After-slope * Grandparent * Working, $\\hat{\\gamma}_{23}$", 
-                      "Shift * Grandparent * Working, $\\hat{\\gamma}_{33}$")
-rownames(swls_work_df) <- rownames_swls_work_df
+rownames(swls_work_df) <- rownames_work # defined above (agree)
 
 apa_table(
   swls_work_df
@@ -3135,38 +2953,7 @@ apa_table(
 tabcon_swls_work <- cbind(contrasts_work_swls[[1]][, c(1, 2, 4)],  # parents
                            contrasts_work_swls[[2]][, c(1, 2, 4)])  # nonparents
 
-rownames_tabcon_swls_work <- c("Shift of not-working controls vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$)", 
-                           "Shift of working controls vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{22}$ + 
-                              $\\hat{\\gamma}_{32}$)",
-                           "Shift of not-working grandparents vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{21}$ + 
-                              $\\hat{\\gamma}_{31}$)",
-                           "Shift of working grandparents vs. 0 ($\\hat{\\gamma}_{20}$ + 
-                              $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{21}$ + 
-                              $\\hat{\\gamma}_{31}$ + $\\hat{\\gamma}_{22}$ + 
-                              $\\hat{\\gamma}_{32}$ + $\\hat{\\gamma}_{23}$ +
-                              $\\hat{\\gamma}_{33}$)",
-                           "Shift of not-working controls vs. not-working grandparents 
-                              ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{31}$)",
-                           "Before-slope of working controls vs. working grandparents 
-                              ($\\hat{\\gamma}_{11}$ + $\\hat{\\gamma}_{13}$)",
-                           "After-slope of working controls vs. working grandparents 
-                              ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{23}$)",
-                           "Shift of working controls vs. working grandparents 
-                              ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{31}$ + 
-                              $\\hat{\\gamma}_{23}$ + $\\hat{\\gamma}_{33}$)",
-                           "Shift of not-working controls vs. working controls 
-                              ($\\hat{\\gamma}_{22}$ + $\\hat{\\gamma}_{32}$)",
-                           "Before-slope of not-working grandparents vs. working grandparents 
-                              ($\\hat{\\gamma}_{12}$ + $\\hat{\\gamma}_{13}$)",
-                           "After-slope of not-working grandparents vs. working grandparents 
-                              ($\\hat{\\gamma}_{22}$ + $\\hat{\\gamma}_{23}$)",
-                           "Shift of not-working grandparents vs. working grandparents 
-                              ($\\hat{\\gamma}_{22}$ + $\\hat{\\gamma}_{32}$ + 
-                              $\\hat{\\gamma}_{23}$ + $\\hat{\\gamma}_{33}$)")
-rownames(tabcon_swls_work) <- rownames_tabcon_swls_work
+rownames(tabcon_swls_work) <- rownames_tabcon_work # defined above (agree)
 
 apa_table(
   tabcon_swls_work
@@ -3199,16 +2986,7 @@ swls_care_df <-
 
 colnames(swls_care_df)[c(4,8)] <- c("p", "p")
 
-rownames_swls_care_df <- c("Intercept, $\\hat{\\gamma}_{00}$",
-                      "Propensity score, $\\hat{\\gamma}_{04}$", 
-                      "After-slope, $\\hat{\\gamma}_{10}$", 
-                      "Grandparent, $\\hat{\\gamma}_{01}$", 
-                      "Caring, $\\hat{\\gamma}_{02}$", 
-                      "After-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
-                      "After-slope * Caring, $\\hat{\\gamma}_{12}$", 
-                      "Grandparent * Caring, $\\hat{\\gamma}_{03}$", 
-                      "After-slope * Grandparent * Caring, $\\hat{\\gamma}_{13}$")
-rownames(swls_care_df) <- rownames_swls_care_df
+rownames(swls_care_df) <- rownames_care_df # defined above (agree)
 
 apa_table(
   swls_care_df
@@ -3236,11 +3014,7 @@ apa_table(
 tabcon_swls_care <- cbind(contrasts_care_swls[[1]][, c(1, 2, 4)],  # parents
                            contrasts_care_swls[[2]][, c(1, 2, 4)])  # nonparents
 
-rownames_tabcon_swls_care <- c("After-slope of caring controls vs. caring grandparents 
-                                  ($\\hat{\\gamma}_{11}$ + $\\hat{\\gamma}_{13}$)",
-                                "After-slope of not-caring grandparents vs. caring grandparents 
-                                  ($\\hat{\\gamma}_{12}$ + $\\hat{\\gamma}_{13}$)")
-rownames(tabcon_swls_care) <- rownames_tabcon_swls_care
+rownames(tabcon_swls_care) <- rownames_tabcon_care # defined above (agree)
 
 apa_table(
   tabcon_swls_care
@@ -3263,7 +3037,7 @@ apa_table(
 
 (ref:H2-hetvar-tab-agree-cap) Tests of Heterogeneous Random Slope Variance Models for `r df_outcomes["agree", "maj"]` Against Comparison Models With a Uniform Random Slope Variance.
 
-(ref:H2-hetvar-tab-note) The heterogeneous variance models (*df* = 16) differ only in the random effects from the comparison models (*df* = 13). In addition to two random slope variances (instead of one), the heterogeneous variance models estimate two additional random intercept/slope covariances. Both models estimate heterogeneous random intercept variances for the grandparent and control groups. *Var.* = random slope variance; *SD* = standard deviation; *LR* = likelihood ratio; *p* = p-value (of the LR test); *GP greater* = indicating if the random slope variance of the grandparents is larger than that of either control group.  
+(ref:H2-hetvar-tab-note) The heterogeneous variance models (*df* = 16) differ only in the random effects from the comparison models (*df* = 13). In addition to two random slope variances (instead of one), the heterogeneous variance models estimate two additional random intercept/slope covariances. Both models estimate heterogeneous random intercept variances for the grandparent and control groups. *Var.* = random slope variance; *SD* = standard deviation; *LR* = likelihood ratio; *p* = *p*-value (of the LR test); *GP greater* = indicating if the random slope variance of the grandparents is larger than that of either control group.  
 
 ```{r H2-hetvar-tab-agree, results="asis"}
 hetvar_agree_df <- rbind(
@@ -3719,7 +3493,7 @@ apa_table(
 \noindent
 **Supplemental Figures**  
 
-(ref:loess-agree-cap) Violin Plots and LOESS Line of `r df_outcomes["agree", "maj"]`.
+(ref:loess-agree-cap) Violin Plots for `r df_outcomes["agree", "maj"]` Including Means Over Time and LOESS Line.
 
 ```{r loess-agree, fig.cap = "(ref:loess-agree-cap)", fig.height=7, fig.width=7, cache=T}
 title_liss <- ggdraw() + 
@@ -3733,35 +3507,35 @@ plot_grid(title_liss, loess_plot_agree_liss, title_HRS, loess_plot_agree_hrs,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:loess-con-cap) Violin Plots and LOESS Line of `r df_outcomes["con", "maj"]`.
+(ref:loess-con-cap) Violin Plots for `r df_outcomes["con", "maj"]` Including Means Over Time and LOESS Line.
 
 ```{r loess-con, fig.cap = "(ref:loess-con-cap)", fig.height=7, fig.width=7, cache=T}
 plot_grid(title_liss, loess_plot_con_liss, title_HRS, loess_plot_con_hrs, 
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:loess-extra-cap) Violin Plots and LOESS Line of `r df_outcomes["extra", "maj"]`.
+(ref:loess-extra-cap) Violin Plots for `r df_outcomes["extra", "maj"]` Including Means Over Time and LOESS Line.
 
 ```{r loess-extra, fig.cap = "(ref:loess-extra-cap)", fig.height=7, fig.width=7, cache=T}
 plot_grid(title_liss, loess_plot_extra_liss, title_HRS, loess_plot_extra_hrs, 
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:loess-neur-cap) Violin Plots and LOESS Line of `r df_outcomes["neur", "maj"]`.
+(ref:loess-neur-cap) Violin Plots for `r df_outcomes["neur", "maj"]` Including Means Over Time and LOESS Line.
 
 ```{r loess-neur, fig.cap = "(ref:loess-neur-cap)", fig.height=7, fig.width=7, cache=T}
 plot_grid(title_liss, loess_plot_neur_liss, title_HRS, loess_plot_neur_hrs, 
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:loess-open-cap) Violin Plots and LOESS Line of `r df_outcomes["open", "maj"]`.
+(ref:loess-open-cap) Violin Plots for `r df_outcomes["open", "maj"]` Including Means Over Time and LOESS Line.
 
 ```{r loess-open, fig.cap = "(ref:loess-open-cap)", fig.height=7, fig.width=7, cache=T}
 plot_grid(title_liss, loess_plot_open_liss, title_HRS, loess_plot_open_hrs, 
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:loess-swls-cap) Violin Plots and LOESS Line of `r df_outcomes["swls", "maj"]`.
+(ref:loess-swls-cap) Violin Plots for `r df_outcomes["swls", "maj"]` Including Means Over Time and LOESS Line.
 
 ```{r loess-swls, fig.cap = "(ref:loess-swls-cap)", fig.height=7, fig.width=7, cache=T}
 plot_grid(title_liss, loess_plot_swls_liss, title_HRS, loess_plot_swls_hrs, 
