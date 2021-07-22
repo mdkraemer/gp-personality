@@ -1867,6 +1867,54 @@ for (i in 1:length(outcomes)){
 }
 # all p < .001
 
+# alternative: only for grandparents with simplified MLMs
+anova_summaries_gp <- list()
+
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  print(outcome)
+  pos = seq(from = 0, to = 20, by = 4)[i]
+  for (j in 1:length(datasets)){
+    dataset = datasets[j]
+    print(dataset)
+    # basic model only for GPs (fixed slopes)
+    if (icc_list[hid_icc_tbl[j], outcome] < 0.05){ # nesting in hid leads to singular fit for some models
+      fs_mod <- lme4::lmer(get(outcome) ~ 1 + pscore + before + after + shift + 
+                              (1 | pid), REML = FALSE, data = get(dataset) %>% filter(grandparent==1))
+    } else { # cross-nesting in pid & hid for all other models
+      fs_mod <- lme4::lmer(get(outcome) ~ 1 + pscore + before + after + shift + 
+                              (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset) %>% filter(grandparent==1))
+    }      
+    # update basic models with random slopes (one at a time) -> random slopes for pid (not hid)
+    print("before")
+    rs_before <- update(fs_mod, . ~ . -(1 | pid) + (1 + before | pid), 
+                        control = lme4::lmerControl(optimizer="bobyqa")) # some nonconvergence with default opt
+    print("after")
+    rs_after <-  update(fs_mod, . ~ . -(1 | pid) + (1 + after | pid), 
+                        control = lme4::lmerControl(optimizer="bobyqa"))
+    print("shift")
+    rs_shift <-  update(fs_mod, . ~ . -(1 | pid) + (1 + shift | pid), 
+                        control = lme4::lmerControl(optimizer="bobyqa"))
+    # run anova() for model comparison
+    before_anov <- as.numeric(anova(fs_mod, rs_before)[2, c("Chisq", "Pr(>Chisq)")])
+    after_anov <-  as.numeric(anova(fs_mod, rs_after)[2, c("Chisq", "Pr(>Chisq)")])
+    shift_anov <-  as.numeric(anova(fs_mod, rs_shift)[2, c("Chisq", "Pr(>Chisq)")])
+    # together
+    comp_anov <- as.data.frame(rbind(before_anov, after_anov, shift_anov))
+    comp_anov <- comp_anov %>% mutate(
+      chi2 = printnum(V1),
+      p = scales::pvalue(V2, prefix = c("$p$ < ", "$p$ = ", "$p$ > ")),
+    ) %>% select(chi2, p)
+    comp_anov["p"] <- # remove "0" from the chr's
+      lapply(comp_anov["p"], gsub, pattern="0\\.", replacement="\\.")
+    rownames(comp_anov) <- c("before", "after", "shift")
+    # save in list object
+    anova_summaries_gp[[pos + j]] <- comp_anov
+    names(anova_summaries_gp)[[pos + j]] <- paste0(outcome, "_", dataset, "_comp")
+  }
+}
+
+
 # heterogeneous variance models in 'nlme' (also possible in 'lme4' but we preregistered 'nlme')
 hetmod1 <- nlme::lme(swls ~ 0 + dummy(grandparent,"0") + dummy(grandparent,"1") + 
                              time:dummy(grandparent,"0") + time:dummy(grandparent,"1"),
@@ -2210,3 +2258,13 @@ loess_neur_hrsparents <- ggplot(hrsanalysis_allgroups %>% filter(!is.na(neur)),
   scale_x_discrete(name="Time (in Years)") +
   stat_summary(fun=mean, geom="point", shape=23, size=1.5, color="blue")
 loess_neur_hrsparents
+
+library("ggdist")
+hrsanalysis_allgroups %>% filter(!is.na(extra)) %>% 
+  ggplot(aes(x = factor(time), y = extra)) +
+  stat_slab(side = "left", scale = 0.5) +
+  stat_dotsinterval(scale = 0.5, quantiles = 100, position=position_dodge(width=0.2)) +
+  geom_smooth(span = 0.9, aes(group=1), method="loess") +
+  facet_wrap(~group)
+
+
