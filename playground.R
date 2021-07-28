@@ -2267,4 +2267,65 @@ hrsanalysis_allgroups %>% filter(!is.na(extra)) %>%
   geom_smooth(span = 0.9, aes(group=1), method="loess") +
   facet_wrap(~group)
 
+#### propensity overlap plots ####
+overlap_ps_lp <- lissanalysis_parents %>% filter(time==matchtime) %>% select(pid, grandparent, pscore)
+overlap_ps_lp_plot <- Hmisc::histbackback(split(overlap_ps_lp$pscore, overlap_ps_lp$grandparent), 
+                    brks=seq(0, max(overlap_ps_lp$pscore), (max(overlap_ps_lp$pscore))/25),
+                    xlab=c("Parent Controls", "Grandparents"))
+
+plotit<-function(data, conlab, title){
+  Hmisc::histbackback(split(data$pscore, data$grandparent), 
+                      brks=seq(0, max(data$pscore), (max(data$pscore))/25),
+                      xlab=c(conlab, "Grandparents"), main= title)
+}
+overlap_plot_lp<-function(){plotit(overlap_ps_lp, "Parent Controls", "LISS")}
+overlap_plot_ln<-function(){plotit(overlap_ps_ln, "Nonparent Controls", NULL)}
+overlap_plot_hp<-function(){plotit(overlap_ps_hp, "Parent Controls", "HRS")}
+overlap_plot_hn<-function(){plotit(overlap_ps_hn, "Nonparent Controls", NULL)}
+
+par(mfrow=c(2,2))
+overlap_plot_lp()
+overlap_plot_hp()
+overlap_plot_ln()
+overlap_plot_hn()
+dev.off()
+
+overlap_plot_lp()
+
+overlap_ps_lp_plot <- ggplot(df, aes(x)) + geom_histogram( aes(x = x, y = ..density..),
+                                         binwidth = diff(range(df$x))/30, fill="blue") + 
+  geom_histogram( aes(x = x2, y = -..density..), binwidth = diff(range(df$x))/30, fill= "green")
+print(g)
+
+
+overlap_ps_ln <- lissanalysis_nonparents %>% filter(time==matchtime) %>% select(pid, grandparent, pscore)
+overlap_ps_hp <- hrsanalysis_parents %>% filter(time==matchtime) %>% select(pid, grandparent, pscore)
+overlap_ps_hn <- hrsanalysis_nonparents %>% filter(time==matchtime) %>% select(pid, grandparent, pscore)
+
+cowplot::plot_grid(
+  Hmisc::histbackback(split(overlap_ps_lp$pscore, overlap_ps_lp$grandparent), 
+                      brks=seq(0, max(overlap_ps_lp$pscore), (max(overlap_ps_lp$pscore))/25),
+                      main= "LISS", xlab=c("Parent Controls", "Grandparents")),
+  Hmisc::histbackback(split(overlap_ps_hp$pscore, overlap_ps_hp$grandparent), 
+                      brks=seq(0, max(overlap_ps_hp$pscore), (max(overlap_ps_hp$pscore))/25),
+                      main= "HRS", xlab=c("Parent Controls", "Grandparents")),
+  Hmisc::histbackback(split(overlap_ps_ln$pscore, overlap_ps_ln$grandparent), 
+                      brks=seq(0, max(overlap_ps_ln$pscore), (max(overlap_ps_ln$pscore))/25),
+                      xlab=c("Parent Controls", "Grandparents")),
+  Hmisc::histbackback(split(overlap_ps_hn$pscore, overlap_ps_hn$grandparent), 
+                      brks=seq(0, max(overlap_ps_hn$pscore), (max(overlap_ps_hn$pscore))/25),
+                      xlab=c("Parent Controls", "Grandparents")),
+  align = "vh", ncol = 2)
+
+Hmisc::histbackback(split(lissanalysis_nonparents$pscore[lissanalysis_nonparents$time==lissanalysis_nonparents$matchtime], lissanalysis_nonparents$grandparent[lissanalysis_nonparents$time==lissanalysis_nonparents$matchtime]), 
+                    brks=seq(0, max(lissanalysis_nonparents$pscore[lissanalysis_nonparents$time==lissanalysis_nonparents$matchtime]), (max(lissanalysis_nonparents$pscore[lissanalysis_nonparents$time==lissanalysis_nonparents$matchtime]))/25), 
+                    main= "Propensity Score", xlab=c("Nonparent Controls", "Grandparents"))
+
+Hmisc::histbackback(split(hrsanalysis_parents$pscore[hrsanalysis_parents$time==hrsanalysis_parents$matchtime], hrsanalysis_parents$grandparent[hrsanalysis_parents$time==hrsanalysis_parents$matchtime]), 
+                    brks=seq(0, max(hrsanalysis_parents$pscore[hrsanalysis_parents$time==hrsanalysis_parents$matchtime]), (max(hrsanalysis_parents$pscore[hrsanalysis_parents$time==hrsanalysis_parents$matchtime]))/25), 
+                    main= "Propensity Score", xlab=c("Parent Controls", "Grandparents"))
+
+Hmisc::histbackback(split(hrsanalysis_nonparents$pscore[hrsanalysis_nonparents$time==hrsanalysis_nonparents$matchtime], hrsanalysis_nonparents$grandparent[hrsanalysis_nonparents$time==hrsanalysis_nonparents$matchtime]), 
+                    brks=seq(0, max(hrsanalysis_nonparents$pscore[hrsanalysis_nonparents$time==hrsanalysis_nonparents$matchtime]), (max(hrsanalysis_nonparents$pscore[hrsanalysis_nonparents$time==hrsanalysis_nonparents$matchtime]))/25), 
+                    main= "Propensity Score", xlab=c("Nonparent Controls", "Grandparents"))
 

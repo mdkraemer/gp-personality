@@ -4138,6 +4138,15 @@ HRS &  &  &  &  &  &  &  & \\
 
 \noindent \textbf{Supplemental Figures}
 
+(ref:pscore-overlap-cap) Distributional Overlap of the Propensity Score
+in the Four Analysis Samples at the Time of Matching.
+
+\begin{figure}
+\centering
+\includegraphics{Figs/pscore-overlap-1.pdf}
+\caption{(\#fig:pscore-overlap)(ref:pscore-overlap-cap)}
+\end{figure}
+
 (ref:loess-agree-cap) Violin Plots for Agreeableness Including Means
 Over Time and LOESS Line.
 
@@ -4457,28 +4466,31 @@ We used R (Version 4.0.4; R Core Team, 2021) and the R-packages
 1.0.2; Wickham, François, et al., 2020), \emph{effects} (Version 4.2.0;
 Fox \& Weisberg, 2018; Fox, 2003; Fox \& Hong, 2009), \emph{forcats}
 (Version 0.5.0; Wickham, 2020a), \emph{foreign} (Version 0.8.81; R Core
-Team, 2020), \emph{ggplot2} (Version 3.3.5; Wickham, 2016),
-\emph{GPArotation} (Version 2014.11.1; Bernaards \& I.Jennrich, 2005),
-\emph{interactions} (Version 1.1.3; Long, 2019), \emph{jtools} (Version
-2.1.1; Long, 2020), \emph{knitr} (Version 1.30; Xie, 2015), \emph{lme4}
-(Version 1.1.26; Bates et al., 2015), \emph{lmerTest} (Version 3.1.3;
-Kuznetsova et al., 2017), \emph{magick} (Version 2.6.0; Ooms, 2021),
-\emph{MASS} (Version 7.3.53; Venables \& Ripley, 2002), \emph{MatchIt}
-(Version 4.1.0; Ho et al., 2020), \emph{Matrix} (Version 1.3.2; Bates \&
-Maechler, 2021), \emph{multcomp} (Version 1.4.17; Hothorn et al., 2008),
-\emph{mvtnorm} (Version 1.1.1; Genz \& Bretz, 2009), \emph{papaja}
-(Version 0.1.0.9997; Aust \& Barth, 2020), \emph{patchwork} (Version
-1.1.0.9000; Pedersen, 2020), \emph{png} (Version 0.1.7; Urbanek, 2013),
-\emph{psych} (Version 2.0.9; Revelle, 2020), \emph{purrr} (Version
-0.3.4; Henry \& Wickham, 2020), \emph{readr} (Version 1.4.0; Wickham \&
-Hester, 2020), \emph{robustlmm} (Version 2.3; Koller, 2016),
-\emph{scales} (Version 1.1.1; Wickham \& Seidel, 2020), \emph{stringr}
-(Version 1.4.0; Wickham, 2019), \emph{survival} (Version 3.2.7; Terry M.
-Therneau \& Patricia M. Grambsch, 2000), \emph{TH.data} (Version 1.0.10;
-Hothorn, 2019), \emph{tibble} (Version 3.1.2; Müller \& Wickham, 2020),
-\emph{tidyr} (Version 1.1.2; Wickham, 2020b), \emph{tidyverse} (Version
-1.3.0; Wickham, Averick, et al., 2019), and \emph{tinylabels} (Version
-0.1.0; Barth, 2020) for data wrangling, analyses, and plots.\\
+Team, 2020), \emph{Formula} (Version 1.2.4; Zeileis \& Croissant, 2010),
+\emph{ggplot2} (Version 3.3.5; Wickham, 2016), \emph{GPArotation}
+(Version 2014.11.1; Bernaards \& I.Jennrich, 2005), \emph{Hmisc}
+(Version 4.4.2; Harrell Jr et al., 2020), \emph{interactions} (Version
+1.1.3; Long, 2019), \emph{jtools} (Version 2.1.1; Long, 2020),
+\emph{knitr} (Version 1.30; Xie, 2015), \emph{lattice} (Version 0.20.41;
+Sarkar, 2008), \emph{lme4} (Version 1.1.26; Bates et al., 2015),
+\emph{lmerTest} (Version 3.1.3; Kuznetsova et al., 2017), \emph{magick}
+(Version 2.6.0; Ooms, 2021), \emph{MASS} (Version 7.3.53; Venables \&
+Ripley, 2002), \emph{MatchIt} (Version 4.1.0; Ho et al., 2020),
+\emph{Matrix} (Version 1.3.2; Bates \& Maechler, 2021), \emph{multcomp}
+(Version 1.4.17; Hothorn et al., 2008), \emph{mvtnorm} (Version 1.1.1;
+Genz \& Bretz, 2009), \emph{papaja} (Version 0.1.0.9997; Aust \& Barth,
+2020), \emph{patchwork} (Version 1.1.0.9000; Pedersen, 2020), \emph{png}
+(Version 0.1.7; Urbanek, 2013), \emph{psych} (Version 2.0.9; Revelle,
+2020), \emph{purrr} (Version 0.3.4; Henry \& Wickham, 2020),
+\emph{readr} (Version 1.4.0; Wickham \& Hester, 2020), \emph{robustlmm}
+(Version 2.3; Koller, 2016), \emph{scales} (Version 1.1.1; Wickham \&
+Seidel, 2020), \emph{stringr} (Version 1.4.0; Wickham, 2019),
+\emph{survival} (Version 3.2.7; Terry M. Therneau \& Patricia M.
+Grambsch, 2000), \emph{TH.data} (Version 1.0.10; Hothorn, 2019),
+\emph{tibble} (Version 3.1.2; Müller \& Wickham, 2020), \emph{tidyr}
+(Version 1.1.2; Wickham, 2020b), \emph{tidyverse} (Version 1.3.0;
+Wickham, Averick, et al., 2019), and \emph{tinylabels} (Version 0.1.0;
+Barth, 2020) for data wrangling, analyses, and plots.\\
 The following is the output of R's \emph{sessionInfo()} command, which
 shows information to aid analytic reproducibility of the analyses.
 
@@ -4502,39 +4514,44 @@ scales\_1.1.1\\
 {[}7{]} Matrix\_1.3-2 GPArotation\_2014.11-1 psych\_2.0.9\\
 {[}10{]} forcats\_0.5.0 stringr\_1.4.0 dplyr\_1.0.2\\
 {[}13{]} purrr\_0.3.4 readr\_1.4.0 tidyr\_1.1.2\\
-{[}16{]} tibble\_3.1.2 ggplot2\_3.3.5 tidyverse\_1.3.0\\
-{[}19{]} multcomp\_1.4-17 TH.data\_1.0-10 MASS\_7.3-53\\
-{[}22{]} survival\_3.2-7 mvtnorm\_1.1-1 citr\_0.3.2\\
-{[}25{]} papaja\_0.1.0.9997 tinylabels\_0.1.0
+{[}16{]} tibble\_3.1.2 tidyverse\_1.3.0 Hmisc\_4.4-2\\
+{[}19{]} ggplot2\_3.3.5 Formula\_1.2-4 lattice\_0.20-41\\
+{[}22{]} multcomp\_1.4-17 TH.data\_1.0-10 MASS\_7.3-53\\
+{[}25{]} survival\_3.2-7 mvtnorm\_1.1-1 citr\_0.3.2\\
+{[}28{]} papaja\_0.1.0.9997 tinylabels\_0.1.0
 
-loaded via a namespace (and not attached): {[}1{]} nlme\_3.1-152
-fs\_1.5.0 lubridate\_1.7.9.2\\
-{[}4{]} httr\_1.4.2 numDeriv\_2016.8-1.1 tools\_4.0.4\\
-{[}7{]} backports\_1.2.1 utf8\_1.2.1 R6\_2.5.0\\
-{[}10{]} DBI\_1.1.0 colorspace\_2.0-1 withr\_2.4.2\\
-{[}13{]} tidyselect\_1.1.0 mnormt\_2.0.2 curl\_4.3.1\\
-{[}16{]} compiler\_4.0.4 cli\_2.5.0 rvest\_0.3.6\\
-{[}19{]} xml2\_1.3.2 sandwich\_3.0-0 bookdown\_0.21\\
-{[}22{]} digest\_0.6.27 foreign\_0.8-81 minqa\_1.2.4\\
-{[}25{]} rmarkdown\_2.5 rio\_0.5.16 base64enc\_0.1-3\\
-{[}28{]} pkgconfig\_2.0.3 htmltools\_0.5.0 dbplyr\_1.4.4\\
-{[}31{]} fastmap\_1.0.1 rlang\_0.4.11 readxl\_1.3.1\\
-{[}34{]} rstudioapi\_0.13 shiny\_1.5.0 generics\_0.1.0\\
-{[}37{]} zoo\_1.8-8 jsonlite\_1.7.2 zip\_2.1.1\\
-{[}40{]} magrittr\_2.0.1 Rcpp\_1.0.6 munsell\_0.5.0\\
-{[}43{]} fansi\_0.5.0 abind\_1.4-5 lifecycle\_1.0.0\\
-{[}46{]} stringi\_1.5.3 yaml\_2.2.1 grid\_4.0.4\\
-{[}49{]} blob\_1.2.1 parallel\_4.0.4 promises\_1.1.1\\
-{[}52{]} crayon\_1.4.1 miniUI\_0.1.1.1 lattice\_0.20-41\\
-{[}55{]} haven\_2.3.1 splines\_4.0.4 hms\_0.5.3\\
-{[}58{]} tmvnsim\_1.0-2 knitr\_1.30 pillar\_1.6.1\\
-{[}61{]} boot\_1.3-26 codetools\_0.2-18 reprex\_0.3.0\\
-{[}64{]} glue\_1.4.2 evaluate\_0.14 data.table\_1.13.2\\
-{[}67{]} modelr\_0.1.8 nloptr\_1.2.2.2 vctrs\_0.3.8\\
-{[}70{]} httpuv\_1.5.4 cellranger\_1.1.0 gtable\_0.3.0\\
-{[}73{]} assertthat\_0.2.1 openxlsx\_4.2.3 xfun\_0.19\\
-{[}76{]} mime\_0.9 xtable\_1.8-4 broom\_0.7.6\\
-{[}79{]} later\_1.1.0.1 statmod\_1.4.35 ellipsis\_0.3.2
+loaded via a namespace (and not attached): {[}1{]} minqa\_1.2.4
+colorspace\_2.0-1 rio\_0.5.16\\
+{[}4{]} ellipsis\_0.3.2 htmlTable\_2.1.0 base64enc\_0.1-3\\
+{[}7{]} fs\_1.5.0 rstudioapi\_0.13 fansi\_0.5.0\\
+{[}10{]} lubridate\_1.7.9.2 xml2\_1.3.2 codetools\_0.2-18\\
+{[}13{]} splines\_4.0.4 mnormt\_2.0.2 knitr\_1.30\\
+{[}16{]} jsonlite\_1.7.2 nloptr\_1.2.2.2 broom\_0.7.6\\
+{[}19{]} cluster\_2.1.0 dbplyr\_1.4.4 png\_0.1-7\\
+{[}22{]} shiny\_1.5.0 compiler\_4.0.4 httr\_1.4.2\\
+{[}25{]} backports\_1.2.1 assertthat\_0.2.1 fastmap\_1.0.1\\
+{[}28{]} cli\_2.5.0 later\_1.1.0.1 htmltools\_0.5.0\\
+{[}31{]} tools\_4.0.4 gtable\_0.3.0 glue\_1.4.2\\
+{[}34{]} Rcpp\_1.0.6 cellranger\_1.1.0 vctrs\_0.3.8\\
+{[}37{]} nlme\_3.1-152 xfun\_0.19 openxlsx\_4.2.3\\
+{[}40{]} rvest\_0.3.6 mime\_0.9 miniUI\_0.1.1.1\\
+{[}43{]} lifecycle\_1.0.0 statmod\_1.4.35 zoo\_1.8-8\\
+{[}46{]} hms\_0.5.3 promises\_1.1.1 parallel\_4.0.4\\
+{[}49{]} sandwich\_3.0-0 RColorBrewer\_1.1-2 curl\_4.3.1\\
+{[}52{]} yaml\_2.2.1 gridExtra\_2.3 rpart\_4.1-15\\
+{[}55{]} latticeExtra\_0.6-29 stringi\_1.5.3 checkmate\_2.0.0\\
+{[}58{]} zip\_2.1.1 boot\_1.3-26 rlang\_0.4.11\\
+{[}61{]} pkgconfig\_2.0.3 evaluate\_0.14 htmlwidgets\_1.5.2\\
+{[}64{]} tidyselect\_1.1.0 magrittr\_2.0.1 bookdown\_0.21\\
+{[}67{]} R6\_2.5.0 generics\_0.1.0 DBI\_1.1.0\\
+{[}70{]} pillar\_1.6.1 haven\_2.3.1 foreign\_0.8-81\\
+{[}73{]} withr\_2.4.2 abind\_1.4-5 nnet\_7.3-15\\
+{[}76{]} modelr\_0.1.8 crayon\_1.4.1 utf8\_1.2.1\\
+{[}79{]} tmvnsim\_1.0-2 rmarkdown\_2.5 jpeg\_0.1-8.1\\
+{[}82{]} grid\_4.0.4 readxl\_1.3.1 data.table\_1.13.2\\
+{[}85{]} blob\_1.2.1 reprex\_0.3.0 digest\_0.6.27\\
+{[}88{]} xtable\_1.8-4 httpuv\_1.5.4 numDeriv\_2016.8-1.1 {[}91{]}
+munsell\_0.5.0
 
 \newpage
 
@@ -4612,6 +4629,10 @@ applied regression data sets}.
 Genz, A., \& Bretz, F. (2009). \emph{Computation of multivariate normal
 and t probabilities}. Springer-Verlag.
 
+\leavevmode\hypertarget{ref-R-Hmisc}{}%
+Harrell Jr, F. E., Charles Dupont, \& others. (2020). \emph{Hmisc:
+Harrell miscellaneous}. \url{https://CRAN.R-project.org/package=Hmisc}
+
 \leavevmode\hypertarget{ref-R-purrr}{}%
 Henry, L., \& Wickham, H. (2020). \emph{Purrr: Functional programming
 tools}. \url{https://CRAN.R-project.org/package=purrr}
@@ -4675,6 +4696,10 @@ computing}. R Foundation for Statistical Computing.
 Revelle, W. (2020). \emph{Psych: Procedures for psychological,
 psychometric, and personality research}. Northwestern University.
 \url{https://CRAN.R-project.org/package=psych}
+
+\leavevmode\hypertarget{ref-R-lattice}{}%
+Sarkar, D. (2008). \emph{Lattice: Multivariate data visualization with
+r}. Springer. \url{http://lmdvr.r-forge.r-project.org}
 
 \leavevmode\hypertarget{ref-stuartMatchingMethodsCausal2010}{}%
 Stuart, E. A. (2010). Matching methods for causal inference: A review
@@ -4749,6 +4774,12 @@ Chapman; Hall/CRC. \url{https://yihui.org/knitr/}
 \leavevmode\hypertarget{ref-R-careless}{}%
 Yentes, R. D., \& Wilhelm, F. (2018). \emph{Careless: Procedures for
 computing indices of careless responding}.
+
+\leavevmode\hypertarget{ref-R-Formula}{}%
+Zeileis, A., \& Croissant, Y. (2010). Extended model formulas in R:
+Multiple parts and multiple responses. \emph{Journal of Statistical
+Software}, \emph{34}(1), 1--13.
+\url{https://doi.org/10.18637/jss.v034.i01}
 
 \endgroup
 \end{appendix}

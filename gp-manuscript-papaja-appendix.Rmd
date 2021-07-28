@@ -3493,6 +3493,36 @@ apa_table(
 \noindent
 **Supplemental Figures**  
 
+(ref:pscore-overlap-cap) Distributional Overlap of the Propensity Score in the Four Analysis Samples at the Time of Matching.
+
+```{r pscore-overlap, fig.cap = "(ref:pscore-overlap-cap)", fig.height=7, fig.width=7, cache=T}
+# filtered data sets at the time of matching
+overlap_ps_lp <- lissanalysis_parents %>% filter(time==matchtime) %>% select(pid, grandparent, pscore)
+overlap_ps_ln <- lissanalysis_nonparents %>% filter(time==matchtime) %>% select(pid, grandparent, pscore)
+overlap_ps_hp <- hrsanalysis_parents %>% filter(time==matchtime) %>% select(pid, grandparent, pscore)
+overlap_ps_hn <- hrsanalysis_nonparents %>% filter(time==matchtime) %>% select(pid, grandparent, pscore)
+
+# function to create plots
+plotit<-function(data, conlab, title){
+  Hmisc::histbackback(split(data$pscore, data$grandparent), 
+                      brks=seq(0, max(data$pscore), (max(data$pscore))/40),
+                      xlab=c(conlab, "Grand-\nparents"), main= title)
+}
+# save the plots as functions rather than objects
+overlap_plot_lp<-function(){plotit(overlap_ps_lp, "Parent\nControls", "LISS")}
+overlap_plot_ln<-function(){plotit(overlap_ps_ln, "Nonparent\nControls", NULL)}
+overlap_plot_hp<-function(){plotit(overlap_ps_hp, "Parent\nControls", "HRS")}
+overlap_plot_hn<-function(){plotit(overlap_ps_hn, "Nonparent\nControls", NULL)}
+
+# grid
+par(mfrow=c(2,2))
+overlap_plot_lp()
+overlap_plot_hp()
+overlap_plot_ln()
+overlap_plot_hn()
+dev.off()
+```
+
 (ref:loess-agree-cap) Violin Plots for `r df_outcomes["agree", "maj"]` Including Means Over Time and LOESS Line.
 
 ```{r loess-agree, fig.cap = "(ref:loess-agree-cap)", fig.height=7, fig.width=7, cache=T}
