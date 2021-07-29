@@ -29,10 +29,9 @@ y_{ti} =& \beta_{0i} + \beta_{1i}before_{ti} + \beta_{2i}after_{ti} + \beta_{3i}
 (\#eq:mlm1)
 \end{equation} where at time \(t\) for person \(i\)
 \(e_{ti} \sim N(0, \sigma_e^2)\) and
-\(\upsilon_{0i} \sim N(0, \tau_{00})\). \(y_{ti}\) represented either
-one of the Big Five or life satisfaction. Separate models were computed
-for LISS and HRS samples, and for parent and nonparent matched
-controls.\\
+\(\upsilon_{0i} \sim N(0, \tau_{00})\). \(y_{ti}\) represented one of
+the Big Five or life satisfaction. Separate models were computed for
+LISS and HRS samples, and for parent and nonparent matched controls.\\
 Model equation for the models including the gender interaction
 (moderator variable \(female_i\)): \begin{equation}
 \begin{split}
@@ -117,7 +116,7 @@ HRS: Nonparent controls &  &  &  &  &  & \\
 \end{tabular}
 
 \begin{tablenotes}[para]
-\normalsize{\textit{Note.} A = agreeableness, C = conscientiousness, E = extraversion, N = neuroticism, O = openness, LS = life satisfaction. Intra-class correlations are the proportion of total variation that is explained by the respective nesting factor. $ICC_{pid}$ is the proportion of total variance explained by nesting in participants which corresponds to the correlation between two randomly selected observations from the same participant. $ICC_{hid}$ is the proportion of total variance explained by nesting in households which corresponds to the correlation between two randomly selected observations from the same household. $ICC_{pid/hid}$ is the proportion of total variance explained by nesting in participants and in households which corresponds to the correlation between two randomly selected observations from the same participant and the same household.}
+\normalsize{\textit{Note.} A = agreeableness, C = conscientiousness, E = extraversion, N = neuroticism, O = openness, LS = life satisfaction. Intra-class correlations are the proportion of total variation that is explained by the respective nesting factor. $ICC_{pid}$ is the proportion of total variance explained by nesting in respondents which corresponds to the correlation between two randomly selected observations from the same respondent. $ICC_{hid}$ is the proportion of total variance explained by nesting in households which corresponds to the correlation between two randomly selected observations from the same household. $ICC_{pid/hid}$ is the proportion of total variance explained by nesting in respondents and in households which corresponds to the correlation between two randomly selected observations from the same respondent and the same household.}
 \end{tablenotes}
 
 \end{threeparttable}
@@ -125,14 +124,14 @@ HRS: Nonparent controls &  &  &  &  &  & \\
 
 \end{table}
 
-(ref:piecewise-coding-scheme-cap) Longitudinal sample size in the
-analysis samples and coding scheme for the piecewise regression
-coefficients.
+(ref:piecewise-coding-scheme-cap) Longitudinal Sample Size in the
+Analysis Samples and Coding Scheme for the Piecewise Regression
+Coefficients.
 
 (ref:piecewise-coding-scheme-note) obs. = observations. \(time=0\) marks
 the first year where the transition to grandparenthood has been
-reported. The number of grandparent participants is \(N_{LISS}=\) 250
-and \(N_{HRS}=\) 846.
+reported. The number of grandparent respondents included in the final
+samples is \(N_{LISS}=\) 250 and \(N_{HRS}=\) 846.
 
 \begin{lltable}
 
@@ -191,14 +190,14 @@ HRS: Coding scheme &  &  &  &  &  &  &  &  &  &  &  &  & \\
 (ref:descriptives-liss-cap) Means and Standard Deviations of the Big
 Five and Life Satisfaction over Time in the LISS Panel.
 
-(ref:descriptives-note) Standard deviations shown in brackets;
+(ref:descriptives-liss-note) Standard deviations shown in parentheses;
 \(time=0\) marks the first year where the transition to grandparenthood
 was reported.
 
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} (ref:descriptives-note)}
+\normalsize{\textit{Note.} (ref:descriptives-liss-note)}
 \end{TableNotes}
 
 \small{
@@ -272,10 +271,16 @@ Life satisfaction &  &  &  &  &  &  &  &  &  &  &  &  & \\
 (ref:descriptives-hrs-cap) Means and Standard Deviations of the Big Five
 and Life Satisfaction over Time in the HRS.
 
+(ref:descriptives-hrs-note) Standard deviations shown in parentheses;
+\(time=0\) marks the first year where the transition to grandparenthood
+was reported. To aid comparability with the LISS panel measures, we
+reverse scored all items so that higher values corresponded to higher
+trait levels.
+
 \begin{lltable}
 
 \begin{TableNotes}[para]
-\normalsize{\textit{Note.} (ref:descriptives-note)}
+\normalsize{\textit{Note.} (ref:descriptives-hrs-note)}
 \end{TableNotes}
 
 \small{
@@ -348,7 +353,7 @@ Life satisfaction &  &  &  &  &  &  &  &  &  &  &  &  & \\
 
 (ref:stddiffmeans-balance-liss-cap) Standardized Difference in Means for
 Covariates Used in Propensity Score Matching and the Propensity Score in
-the LISS panel.
+the LISS.
 
 (ref:stddiffmeans-balance-note) PSM = propensity score matching, ref. =
 reference category, f.~= female, m. = male, NA = covariate not used in
@@ -371,14 +376,14 @@ thumb say that this measure should ideally be below \(.25\) (Stuart,
 \toprule
  &  &  & \multicolumn{2}{c}{Parent control group} & \multicolumn{2}{c}{Nonparent control group} \\
 \cmidrule(r){4-5} \cmidrule(r){6-7}
-Covariate & Description & Raw variable & Before PSM & After PSM & Before PSM & After PSM\\
+Covariate & Description & Raw variables & Before PSM & After PSM & Before PSM & After PSM\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:stddiffmeans-balance-liss} continued}}\\
 \toprule
  &  &  & \multicolumn{2}{c}{Parent control group} & \multicolumn{2}{c}{Nonparent control group} \\
 \cmidrule(r){4-5} \cmidrule(r){6-7}
-Covariate & Description & Raw variable & Before PSM & After PSM & Before PSM & After PSM\\
+Covariate & Description & Raw variables & Before PSM & After PSM & Before PSM & After PSM\\
 \midrule
 \endhead
 pscore & Propensity score & / & 1.14 & 0.02 & 1.34 & 0.04\\
@@ -449,14 +454,14 @@ the HRS.
 \toprule
  &  &  & \multicolumn{2}{c}{Parent control group} & \multicolumn{2}{c}{Nonparent control group} \\
 \cmidrule(r){4-5} \cmidrule(r){6-7}
-Covariate & Description & Raw variable & Before PSM & After PSM & Before PSM & After PSM\\
+Covariate & Description & Raw variables & Before PSM & After PSM & Before PSM & After PSM\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:stddiffmeans-balance-hrs} continued}}\\
 \toprule
  &  &  & \multicolumn{2}{c}{Parent control group} & \multicolumn{2}{c}{Nonparent control group} \\
 \cmidrule(r){4-5} \cmidrule(r){6-7}
-Covariate & Description & Raw variable & Before PSM & After PSM & Before PSM & After PSM\\
+Covariate & Description & Raw variables & Before PSM & After PSM & Before PSM & After PSM\\
 \midrule
 \endhead
 pscore & Propensity score & / & 0.92 & 0.01 & 1.45 & 0.00\\
@@ -792,7 +797,7 @@ HRS &  &  &  &  &  & \\
                               $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
                               $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
                               $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
-                              $\hat{\gamma}_{33}$ \textcolor{white}{H} & 0.00 & 0.01 & .927 & 0.00 & 0.01 & .936\\
+                              $\hat{\gamma}_{33}$) \textcolor{white}{H} & 0.00 & 0.01 & .927 & 0.00 & 0.01 & .936\\
 \ \ \ Shift of male controls vs. grandfathers 
                               ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{H} & -0.02 & 0.39 & .531 & 0.00 & 0.01 & .929\\
 \ \ \ Before-slope of female controls vs. grandmothers 
@@ -1308,7 +1313,7 @@ HRS &  &  &  &  &  & \\
                               $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
                               $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
                               $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
-                              $\hat{\gamma}_{33}$ \textcolor{white}{H} & 0.00 & 0.01 & .906 & 0.00 & 0.01 & .912\\
+                              $\hat{\gamma}_{33}$) \textcolor{white}{H} & 0.00 & 0.01 & .906 & 0.00 & 0.01 & .912\\
 \ \ \ Shift of male controls vs. grandfathers 
                               ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{H} & -0.05 & 4.78 & .029 & -0.04 & 2.75 & .097\\
 \ \ \ Before-slope of female controls vs. grandmothers 
@@ -1824,7 +1829,7 @@ HRS &  &  &  &  &  & \\
                               $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
                               $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
                               $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
-                              $\hat{\gamma}_{33}$ \textcolor{white}{H} & -0.02 & 0.73 & .393 & -0.02 & 0.78 & .377\\
+                              $\hat{\gamma}_{33}$) \textcolor{white}{H} & -0.02 & 0.73 & .393 & -0.02 & 0.78 & .377\\
 \ \ \ Shift of male controls vs. grandfathers 
                               ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{H} & 0.00 & 0.00 & .999 & 0.01 & 0.06 & .805\\
 \ \ \ Before-slope of female controls vs. grandmothers 
@@ -2340,7 +2345,7 @@ HRS &  &  &  &  &  & \\
                               $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
                               $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
                               $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
-                              $\hat{\gamma}_{33}$ \textcolor{white}{H} & -0.07 & 6.49 & .011 & -0.07 & 6.77 & .009\\
+                              $\hat{\gamma}_{33}$) \textcolor{white}{H} & -0.07 & 6.49 & .011 & -0.07 & 6.77 & .009\\
 \ \ \ Shift of male controls vs. grandfathers 
                               ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{H} & -0.16 & 20.99 & < .001 & -0.07 & 5.10 & .024\\
 \ \ \ Before-slope of female controls vs. grandmothers 
@@ -2856,7 +2861,7 @@ HRS &  &  &  &  &  & \\
                               $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
                               $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
                               $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
-                              $\hat{\gamma}_{33}$ \textcolor{white}{H} & 0.00 & 0.01 & .919 & 0.00 & 0.02 & .899\\
+                              $\hat{\gamma}_{33}$) \textcolor{white}{H} & 0.00 & 0.01 & .919 & 0.00 & 0.02 & .899\\
 \ \ \ Shift of male controls vs. grandfathers 
                               ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{H} & -0.11 & 15.71 & < .001 & -0.02 & 0.80 & .372\\
 \ \ \ Before-slope of female controls vs. grandmothers 
@@ -3372,7 +3377,7 @@ HRS &  &  &  &  &  & \\
                               $\hat{\gamma}_{30}$ + $\hat{\gamma}_{21}$ + 
                               $\hat{\gamma}_{31}$ + $\hat{\gamma}_{22}$ + 
                               $\hat{\gamma}_{32}$ + $\hat{\gamma}_{23}$ +
-                              $\hat{\gamma}_{33}$ \textcolor{white}{H} & -0.05 & 0.37 & .541 & -0.05 & 0.48 & .489\\
+                              $\hat{\gamma}_{33}$) \textcolor{white}{H} & -0.05 & 0.37 & .541 & -0.05 & 0.48 & .489\\
 \ \ \ Shift of male controls vs. grandfathers 
                               ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) \textcolor{white}{H} & -0.04 & 0.15 & .700 & 0.16 & 3.22 & .073\\
 \ \ \ Before-slope of female controls vs. grandmothers 
@@ -4138,6 +4143,19 @@ HRS &  &  &  &  &  &  &  & \\
 
 \noindent \textbf{Supplemental Figures}
 
+(ref:flowchart-fig-cap) Participant flowchart demonstrating the
+composition of the four analysis samples via matching (1:4 matching
+ratio with replacement). obs. = longitudinal observations.
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{Figs/flowchart-participant-1} 
+
+}
+
+\caption{(ref:flowchart-fig-cap)}(\#fig:flowchart-participant)
+\end{figure}
+
 (ref:pscore-overlap-cap) Distributional Overlap of the Propensity Score
 in the Four Analysis Samples at the Time of Matching.
 
@@ -4467,24 +4485,26 @@ We used R (Version 4.0.4; R Core Team, 2021) and the R-packages
 Fox \& Weisberg, 2018; Fox, 2003; Fox \& Hong, 2009), \emph{forcats}
 (Version 0.5.0; Wickham, 2020a), \emph{foreign} (Version 0.8.81; R Core
 Team, 2020), \emph{Formula} (Version 1.2.4; Zeileis \& Croissant, 2010),
-\emph{ggplot2} (Version 3.3.5; Wickham, 2016), \emph{GPArotation}
-(Version 2014.11.1; Bernaards \& I.Jennrich, 2005), \emph{Hmisc}
-(Version 4.4.2; Harrell Jr et al., 2020), \emph{interactions} (Version
-1.1.3; Long, 2019), \emph{jtools} (Version 2.1.1; Long, 2020),
-\emph{knitr} (Version 1.30; Xie, 2015), \emph{lattice} (Version 0.20.41;
-Sarkar, 2008), \emph{lme4} (Version 1.1.26; Bates et al., 2015),
-\emph{lmerTest} (Version 3.1.3; Kuznetsova et al., 2017), \emph{magick}
-(Version 2.6.0; Ooms, 2021), \emph{MASS} (Version 7.3.53; Venables \&
-Ripley, 2002), \emph{MatchIt} (Version 4.1.0; Ho et al., 2020),
-\emph{Matrix} (Version 1.3.2; Bates \& Maechler, 2021), \emph{multcomp}
-(Version 1.4.17; Hothorn et al., 2008), \emph{mvtnorm} (Version 1.1.1;
-Genz \& Bretz, 2009), \emph{papaja} (Version 0.1.0.9997; Aust \& Barth,
-2020), \emph{patchwork} (Version 1.1.0.9000; Pedersen, 2020), \emph{png}
-(Version 0.1.7; Urbanek, 2013), \emph{psych} (Version 2.0.9; Revelle,
-2020), \emph{purrr} (Version 0.3.4; Henry \& Wickham, 2020),
-\emph{readr} (Version 1.4.0; Wickham \& Hester, 2020), \emph{robustlmm}
-(Version 2.3; Koller, 2016), \emph{scales} (Version 1.1.1; Wickham \&
-Seidel, 2020), \emph{stringr} (Version 1.4.0; Wickham, 2019),
+\emph{ggplot2} (Version 3.3.5; Wickham, 2016), \emph{ggplotify} (Version
+0.0.7; Yu, 2021), \emph{GPArotation} (Version 2014.11.1; Bernaards \&
+I.Jennrich, 2005), \emph{Hmisc} (Version 4.4.2; Harrell Jr et al.,
+2020), \emph{interactions} (Version 1.1.3; Long, 2019), \emph{jtools}
+(Version 2.1.1; Long, 2020), \emph{knitr} (Version 1.30; Xie, 2015),
+\emph{lattice} (Version 0.20.41; Sarkar, 2008), \emph{lme4} (Version
+1.1.26; Bates et al., 2015), \emph{lmerTest} (Version 3.1.3; Kuznetsova
+et al., 2017), \emph{magick} (Version 2.6.0; Ooms, 2021), \emph{MASS}
+(Version 7.3.53; Venables \& Ripley, 2002), \emph{MatchIt} (Version
+4.1.0; Ho et al., 2020), \emph{Matrix} (Version 1.3.2; Bates \&
+Maechler, 2021), \emph{multcomp} (Version 1.4.17; Hothorn et al., 2008),
+\emph{mvtnorm} (Version 1.1.1; Genz \& Bretz, 2009), \emph{papaja}
+(Version 0.1.0.9997; Aust \& Barth, 2020), \emph{patchwork} (Version
+1.1.0.9000; Pedersen, 2020), \emph{png} (Version 0.1.7; Urbanek, 2013),
+\emph{psych} (Version 2.0.9; Revelle, 2020), \emph{purrr} (Version
+0.3.4; Henry \& Wickham, 2020), \emph{readr} (Version 1.4.0; Wickham \&
+Hester, 2020), \emph{readxl} (Version 1.3.1; Wickham \& Bryan, 2019),
+\emph{robustlmm} (Version 2.3; Koller, 2016), \emph{scales} (Version
+1.1.1; Wickham \& Seidel, 2020), \emph{shiny} (Version 1.5.0; Chang et
+al., 2020), \emph{stringr} (Version 1.4.0; Wickham, 2019),
 \emph{survival} (Version 3.2.7; Terry M. Therneau \& Patricia M.
 Grambsch, 2000), \emph{TH.data} (Version 1.0.10; Hothorn, 2019),
 \emph{tibble} (Version 3.1.2; Müller \& Wickham, 2020), \emph{tidyr}
@@ -4505,20 +4525,20 @@ LAPACK:
 locale: {[}1{]}
 en\_US.UTF-8/en\_US.UTF-8/en\_US.UTF-8/C/en\_US.UTF-8/en\_US.UTF-8
 
-attached base packages: {[}1{]} stats graphics grDevices utils datasets
-methods base
+attached base packages: {[}1{]} grid stats graphics grDevices utils
+datasets methods\\
+{[}8{]} base
 
-other attached packages: {[}1{]} car\_3.0-10 carData\_3.0-4
-scales\_1.1.1\\
-{[}4{]} cowplot\_1.1.0 lmerTest\_3.1-3 lme4\_1.1-26\\
-{[}7{]} Matrix\_1.3-2 GPArotation\_2014.11-1 psych\_2.0.9\\
-{[}10{]} forcats\_0.5.0 stringr\_1.4.0 dplyr\_1.0.2\\
-{[}13{]} purrr\_0.3.4 readr\_1.4.0 tidyr\_1.1.2\\
-{[}16{]} tibble\_3.1.2 tidyverse\_1.3.0 Hmisc\_4.4-2\\
-{[}19{]} ggplot2\_3.3.5 Formula\_1.2-4 lattice\_0.20-41\\
-{[}22{]} multcomp\_1.4-17 TH.data\_1.0-10 MASS\_7.3-53\\
-{[}25{]} survival\_3.2-7 mvtnorm\_1.1-1 citr\_0.3.2\\
-{[}28{]} papaja\_0.1.0.9997 tinylabels\_0.1.0
+other attached packages: {[}1{]} png\_0.1-7 car\_3.0-10 carData\_3.0-4\\
+{[}4{]} scales\_1.1.1 cowplot\_1.1.0 lmerTest\_3.1-3\\
+{[}7{]} lme4\_1.1-26 Matrix\_1.3-2 GPArotation\_2014.11-1 {[}10{]}
+psych\_2.0.9 forcats\_0.5.0 stringr\_1.4.0\\
+{[}13{]} dplyr\_1.0.2 purrr\_0.3.4 readr\_1.4.0\\
+{[}16{]} tidyr\_1.1.2 tibble\_3.1.2 tidyverse\_1.3.0\\
+{[}19{]} Hmisc\_4.4-2 ggplot2\_3.3.5 Formula\_1.2-4\\
+{[}22{]} lattice\_0.20-41 multcomp\_1.4-17 TH.data\_1.0-10\\
+{[}25{]} MASS\_7.3-53 survival\_3.2-7 mvtnorm\_1.1-1\\
+{[}28{]} citr\_0.3.2 papaja\_0.1.0.9997 tinylabels\_0.1.0
 
 loaded via a namespace (and not attached): {[}1{]} minqa\_1.2.4
 colorspace\_2.0-1 rio\_0.5.16\\
@@ -4527,31 +4547,30 @@ colorspace\_2.0-1 rio\_0.5.16\\
 {[}10{]} lubridate\_1.7.9.2 xml2\_1.3.2 codetools\_0.2-18\\
 {[}13{]} splines\_4.0.4 mnormt\_2.0.2 knitr\_1.30\\
 {[}16{]} jsonlite\_1.7.2 nloptr\_1.2.2.2 broom\_0.7.6\\
-{[}19{]} cluster\_2.1.0 dbplyr\_1.4.4 png\_0.1-7\\
-{[}22{]} shiny\_1.5.0 compiler\_4.0.4 httr\_1.4.2\\
-{[}25{]} backports\_1.2.1 assertthat\_0.2.1 fastmap\_1.0.1\\
-{[}28{]} cli\_2.5.0 later\_1.1.0.1 htmltools\_0.5.0\\
-{[}31{]} tools\_4.0.4 gtable\_0.3.0 glue\_1.4.2\\
-{[}34{]} Rcpp\_1.0.6 cellranger\_1.1.0 vctrs\_0.3.8\\
-{[}37{]} nlme\_3.1-152 xfun\_0.19 openxlsx\_4.2.3\\
-{[}40{]} rvest\_0.3.6 mime\_0.9 miniUI\_0.1.1.1\\
-{[}43{]} lifecycle\_1.0.0 statmod\_1.4.35 zoo\_1.8-8\\
-{[}46{]} hms\_0.5.3 promises\_1.1.1 parallel\_4.0.4\\
-{[}49{]} sandwich\_3.0-0 RColorBrewer\_1.1-2 curl\_4.3.1\\
-{[}52{]} yaml\_2.2.1 gridExtra\_2.3 rpart\_4.1-15\\
-{[}55{]} latticeExtra\_0.6-29 stringi\_1.5.3 checkmate\_2.0.0\\
-{[}58{]} zip\_2.1.1 boot\_1.3-26 rlang\_0.4.11\\
-{[}61{]} pkgconfig\_2.0.3 evaluate\_0.14 htmlwidgets\_1.5.2\\
-{[}64{]} tidyselect\_1.1.0 magrittr\_2.0.1 bookdown\_0.21\\
-{[}67{]} R6\_2.5.0 generics\_0.1.0 DBI\_1.1.0\\
-{[}70{]} pillar\_1.6.1 haven\_2.3.1 foreign\_0.8-81\\
-{[}73{]} withr\_2.4.2 abind\_1.4-5 nnet\_7.3-15\\
-{[}76{]} modelr\_0.1.8 crayon\_1.4.1 utf8\_1.2.1\\
-{[}79{]} tmvnsim\_1.0-2 rmarkdown\_2.5 jpeg\_0.1-8.1\\
-{[}82{]} grid\_4.0.4 readxl\_1.3.1 data.table\_1.13.2\\
-{[}85{]} blob\_1.2.1 reprex\_0.3.0 digest\_0.6.27\\
-{[}88{]} xtable\_1.8-4 httpuv\_1.5.4 numDeriv\_2016.8-1.1 {[}91{]}
-munsell\_0.5.0
+{[}19{]} cluster\_2.1.0 dbplyr\_1.4.4 shiny\_1.5.0\\
+{[}22{]} compiler\_4.0.4 httr\_1.4.2 backports\_1.2.1\\
+{[}25{]} assertthat\_0.2.1 fastmap\_1.0.1 cli\_2.5.0\\
+{[}28{]} later\_1.1.0.1 htmltools\_0.5.0 tools\_4.0.4\\
+{[}31{]} gtable\_0.3.0 glue\_1.4.2 Rcpp\_1.0.6\\
+{[}34{]} cellranger\_1.1.0 vctrs\_0.3.8 nlme\_3.1-152\\
+{[}37{]} xfun\_0.19 openxlsx\_4.2.3 rvest\_0.3.6\\
+{[}40{]} mime\_0.9 miniUI\_0.1.1.1 lifecycle\_1.0.0\\
+{[}43{]} statmod\_1.4.35 zoo\_1.8-8 hms\_0.5.3\\
+{[}46{]} promises\_1.1.1 parallel\_4.0.4 sandwich\_3.0-0\\
+{[}49{]} RColorBrewer\_1.1-2 curl\_4.3.1 yaml\_2.2.1\\
+{[}52{]} gridExtra\_2.3 rpart\_4.1-15 latticeExtra\_0.6-29 {[}55{]}
+stringi\_1.5.3 checkmate\_2.0.0 zip\_2.1.1\\
+{[}58{]} boot\_1.3-26 rlang\_0.4.11 pkgconfig\_2.0.3\\
+{[}61{]} evaluate\_0.14 htmlwidgets\_1.5.2 tidyselect\_1.1.0\\
+{[}64{]} magrittr\_2.0.1 bookdown\_0.21 R6\_2.5.0\\
+{[}67{]} generics\_0.1.0 DBI\_1.1.0 pillar\_1.6.1\\
+{[}70{]} haven\_2.3.1 foreign\_0.8-81 withr\_2.4.2\\
+{[}73{]} abind\_1.4-5 nnet\_7.3-15 modelr\_0.1.8\\
+{[}76{]} crayon\_1.4.1 utf8\_1.2.1 tmvnsim\_1.0-2\\
+{[}79{]} rmarkdown\_2.5 jpeg\_0.1-8.1 readxl\_1.3.1\\
+{[}82{]} data.table\_1.13.2 blob\_1.2.1 reprex\_0.3.0\\
+{[}85{]} digest\_0.6.27 xtable\_1.8-4 httpuv\_1.5.4\\
+{[}88{]} numDeriv\_2016.8-1.1 munsell\_0.5.0
 
 \newpage
 
@@ -4594,6 +4613,11 @@ Bernaards, C. A., \& I.Jennrich, R. (2005). Gradient projection
 algorithms and software for arbitrary rotation criteria in factor
 analysis. \emph{Educational and Psychological Measurement}, \emph{65},
 676--696.
+
+\leavevmode\hypertarget{ref-R-shiny}{}%
+Chang, W., Cheng, J., Allaire, J., Xie, Y., \& McPherson, J. (2020).
+\emph{Shiny: Web application framework for r}.
+\url{https://CRAN.R-project.org/package=shiny}
 
 \leavevmode\hypertarget{ref-R-effects_b}{}%
 Fox, J. (2003). Effect displays in R for generalised linear models.
@@ -4749,6 +4773,10 @@ Robinson, D., Seidel, D. P., Spinu, V., \ldots{} Yutani, H. (2019).
 Welcome to the tidyverse. \emph{Journal of Open Source Software},
 \emph{4}(43), 1686. \url{https://doi.org/10.21105/joss.01686}
 
+\leavevmode\hypertarget{ref-R-readxl}{}%
+Wickham, H., \& Bryan, J. (2019). \emph{Readxl: Read excel files}.
+\url{https://CRAN.R-project.org/package=readxl}
+
 \leavevmode\hypertarget{ref-R-dplyr}{}%
 Wickham, H., François, R., Henry, L., \& Müller, K. (2020). \emph{Dplyr:
 A grammar of data manipulation}.
@@ -4774,6 +4802,10 @@ Chapman; Hall/CRC. \url{https://yihui.org/knitr/}
 \leavevmode\hypertarget{ref-R-careless}{}%
 Yentes, R. D., \& Wilhelm, F. (2018). \emph{Careless: Procedures for
 computing indices of careless responding}.
+
+\leavevmode\hypertarget{ref-R-ggplotify}{}%
+Yu, G. (2021). \emph{Ggplotify: Convert plot to 'grob' or 'ggplot'
+object}. \url{https://CRAN.R-project.org/package=ggplotify}
 
 \leavevmode\hypertarget{ref-R-Formula}{}%
 Zeileis, A., \& Croissant, Y. (2010). Extended model formulas in R:

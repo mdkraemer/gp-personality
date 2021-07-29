@@ -28,7 +28,7 @@ y_{ti} =& \beta_{0i} + \beta_{1i}before_{ti} + \beta_{2i}after_{ti} + \beta_{3i}
          & + \gamma_{31}shift_{ti}grandparent_i + \upsilon_{0i} + e_{ti}\ ,
 \end{split}
 \end{equation} -->
-where at time $t$ for person $i$ $e_{ti} \sim N(0, \sigma_e^2)$ and $\upsilon_{0i} \sim N(0, \tau_{00})$. $y_{ti}$ represented either one of the Big Five or life satisfaction. Separate models were computed for LISS and HRS samples, and for parent and nonparent matched controls.  
+where at time $t$ for person $i$ $e_{ti} \sim N(0, \sigma_e^2)$ and $\upsilon_{0i} \sim N(0, \tau_{00})$. $y_{ti}$ represented one of the Big Five or life satisfaction. Separate models were computed for LISS and HRS samples, and for parent and nonparent matched controls.  
 Model equation for the models including the gender interaction (moderator variable $female_i$):
 \begin{equation}
 \begin{split}
@@ -109,7 +109,7 @@ colnames(icc_list) <- c("\\textcolor{white}{xxx}A\\textcolor{white}{xxx}",
 apa_table(
   icc_list
   , caption = "Intra-Class Correlations of Grandparents and Matched Controls in the Four Analysis Samples."
-  , note = "A = agreeableness, C = conscientiousness, E = extraversion, N = neuroticism, O = openness, LS = life satisfaction. Intra-class correlations are the proportion of total variation that is explained by the respective nesting factor. $ICC_{pid}$ is the proportion of total variance explained by nesting in participants which corresponds to the correlation between two randomly selected observations from the same participant. $ICC_{hid}$ is the proportion of total variance explained by nesting in households which corresponds to the correlation between two randomly selected observations from the same household. $ICC_{pid/hid}$ is the proportion of total variance explained by nesting in participants and in households which corresponds to the correlation between two randomly selected observations from the same participant and the same household." 
+  , note = "A = agreeableness, C = conscientiousness, E = extraversion, N = neuroticism, O = openness, LS = life satisfaction. Intra-class correlations are the proportion of total variation that is explained by the respective nesting factor. $ICC_{pid}$ is the proportion of total variance explained by nesting in respondents which corresponds to the correlation between two randomly selected observations from the same respondent. $ICC_{hid}$ is the proportion of total variance explained by nesting in households which corresponds to the correlation between two randomly selected observations from the same household. $ICC_{pid/hid}$ is the proportion of total variance explained by nesting in respondents and in households which corresponds to the correlation between two randomly selected observations from the same respondent and the same household." 
   , align = c("l", "c", "c", "c", "c", "c", "c")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
                        digits = c(2,2,2,2,2,2,2),
@@ -148,9 +148,9 @@ sample_time_hrs_p <- sample_time_hrs_p %>% arrange(desc(grandparent))
 sample_time_hrs_np <- sample_time_hrs_np %>% filter(grandparent==0)
 ```
 
-(ref:piecewise-coding-scheme-cap) Longitudinal sample size in the analysis samples and coding scheme for the piecewise regression coefficients.
+(ref:piecewise-coding-scheme-cap) Longitudinal Sample Size in the Analysis Samples and Coding Scheme for the Piecewise Regression Coefficients.
 
-(ref:piecewise-coding-scheme-note) obs. = observations. $time=0$ marks the first year where the transition to grandparenthood has been reported. The number of grandparent participants is $N_{LISS}=$ 250 and $N_{HRS}=$ 846. 
+(ref:piecewise-coding-scheme-note) obs. = observations. $time=0$ marks the first year where the transition to grandparenthood has been reported. The number of grandparent respondents included in the final samples is $N_{LISS}=$ 250 and $N_{HRS}=$ 846. 
 
 ```{r piecewise-coding-scheme, results="asis", warning=FALSE, message=FALSE}
 sample_time_liss <- as.data.frame(rbind(sample_time_liss_p, sample_time_liss_np))
@@ -267,7 +267,7 @@ descriptives_hrs <- descriptives_hrs %>% add_column(`-5` = "", `-3` = "", `-1` =
 
 (ref:descriptives-liss-cap) Means and Standard Deviations of the Big Five and Life Satisfaction over Time in the LISS Panel.
 
-(ref:descriptives-note) Standard deviations shown in brackets; $time=0$ marks the first year where the transition to grandparenthood was reported.
+(ref:descriptives-liss-note) Standard deviations shown in parentheses; $time=0$ marks the first year where the transition to grandparenthood was reported.
 
 ```{r descriptives-liss, results="asis", warning=FALSE, message=FALSE}
 # no duplicate rownames allowed :(
@@ -311,7 +311,7 @@ rownames(descriptives_liss) <- c("Grandparents \\textcolor{white}{A}",
 apa_table(
   descriptives_liss
   , caption = "(ref:descriptives-liss-cap)"
-  , note = "(ref:descriptives-note)"
+  , note = "(ref:descriptives-liss-note)"
   , align = c("l", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c")
   , col.names = c("", "-6", "-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3", "4", "5", "6")
   , col_spanners = list("Pre-transition years" = c(2,7), "Post-transition years" = c(8,14))
@@ -329,6 +329,8 @@ apa_table(
 ```
 
 (ref:descriptives-hrs-cap) Means and Standard Deviations of the Big Five and Life Satisfaction over Time in the HRS.
+
+(ref:descriptives-hrs-note) Standard deviations shown in parentheses; $time=0$ marks the first year where the transition to grandparenthood was reported. To aid comparability with the LISS panel measures, we reverse scored all items so that higher values corresponded to higher trait levels.
 
 ```{r descriptives-hrs, results="asis", warning=FALSE, message=FALSE}
 # no duplicate rownames allowed :(
@@ -372,7 +374,7 @@ rownames(descriptives_hrs) <- c("Grandparents \\textcolor{white}{A}",
 apa_table(
   descriptives_hrs
   , caption = "(ref:descriptives-hrs-cap)"
-  , note = "(ref:descriptives-note)"
+  , note = "(ref:descriptives-hrs-note)"
   , align = c("l", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c")
   , col.names = c("", "-6", "-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3", "4", "5", "6")
   , col_spanners = list("Pre-transition years" = c(2,7), "Post-transition years" = c(8,14))
@@ -389,7 +391,7 @@ apa_table(
 )
 ```
 
-(ref:stddiffmeans-balance-liss-cap) Standardized Difference in Means for Covariates Used in Propensity Score Matching and the Propensity Score in the LISS panel.
+(ref:stddiffmeans-balance-liss-cap) Standardized Difference in Means for Covariates Used in Propensity Score Matching and the Propensity Score in the LISS.
 
 (ref:stddiffmeans-balance-note) PSM = propensity score matching, ref. = reference category, f. = female, m. = male, NA = covariate not used in this sample. The standardized difference in means between the grandparent and the two control groups (parent and nonparent) was computed by $(\bar{x}_{gp}-\bar{x}_{c})/ (\hat\sigma_{gp})$. Rules of thumb say that this measure should ideally be below $.25$ [@stuartMatchingMethodsCausal2010] or below $.10$ [@austinIntroductionPropensityScore2011].  
 
@@ -404,7 +406,7 @@ apa_table(
   , caption = "(ref:stddiffmeans-balance-liss-cap)"
   , note = "(ref:stddiffmeans-balance-note)"
   , align = c("l", "l", "l", "r", "r", "r", "r")
-  , col.names = c("Covariate", "Description", "Raw variable", 
+  , col.names = c("Covariate", "Description", "Raw variables", 
                   "Before PSM", "After PSM", "Before PSM", "After PSM")
   , col_spanners = list("Parent control group" = c(4,5), "Nonparent control group" = c(6,7))
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
@@ -431,7 +433,7 @@ apa_table(
   , caption = "(ref:stddiffmeans-balance-hrs-cap)"
   , note = "(ref:stddiffmeans-balance-note)"
   , align = c("l", "l", "l", "r", "r", "r", "r")
-  , col.names = c("Covariate", "Description", "Raw variable", 
+  , col.names = c("Covariate", "Description", "Raw variables", 
                   "Before PSM", "After PSM", "Before PSM", "After PSM")
   , col_spanners = list("Parent control group" = c(4,5), "Nonparent control group" = c(6,7))
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
@@ -703,7 +705,7 @@ rownames_tabcon_agree_gender <- c("Shift of male controls vs. 0 ($\\hat{\\gamma}
                               $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{21}$ + 
                               $\\hat{\\gamma}_{31}$ + $\\hat{\\gamma}_{22}$ + 
                               $\\hat{\\gamma}_{32}$ + $\\hat{\\gamma}_{23}$ +
-                              $\\hat{\\gamma}_{33}$ \\textcolor{white}{H}",
+                              $\\hat{\\gamma}_{33}$) \\textcolor{white}{H}",
                            "Shift of male controls vs. grandfathers 
                               ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{31}$) \\textcolor{white}{H}",
                            "Before-slope of female controls vs. grandmothers 
@@ -1185,7 +1187,7 @@ rownames_tabcon_con_gender <- c("Shift of male controls vs. 0 ($\\hat{\\gamma}_{
                               $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{21}$ + 
                               $\\hat{\\gamma}_{31}$ + $\\hat{\\gamma}_{22}$ + 
                               $\\hat{\\gamma}_{32}$ + $\\hat{\\gamma}_{23}$ +
-                              $\\hat{\\gamma}_{33}$ \\textcolor{white}{H}",
+                              $\\hat{\\gamma}_{33}$) \\textcolor{white}{H}",
                            "Shift of male controls vs. grandfathers 
                               ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{31}$) \\textcolor{white}{H}",
                            "Before-slope of female controls vs. grandmothers 
@@ -1606,7 +1608,7 @@ rownames_tabcon_extra_gender <- c("Shift of male controls vs. 0 ($\\hat{\\gamma}
                               $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{21}$ + 
                               $\\hat{\\gamma}_{31}$ + $\\hat{\\gamma}_{22}$ + 
                               $\\hat{\\gamma}_{32}$ + $\\hat{\\gamma}_{23}$ +
-                              $\\hat{\\gamma}_{33}$ \\textcolor{white}{H}",
+                              $\\hat{\\gamma}_{33}$) \\textcolor{white}{H}",
                            "Shift of male controls vs. grandfathers 
                               ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{31}$) \\textcolor{white}{H}",
                            "Before-slope of female controls vs. grandmothers 
@@ -2027,7 +2029,7 @@ rownames_tabcon_neur_gender <- c("Shift of male controls vs. 0 ($\\hat{\\gamma}_
                               $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{21}$ + 
                               $\\hat{\\gamma}_{31}$ + $\\hat{\\gamma}_{22}$ + 
                               $\\hat{\\gamma}_{32}$ + $\\hat{\\gamma}_{23}$ +
-                              $\\hat{\\gamma}_{33}$ \\textcolor{white}{H}",
+                              $\\hat{\\gamma}_{33}$) \\textcolor{white}{H}",
                            "Shift of male controls vs. grandfathers 
                               ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{31}$) \\textcolor{white}{H}",
                            "Before-slope of female controls vs. grandmothers 
@@ -2448,7 +2450,7 @@ rownames_tabcon_open_gender <- c("Shift of male controls vs. 0 ($\\hat{\\gamma}_
                               $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{21}$ + 
                               $\\hat{\\gamma}_{31}$ + $\\hat{\\gamma}_{22}$ + 
                               $\\hat{\\gamma}_{32}$ + $\\hat{\\gamma}_{23}$ +
-                              $\\hat{\\gamma}_{33}$ \\textcolor{white}{H}",
+                              $\\hat{\\gamma}_{33}$) \\textcolor{white}{H}",
                            "Shift of male controls vs. grandfathers 
                               ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{31}$) \\textcolor{white}{H}",
                            "Before-slope of female controls vs. grandmothers 
@@ -2869,7 +2871,7 @@ rownames_tabcon_swls_gender <- c("Shift of male controls vs. 0 ($\\hat{\\gamma}_
                               $\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{21}$ + 
                               $\\hat{\\gamma}_{31}$ + $\\hat{\\gamma}_{22}$ + 
                               $\\hat{\\gamma}_{32}$ + $\\hat{\\gamma}_{23}$ +
-                              $\\hat{\\gamma}_{33}$ \\textcolor{white}{H}",
+                              $\\hat{\\gamma}_{33}$) \\textcolor{white}{H}",
                            "Shift of male controls vs. grandfathers 
                               ($\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{31}$) \\textcolor{white}{H}",
                            "Before-slope of female controls vs. grandmothers 
@@ -3492,6 +3494,16 @@ apa_table(
 
 \noindent
 **Supplemental Figures**  
+
+(ref:flowchart-fig-cap) Participant flowchart demonstrating the composition of the four analysis samples via matching (1:4 matching ratio with replacement). obs. = longitudinal observations.
+
+```{r flowchart-participant, fig.align = "center", out.width = "100%", fig.cap="(ref:flowchart-fig-cap)"}
+#knitr::include_graphics(".../images/swans.png") 
+# this function in combination with papaja or PDF rendering is very buggy
+# this was a solution: https://stackoverflow.com/questions/53580306/using-include-graphics-in-r-markdown-does-not-reproduce-the-image-in-html-file
+img <- readPNG("gp-participant-flowchart.png")
+grid.raster(img)
+```
 
 (ref:pscore-overlap-cap) Distributional Overlap of the Propensity Score in the Four Analysis Samples at the Time of Matching.
 
