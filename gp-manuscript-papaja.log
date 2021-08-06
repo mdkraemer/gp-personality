@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  30 JUL 2021 16:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  6 AUG 2021 12:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2031,6 +2031,18 @@ File: Figs/H1-swls-care-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-swls-care-fig-1.pdf>
 Package pdftex.def Info: Figs/H1-swls-care-fig-1.pdf  used on input line 5856.
 (pdftex.def)             Requested size: 469.76265pt x 402.65372pt.
+<Figs/effects-basic-plot-1.pdf, id=1459, 578.16pt x 469.755pt>
+File: Figs/effects-basic-plot-1.pdf Graphic file (type pdf)
+<use Figs/effects-basic-plot-1.pdf>
+Package pdftex.def Info: Figs/effects-basic-plot-1.pdf  used on input line 5879
+.
+(pdftex.def)             Requested size: 469.75385pt x 381.675pt.
+<Figs/effects-gender-plot-1.pdf, id=1472, 578.16pt x 650.43pt>
+File: Figs/effects-gender-plot-1.pdf Graphic file (type pdf)
+<use Figs/effects-gender-plot-1.pdf>
+Package pdftex.def Info: Figs/effects-gender-plot-1.pdf  used on input line 590
+6.
+(pdftex.def)             Requested size: 469.75385pt x 528.47307pt.
 [76
 
  <./Figs/flowchart-participant-1.pdf>] [77 <./Figs/pscore-overlap-1.pdf>] [78 <
@@ -2044,65 +2056,66 @@ gs/H1-extra-care-fig-1.pdf>] [93 <./Figs/H1-neur-fig-1.pdf>] [94 <./Figs/H1-neu
 r-work-fig-1.pdf>] [95 <./Figs/H1-neur-care-fig-1.pdf>] [96 <./Figs/H1-open-fig
 -1.pdf>] [97 <./Figs/H1-open-work-fig-1.pdf>] [98 <./Figs/H1-open-care-fig-1.pd
 f>] [99 <./Figs/H1-swls-fig-1.pdf>] [100 <./Figs/H1-swls-work-fig-1.pdf>] [101 
-<./Figs/H1-swls-care-fig-1.pdf>]
+<./Figs/H1-swls-care-fig-1.pdf>] [102 <./Figs/effects-basic-plot-1.pdf>] [103 <
+./Figs/effects-gender-plot-1.pdf>]
 Underfull \vbox (badness 7649) has occurred while \output is active []
 
-[102] [103] [104]pdfTeX warning (ext4): destination with the same identifier (n
+[104] [105] [106]pdfTeX warning (ext4): destination with the same identifier (n
 ame{refs}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.5975 \hypertarget{refs}{}
+l.6030 \hypertarget{refs}{}
                            pdfTeX warning (ext4): destination with the same ide
 ntifier (name{ref-R-papaja}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.5980 \leavevmode\hypertarget{ref-R-papaja}{}
+l.6035 \leavevmode\hypertarget{ref-R-papaja}{}
                                               %pdfTeX warning (ext4): destinati
 on with the same identifier (name{ref-austinIntroductionPropensityScore2011}) h
 as been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.5984 ...austinIntroductionPropensityScore2011}{}
+l.6039 ...austinIntroductionPropensityScore2011}{}
                                                   %pdfTeX warning (ext4): desti
 nation with the same identifier (name{ref-R-lme4}) has been already used, dupli
 cate ignored
 <to be read again> 
                    \relax 
-l.5998 \leavevmode\hypertarget{ref-R-lme4}{}
-                                            % [105]pdfTeX warning (ext4): desti
+l.6053 \leavevmode\hypertarget{ref-R-lme4}{}
+                                            % [107]pdfTeX warning (ext4): desti
 nation with the same identifier (name{ref-car2019}) has been already used, dupl
 icate ignored
 <to be read again> 
                    \relax 
-l.6031 \leavevmode\hypertarget{ref-car2019}{}
+l.6086 \leavevmode\hypertarget{ref-car2019}{}
                                              %pdfTeX warning (ext4): destinatio
 n with the same identifier (name{ref-R-lmerTest}) has been already used, duplic
 ate ignored
 <to be read again> 
                    \relax 
-l.6075 \leavevmode\hypertarget{ref-R-lmerTest}{}
-                                                % [106]pdfTeX warning (ext4): d
+l.6130 \leavevmode\hypertarget{ref-R-lmerTest}{}
+                                                % [108]pdfTeX warning (ext4): d
 estination with the same identifier (name{ref-R-base}) has been already used, d
 uplicate ignored
 <to be read again> 
                    \relax 
-l.6106 \leavevmode\hypertarget{ref-R-base}{}
+l.6161 \leavevmode\hypertarget{ref-R-base}{}
                                             %pdfTeX warning (ext4): destination
  with the same identifier (name{ref-stuartMatchingMethodsCausal2010}) has been 
 already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.6120 ...t{ref-stuartMatchingMethodsCausal2010}{}
-                                                  % [107] [108] AED endfloat: P
-rocessing end Figures and Tables [109] (./gp-manuscript-papaja.aux)
+l.6175 ...t{ref-stuartMatchingMethodsCausal2010}{}
+                                                  % [109] [110] AED endfloat: P
+rocessing end Figures and Tables [111] (./gp-manuscript-papaja.aux)
 Package rerunfilecheck Info: File `gp-manuscript-papaja.out' has not changed.
 (rerunfilecheck)             Checksum: 64210B97B618E74FCB2F24BBE1F12F6F;4901.
  ) 
 Here is how much of TeX's memory you used:
- 25726 strings out of 480962
- 469236 string characters out of 5906169
- 841889 words of memory out of 5000000
- 41876 multiletter control sequences out of 15000+600000
+ 25744 strings out of 480962
+ 469765 string characters out of 5906169
+ 850186 words of memory out of 5000000
+ 41888 multiletter control sequences out of 15000+600000
  496100 words of font info for 104 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  102i,19n,103p,2526b,771s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2171,10 +2184,10 @@ ts/type1/public/lm/lmri10.pfb></Users/michaelkramer/Library/TinyTeX/texmf-dist/
 fonts/type1/public/lm/lmri12.pfb></Users/michaelkramer/Library/TinyTeX/texmf-di
 st/fonts/type1/public/lm/lmss8.pfb></Users/michaelkramer/Library/TinyTeX/texmf-
 dist/fonts/type1/public/lm/lmsy10.pfb>
-Output written on gp-manuscript-papaja.pdf (179 pages, 3199903 bytes).
+Output written on gp-manuscript-papaja.pdf (181 pages, 3229255 bytes).
 PDF statistics:
- 2035 PDF objects out of 2073 (max. 8388607)
- 1717 compressed objects within 18 object streams
- 519 named destinations out of 1000 (max. 500000)
- 415 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2084 PDF objects out of 2487 (max. 8388607)
+ 1760 compressed objects within 18 object streams
+ 523 named destinations out of 1000 (max. 500000)
+ 425 words of extra memory for PDF output out of 10000 (max. 10000000)
 

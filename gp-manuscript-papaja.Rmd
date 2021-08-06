@@ -814,7 +814,7 @@ for (i in 1:length(outcomes)){
     eval(call("<-", as.name(obj_name_test), obj_test)) # save lmerTest model
     # for better formatting in text: p-values
     obj_p <- as.data.frame(summary(mod_summaries_test[[pos + j]])$coefficients) %>% # unfold list
-      rownames_to_column() %>% select(rowname, "Pr(>|t|)") %>% rename(p = "Pr(>|t|)") %>% 
+      rownames_to_column() %>% dplyr::select(rowname, "Pr(>|t|)") %>% rename(p = "Pr(>|t|)") %>% 
       mutate(p = scales::pvalue(p, prefix = c("$p$ < ", "$p$ = ", "$p$ > "))) %>% column_to_rownames()
     obj_p["p"] <- # remove "0" from the chr's 
       lapply(obj_p["p"], gsub, pattern="0\\.", replacement="\\.")
@@ -838,7 +838,7 @@ for (i in 1:length(outcomes)){
     eval(call("<-", as.name(obj_gender_test_name), obj_gender_test)) # save object
     # for better formatting in text: p-values
     obj_gender_p <- as.data.frame(summary(mod_summaries_gender_test[[pos + j]])$coefficients) %>% # unfold
-      rownames_to_column() %>% select(rowname, "Pr(>|t|)") %>% rename(p = "Pr(>|t|)") %>% 
+      rownames_to_column() %>% dplyr::select(rowname, "Pr(>|t|)") %>% rename(p = "Pr(>|t|)") %>% 
       mutate(p = scales::pvalue(p, prefix = c("$p$ < ", "$p$ = ", "$p$ > "))) %>% column_to_rownames()
     obj_gender_p["p"] <- # remove "0" from the chr's 
       lapply(obj_gender_p["p"], gsub, pattern="0\\.", replacement="\\.")
@@ -912,7 +912,7 @@ for (i in 1:length(outcomes)){
     eval(call("<-", as.name(obj_work_test_name), obj_work_test)) # save object
     # for better formatting in text: p-values
     obj_work_p <- as.data.frame(summary(mod_summaries_work_test[[pos + j]])$coefficients) %>% # unfold
-      rownames_to_column() %>% select(rowname, "Pr(>|t|)") %>% rename(p = "Pr(>|t|)") %>% 
+      rownames_to_column() %>% dplyr::select(rowname, "Pr(>|t|)") %>% rename(p = "Pr(>|t|)") %>% 
       mutate(p = scales::pvalue(p, prefix = c("$p$ < ", "$p$ = ", "$p$ > "))) %>% column_to_rownames()
     obj_work_p["p"] <- # remove "0" from the chr's 
       lapply(obj_work_p["p"], gsub, pattern="0\\.", replacement="\\.")
@@ -987,7 +987,7 @@ for (i in 1:length(outcomes)){
     eval(call("<-", as.name(obj_care_test_name), obj_care_test)) # save object
     # for better formatting in text: p-values
     obj_care_p <- as.data.frame(summary(mod_summaries_care_test[[pos + j]])$coefficients) %>% 
-      rownames_to_column() %>% select(rowname, "Pr(>|t|)") %>% rename(p = "Pr(>|t|)") %>% 
+      rownames_to_column() %>% dplyr::select(rowname, "Pr(>|t|)") %>% rename(p = "Pr(>|t|)") %>% 
       mutate(p = scales::pvalue(p, prefix = c("$p$ < ", "$p$ = ", "$p$ > "))) %>% column_to_rownames()
     obj_care_p["p"] <- # remove "0" from the chr's 
       lapply(obj_care_p["p"], gsub, pattern="0\\.", replacement="\\.")
@@ -1298,7 +1298,7 @@ for (i in 1:length(outcomes)){
 # remove unnecessary objects
 rm(list = ls(pattern = paste0(c(to_be_tested, to_be_tested_gender, 
                                 to_be_tested_work, to_be_tested_care), collapse="|")))
-rm(list = ls(pattern = paste0("contrasts_", outcomes, "_", collapse = "|")))
+#rm(list = ls(pattern = paste0("contrasts_", outcomes, "_", collapse = "|"))) # needed for plots
 ```
 
 ```{r H1-dataframes-plots, include=FALSE, cache=T}
@@ -1521,9 +1521,9 @@ for (i in 1:length(outcomes)){
   }
 }
 
-# remove list objects from environment
-rm(mod_summaries_test, mod_summaries_gender, mod_summaries_gender_test, #mod_summaries
-   mod_summaries_work, mod_summaries_work_test, mod_summaries_care, mod_summaries_care_test)
+# remove list objects from environment (needed for plots later)
+#rm(mod_summaries_test, mod_summaries_gender, mod_summaries_gender_test, #mod_summaries
+#   mod_summaries_work, mod_summaries_work_test, mod_summaries_care, mod_summaries_care_test)
 ```
 
 ```{r H1-build-plots, include=FALSE, cache=T}

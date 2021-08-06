@@ -4226,6 +4226,238 @@ plot_grid(title_HRS, grid_swls_care,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
+(ref:effects-basic-plot-cap) Unstandardized Effect Sizes of the Basic Models Across Analysis Samples (Regression Coefficients $\hat{\gamma}$ or Linear Contrasts $\hat{\gamma}_{c}$ From Multilevel Models, see Tables \@ref(tab:H1-agree-tab), \@ref(tab:H1-agree-contrasts), \@ref(tab:H1-con-tab), \@ref(tab:H1-con-contrasts), \@ref(tab:H1-extra-tab), \@ref(tab:H1-extra-contrasts), \@ref(tab:H1-neur-tab), \@ref(tab:H1-neur-contrasts), \@ref(tab:H1-open-tab), \@ref(tab:H1-open-contrasts), \@ref(tab:H1-swls-tab), \@ref(tab:H1-swls-contrasts)). Error Bars Represent 95% Confidence Intervals.
+
+```{r effects-basic-plot, fig.cap = "(ref:effects-basic-plot-cap)", fig.height=6.5, fig.width=8, cache=T}
+# see Matz & Harari (2021) JPSP : https://osf.io/qae5y/
+
+effects_basic <- summary(agree_liss_parents_test)$coefficients[c("before:grandparent", 
+                                                                 "after:grandparent"), 
+                                                               c("Estimate", "Std. Error")]
+colnames(effects_basic) <- c("est", "err")
+# compute 95% CIs
+effects_basic <- effects_basic %>% as.data.frame() %>% mutate(
+  lwr = est - qnorm(.975)*err,
+  upr = est + qnorm(.975)*err,
+) %>% dplyr::select(-err)
+# add shift effect from contrast object
+effects_basic <- rbind(effects_basic, 
+                       contrasts_agree_liss_parents["shift_gp_vs_control", c("est", "lwr", "upr")])
+rownames(effects_basic) <- NULL
+# add descriptive factor variables for later ggplot use 
+effects_basic$parameter <- factor(c("Before-slope", "After-slope", "Shift"), 
+                                  levels = c("Before-slope", "After-slope", "Shift"))
+effects_basic$outcome <- factor(c(df_outcomes["agree", "maj"]))
+effects_basic$sample <- factor(c("LISS"))
+effects_basic$comparison <- factor(c("Parents"))
+
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  for (j in 1:length(c("liss", "hrs"))){
+    panel = c("liss", "hrs")[j]
+    for (k in 1:length(c("parents", "nonparents"))){
+      comp = c("parents", "nonparents")[k]
+      model = get(paste(outcome, panel, comp, "test", sep = "_"))
+      # all but first one (which we created above)
+      if (paste(outcome, panel, comp, "test", sep = "_")!="agree_liss_parents_test"){ 
+      # grab effects from previously saved models
+      more_effects <- summary(model)$coefficients[c("before:grandparent", "after:grandparent"), 
+                                                   c("Estimate", "Std. Error")]
+      colnames(more_effects) <- c("est", "err")
+      # compute 95% CIs
+      more_effects <- more_effects %>% as.data.frame() %>% mutate(
+        lwr = est - qnorm(.975)*err,
+        upr = est + qnorm(.975)*err,
+      ) %>% dplyr::select(-err)
+      # add shift effect from contrast object
+      contrast = get(paste("contrasts", outcome, panel, comp, sep = "_"))
+      more_effects <- rbind(more_effects, 
+                             contrast["shift_gp_vs_control", c("est", "lwr", "upr")])
+      rownames(more_effects) <- NULL
+      # add descriptive factor variables for later ggplot use 
+      more_effects$parameter <- factor(c("Before-slope", "After-slope", "Shift"), 
+                                       levels = c("Before-slope", "After-slope", "Shift"))
+      more_effects$outcome <- factor(c(df_outcomes[outcome, "maj"]))
+      more_effects$sample <- factor(c(c("LISS", "HRS")[j]))
+      more_effects$comparison <- factor(c(c("Parents", "Nonparents")[k]))
+      # bind with all effects created in previous loops
+      effects_basic <- rbind(effects_basic, more_effects)
+      }
+    }
+  }
+}
+# a single grouping factor turned out easier to handle
+effects_basic$analysissample <- paste(effects_basic$sample, effects_basic$comparison)
+effects_basic$analysissample <- factor(effects_basic$analysissample, 
+                                       levels = c("LISS Parents", "LISS Nonparents", 
+                                                  "HRS Parents", "HRS Nonparents"))
+# more intuitive label (appears in legend later)
+levels(effects_basic$analysissample) <- c("LISS: Grandparents vs. Parents", 
+                                          "LISS: Grandparents vs. Nonparents", 
+                                          "HRS: Grandparents vs. Parents", 
+                                          "HRS: Grandparents vs. Nonparents")
+
+ggplot(effects_basic, aes(x = fct_rev(parameter), y = est, colour = fct_rev(analysissample), 
+                          group = fct_rev(analysissample))) +
+  geom_point(aes(color = fct_rev(analysissample), shape = fct_rev(analysissample)), 
+             size=2, position=position_dodge(0.4)) + 
+  geom_hline(yintercept=0) +
+  geom_errorbar(aes(ymin = lwr, ymax = upr), width=.3, position=position_dodge(0.4)) +
+  facet_wrap( ~ outcome, ncol = 6) +
+  theme_bw() + 
+  scale_shape_manual(values=c(18,17,16,15))+
+  scale_color_manual(values=c("#009E73", "#56B4E9", "#E69F00", "#000000"))+
+  ylab("Unstandardized Effect Size (95% CI)") +
+  xlab("") +
+  theme(legend.position="top") +
+  guides(colour = guide_legend(reverse = TRUE, ncol=2), shape = guide_legend(reverse = TRUE, ncol=2)) + 
+  theme(legend.title=element_blank()) +
+  theme(legend.text=element_text(size=12)) +
+  coord_flip() +
+  theme(strip.text.x = element_text(size = 8)) +
+  theme(axis.text.x=element_text(size=7), axis.text.y=element_text(size=12))
+```
+
+
+(ref:effects-gender-plot-cap) Unstandardized Effect Sizes of the Models Including the Gender Interaction Across Analysis Samples (Regression Coefficients $\hat{\gamma}$ or Linear Contrasts $\hat{\gamma}_{c}$ From Multilevel Models, see Tables \@ref(tab:H1-agree-gender-tab), \@ref(tab:H1-agree-gender-contrasts), \@ref(tab:H1-con-gender-tab), \@ref(tab:H1-con-gender-contrasts), \@ref(tab:H1-extra-gender-tab), \@ref(tab:H1-extra-gender-contrasts), \@ref(tab:H1-neur-gender-tab), \@ref(tab:H1-neur-gender-contrasts), \@ref(tab:H1-open-gender-tab), \@ref(tab:H1-open-gender-contrasts), \@ref(tab:H1-swls-gender-tab), \@ref(tab:H1-swls-gender-contrasts)). Error Bars Represent 95% Confidence Intervals.
+
+```{r effects-gender-plot, fig.cap = "(ref:effects-gender-plot-cap)", fig.height=9, fig.width=8, cache=T}
+# next, for moderation by gender, I want grandfathers vs. male controls, grandmothers vs. female controls,
+# and grandfathers vs. grandmothers
+effects_gender <- summary(agree_liss_parents_gender_test)$coefficients[c("before:grandparent", 
+                                                                         "after:grandparent"), 
+                                                                       c("Estimate", "Std. Error")]
+colnames(effects_gender) <- c("est", "err")
+# compute 95% CIs
+effects_gender <- effects_gender %>% as.data.frame() %>% mutate(
+  lwr = est - qnorm(.975)*err,
+  upr = est + qnorm(.975)*err,
+) %>% dplyr::select(-err)
+# add shift effect from contrast object (plus all the other gender comparisons...)
+effects_gender <- rbind(effects_gender, 
+                        contrasts_agree_liss_parents_gender[c("shift_gp_vs_control_men",
+                                                              "before_gp_vs_control_women",
+                                                              "after_gp_vs_control_women",
+                                                              "shift_gp_vs_control_women",
+                                                              "before_male_vs_female_gp",
+                                                              "after_male_vs_female_gp",
+                                                              "shift_male_vs_female_gp"), 
+                                                            c("est", "lwr", "upr")])
+rownames(effects_gender) <- NULL
+# add descriptive factor variables for later ggplot use 
+effects_gender$parameter <- factor(c("Before-slope\n(grandfathers vs.\nmale controls)", 
+                                     "After-slope\n(grandfathers vs.\nmale controls)", 
+                                     "Shift\n(grandfathers vs.\nmale controls)",
+                                     "Before-slope\n(grandmothers vs.\nfemale controls)", 
+                                     "After-slope\n(grandmothers vs.\nfemale controls)", 
+                                     "Shift\n(grandmothers vs.\nfemale controls)",
+                                     "Before-slope\n(grandfathers vs.\ngrandmothers)", 
+                                     "After-slope\n(grandfathers vs.\ngrandmothers)", 
+                                     "Shift\n(grandfathers vs.\ngrandmothers)"),
+                                   levels = c("Before-slope\n(grandfathers vs.\nmale controls)", 
+                                              "After-slope\n(grandfathers vs.\nmale controls)", 
+                                              "Shift\n(grandfathers vs.\nmale controls)",
+                                              "Before-slope\n(grandmothers vs.\nfemale controls)", 
+                                              "After-slope\n(grandmothers vs.\nfemale controls)", 
+                                              "Shift\n(grandmothers vs.\nfemale controls)",
+                                              "Before-slope\n(grandfathers vs.\ngrandmothers)", 
+                                              "After-slope\n(grandfathers vs.\ngrandmothers)", 
+                                              "Shift\n(grandfathers vs.\ngrandmothers)"))
+effects_gender$outcome <- factor(c(df_outcomes["agree", "maj"]))
+effects_gender$sample <- factor(c("LISS"))
+effects_gender$comparison <- factor(c("Parents"))
+
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  for (j in 1:length(c("liss", "hrs"))){
+    panel = c("liss", "hrs")[j]
+    for (k in 1:length(c("parents", "nonparents"))){
+      comp = c("parents", "nonparents")[k]
+      model = get(paste(outcome, panel, comp, "gender_test", sep = "_"))
+      # all but first one (which we already created above)
+      if (paste(outcome, panel, comp, "gender_test", sep = "_")!="agree_liss_parents_gender_test"){ 
+        # grab effects from previously saved models
+        more_effects_gender <- summary(model)$coefficients[c("before:grandparent", "after:grandparent"), 
+                                                           c("Estimate", "Std. Error")]
+        colnames(more_effects_gender) <- c("est", "err")
+        # compute 95% CIs
+        more_effects_gender <- more_effects_gender %>% as.data.frame() %>% mutate(
+          lwr = est - qnorm(.975)*err,
+          upr = est + qnorm(.975)*err,
+        ) %>% dplyr::select(-err)
+        # add shift effect from contrast object (& other gender comparisons)
+        contrast = get(paste("contrasts", outcome, panel, comp, "gender", sep = "_"))
+        more_effects_gender <- rbind(more_effects_gender, 
+                              contrast[c("shift_gp_vs_control_men",
+                                         "before_gp_vs_control_women",
+                                         "after_gp_vs_control_women",
+                                         "shift_gp_vs_control_women",
+                                         "before_male_vs_female_gp",
+                                         "after_male_vs_female_gp",
+                                         "shift_male_vs_female_gp"), 
+                                       c("est", "lwr", "upr")])
+        rownames(more_effects_gender) <- NULL
+        # add descriptive factor variables for later ggplot use 
+        more_effects_gender$parameter <- factor(c("Before-slope\n(grandfathers vs.\nmale controls)", 
+                                                  "After-slope\n(grandfathers vs.\nmale controls)", 
+                                                  "Shift\n(grandfathers vs.\nmale controls)",
+                                                  "Before-slope\n(grandmothers vs.\nfemale controls)", 
+                                                  "After-slope\n(grandmothers vs.\nfemale controls)", 
+                                                  "Shift\n(grandmothers vs.\nfemale controls)",
+                                                  "Before-slope\n(grandfathers vs.\ngrandmothers)", 
+                                                  "After-slope\n(grandfathers vs.\ngrandmothers)", 
+                                                  "Shift\n(grandfathers vs.\ngrandmothers)"),
+                                         levels = c("Before-slope\n(grandfathers vs.\nmale controls)", 
+                                                    "After-slope\n(grandfathers vs.\nmale controls)", 
+                                                    "Shift\n(grandfathers vs.\nmale controls)",
+                                                    "Before-slope\n(grandmothers vs.\nfemale controls)",
+                                                    "After-slope\n(grandmothers vs.\nfemale controls)", 
+                                                    "Shift\n(grandmothers vs.\nfemale controls)",
+                                                    "Before-slope\n(grandfathers vs.\ngrandmothers)", 
+                                                    "After-slope\n(grandfathers vs.\ngrandmothers)", 
+                                                    "Shift\n(grandfathers vs.\ngrandmothers)"))
+        more_effects_gender$outcome <- factor(c(df_outcomes[outcome, "maj"]))
+        more_effects_gender$sample <- factor(c(c("LISS", "HRS")[j]))
+        more_effects_gender$comparison <- factor(c(c("Parents", "Nonparents")[k]))
+        # bind with all effects created in previous loops
+        effects_gender <- rbind(effects_gender, more_effects_gender)
+      }
+    }
+  }
+}
+# a single grouping factor turned out easier to handle
+effects_gender$analysissample <- paste(effects_gender$sample, effects_gender$comparison)
+effects_gender$analysissample <- factor(effects_gender$analysissample, 
+                                        levels = c("LISS Parents", "LISS Nonparents", 
+                                                   "HRS Parents", "HRS Nonparents"))
+# more intuitive label (appears in legend later)
+levels(effects_gender$analysissample) <- c("LISS: Grandparents vs. Parents", 
+                                           "LISS: Grandparents vs. Nonparents",
+                                           "HRS: Grandparents vs. Parents", 
+                                           "HRS: Grandparents vs. Nonparents")
+
+ggplot(effects_gender, aes(x = fct_rev(parameter), y = est, colour = fct_rev(analysissample), 
+                           group = fct_rev(analysissample))) +
+  geom_point(aes(color = fct_rev(analysissample), shape = fct_rev(analysissample)), 
+             size=3, position=position_dodge(0.6)) + 
+  geom_hline(yintercept=0) +
+  geom_errorbar(aes(ymin = lwr, ymax = upr), width=.3, position=position_dodge(0.6)) +
+  facet_wrap( ~ outcome, ncol = 6) +
+  theme_bw() + 
+  scale_shape_manual(values=c(18,17,16,15))+
+  scale_color_manual(values=c("#009E73", "#56B4E9", "#E69F00", "#000000"))+
+  ylab("Unstandardized Effect Size (95% CI)") +
+  xlab("") +
+  theme(legend.position="top") +
+  guides(colour = guide_legend(reverse = TRUE, ncol=2), shape = guide_legend(reverse = TRUE, ncol=2)) + 
+  theme(legend.title=element_blank()) +
+  theme(legend.text=element_text(size=12)) +
+  coord_flip() +
+  geom_vline(xintercept = c(3.5, 6.5), linetype=3) + 
+  theme(strip.text.x = element_text(size = 8)) +
+  theme(axis.text.x=element_text(size=7), axis.text.y=element_text(size=12))
+```
+
 \newpage
 
 \noindent 

@@ -5863,6 +5863,60 @@ same as in Figure \ref{fig:H1-swls-fig} (basic models) but restricted to
 the post-transition period for better comparability.}
 \end{figure}
 
+
+
+
+
+
+
+
+
+
+
+
+\begin{figure}
+\centering
+\includegraphics{Figs/effects-basic-plot-1.pdf}
+\caption{\label{fig:effects-basic-plot}Unstandardized Effect Sizes of the Basic
+Models Across Analysis Samples (Regression Coefficients \(\hat{\gamma}\)
+or Linear Contrasts \(\hat{\gamma}_{c}\) From Multilevel Models, see
+Tables \ref{tab:H1-agree-tab}, \ref{tab:H1-agree-contrasts},
+\ref{tab:H1-con-tab}, \ref{tab:H1-con-contrasts},
+\ref{tab:H1-extra-tab}, \ref{tab:H1-extra-contrasts},
+\ref{tab:H1-neur-tab}, \ref{tab:H1-neur-contrasts},
+\ref{tab:H1-open-tab}, \ref{tab:H1-open-contrasts},
+\ref{tab:H1-swls-tab}, \ref{tab:H1-swls-contrasts}). Error Bars
+Represent 95\% Confidence Intervals.}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{figure}
+\centering
+\includegraphics{Figs/effects-gender-plot-1.pdf}
+\caption{\label{fig:effects-gender-plot}Unstandardized Effect Sizes of the Models
+Including the Gender Interaction Across Analysis Samples (Regression
+Coefficients \(\hat{\gamma}\) or Linear Contrasts \(\hat{\gamma}_{c}\)
+From Multilevel Models, see Tables \ref{tab:H1-agree-gender-tab},
+\ref{tab:H1-agree-gender-contrasts}, \ref{tab:H1-con-gender-tab},
+\ref{tab:H1-con-gender-contrasts}, \ref{tab:H1-extra-gender-tab},
+\ref{tab:H1-extra-gender-contrasts}, \ref{tab:H1-neur-gender-tab},
+\ref{tab:H1-neur-gender-contrasts}, \ref{tab:H1-open-gender-tab},
+\ref{tab:H1-open-gender-contrasts}, \ref{tab:H1-swls-gender-tab},
+\ref{tab:H1-swls-gender-contrasts}). Error Bars Represent 95\%
+Confidence Intervals.}
+\end{figure}
+
 \newpage
 
 \noindent  \textbf{Complete Software and Session Information}
@@ -5935,34 +5989,35 @@ psych\_2.0.9 forcats\_0.5.0 stringr\_1.4.0\\
 loaded via a namespace (and not attached): {[}1{]} minqa\_1.2.4
 colorspace\_2.0-1 rio\_0.5.16\\
 {[}4{]} ellipsis\_0.3.2 htmlTable\_2.1.0 base64enc\_0.1-3\\
-{[}7{]} fs\_1.5.0 rstudioapi\_0.13 fansi\_0.5.0\\
-{[}10{]} lubridate\_1.7.9.2 xml2\_1.3.2 codetools\_0.2-18\\
-{[}13{]} splines\_4.0.4 mnormt\_2.0.2 knitr\_1.30\\
-{[}16{]} jsonlite\_1.7.2 nloptr\_1.2.2.2 broom\_0.7.6\\
-{[}19{]} cluster\_2.1.0 dbplyr\_1.4.4 shiny\_1.5.0\\
-{[}22{]} compiler\_4.0.4 httr\_1.4.2 backports\_1.2.1\\
-{[}25{]} assertthat\_0.2.1 fastmap\_1.0.1 cli\_2.5.0\\
-{[}28{]} later\_1.1.0.1 htmltools\_0.5.0 tools\_4.0.4\\
-{[}31{]} gtable\_0.3.0 glue\_1.4.2 Rcpp\_1.0.6\\
-{[}34{]} cellranger\_1.1.0 vctrs\_0.3.8 nlme\_3.1-152\\
-{[}37{]} xfun\_0.19 openxlsx\_4.2.3 rvest\_0.3.6\\
-{[}40{]} mime\_0.9 miniUI\_0.1.1.1 lifecycle\_1.0.0\\
-{[}43{]} statmod\_1.4.35 zoo\_1.8-8 hms\_0.5.3\\
-{[}46{]} promises\_1.1.1 parallel\_4.0.4 sandwich\_3.0-0\\
-{[}49{]} RColorBrewer\_1.1-2 curl\_4.3.1 yaml\_2.2.1\\
-{[}52{]} gridExtra\_2.3 rpart\_4.1-15 latticeExtra\_0.6-29 {[}55{]}
-stringi\_1.5.3 checkmate\_2.0.0 zip\_2.1.1\\
-{[}58{]} boot\_1.3-26 rlang\_0.4.11 pkgconfig\_2.0.3\\
-{[}61{]} evaluate\_0.14 htmlwidgets\_1.5.2 tidyselect\_1.1.0\\
-{[}64{]} magrittr\_2.0.1 bookdown\_0.21 R6\_2.5.0\\
-{[}67{]} generics\_0.1.0 DBI\_1.1.0 pillar\_1.6.1\\
-{[}70{]} haven\_2.3.1 foreign\_0.8-81 withr\_2.4.2\\
-{[}73{]} abind\_1.4-5 nnet\_7.3-15 modelr\_0.1.8\\
-{[}76{]} crayon\_1.4.1 utf8\_1.2.1 tmvnsim\_1.0-2\\
-{[}79{]} rmarkdown\_2.5 jpeg\_0.1-8.1 readxl\_1.3.1\\
-{[}82{]} data.table\_1.13.2 blob\_1.2.1 reprex\_0.3.0\\
-{[}85{]} digest\_0.6.27 xtable\_1.8-4 httpuv\_1.5.4\\
-{[}88{]} numDeriv\_2016.8-1.1 munsell\_0.5.0
+{[}7{]} fs\_1.5.0 rstudioapi\_0.13 farver\_2.1.0\\
+{[}10{]} fansi\_0.5.0 lubridate\_1.7.9.2 xml2\_1.3.2\\
+{[}13{]} codetools\_0.2-18 splines\_4.0.4 mnormt\_2.0.2\\
+{[}16{]} knitr\_1.30 jsonlite\_1.7.2 nloptr\_1.2.2.2\\
+{[}19{]} broom\_0.7.6 cluster\_2.1.0 dbplyr\_1.4.4\\
+{[}22{]} shiny\_1.5.0 compiler\_4.0.4 httr\_1.4.2\\
+{[}25{]} backports\_1.2.1 assertthat\_0.2.1 fastmap\_1.0.1\\
+{[}28{]} cli\_2.5.0 later\_1.1.0.1 htmltools\_0.5.0\\
+{[}31{]} tools\_4.0.4 gtable\_0.3.0 glue\_1.4.2\\
+{[}34{]} Rcpp\_1.0.6 cellranger\_1.1.0 vctrs\_0.3.8\\
+{[}37{]} nlme\_3.1-152 xfun\_0.19 openxlsx\_4.2.3\\
+{[}40{]} rvest\_0.3.6 mime\_0.9 miniUI\_0.1.1.1\\
+{[}43{]} lifecycle\_1.0.0 statmod\_1.4.35 zoo\_1.8-8\\
+{[}46{]} hms\_0.5.3 promises\_1.1.1 parallel\_4.0.4\\
+{[}49{]} sandwich\_3.0-0 RColorBrewer\_1.1-2 curl\_4.3.1\\
+{[}52{]} yaml\_2.2.1 gridExtra\_2.3 rpart\_4.1-15\\
+{[}55{]} latticeExtra\_0.6-29 stringi\_1.5.3 highr\_0.8\\
+{[}58{]} checkmate\_2.0.0 zip\_2.1.1 boot\_1.3-26\\
+{[}61{]} rlang\_0.4.11 pkgconfig\_2.0.3 evaluate\_0.14\\
+{[}64{]} labeling\_0.4.2 htmlwidgets\_1.5.2 tidyselect\_1.1.0\\
+{[}67{]} magrittr\_2.0.1 bookdown\_0.21 R6\_2.5.0\\
+{[}70{]} generics\_0.1.0 DBI\_1.1.0 pillar\_1.6.1\\
+{[}73{]} haven\_2.3.1 foreign\_0.8-81 withr\_2.4.2\\
+{[}76{]} abind\_1.4-5 nnet\_7.3-15 modelr\_0.1.8\\
+{[}79{]} crayon\_1.4.1 utf8\_1.2.1 tmvnsim\_1.0-2\\
+{[}82{]} rmarkdown\_2.5 jpeg\_0.1-8.1 readxl\_1.3.1\\
+{[}85{]} data.table\_1.13.2 blob\_1.2.1 reprex\_0.3.0\\
+{[}88{]} digest\_0.6.27 xtable\_1.8-4 httpuv\_1.5.4\\
+{[}91{]} numDeriv\_2016.8-1.1 munsell\_0.5.0
 
 \newpage
 
