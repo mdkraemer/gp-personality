@@ -2541,3 +2541,221 @@ ggplot(effects_gender, aes(x = fct_rev(parameter), y = est, colour = fct_rev(ana
   theme(strip.text.x = element_text(size = 12)) +
   theme(axis.text=element_text(size=11))
 
+
+#### models restricted to time [-2, 6] ####
+lissanalysis_parents_restr <- lissanalysis_parents %>% filter(time %in% c(-2:6)) %>% 
+  mutate(
+    before = before - 4 # filtering changes meaning of before-slope (other stay the same)
+  )
+lissanalysis_nonparents_restr <- lissanalysis_nonparents %>% filter(time %in% c(-2:6)) %>% 
+  mutate(
+    before = before - 4 # filtering changes meaning of before-slope (other stay the same)
+  )
+hrsanalysis_parents_restr <- hrsanalysis_parents %>% filter(time %in% c(-2:6))
+hrsanalysis_nonparents_restr <- hrsanalysis_nonparents %>% filter(time %in% c(-2:6))
+  
+outcomes <- c("agree", "con", "extra", "neur", "open", "swls")
+datasets_restr <- c("lissanalysis_parents_restr", "lissanalysis_nonparents_restr", 
+                    "hrsanalysis_parents_restr", "hrsanalysis_nonparents_restr")
+hid_icc_tbl <- c("icc_liss_parents_hid", "icc_liss_nonparents_hid",
+                 "icc_hrs_parents_hid", "icc_hrs_nonparents_hid") # see table 'icc_list'
+mod_summaries_restr <- list()
+mod_summaries_restr_test <- list()
+mod_summaries_restr_gender <- list()
+mod_summaries_restr_gender_test <- list()
+
+# run models (save in list object)
+for (i in 1:length(outcomes)){
+    outcome = outcomes[i]
+  pos = seq(from = 0, to = 24, by = 4)[i]
+  for (j in 1:length(datasets_restr)){
+    dataset = datasets_restr[j]
+    # basic models (different specifications for LISS & HRS this time ...)
+    if (dataset %in% datasets_restr[grep("^(?=.*liss)", datasets_restr, perl=T)]){ # filter LISS
+      if ((icc_list[hid_icc_tbl[j], outcome] < 0.05) || #nesting in hid leads to singular fit for some models
+          (outcome=="extra" & dataset=="lissanalysis_nonparents_restr")){ # needs to be added for the restricted models
+        model_1 <- lme4::lmer(get(outcome) ~ 1 + pscore + before + after + shift + grandparent + 
+                                grandparent:before + grandparent:after + grandparent:shift + 
+                                (1 | pid), REML = FALSE, data = get(dataset))
+        model_2 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + before + after + shift + grandparent + 
+                                    grandparent:before + grandparent:after + grandparent:shift + 
+                                    (1 | pid), REML = FALSE, data = get(dataset))
+      } else { # cross-nesting in pid & hid for all other models
+        model_1 <- lme4::lmer(get(outcome) ~ 1 + pscore + before + after + shift + grandparent + 
+                                grandparent:before + grandparent:after + grandparent:shift + 
+                                (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+        model_2 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + before + after + shift + grandparent + 
+                                    grandparent:before + grandparent:after + grandparent:shift + 
+                                    (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+      }
+    } else { # HRS models now without before-slope 
+      if (icc_list[hid_icc_tbl[j], outcome] < 0.05){ # nesting in hid leads to singular fit for some models
+        model_1 <- lme4::lmer(get(outcome) ~ 1 + pscore + after + shift + grandparent + 
+                                grandparent:after + grandparent:shift + 
+                                (1 | pid), REML = FALSE, data = get(dataset))
+        model_2 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + after + shift + grandparent + 
+                                    grandparent:after + grandparent:shift + 
+                                    (1 | pid), REML = FALSE, data = get(dataset))
+      } else { # cross-nesting in pid & hid for all other models
+        model_1 <- lme4::lmer(get(outcome) ~ 1 + pscore + after + shift + grandparent + 
+                                grandparent:after + grandparent:shift + 
+                                (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+        model_2 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + after + shift + grandparent + 
+                                    grandparent:after + grandparent:shift + 
+                                    (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+      }
+    }
+    mod_summaries_restr[[pos + j]] <- model_1
+    names(mod_summaries_restr)[[pos + j]] <- paste0(outcome, "_", dataset)
+    mod_summaries_restr_test[[pos + j]] <- model_2
+    names(mod_summaries_restr_test)[[pos + j]] <- paste0(outcome, "_", dataset)
+    # moderation by gender models
+    if (dataset %in% datasets_restr[grep("^(?=.*liss)", datasets_restr, perl=T)]){ # filter LISS
+      if ((icc_list[hid_icc_tbl[j], outcome] < 0.05) || #nesting in hid leads to singular fit for some models
+          (outcome=="extra" & dataset=="lissanalysis_nonparents_restr")){ # needs to be added for the restricted models
+        model_3 <- lme4::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
+                                grandparent:before + grandparent:after + grandparent:shift)*female + 
+                                (1 | pid), REML = FALSE, data = get(dataset))
+        model_4 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
+                                    grandparent:before + grandparent:after + grandparent:shift)*female + 
+                                    (1 | pid), REML = FALSE, data = get(dataset))
+      } else { # cross-nesting in pid & hid for all other models
+        model_3 <- lme4::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
+                                grandparent:before + grandparent:after + grandparent:shift)*female + 
+                                (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+        model_4 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
+                                    grandparent:before + grandparent:after + grandparent:shift)*female + 
+                                    (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+      }
+    } else { # HRS models now without before-slope 
+      if (icc_list[hid_icc_tbl[j], outcome] < 0.05){ # nesting in hid leads to singular fit for some models
+        model_3 <- lme4::lmer(get(outcome) ~ 1 + pscore + (after + shift + grandparent + 
+                                grandparent:after + grandparent:shift)*female + 
+                                (1 | pid), REML = FALSE, data = get(dataset))
+        model_4 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + (after + shift + grandparent + 
+                                    grandparent:after + grandparent:shift)*female + 
+                                    (1 | pid), REML = FALSE, data = get(dataset))
+      } else { # cross-nesting in pid & hid for all other models
+        model_3 <- lme4::lmer(get(outcome) ~ 1 + pscore + (after + shift + grandparent + 
+                                grandparent:after + grandparent:shift)*female + 
+                                (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+        model_4 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + (after + shift + grandparent + 
+                                    grandparent:after + grandparent:shift)*female + 
+                                    (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+      }
+    }
+    mod_summaries_restr_gender[[pos + j]] <- model_3
+    names(mod_summaries_restr_gender)[[pos + j]] <- paste0(outcome, "_", dataset)
+    mod_summaries_restr_gender_test[[pos + j]] <- model_4
+    names(mod_summaries_restr_gender_test)[[pos + j]] <- paste0(outcome, "_", dataset)
+  }
+}
+
+datasets_short <- c("liss_parents", "liss_nonparents", "hrs_parents", "hrs_nonparents")
+# coefs: the way they are named in the 'papaja' objects
+coefs <- c("Intercept", "pscore", "before", "after", "shift", "grandparent", 
+           "before_grandparent", "after_grandparent", "shift_grandparent") # same as before for LISS
+gammas <- c("gamma}_{00", "gamma}_{02", "gamma}_{10", "gamma}_{20", "gamma}_{30", "gamma}_{01", 
+            "gamma}_{11", "gamma}_{21", "gamma}_{31") # gammas the same as before for LISS
+
+coefs_restr_hrs <- c("Intercept", "pscore", "after", "shift", 
+                      "grandparent", "after_grandparent", "shift_grandparent") # without 'before'
+gammas_restr_hrs<- c("gamma}_{00", "gamma}_{02", "gamma}_{20", 
+                       "gamma}_{30", "gamma}_{01", "gamma}_{21", "gamma}_{31")
+
+coefs_gender <- c("Intercept", "pscore", "before", "after", "shift", "grandparent", # same as before
+                  "female", "before_grandparent", "after_grandparent", "shift_grandparent",
+                  "before_female", "after_female", "shift_female", "grandparent_female", 
+                  "before_grandparent_female", "after_grandparent_female", "shift_grandparent_female")
+gammas_gender <- c("gamma}_{00", "gamma}_{04", "gamma}_{10", "gamma}_{20", "gamma}_{30", "gamma}_{01", 
+                   "gamma}_{02", "gamma}_{11", "gamma}_{21", "gamma}_{31",
+                   "gamma}_{12", "gamma}_{22", "gamma}_{32", "gamma}_{03", 
+                   "gamma}_{13", "gamma}_{23", "gamma}_{33") # gammas the same as before for LISS
+
+coefs_gender_restr_hrs <- c("Intercept", "pscore", "after", "shift", "grandparent", # without 'before'
+                       "female", "after_grandparent", "shift_grandparent",
+                       "after_female", "shift_female", "grandparent_female", 
+                       "after_grandparent_female", "shift_grandparent_female")
+gammas_gender_restr_hrs <- c("gamma}_{00", "gamma}_{04", "gamma}_{20", "gamma}_{30", "gamma}_{01", 
+                   "gamma}_{02", "gamma}_{21", "gamma}_{31",
+                   "gamma}_{22", "gamma}_{32", "gamma}_{03", 
+                   "gamma}_{23", "gamma}_{33")
+
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  pos = seq(from = 0, to = 24, by = 4)[i]
+  for (j in 1:length(datasets_short)){
+    ### basic models (need to differntiate between LISS & HRS models now)
+    dataset = datasets_short[j]
+    obj = apa_print(mod_summaries_restr[[pos + j]]) # unfold list objects (lme4)
+    obj_test = mod_summaries_restr_test[[pos + j]] # unfold list objects (lmerTest)
+    # reformatting: change beta^hat to gamma^hat (plus subscripts)
+    if (dataset %in% datasets_short[grep("^(?=.*liss)", datasets_short, perl=T)]){ # filter LISS
+      for (k in 1:length(coefs)){ 
+        coef <- coefs[k] # 9 coefficients for each model (object)
+        gamma <- gammas[k]
+        obj$estimate[coef] <- lapply(obj$estimate[coef], gsub, pattern="beta", replacement=gamma)
+        obj$full_result[coef] <- lapply(obj$full_result[coef], gsub, pattern="beta", replacement=gamma)
+      }
+    }
+    else { # HRS
+      for (k in 1:length(coefs_restr_hrs)){ 
+        coef <- coefs_restr_hrs[k] # 7 coefficients for each model (object)
+        gamma <- gammas_restr_hrs[k]
+        obj$estimate[coef] <- lapply(obj$estimate[coef], gsub, pattern="beta", replacement=gamma)
+        obj$full_result[coef] <- lapply(obj$full_result[coef], gsub, pattern="beta", replacement=gamma)
+      }
+    }
+    obj_name <- paste0(outcome, "_", dataset, "_restr_summary")
+    eval(call("<-", as.name(obj_name), obj)) # save lme4 model
+    obj_name_test <- paste0(outcome, "_", dataset, "_restr_test")
+    eval(call("<-", as.name(obj_name_test), obj_test)) # save lmerTest model
+    # for better formatting in text: p-values
+    obj_p <- as.data.frame(summary(mod_summaries_restr_test[[pos + j]])$coefficients) %>% # unfold list
+      rownames_to_column() %>% dplyr::select(rowname, "Pr(>|t|)") %>% rename(p = "Pr(>|t|)") %>% 
+      mutate(p = scales::pvalue(p, prefix = c("$p$ < ", "$p$ = ", "$p$ > "))) %>% column_to_rownames()
+    obj_p["p"] <- # remove "0" from the chr's 
+      lapply(obj_p["p"], gsub, pattern="0\\.", replacement="\\.")
+    obj_name_p <- paste0(outcome, "_", dataset, "_restr_p")
+    eval(call("<-", as.name(obj_name_p), obj_p)) # save objects
+    ### moderation by gender models
+    obj_gender = apa_print(mod_summaries_restr_gender[[pos + j]]) # unfold list objects
+    obj_gender_test = mod_summaries_restr_gender_test[[pos + j]] # unfold list objects (lmerTest)
+    # reformatting: change beta^hat to gamma^hat (plus subscripts)
+    if (dataset %in% datasets_short[grep("^(?=.*liss)", datasets_short, perl=T)]){ # filter LISS
+      for (k in 1:length(coefs_gender)){ 
+        coef <- coefs_gender[k] # 17 coefficients for each model (object)
+        gamma <- gammas_gender[k]
+        obj_gender$estimate[coef] <- lapply(obj_gender$estimate[coef], gsub, 
+                                            pattern="beta", replacement=gamma)
+        obj_gender$full_result[coef] <- lapply(obj_gender$full_result[coef], gsub, 
+                                               pattern="beta", replacement=gamma)
+      }
+    }
+    else { # HRS
+      for (k in 1:length(coefs_gender_restr_hrs)){ 
+        coef <- coefs_gender_restr_hrs[k] # 13 coefficients for each model (object)
+        gamma <- gammas_gender_restr_hrs[k]
+        obj_gender$estimate[coef] <- lapply(obj_gender$estimate[coef], gsub, 
+                                            pattern="beta", replacement=gamma)
+        obj_gender$full_result[coef] <- lapply(obj_gender$full_result[coef], gsub, 
+                                               pattern="beta", replacement=gamma)
+      }
+    }
+    obj_gender_name <- paste0(outcome, "_", dataset, "_restr_gender_summary")
+    eval(call("<-", as.name(obj_gender_name), obj_gender)) # save object
+    obj_gender_test_name <- paste0(outcome, "_", dataset, "_restr_gender_test")
+    eval(call("<-", as.name(obj_gender_test_name), obj_gender_test)) # save object
+    # for better formatting in text: p-values
+    obj_gender_p <- 
+      as.data.frame(summary(mod_summaries_restr_gender_test[[pos + j]])$coefficients) %>% # unfold
+      rownames_to_column() %>% dplyr::select(rowname, "Pr(>|t|)") %>% rename(p = "Pr(>|t|)") %>% 
+      mutate(p = scales::pvalue(p, prefix = c("$p$ < ", "$p$ = ", "$p$ > "))) %>% column_to_rownames()
+    obj_gender_p["p"] <- # remove "0" from the chr's 
+      lapply(obj_gender_p["p"], gsub, pattern="0\\.", replacement="\\.")
+    obj_gender_name_p <- paste0(outcome, "_", dataset, "_restr_gender_p")
+    eval(call("<-", as.name(obj_gender_name_p), obj_gender_p)) # save objects  
+  }
+}
+
+

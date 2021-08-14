@@ -3492,6 +3492,835 @@ apa_table(
 )
 ```
 
+(ref:H1-agree-restr-tab-cap) Fixed Effects of `r df_outcomes["agree", "maj"]` Over the Transition to Grandparenthood in the Restricted Models.
+
+(ref:H1-agree-restr-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. Analyses samples were restricted to *time* [-2, 6] and the *before* coefficient recoded for the LISS samples (0 at *time*=-2 and 1 afterwards). CI = confidence interval.
+
+```{r H1-agree-restr-tab, results="asis"}
+agree_liss_df_restr <- 
+  cbind(printnum(agree_liss_parents_restr_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(agree_liss_parents_restr_test)$coefficients[, 5], # parents: p-value
+        printnum(agree_liss_nonparents_restr_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(agree_liss_nonparents_restr_test)$coefficients[, 5])  # nonparents: p-value
+
+agree_hrs_df_restr <- 
+  cbind(printnum(agree_hrs_parents_restr_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(agree_hrs_parents_restr_test)$coefficients[, 5], # parents: p-value
+        printnum(agree_hrs_nonparents_restr_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(agree_hrs_nonparents_restr_test)$coefficients[, 5])  # nonparents: p-value
+
+# make one large table
+colnames(agree_liss_df_restr)[c(4,8)] <- c("p", "p")
+colnames(agree_hrs_df_restr)[c(4,8)] <- c("p", "p")
+agree_df_restr <- rbind(agree_liss_df_restr, agree_hrs_df_restr)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_agree_df_restr <- c("Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{L}", 
+                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{L}", 
+                      "Before-slope, $\\hat{\\gamma}_{10}$", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{L}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{L}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{L}", 
+                      "Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{H}", 
+                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{H}", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{H}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{H}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{H}")
+rownames(agree_df_restr) <- rownames_agree_df_restr
+
+apa_table(
+  agree_df_restr
+  , caption = "(ref:H1-agree-restr-tab-cap)"
+  , note = "(ref:H1-agree-restr-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  #, stub_indents = list("Fixed effects" = 1:12)
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , stub_indents = list("LISS" = 1:9, "HRS" = 10:16)
+  , placement = "H"
+)
+```
+
+(ref:H1-agree-gender-restr-tab-cap) Fixed Effects of `r df_outcomes["agree", "maj"]` Over the Transition to Grandparenthood Moderated by Gender in the Restricted Models.
+
+(ref:H1-agree-gender-restr-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. Analyses samples were restricted to *time* [-2, 6] and the *before* coefficient recoded for the LISS samples (0 at *time*=-2 and 1 afterwards). CI = confidence interval.
+
+```{r H1-agree-gender-restr-tab, results="asis"}
+agree_restr_gender_liss_df <- 
+  cbind(printnum(agree_liss_parents_restr_gender_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(agree_liss_parents_restr_gender_test)$coefficients[, 5], # parents: p-value
+        printnum(agree_liss_nonparents_restr_gender_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(agree_liss_nonparents_restr_gender_test)$coefficients[, 5])  # nonparents: p-value
+
+agree_restr_gender_hrs_df <- 
+  cbind(printnum(agree_hrs_parents_restr_gender_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(agree_hrs_parents_restr_gender_test)$coefficients[, 5], # parents: p-value
+        printnum(agree_hrs_nonparents_restr_gender_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(agree_hrs_nonparents_restr_gender_test)$coefficients[, 5])  # nonparents: p-value
+
+# make one large table
+colnames(agree_restr_gender_liss_df)[c(4,8)] <- c("p", "p")
+colnames(agree_restr_gender_hrs_df)[c(4,8)] <- c("p", "p")
+agree_gender_restr_df <- rbind(agree_restr_gender_liss_df, agree_restr_gender_hrs_df)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_agree_gender_restr_df <- c("Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{L}", # LISS
+                      "Propensity score, $\\hat{\\gamma}_{04}$ \\textcolor{white}{L}", 
+                      "Before-slope, $\\hat{\\gamma}_{10}$", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{L}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{L}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{L}", 
+                      "Female, $\\hat{\\gamma}_{02}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{L}",
+                      "Before-slope * Female, $\\hat{\\gamma}_{12}$", 
+                      "After-slope * Female, $\\hat{\\gamma}_{22}$ \\textcolor{white}{L}", 
+                      "Shift * Female, $\\hat{\\gamma}_{32}$ \\textcolor{white}{L}",
+                      "Grandparent * Female, $\\hat{\\gamma}_{03}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent * Female, $\\hat{\\gamma}_{13}$", 
+                      "After-slope * Grandparent * Female, $\\hat{\\gamma}_{23}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent * Female, $\\hat{\\gamma}_{33}$ \\textcolor{white}{L}",
+                      "Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{H}", # HRS
+                      "Propensity score, $\\hat{\\gamma}_{04}$ \\textcolor{white}{H}", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{H}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{H}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{H}", 
+                      "Female, $\\hat{\\gamma}_{02}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{H}",
+                      "After-slope * Female, $\\hat{\\gamma}_{22}$ \\textcolor{white}{H}", 
+                      "Shift * Female, $\\hat{\\gamma}_{32}$ \\textcolor{white}{H}",
+                      "Grandparent * Female, $\\hat{\\gamma}_{03}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent * Female, $\\hat{\\gamma}_{23}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent * Female, $\\hat{\\gamma}_{33}$ \\textcolor{white}{H}")
+rownames(agree_gender_restr_df) <- rownames_agree_gender_restr_df
+
+apa_table(
+  agree_gender_restr_df
+  , caption = "(ref:H1-agree-gender-restr-tab-cap)"
+  , note = "(ref:H1-agree-gender-restr-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  #, stub_indents = list("Fixed effects" = 1:12)
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , stub_indents = list("LISS" = 1:17, "HRS" = 18:30)
+  , placement = "H"
+)
+```
+
+
+(ref:H1-con-restr-tab-cap) Fixed Effects of `r df_outcomes["con", "maj"]` Over the Transition to Grandparenthood in the Restricted Models.
+
+(ref:H1-con-restr-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. Analyses samples were restricted to *time* [-2, 6] and the *before* coefficient recoded for the LISS samples (0 at *time*=-2 and 1 afterwards). CI = confidence interval.
+
+```{r H1-con-restr-tab, results="asis"}
+con_liss_df_restr <- 
+  cbind(printnum(con_liss_parents_restr_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(con_liss_parents_restr_test)$coefficients[, 5], # parents: p-value
+        printnum(con_liss_nonparents_restr_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(con_liss_nonparents_restr_test)$coefficients[, 5])  # nonparents: p-value
+
+con_hrs_df_restr <- 
+  cbind(printnum(con_hrs_parents_restr_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(con_hrs_parents_restr_test)$coefficients[, 5], # parents: p-value
+        printnum(con_hrs_nonparents_restr_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(con_hrs_nonparents_restr_test)$coefficients[, 5])  # nonparents: p-value
+
+# make one large table
+colnames(con_liss_df_restr)[c(4,8)] <- c("p", "p")
+colnames(con_hrs_df_restr)[c(4,8)] <- c("p", "p")
+con_df_restr <- rbind(con_liss_df_restr, con_hrs_df_restr)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_con_df_restr <- c("Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{L}", 
+                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{L}", 
+                      "Before-slope, $\\hat{\\gamma}_{10}$", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{L}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{L}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{L}", 
+                      "Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{H}", 
+                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{H}", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{H}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{H}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{H}")
+rownames(con_df_restr) <- rownames_con_df_restr
+
+apa_table(
+  con_df_restr
+  , caption = "(ref:H1-con-restr-tab-cap)"
+  , note = "(ref:H1-con-restr-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  #, stub_indents = list("Fixed effects" = 1:12)
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , stub_indents = list("LISS" = 1:9, "HRS" = 10:16)
+  , placement = "H"
+)
+```
+
+(ref:H1-con-gender-restr-tab-cap) Fixed Effects of `r df_outcomes["con", "maj"]` Over the Transition to Grandparenthood Moderated by Gender in the Restricted Models.
+
+(ref:H1-con-gender-restr-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. Analyses samples were restricted to *time* [-2, 6] and the *before* coefficient recoded for the LISS samples (0 at *time*=-2 and 1 afterwards). CI = confidence interval.
+
+```{r H1-con-gender-restr-tab, results="asis"}
+con_restr_gender_liss_df <- 
+  cbind(printnum(con_liss_parents_restr_gender_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(con_liss_parents_restr_gender_test)$coefficients[, 5], # parents: p-value
+        printnum(con_liss_nonparents_restr_gender_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(con_liss_nonparents_restr_gender_test)$coefficients[, 5])  # nonparents: p-value
+
+con_restr_gender_hrs_df <- 
+  cbind(printnum(con_hrs_parents_restr_gender_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(con_hrs_parents_restr_gender_test)$coefficients[, 5], # parents: p-value
+        printnum(con_hrs_nonparents_restr_gender_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(con_hrs_nonparents_restr_gender_test)$coefficients[, 5])  # nonparents: p-value
+
+# make one large table
+colnames(con_restr_gender_liss_df)[c(4,8)] <- c("p", "p")
+colnames(con_restr_gender_hrs_df)[c(4,8)] <- c("p", "p")
+con_gender_restr_df <- rbind(con_restr_gender_liss_df, con_restr_gender_hrs_df)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_con_gender_restr_df <- c("Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{L}", # LISS
+                      "Propensity score, $\\hat{\\gamma}_{04}$ \\textcolor{white}{L}", 
+                      "Before-slope, $\\hat{\\gamma}_{10}$", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{L}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{L}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{L}", 
+                      "Female, $\\hat{\\gamma}_{02}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{L}",
+                      "Before-slope * Female, $\\hat{\\gamma}_{12}$", 
+                      "After-slope * Female, $\\hat{\\gamma}_{22}$ \\textcolor{white}{L}", 
+                      "Shift * Female, $\\hat{\\gamma}_{32}$ \\textcolor{white}{L}",
+                      "Grandparent * Female, $\\hat{\\gamma}_{03}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent * Female, $\\hat{\\gamma}_{13}$", 
+                      "After-slope * Grandparent * Female, $\\hat{\\gamma}_{23}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent * Female, $\\hat{\\gamma}_{33}$ \\textcolor{white}{L}",
+                      "Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{H}", # HRS
+                      "Propensity score, $\\hat{\\gamma}_{04}$ \\textcolor{white}{H}", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{H}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{H}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{H}", 
+                      "Female, $\\hat{\\gamma}_{02}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{H}",
+                      "After-slope * Female, $\\hat{\\gamma}_{22}$ \\textcolor{white}{H}", 
+                      "Shift * Female, $\\hat{\\gamma}_{32}$ \\textcolor{white}{H}",
+                      "Grandparent * Female, $\\hat{\\gamma}_{03}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent * Female, $\\hat{\\gamma}_{23}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent * Female, $\\hat{\\gamma}_{33}$ \\textcolor{white}{H}")
+rownames(con_gender_restr_df) <- rownames_con_gender_restr_df
+
+apa_table(
+  con_gender_restr_df
+  , caption = "(ref:H1-con-gender-restr-tab-cap)"
+  , note = "(ref:H1-con-gender-restr-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  #, stub_indents = list("Fixed effects" = 1:12)
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , stub_indents = list("LISS" = 1:17, "HRS" = 18:30)
+  , placement = "H"
+)
+```
+
+(ref:H1-extra-restr-tab-cap) Fixed Effects of `r df_outcomes["extra", "maj"]` Over the Transition to Grandparenthood in the Restricted Models.
+
+(ref:H1-extra-restr-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. Analyses samples were restricted to *time* [-2, 6] and the *before* coefficient recoded for the LISS samples (0 at *time*=-2 and 1 afterwards). CI = confidence interval.
+
+```{r H1-extra-restr-tab, results="asis"}
+extra_liss_df_restr <- 
+  cbind(printnum(extra_liss_parents_restr_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(extra_liss_parents_restr_test)$coefficients[, 5], # parents: p-value
+        printnum(extra_liss_nonparents_restr_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(extra_liss_nonparents_restr_test)$coefficients[, 5])  # nonparents: p-value
+
+extra_hrs_df_restr <- 
+  cbind(printnum(extra_hrs_parents_restr_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(extra_hrs_parents_restr_test)$coefficients[, 5], # parents: p-value
+        printnum(extra_hrs_nonparents_restr_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(extra_hrs_nonparents_restr_test)$coefficients[, 5])  # nonparents: p-value
+
+# make one large table
+colnames(extra_liss_df_restr)[c(4,8)] <- c("p", "p")
+colnames(extra_hrs_df_restr)[c(4,8)] <- c("p", "p")
+extra_df_restr <- rbind(extra_liss_df_restr, extra_hrs_df_restr)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_extra_df_restr <- c("Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{L}", 
+                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{L}", 
+                      "Before-slope, $\\hat{\\gamma}_{10}$", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{L}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{L}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{L}", 
+                      "Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{H}", 
+                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{H}", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{H}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{H}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{H}")
+rownames(extra_df_restr) <- rownames_extra_df_restr
+
+apa_table(
+  extra_df_restr
+  , caption = "(ref:H1-extra-restr-tab-cap)"
+  , note = "(ref:H1-extra-restr-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  #, stub_indents = list("Fixed effects" = 1:12)
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , stub_indents = list("LISS" = 1:9, "HRS" = 10:16)
+  , placement = "H"
+)
+```
+
+(ref:H1-extra-gender-restr-tab-cap) Fixed Effects of `r df_outcomes["extra", "maj"]` Over the Transition to Grandparenthood Moderated by Gender in the Restricted Models.
+
+(ref:H1-extra-gender-restr-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. Analyses samples were restricted to *time* [-2, 6] and the *before* coefficient recoded for the LISS samples (0 at *time*=-2 and 1 afterwards). CI = confidence interval.
+
+```{r H1-extra-gender-restr-tab, results="asis"}
+extra_restr_gender_liss_df <- 
+  cbind(printnum(extra_liss_parents_restr_gender_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(extra_liss_parents_restr_gender_test)$coefficients[, 5], # parents: p-value
+        printnum(extra_liss_nonparents_restr_gender_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(extra_liss_nonparents_restr_gender_test)$coefficients[, 5])  # nonparents: p-value
+
+extra_restr_gender_hrs_df <- 
+  cbind(printnum(extra_hrs_parents_restr_gender_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(extra_hrs_parents_restr_gender_test)$coefficients[, 5], # parents: p-value
+        printnum(extra_hrs_nonparents_restr_gender_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(extra_hrs_nonparents_restr_gender_test)$coefficients[, 5])  # nonparents: p-value
+
+# make one large table
+colnames(extra_restr_gender_liss_df)[c(4,8)] <- c("p", "p")
+colnames(extra_restr_gender_hrs_df)[c(4,8)] <- c("p", "p")
+extra_gender_restr_df <- rbind(extra_restr_gender_liss_df, extra_restr_gender_hrs_df)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_extra_gender_restr_df <- c("Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{L}", # LISS
+                      "Propensity score, $\\hat{\\gamma}_{04}$ \\textcolor{white}{L}", 
+                      "Before-slope, $\\hat{\\gamma}_{10}$", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{L}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{L}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{L}", 
+                      "Female, $\\hat{\\gamma}_{02}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{L}",
+                      "Before-slope * Female, $\\hat{\\gamma}_{12}$", 
+                      "After-slope * Female, $\\hat{\\gamma}_{22}$ \\textcolor{white}{L}", 
+                      "Shift * Female, $\\hat{\\gamma}_{32}$ \\textcolor{white}{L}",
+                      "Grandparent * Female, $\\hat{\\gamma}_{03}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent * Female, $\\hat{\\gamma}_{13}$", 
+                      "After-slope * Grandparent * Female, $\\hat{\\gamma}_{23}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent * Female, $\\hat{\\gamma}_{33}$ \\textcolor{white}{L}",
+                      "Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{H}", # HRS
+                      "Propensity score, $\\hat{\\gamma}_{04}$ \\textcolor{white}{H}", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{H}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{H}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{H}", 
+                      "Female, $\\hat{\\gamma}_{02}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{H}",
+                      "After-slope * Female, $\\hat{\\gamma}_{22}$ \\textcolor{white}{H}", 
+                      "Shift * Female, $\\hat{\\gamma}_{32}$ \\textcolor{white}{H}",
+                      "Grandparent * Female, $\\hat{\\gamma}_{03}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent * Female, $\\hat{\\gamma}_{23}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent * Female, $\\hat{\\gamma}_{33}$ \\textcolor{white}{H}")
+rownames(extra_gender_restr_df) <- rownames_extra_gender_restr_df
+
+apa_table(
+  extra_gender_restr_df
+  , caption = "(ref:H1-extra-gender-restr-tab-cap)"
+  , note = "(ref:H1-extra-gender-restr-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  #, stub_indents = list("Fixed effects" = 1:12)
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , stub_indents = list("LISS" = 1:17, "HRS" = 18:30)
+  , placement = "H"
+)
+```
+
+(ref:H1-neur-restr-tab-cap) Fixed Effects of `r df_outcomes["neur", "maj"]` Over the Transition to Grandparenthood in the Restricted Models.
+
+(ref:H1-neur-restr-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. Analyses samples were restricted to *time* [-2, 6] and the *before* coefficient recoded for the LISS samples (0 at *time*=-2 and 1 afterwards). CI = confidence interval.
+
+```{r H1-neur-restr-tab, results="asis"}
+neur_liss_df_restr <- 
+  cbind(printnum(neur_liss_parents_restr_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(neur_liss_parents_restr_test)$coefficients[, 5], # parents: p-value
+        printnum(neur_liss_nonparents_restr_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(neur_liss_nonparents_restr_test)$coefficients[, 5])  # nonparents: p-value
+
+neur_hrs_df_restr <- 
+  cbind(printnum(neur_hrs_parents_restr_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(neur_hrs_parents_restr_test)$coefficients[, 5], # parents: p-value
+        printnum(neur_hrs_nonparents_restr_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(neur_hrs_nonparents_restr_test)$coefficients[, 5])  # nonparents: p-value
+
+# make one large table
+colnames(neur_liss_df_restr)[c(4,8)] <- c("p", "p")
+colnames(neur_hrs_df_restr)[c(4,8)] <- c("p", "p")
+neur_df_restr <- rbind(neur_liss_df_restr, neur_hrs_df_restr)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_neur_df_restr <- c("Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{L}", 
+                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{L}", 
+                      "Before-slope, $\\hat{\\gamma}_{10}$", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{L}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{L}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{L}", 
+                      "Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{H}", 
+                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{H}", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{H}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{H}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{H}")
+rownames(neur_df_restr) <- rownames_neur_df_restr
+
+apa_table(
+  neur_df_restr
+  , caption = "(ref:H1-neur-restr-tab-cap)"
+  , note = "(ref:H1-neur-restr-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  #, stub_indents = list("Fixed effects" = 1:12)
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , stub_indents = list("LISS" = 1:9, "HRS" = 10:16)
+  , placement = "H"
+)
+```
+
+(ref:H1-neur-gender-restr-tab-cap) Fixed Effects of `r df_outcomes["neur", "maj"]` Over the Transition to Grandparenthood Moderated by Gender in the Restricted Models.
+
+(ref:H1-neur-gender-restr-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. Analyses samples were restricted to *time* [-2, 6] and the *before* coefficient recoded for the LISS samples (0 at *time*=-2 and 1 afterwards). CI = confidence interval.
+
+```{r H1-neur-gender-restr-tab, results="asis"}
+neur_restr_gender_liss_df <- 
+  cbind(printnum(neur_liss_parents_restr_gender_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(neur_liss_parents_restr_gender_test)$coefficients[, 5], # parents: p-value
+        printnum(neur_liss_nonparents_restr_gender_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(neur_liss_nonparents_restr_gender_test)$coefficients[, 5])  # nonparents: p-value
+
+neur_restr_gender_hrs_df <- 
+  cbind(printnum(neur_hrs_parents_restr_gender_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(neur_hrs_parents_restr_gender_test)$coefficients[, 5], # parents: p-value
+        printnum(neur_hrs_nonparents_restr_gender_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(neur_hrs_nonparents_restr_gender_test)$coefficients[, 5])  # nonparents: p-value
+
+# make one large table
+colnames(neur_restr_gender_liss_df)[c(4,8)] <- c("p", "p")
+colnames(neur_restr_gender_hrs_df)[c(4,8)] <- c("p", "p")
+neur_gender_restr_df <- rbind(neur_restr_gender_liss_df, neur_restr_gender_hrs_df)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_neur_gender_restr_df <- c("Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{L}", # LISS
+                      "Propensity score, $\\hat{\\gamma}_{04}$ \\textcolor{white}{L}", 
+                      "Before-slope, $\\hat{\\gamma}_{10}$", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{L}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{L}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{L}", 
+                      "Female, $\\hat{\\gamma}_{02}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{L}",
+                      "Before-slope * Female, $\\hat{\\gamma}_{12}$", 
+                      "After-slope * Female, $\\hat{\\gamma}_{22}$ \\textcolor{white}{L}", 
+                      "Shift * Female, $\\hat{\\gamma}_{32}$ \\textcolor{white}{L}",
+                      "Grandparent * Female, $\\hat{\\gamma}_{03}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent * Female, $\\hat{\\gamma}_{13}$", 
+                      "After-slope * Grandparent * Female, $\\hat{\\gamma}_{23}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent * Female, $\\hat{\\gamma}_{33}$ \\textcolor{white}{L}",
+                      "Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{H}", # HRS
+                      "Propensity score, $\\hat{\\gamma}_{04}$ \\textcolor{white}{H}", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{H}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{H}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{H}", 
+                      "Female, $\\hat{\\gamma}_{02}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{H}",
+                      "After-slope * Female, $\\hat{\\gamma}_{22}$ \\textcolor{white}{H}", 
+                      "Shift * Female, $\\hat{\\gamma}_{32}$ \\textcolor{white}{H}",
+                      "Grandparent * Female, $\\hat{\\gamma}_{03}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent * Female, $\\hat{\\gamma}_{23}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent * Female, $\\hat{\\gamma}_{33}$ \\textcolor{white}{H}")
+rownames(neur_gender_restr_df) <- rownames_neur_gender_restr_df
+
+apa_table(
+  neur_gender_restr_df
+  , caption = "(ref:H1-neur-gender-restr-tab-cap)"
+  , note = "(ref:H1-neur-gender-restr-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  #, stub_indents = list("Fixed effects" = 1:12)
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , stub_indents = list("LISS" = 1:17, "HRS" = 18:30)
+  , placement = "H"
+)
+```
+
+(ref:H1-open-restr-tab-cap) Fixed Effects of `r df_outcomes["open", "maj"]` Over the Transition to Grandparenthood in the Restricted Models.
+
+(ref:H1-open-restr-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. Analyses samples were restricted to *time* [-2, 6] and the *before* coefficient recoded for the LISS samples (0 at *time*=-2 and 1 afterwards). CI = confidence interval.
+
+```{r H1-open-restr-tab, results="asis"}
+open_liss_df_restr <- 
+  cbind(printnum(open_liss_parents_restr_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(open_liss_parents_restr_test)$coefficients[, 5], # parents: p-value
+        printnum(open_liss_nonparents_restr_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(open_liss_nonparents_restr_test)$coefficients[, 5])  # nonparents: p-value
+
+open_hrs_df_restr <- 
+  cbind(printnum(open_hrs_parents_restr_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(open_hrs_parents_restr_test)$coefficients[, 5], # parents: p-value
+        printnum(open_hrs_nonparents_restr_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(open_hrs_nonparents_restr_test)$coefficients[, 5])  # nonparents: p-value
+
+# make one large table
+colnames(open_liss_df_restr)[c(4,8)] <- c("p", "p")
+colnames(open_hrs_df_restr)[c(4,8)] <- c("p", "p")
+open_df_restr <- rbind(open_liss_df_restr, open_hrs_df_restr)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_open_df_restr <- c("Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{L}", 
+                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{L}", 
+                      "Before-slope, $\\hat{\\gamma}_{10}$", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{L}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{L}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{L}", 
+                      "Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{H}", 
+                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{H}", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{H}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{H}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{H}")
+rownames(open_df_restr) <- rownames_open_df_restr
+
+apa_table(
+  open_df_restr
+  , caption = "(ref:H1-open-restr-tab-cap)"
+  , note = "(ref:H1-open-restr-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  #, stub_indents = list("Fixed effects" = 1:12)
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , stub_indents = list("LISS" = 1:9, "HRS" = 10:16)
+  , placement = "H"
+)
+```
+
+(ref:H1-open-gender-restr-tab-cap) Fixed Effects of `r df_outcomes["open", "maj"]` Over the Transition to Grandparenthood Moderated by Gender in the Restricted Models.
+
+(ref:H1-open-gender-restr-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. Analyses samples were restricted to *time* [-2, 6] and the *before* coefficient recoded for the LISS samples (0 at *time*=-2 and 1 afterwards). CI = confidence interval.
+
+```{r H1-open-gender-restr-tab, results="asis"}
+open_restr_gender_liss_df <- 
+  cbind(printnum(open_liss_parents_restr_gender_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(open_liss_parents_restr_gender_test)$coefficients[, 5], # parents: p-value
+        printnum(open_liss_nonparents_restr_gender_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(open_liss_nonparents_restr_gender_test)$coefficients[, 5])  # nonparents: p-value
+
+open_restr_gender_hrs_df <- 
+  cbind(printnum(open_hrs_parents_restr_gender_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(open_hrs_parents_restr_gender_test)$coefficients[, 5], # parents: p-value
+        printnum(open_hrs_nonparents_restr_gender_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(open_hrs_nonparents_restr_gender_test)$coefficients[, 5])  # nonparents: p-value
+
+# make one large table
+colnames(open_restr_gender_liss_df)[c(4,8)] <- c("p", "p")
+colnames(open_restr_gender_hrs_df)[c(4,8)] <- c("p", "p")
+open_gender_restr_df <- rbind(open_restr_gender_liss_df, open_restr_gender_hrs_df)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_open_gender_restr_df <- c("Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{L}", # LISS
+                      "Propensity score, $\\hat{\\gamma}_{04}$ \\textcolor{white}{L}", 
+                      "Before-slope, $\\hat{\\gamma}_{10}$", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{L}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{L}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{L}", 
+                      "Female, $\\hat{\\gamma}_{02}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{L}",
+                      "Before-slope * Female, $\\hat{\\gamma}_{12}$", 
+                      "After-slope * Female, $\\hat{\\gamma}_{22}$ \\textcolor{white}{L}", 
+                      "Shift * Female, $\\hat{\\gamma}_{32}$ \\textcolor{white}{L}",
+                      "Grandparent * Female, $\\hat{\\gamma}_{03}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent * Female, $\\hat{\\gamma}_{13}$", 
+                      "After-slope * Grandparent * Female, $\\hat{\\gamma}_{23}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent * Female, $\\hat{\\gamma}_{33}$ \\textcolor{white}{L}",
+                      "Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{H}", # HRS
+                      "Propensity score, $\\hat{\\gamma}_{04}$ \\textcolor{white}{H}", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{H}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{H}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{H}", 
+                      "Female, $\\hat{\\gamma}_{02}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{H}",
+                      "After-slope * Female, $\\hat{\\gamma}_{22}$ \\textcolor{white}{H}", 
+                      "Shift * Female, $\\hat{\\gamma}_{32}$ \\textcolor{white}{H}",
+                      "Grandparent * Female, $\\hat{\\gamma}_{03}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent * Female, $\\hat{\\gamma}_{23}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent * Female, $\\hat{\\gamma}_{33}$ \\textcolor{white}{H}")
+rownames(open_gender_restr_df) <- rownames_open_gender_restr_df
+
+apa_table(
+  open_gender_restr_df
+  , caption = "(ref:H1-open-gender-restr-tab-cap)"
+  , note = "(ref:H1-open-gender-restr-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  #, stub_indents = list("Fixed effects" = 1:12)
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , stub_indents = list("LISS" = 1:17, "HRS" = 18:30)
+  , placement = "H"
+)
+```
+
+(ref:H1-swls-restr-tab-cap) Fixed Effects of `r df_outcomes["swls", "maj"]` Over the Transition to Grandparenthood in the Restricted Models.
+
+(ref:H1-swls-restr-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. Analyses samples were restricted to *time* [-2, 6] and the *before* coefficient recoded for the LISS samples (0 at *time*=-2 and 1 afterwards). CI = confidence interval.
+
+```{r H1-swls-restr-tab, results="asis"}
+swls_liss_df_restr <- 
+  cbind(printnum(swls_liss_parents_restr_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(swls_liss_parents_restr_test)$coefficients[, 5], # parents: p-value
+        printnum(swls_liss_nonparents_restr_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(swls_liss_nonparents_restr_test)$coefficients[, 5])  # nonparents: p-value
+
+swls_hrs_df_restr <- 
+  cbind(printnum(swls_hrs_parents_restr_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(swls_hrs_parents_restr_test)$coefficients[, 5], # parents: p-value
+        printnum(swls_hrs_nonparents_restr_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(swls_hrs_nonparents_restr_test)$coefficients[, 5])  # nonparents: p-value
+
+# make one large table
+colnames(swls_liss_df_restr)[c(4,8)] <- c("p", "p")
+colnames(swls_hrs_df_restr)[c(4,8)] <- c("p", "p")
+swls_df_restr <- rbind(swls_liss_df_restr, swls_hrs_df_restr)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_swls_df_restr <- c("Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{L}", 
+                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{L}", 
+                      "Before-slope, $\\hat{\\gamma}_{10}$", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{L}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{L}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{L}", 
+                      "Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{H}", 
+                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{H}", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{H}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{H}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{H}")
+rownames(swls_df_restr) <- rownames_swls_df_restr
+
+apa_table(
+  swls_df_restr
+  , caption = "(ref:H1-swls-restr-tab-cap)"
+  , note = "(ref:H1-swls-restr-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  #, stub_indents = list("Fixed effects" = 1:12)
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , stub_indents = list("LISS" = 1:9, "HRS" = 10:16)
+  , placement = "H"
+)
+```
+
+(ref:H1-swls-gender-restr-tab-cap) Fixed Effects of `r df_outcomes["swls", "maj"]` Over the Transition to Grandparenthood Moderated by Gender in the Restricted Models.
+
+(ref:H1-swls-gender-restr-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. Analyses samples were restricted to *time* [-2, 6] and the *before* coefficient recoded for the LISS samples (0 at *time*=-2 and 1 afterwards). CI = confidence interval.
+
+```{r H1-swls-gender-restr-tab, results="asis"}
+swls_restr_gender_liss_df <- 
+  cbind(printnum(swls_liss_parents_restr_gender_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(swls_liss_parents_restr_gender_test)$coefficients[, 5], # parents: p-value
+        printnum(swls_liss_nonparents_restr_gender_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(swls_liss_nonparents_restr_gender_test)$coefficients[, 5])  # nonparents: p-value
+
+swls_restr_gender_hrs_df <- 
+  cbind(printnum(swls_hrs_parents_restr_gender_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(swls_hrs_parents_restr_gender_test)$coefficients[, 5], # parents: p-value
+        printnum(swls_hrs_nonparents_restr_gender_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(swls_hrs_nonparents_restr_gender_test)$coefficients[, 5])  # nonparents: p-value
+
+# make one large table
+colnames(swls_restr_gender_liss_df)[c(4,8)] <- c("p", "p")
+colnames(swls_restr_gender_hrs_df)[c(4,8)] <- c("p", "p")
+swls_gender_restr_df <- rbind(swls_restr_gender_liss_df, swls_restr_gender_hrs_df)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_swls_gender_restr_df <- c("Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{L}", # LISS
+                      "Propensity score, $\\hat{\\gamma}_{04}$ \\textcolor{white}{L}", 
+                      "Before-slope, $\\hat{\\gamma}_{10}$", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{L}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{L}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{L}", 
+                      "Female, $\\hat{\\gamma}_{02}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{L}",
+                      "Before-slope * Female, $\\hat{\\gamma}_{12}$", 
+                      "After-slope * Female, $\\hat{\\gamma}_{22}$ \\textcolor{white}{L}", 
+                      "Shift * Female, $\\hat{\\gamma}_{32}$ \\textcolor{white}{L}",
+                      "Grandparent * Female, $\\hat{\\gamma}_{03}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent * Female, $\\hat{\\gamma}_{13}$", 
+                      "After-slope * Grandparent * Female, $\\hat{\\gamma}_{23}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent * Female, $\\hat{\\gamma}_{33}$ \\textcolor{white}{L}",
+                      "Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{H}", # HRS
+                      "Propensity score, $\\hat{\\gamma}_{04}$ \\textcolor{white}{H}", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{H}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{H}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{H}", 
+                      "Female, $\\hat{\\gamma}_{02}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{H}",
+                      "After-slope * Female, $\\hat{\\gamma}_{22}$ \\textcolor{white}{H}", 
+                      "Shift * Female, $\\hat{\\gamma}_{32}$ \\textcolor{white}{H}",
+                      "Grandparent * Female, $\\hat{\\gamma}_{03}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent * Female, $\\hat{\\gamma}_{23}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent * Female, $\\hat{\\gamma}_{33}$ \\textcolor{white}{H}")
+rownames(swls_gender_restr_df) <- rownames_swls_gender_restr_df
+
+apa_table(
+  swls_gender_restr_df
+  , caption = "(ref:H1-swls-gender-restr-tab-cap)"
+  , note = "(ref:H1-swls-gender-restr-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  #, stub_indents = list("Fixed effects" = 1:12)
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , stub_indents = list("LISS" = 1:17, "HRS" = 18:30)
+  , placement = "H"
+)
+```
+
 \noindent
 **Supplemental Figures**  
 
@@ -4299,9 +5128,9 @@ levels(effects_basic$analysissample) <- c("LISS: Grandparents vs. Parents",
 
 ggplot(effects_basic, aes(x = fct_rev(parameter), y = est, colour = fct_rev(analysissample), 
                           group = fct_rev(analysissample))) +
+  geom_hline(yintercept=0) +
   geom_point(aes(color = fct_rev(analysissample), shape = fct_rev(analysissample)), 
              size=2, position=position_dodge(0.4)) + 
-  geom_hline(yintercept=0) +
   geom_errorbar(aes(ymin = lwr, ymax = upr), width=.3, position=position_dodge(0.4)) +
   facet_wrap( ~ outcome, ncol = 6) +
   theme_bw() + 
@@ -4310,7 +5139,7 @@ ggplot(effects_basic, aes(x = fct_rev(parameter), y = est, colour = fct_rev(anal
   ylab("Unstandardized Effect Size (95% CI)") +
   xlab("") +
   theme(legend.position="top") +
-  guides(colour = guide_legend(reverse = TRUE, ncol=2), shape = guide_legend(reverse = TRUE, ncol=2)) + 
+  guides(colour = guide_legend(reverse = TRUE, ncol=1), shape = guide_legend(reverse = TRUE, ncol=1)) + 
   theme(legend.title=element_blank()) +
   theme(legend.text=element_text(size=12)) +
   coord_flip() +
@@ -4438,10 +5267,10 @@ levels(effects_gender$analysissample) <- c("LISS: Grandparents vs. Parents",
 
 ggplot(effects_gender, aes(x = fct_rev(parameter), y = est, colour = fct_rev(analysissample), 
                            group = fct_rev(analysissample))) +
-  geom_point(aes(color = fct_rev(analysissample), shape = fct_rev(analysissample)), 
-             size=3, position=position_dodge(0.6)) + 
   geom_hline(yintercept=0) +
-  geom_errorbar(aes(ymin = lwr, ymax = upr), width=.3, position=position_dodge(0.6)) +
+  geom_point(aes(color = fct_rev(analysissample), shape = fct_rev(analysissample)), 
+             size=2, position=position_dodge(0.4)) + 
+  geom_errorbar(aes(ymin = lwr, ymax = upr), width=.3, position=position_dodge(0.4)) +
   facet_wrap( ~ outcome, ncol = 6) +
   theme_bw() + 
   scale_shape_manual(values=c(18,17,16,15))+
@@ -4449,7 +5278,7 @@ ggplot(effects_gender, aes(x = fct_rev(parameter), y = est, colour = fct_rev(ana
   ylab("Unstandardized Effect Size (95% CI)") +
   xlab("") +
   theme(legend.position="top") +
-  guides(colour = guide_legend(reverse = TRUE, ncol=2), shape = guide_legend(reverse = TRUE, ncol=2)) + 
+  guides(colour = guide_legend(reverse = TRUE, ncol=1), shape = guide_legend(reverse = TRUE, ncol=1)) + 
   theme(legend.title=element_blank()) +
   theme(legend.text=element_text(size=12)) +
   coord_flip() +
