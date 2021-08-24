@@ -56,7 +56,7 @@ authornote: |
   David Richter, Socio-Economic Panel (SOEP), German Institute for Economic Research (DIW Berlin); Survey Research Division, Department of Education and Psychology, Freie Universit&auml;t Berlin  
 
 abstract: |
- abc  
+ Intergenerational relations have received increased attention amidst an aging demographic and increased childcare responsibilities taken on by grandparents. However, few studies have investigated the psychological consequences of becoming a grandparent. For Big Five personality development, the transition to grandparenthood has been proposed as a developmental task in middle adulthood and old age contributing to personality maturation through this new role adoption—in line with the social investment principle. In this preregistered study, we used nationally representative panel data from the Netherlands (*N* = 250) and the USA (*N* = 846) to analyze first-time grandparents' development of the Big Five and life satisfaction in terms of mean-level changes, interindividual differences in change, and rank-order stability. We tested gender, paid work, and grandchild care as moderators of change trajectories. To address confounding bias, we employed propensity score matching in two procedures: matching grandparents with parents as well as nonparents in order to achieve balance in different sets of carefully selected covariates. Longitudinal multilevel models demonstrated mostly stability of the Big Five and life satisfaction over the transition to grandparenthood, and no consistent moderation effects. A few small effects that suggested personality maturation did not replicate across analysis samples. Contrary to expectations, we also found no consistent evidence for larger interindividual difference in change in the grandparents, or for smaller rank-order stability compared to the controls. Our findings add to recent failed tests of the social investment principle and are discussed in light of characteristics specific to grandparenthood that might moderate personality development.  
 
 keywords          : "grandparenthood, Big Five, life satisfaction, development, propensity score matching"
 wordcount         : "abc"
@@ -170,7 +170,7 @@ load(file = "data/processed/HRS/hrs_replacement_controls.rda")
 load(file = "data/processed/LISS/liss_balance_df.rda")
 load(file = "data/processed/HRS/hrs_balance_df.rda")
 ```
-Becoming a grandparent is an important life event for many people in midlife or old age [@infurnaMidlife2020sOpportunities2020]. At the same time, there is considerable heterogeneity in how intensely grandparents are involved in their grandchildren's lives and care [@meyerGrandparentingUnitedStates2017]. In the context of an aging demographic, the time that grandparents are alive and in good health during grandparenthood is prolonged compared to previous generations [@margolisHealthyGrandparenthoodHow2017; @leopoldDemographyGrandparenthoodInternational2015]. In addition, an increased share of childcare functions are being fulfilled by grandparents [@hayslipGrandparentsRaisingGrandchildren2019; @pilkauskasHistoricalTrendsChildren2020]. Thus, intergenerational relations have received heightened attention from psychological and sociological research in recent years [@bengtsonNuclearFamilyIncreasing2001; @coallGrandparentalInvestmentRelic2011]. With regard to personality development, the transition to grandparenthood has been posited as an important developmental task in old age [@huttemanDevelopmentalTasksFramework2014]. However, empirical research into the psychological consequences of becoming a grandparent is sparse. Testing hypotheses derived from neo-socioanalytic theory [@robertsPersonalityDevelopmentContext2006] in a prospective matched control-group design [see @luhmannStudyingChangesLife2014], we investigate whether the transition to grandparenthood affects the Big Five personality traits and life satisfaction using data from two nationally representative panel studies.  
+Becoming a grandparent is an important life event for many people in midlife or old age [@infurnaMidlife2020sOpportunities2020]. At the same time, there is considerable heterogeneity in how intensely grandparents are involved in their grandchildren's lives and care [@meyerGrandparentingUnitedStates2017]. In the context of an aging demographic, the time that grandparents are alive and in good health during grandparenthood is prolonged compared to previous generations [@margolisHealthyGrandparenthoodHow2017; @leopoldDemographyGrandparenthoodInternational2015; @bengtsonNuclearFamilyIncreasing2001]. In addition, an increased share of childcare functions are being fulfilled by grandparents [@hayslipGrandparentsRaisingGrandchildren2019; @pilkauskasHistoricalTrendsChildren2020]. Thus, intergenerational relations have received heightened attention from psychological and sociological research in recent years [@bengtsonNuclearFamilyIncreasing2001; @coallGrandparentalInvestmentRelic2011; @fingermanDecadeResearchIntergenerational2020]. With regard to personality development, the transition to grandparenthood has been posited as an important developmental task in old age [@huttemanDevelopmentalTasksFramework2014]. However, empirical research into the psychological consequences of becoming a grandparent is sparse. Testing hypotheses derived from neo-socioanalytic theory [@robertsPersonalityDevelopmentContext2006] in a prospective matched control-group design [see @luhmannStudyingChangesLife2014], we investigate whether the transition to grandparenthood affects the Big Five personality traits and life satisfaction using data from two nationally representative panel studies.  
 
 ## Personality Development in Middle Adulthood and Old Age
 
@@ -1720,6 +1720,116 @@ for (i in 1:length(outcomes)){
   }
 }
 
+#### models restricted to time [-2, 6] ####
+
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  pos = seq(from = 0, to = 24, by = 4)[i]
+  for (j in 1:length(datasets_restr)){
+    ### basic models
+    dataset = datasets_restr[j]
+    dataset_short = datasets_short[j]
+    obj_test = mod_summaries_restr_test[[pos + j]] # unfold list objects (lmerTest)
+    # create data.frame (with all predictors)
+    ps_mean <- as.data.frame(subset(get(dataset), !is.na(get(outcome)) & time==0) %>% 
+                               group_by(grandparent) %>% summarise(pscore = mean(pscore))) # pscore mean
+    # different time sequences for LISS/HRS
+    if (dataset_short %in% c("liss_parents", "liss_nonparents")){ 
+      dframe <- data.frame( # for LISS
+        pscore = c(rep(ps_mean[1,2], 9),  # controls
+                   rep(ps_mean[2,2], 9)), # grandparents
+        before = rep(c(0:1, rep(1, 7)), 2),
+        after = rep(c(rep(0, 2), 1:7), 2),
+        shift = rep(c(rep(0, 2), rep(1, 7)), 2),
+        grandparent = c(rep(0, 9), rep(1, 9)),
+        x = rep(-2:6, 2)
+      )
+    } else { # for HRS
+      dframe <- data.frame(
+        pscore = c(rep(ps_mean[1,2], 5), 
+                   rep(ps_mean[2,2], 5)),
+        #before = rep(c(0:2, rep(2, 4)), 2),
+        after = rep(c(0:4), 2),
+        shift = rep(c(0, rep(1, 4)), 2),
+        grandparent = c(rep(0, 5), rep(1, 5)),
+        x = rep(seq(-2, 6, by=2), 2)
+      )
+    }      
+    # predict response (again, same procedure for LISS & HRS)
+    dframe$pred <- predict(obj_test, newdata = dframe, re.form=NA)
+    # create design matrix
+    designmat <- model.matrix(as.formula(lme4::nobars(formula(obj_test))[-2]), 
+                              dframe) # [-2] drops response from formula
+    # compute standard error
+    predvar <- diag(designmat %*% vcov(obj_test) %*% t(designmat)) 
+    dframe$SE <- sqrt(predvar) # for confidence intervals
+    # add grandparent variable as a factor
+    if (dataset_short %in% c("liss_parents", "hrs_parents")){ 
+      dframe$gpgroup <- factor(dframe$grandparent, labels=c("Parent\nControls","Grandparents"))
+    } else { # for nonparent controls
+      dframe$gpgroup <- factor(dframe$grandparent, labels=c("Nonparent\nControls","Grandparents"))
+    }      
+    dframe$gpgroup <- fct_rev(dframe$gpgroup)
+    dframe_name <- paste0("dframe_", outcome, "_", dataset_short, "_restr")
+    eval(call("<-", as.name(dframe_name), dframe)) # save data.frame for later ggplot use
+    ### moderation by gender models
+    obj_test_gender = mod_summaries_restr_gender_test[[pos + j]] # unfold list objects (lmerTest)
+    # create data.frame (with all predictors)
+    ps_mean_gender <- as.data.frame(subset(get(dataset), !is.na(get(outcome)) & time==0) %>% 
+                                      group_by(grandparent, female) %>% summarise(pscore = mean(pscore)))
+    # different time sequences for LISS/HRS
+    if (dataset_short %in% c("liss_parents", "liss_nonparents")){ 
+      dframe_gender <- data.frame(
+        pscore = c(rep(ps_mean_gender[1,3], 9),  # male controls
+                   rep(ps_mean_gender[2,3], 9),  # female controls
+                   rep(ps_mean_gender[3,3], 9),  # male grandparents
+                   rep(ps_mean_gender[4,3], 9)), # female grandparents
+        before = rep(c(0:1, rep(1, 7)), 4),
+        after = rep(c(rep(0, 2), 1:7), 4),
+        shift = rep(c(rep(0, 2), rep(1, 7)), 4),
+        grandparent = c(rep(0, 18), rep(1, 18)),
+        female = rep(c(rep(0, 9), rep(1, 9)), 2),
+        x = rep(-2:6, 4)
+      )
+    } else { # for HRS
+      dframe_gender <- data.frame(
+        pscore = c(rep(ps_mean_gender[1,3], 5),  # male controls
+                   rep(ps_mean_gender[2,3], 5),  # female controls
+                   rep(ps_mean_gender[3,3], 5),  # male grandparents
+                   rep(ps_mean_gender[4,3], 5)), # female grandparents
+        #before = rep(c(0:2, rep(2, 4)), 4),
+        after = rep(c(0:4), 4),
+        shift = rep(c(0, rep(1, 4)), 4),
+        grandparent = c(rep(0, 10), rep(1, 10)),
+        female = rep(c(rep(0, 5), rep(1, 5)), 2),
+        x = rep(seq(-2, 6, by=2), 4)
+      )
+    }      
+    # predict response (again, same procedure for LISS & HRS)
+    dframe_gender$pred <- predict(obj_test_gender, newdata = dframe_gender, re.form=NA)
+    # create design matrix
+    designmat_gender <- model.matrix(as.formula(lme4::nobars(formula(obj_test_gender))[-2]), 
+                                     dframe_gender) # [-2] drops response from formula
+    # compute standard error
+    predvar_gender <- diag(designmat_gender %*% vcov(obj_test_gender) %*% t(designmat_gender)) 
+    dframe_gender$SE <- sqrt(predvar_gender) # for confidence intervals
+    # add grandparent variable as a factor
+    if (dataset_short %in% c("liss_parents", "hrs_parents")){ 
+      dframe_gender$gpgroup <- factor(dframe_gender$grandparent, 
+                                      labels=c("Parent\nControls","Grandparents"))
+    } else { # for nonparent controls
+      dframe_gender$gpgroup <- factor(dframe_gender$grandparent, 
+                                      labels=c("Nonparent\nControls","Grandparents"))
+    }      
+    dframe_gender$gpgroup <- fct_rev(dframe_gender$gpgroup)
+    # add female variable as a factor
+    dframe_gender$gender <- factor(dframe_gender$female, labels=c("Men","Women"))
+    dframe_gender$gender <- fct_rev(dframe_gender$gender)
+    dframe_name_gender <- paste0("dframe_", outcome, "_", dataset_short, "_restr_gender")
+    eval(call("<-", as.name(dframe_name_gender), dframe_gender)) # save data.frame for later ggplot use
+  }
+}
+
 # remove list objects from environment (needed for plots later)
 #rm(mod_summaries_test, mod_summaries_gender, mod_summaries_gender_test, #mod_summaries
 #   mod_summaries_work, mod_summaries_work_test, mod_summaries_care, mod_summaries_care_test)
@@ -1737,24 +1847,30 @@ rownames(limits) <- outcomes_plots
 #### basic models & moderation by gender ####
 
 # collect data frames in correct order (ACENO+LS -> LISS-p, LISS-np, HRS-p, HRS-np)
-dframes <- c(sort(ls()[grep("^(?=.*dframe_agree)(?!.*gender)(?!.*work)(?!.*care)", 
+dframes <- c(sort(ls()[grep("^(?=.*dframe_agree)(?!.*gender)(?!.*work)(?!.*care)(?!.*restr)", 
                             ls(), perl=T)], decreasing=T),
-             sort(ls()[grep("^(?=.*dframe_con)(?!.*gender)(?!.*work)(?!.*care)", 
+             sort(ls()[grep("^(?=.*dframe_con)(?!.*gender)(?!.*work)(?!.*care)(?!.*restr)", 
                             ls(), perl=T)], decreasing=T),
-             sort(ls()[grep("^(?=.*dframe_extra)(?!.*gender)(?!.*work)(?!.*care)", 
+             sort(ls()[grep("^(?=.*dframe_extra)(?!.*gender)(?!.*work)(?!.*care)(?!.*restr)", 
                             ls(), perl=T)], decreasing=T),
-             sort(ls()[grep("^(?=.*dframe_neur)(?!.*gender)(?!.*work)(?!.*care)", 
+             sort(ls()[grep("^(?=.*dframe_neur)(?!.*gender)(?!.*work)(?!.*care)(?!.*restr)", 
                             ls(), perl=T)], decreasing=T),
-             sort(ls()[grep("^(?=.*dframe_open)(?!.*gender)(?!.*work)(?!.*care)", 
+             sort(ls()[grep("^(?=.*dframe_open)(?!.*gender)(?!.*work)(?!.*care)(?!.*restr)", 
                             ls(), perl=T)], decreasing=T),
-             sort(ls()[grep("^(?=.*dframe_swls)(?!.*gender)(?!.*work)(?!.*care)", 
+             sort(ls()[grep("^(?=.*dframe_swls)(?!.*gender)(?!.*work)(?!.*care)(?!.*restr)", 
                             ls(), perl=T)], decreasing=T))
-dframes_gender <- c(sort(ls()[grep("^(?=.*dframe_agree)(?=.*gender)", ls(), perl=T)], decreasing=T),
-                    sort(ls()[grep("^(?=.*dframe_con)(?=.*gender)", ls(), perl=T)], decreasing=T),
-                    sort(ls()[grep("^(?=.*dframe_extra)(?=.*gender)", ls(), perl=T)], decreasing=T),
-                    sort(ls()[grep("^(?=.*dframe_neur)(?=.*gender)", ls(), perl=T)], decreasing=T),    
-                    sort(ls()[grep("^(?=.*dframe_open)(?=.*gender)", ls(), perl=T)], decreasing=T),
-                    sort(ls()[grep("^(?=.*dframe_swls)(?=.*gender)", ls(), perl=T)], decreasing=T))
+dframes_gender <- c(sort(ls()[grep("^(?=.*dframe_agree)(?=.*gender)(?!.*restr)", 
+                                   ls(), perl=T)], decreasing=T),
+                    sort(ls()[grep("^(?=.*dframe_con)(?=.*gender)(?!.*restr)", 
+                                   ls(), perl=T)], decreasing=T),
+                    sort(ls()[grep("^(?=.*dframe_extra)(?=.*gender)(?!.*restr)", 
+                                   ls(), perl=T)], decreasing=T),
+                    sort(ls()[grep("^(?=.*dframe_neur)(?=.*gender)(?!.*restr)", 
+                                   ls(), perl=T)], decreasing=T),    
+                    sort(ls()[grep("^(?=.*dframe_open)(?=.*gender)(?!.*restr)", 
+                                   ls(), perl=T)], decreasing=T),
+                    sort(ls()[grep("^(?=.*dframe_swls)(?=.*gender)(?!.*restr)", 
+                                   ls(), perl=T)], decreasing=T))
 
 for (i in 1:length(dframes)){
   ### basic
@@ -1911,6 +2027,96 @@ for (i in 1:length(dframes_care)){
   } 
   plot_name_care <- gsub("dframe", "plot", dframes_care[i])
   eval(call("<-", as.name(plot_name_care), plot_care)) # save plots for later assembly
+}
+
+#### models restricted to time [-2, 6] ####
+
+# collect data frames in correct order (ACENO+LS -> LISS-p, LISS-np, HRS-p, HRS-np)
+dframes_restr <- c(sort(ls()[grep("^(?=.*dframe_agree)(?=.*restr)(?!.*gender)", 
+                            ls(), perl=T)], decreasing=T),
+             sort(ls()[grep("^(?=.*dframe_con)(?=.*restr)(?!.*gender)", 
+                            ls(), perl=T)], decreasing=T),
+             sort(ls()[grep("^(?=.*dframe_extra)(?=.*restr)(?!.*gender)", 
+                            ls(), perl=T)], decreasing=T),
+             sort(ls()[grep("^(?=.*dframe_neur)(?=.*restr)(?!.*gender)", 
+                            ls(), perl=T)], decreasing=T),
+             sort(ls()[grep("^(?=.*dframe_open)(?=.*restr)(?!.*gender)", 
+                            ls(), perl=T)], decreasing=T),
+             sort(ls()[grep("^(?=.*dframe_swls)(?=.*restr)(?!.*gender)", 
+                            ls(), perl=T)], decreasing=T))
+dframes_restr_gender <- c(sort(ls()[grep("^(?=.*dframe_agree)(?=.*restr_gender)", 
+                                         ls(), perl=T)], decreasing=T),
+                    sort(ls()[grep("^(?=.*dframe_con)(?=.*restr_gender)", 
+                                   ls(), perl=T)], decreasing=T),
+                    sort(ls()[grep("^(?=.*dframe_extra)(?=.*restr_gender)", 
+                                   ls(), perl=T)], decreasing=T),
+                    sort(ls()[grep("^(?=.*dframe_neur)(?=.*restr_gender)", 
+                                   ls(), perl=T)], decreasing=T),    
+                    sort(ls()[grep("^(?=.*dframe_open)(?=.*restr_gender)", 
+                                   ls(), perl=T)], decreasing=T),
+                    sort(ls()[grep("^(?=.*dframe_swls)(?=.*restr_gender)", 
+                                   ls(), perl=T)], decreasing=T))
+
+for (i in 1:length(dframes_restr)){
+  ### basic
+  plot <- ggplot(get(dframes_restr[i]), aes(x=x,y=pred,colour=gpgroup))+
+    geom_line(position=position_dodge(width=0.2),size=1)+
+    geom_point(position=position_dodge(width=0.2),size=1.5)+
+    scale_colour_brewer(palette = "Set1", name="Group")+ 
+    geom_errorbar(aes(ymin=pred-1.96*SE,ymax=pred+1.96*SE),width=0.6,position=position_dodge(width=0.2))+
+    coord_cartesian(ylim=c(limits[i, 1], limits[i, 2]))+ # loop over limits as defined above
+    theme(#axis.text = element_text(face="bold"), #, size=14
+      #axis.title = element_text(size=18),
+      #legend.background = element_rect(fill="gray90", size=.5, linetype="dotted"),
+      #legend.text=element_text(size=14),
+      #legend.title=element_text(size=14),
+      legend.position = "none",
+      panel.border=element_rect(colour="darkgrey", fill=NA, size=1))+
+    scale_y_continuous(name=outcomes_plots[i]) 
+  if (dframes_restr[i] %in% dframes_restr[grep("^(?=.*liss)", dframes_restr, perl=T)]){ # filter LISS
+    plot <- plot + scale_x_continuous(name="Time (in Years)",breaks=c(-2:6)) +
+      geom_vline(xintercept=-0.5, colour="darkgrey") # LISS
+  } else { 
+    plot <- plot + scale_x_continuous(name="Time (in Years)",breaks=seq(-2,6,2)) + 
+      geom_vline(xintercept=-1, colour="darkgrey") # HRS
+  }      
+  if (dframes_restr[i] %in% dframes_restr[grep("^(?=.*_parents)", 
+                                               dframes_restr, perl=T)]){ # filter parent df's
+    plot <- plot + theme(axis.title.x=element_blank())
+  } 
+  plot_name <- gsub("dframe", "plot", dframes_restr[i])
+  eval(call("<-", as.name(plot_name), plot)) # save plots for later assembly
+  ### moderation by gender
+  plot_gender <- ggplot(get(dframes_restr_gender[i]), aes(x=x,y=pred,colour=gpgroup,linetype=gender))+
+    geom_line(position=position_dodge(width=0.2),size=1)+
+    geom_point(position=position_dodge(width=0.2),size=1.5)+
+    scale_colour_brewer(palette = "Set1", name="Group")+ 
+    scale_linetype_discrete(name="Gender")+
+    geom_errorbar(aes(ymin=pred-1.96*SE,ymax=pred+1.96*SE),width=0.6,position=position_dodge(width=0.2))+
+    coord_cartesian(ylim=c(limits[i, 1], limits[i, 2]))+ # loop over limits as defined above
+    theme(#axis.text = element_text(face="bold"), #, size=14
+      #axis.title = element_text(size=18),
+      #legend.background = element_rect(fill="gray90", size=.5, linetype="dotted"),
+      #legend.text=element_text(size=14),
+      #legend.title=element_text(size=14),
+      panel.border=element_rect(colour="darkgrey", fill=NA, size=1),
+      axis.title.y=element_blank())+
+    guides(colour = guide_legend(order = 1), linetype = guide_legend(order = 2))+ # legend element order
+    scale_y_continuous() # name=outcomes_plots[i]
+  if (dframes_restr_gender[i] %in% 
+      dframes_restr_gender[grep("^(?=.*liss)", dframes_restr_gender, perl=T)]){ # filter LISS
+    plot_gender <- plot_gender + scale_x_continuous(name="Time (in Years)",breaks=c(-2:6)) +
+      geom_vline(xintercept=-0.5, colour="darkgrey") # LISS
+  } else { 
+    plot_gender <- plot_gender + scale_x_continuous(name="Time (in Years)",breaks=seq(-2,6,2)) + 
+      geom_vline(xintercept=-1, colour="darkgrey") # HRS
+  }      
+  if (dframes_restr_gender[i] %in% 
+      dframes_restr_gender[grep("^(?=.*_parents_)", dframes_restr_gender, perl=T)]){ 
+    plot_gender <- plot_gender + theme(axis.title.x=element_blank()) # omit x-axis title for parent plots
+  } 
+  plot_name_gender <- gsub("dframe", "plot", dframes_restr_gender[i])
+  eval(call("<-", as.name(plot_name_gender), plot_gender)) # save plots for later assembly
 }
 ```
 
@@ -2331,14 +2537,14 @@ Overall, we found no confirmatory evidence in support of hypothesis H3.[^f14]
 
 # Discussion
 
-In an analysis of first-time grandparents in comparison with both parent and nonparent matched control respondents we found pronounced stability in the Big Five and life satisfaction over the transition to grandparenthood. Although there were a few isolated effects in line with our hypotheses on mean-level changes (H1), they were very small in size and also not consistent over the two analyzed panel studies---LISS and HRS. We found partial evidence for moderation of the mean-level trajectories of conscientiousness, neuroticism, and openness by performing paid work, and of extraversion and openness by providing substantial grandchild care (contrary to H1b). While interindividual differences in change were present for all parameters of change, they were only greater in the grandparents in a stark minority of conducted model comparisons (H2). Lastly, rank-order stability did not differ between grandparents and either controls group, or was larger in the control group---contrary to expectations (H3).  
+In an analysis of first-time grandparents in comparison with both parent and nonparent matched control respondents we found pronounced stability in the Big Five and life satisfaction over the transition to grandparenthood. Although there were a few isolated effects in line with our hypotheses on mean-level changes (H1), they were very small in size and also not consistent over the two analyzed panel studies---LISS and HRS. We found partial evidence for moderation of the mean-level trajectories of conscientiousness, neuroticism, and openness by performing paid work, and of extraversion and openness by providing substantial grandchild care (contrary to H1b). While interindividual differences in change were present for all parameters of change, they were only greater in the grandparents in a stark minority of conducted model comparisons (H2). Lastly, rank-order stability did not differ between grandparents and either control group, or was larger in the control group---contrary to expectations (H3).  
 
 ## Social Investment Principle
 
 We conducted a preregistered, cross-study, and multi-comparison test of the social investment principle [@robertsPersonalityDevelopmentContext2006; @lodi-smithSocialInvestmentPersonality2007] in middle adulthood and old age where the transition to grandparenthood has been put forward as a potentially important developmental task driving personality development of the Big Five [@huttemanDevelopmentalTasksFramework2014]. Across all analyzed traits, we found more evidence for trait stability than change [@bleidornPersonalityTraitStability2021].  
 Still, below we summarize the sparse evidence in line with the social investment principle because even small effects may be meaningful and involve real world consequences [@gotzSmallEffectsIndispensable2021]: For agreeableness and conscientiousness we found slight post-transition increases in comparison to the matched control groups which were line with the social investment principle However, the effects were not only small but also inconsistent across samples. Agreeableness only increased in the LISS (compared to parents) and conscientiousness only in the HRS (compared to both parents and nonparents). In the HRS, neuroticism decreased in grandparents directly following the transition to grandparenthood when compared to matched parent respondents. This was not the case in the other analysis samples.  
 In the case of agreeableness and neuroticism, these effects were only present in the comparison of grandfathers and male controls, whereas no effects were found for grandmothers. In contrast, past research---mostly in the domains of well-being and health---found more pronounced effects of the transition to grandparenthood for grandmothers [@digessaBecomingGrandparentIts2019; @digessaImpactCaringGrandchildren2016; @sheppardBecomingFirstTimeGrandparent2019; @tanskanenTransitionGrandparenthoodSubjective2019]. More beneficial effects for grandmothers have been discussed in the context of grandmothers spending more time with their grandchildren than grandfathers and providing more hours of care [@condonAustralianFirsttimeGrandparents2013; @digessaLookingGrandchildrenGender2020], thus making a higher social investment.[^f15] In our analysis, we found partial support for this for life satisfaction (see below). Yet our results for the Big Five were not in agreement with this line of thought. Instead, one possible explanation is that (future) grandfathers have on average been previously more invested in their work lives than in child rearing, and at the end of their career or after retirement found investment in grandchild care to be a more novel and meaningful transition than grandmothers [@stgeorgeMenExperiencesGrandfatherhood2014; @tanskanenDoesTransitionRetirement2021]. Currently, however, empirical research specifically into the grandfather role is sparse, and the demography of grandparenthood is undergoing swift changes toward a higher proportion of actively involved grandfathers [see @coallNewNicheTheory2016; @mannOutShadowsGrandfatherhood2007]. Thus, more research into grandfathers' experience of the transition to grandparenthood is needed to substantiate our tentative findings.   
-To gain more insight into social investment mechanisms, we tested paid work and grandchild care as moderators. For conscientiousness, we found that grandparents who were not gainfully employed increased more strongly in anticipation of the transition to grandparenthood than working grandparents (and than the matched nonworking controls). Although this could imply that working grandparents did not find as much time for social investment because of the role conflict with the employee/worker role [see @tanskanenDoesTransitionRetirement2021], we would have expected these moderation effects after the transition where grandparents were indeed able to spend time with their grandchild. However, such post-transition differences did not surface. Results for neuroticism were even less clearly in line with the social investment principle: Working grandparents increased in neuroticism in anticipation of the transition to grandparenthood (compared to nonparents), and decreased immediately following the transition (compared to parents). Regarding moderation by grandchild care, our results suggested that grandparents who provided substantial grandchild care increased more in conscientiousness and decreased more in neuroticism compared to grandparents who did not. However, the strength of evidence was not entirely convincing and indicates a need for temporally more fine-grained assessments with more extensive instruments of grandchild care [e.g., @vermoteImpactNonresidentialGrandchild2021a].  
+To gain more insight into social investment mechanisms, we tested paid work and grandchild care as moderators. For conscientiousness, we found that grandparents who were not gainfully employed increased more strongly in anticipation of the transition to grandparenthood than working grandparents (and than the matched nonworking controls). Although this could imply that working grandparents did not find as much time for social investment because of the role conflict with the employee/worker role [see @tanskanenDoesTransitionRetirement2021], we would have expected these moderation effects after the transition where grandparents were indeed able to spend time with their grandchild. However, such post-transition differences did not surface. Results for neuroticism were even less clearly in line with the social investment principle: Working grandparents increased in neuroticism in anticipation of the transition to grandparenthood (compared to nonparents), and decreased immediately following the transition (compared to parents). Regarding moderation by grandchild care, our results suggested that grandparents who provided substantial grandchild care increased more in conscientiousness and decreased more in neuroticism compared to grandparents who did not. However, the strength of evidence was not entirely convincing and indicates a need for temporally more fine-grained assessments with more extensive instruments of grandchild care [e.g., @vermoteImpactNonresidentialGrandchild2021a; see also @fingermanDecadeResearchIntergenerational2020].  
 In total, evidence in favor of the social investment principle in our analyses was rather thin. This adds to other recent empirical tests of the social investment principle in the context of parenthood and romantic relationships [@asselmannTestingSocialInvestment2020; @vanscheppingenPersonalityTraitDevelopment2016; @asselmannTakingUpsDowns2020; @spikicDoesDivorceChange2021] that have challenged its core theoretical assumption of personality maturation through age-graded social role transitions. In fact, more recent formulations of the social investment principle have acknowledged that it is mostly applicable to transitions into first employment roles and romantic relationships in emerging adulthood and may also be more closely tied to subjective perceptions of adult role competency than to the transitions per se [@robertsYoungAdulthoodCrucible2016].  
 Nonetheless, the possibility remains that certain preconditions we have not considered have to be met for grandparents to undergo personality maturation after the transition to grandparenthood. For example, grandparents might need to live in close proximity to their grandchild, see them on a regular basis, and provide grandchild care above a certain quantity and quality (i.e., level of responsibility). To our knowledge, however, there are presently no datasets with such detailed information regarding the grandparent role in conjunction with multiple waves of Big Five personality data. Studies in the well-being literature have provided initial evidence that more frequent contact with grandchildren was associated with higher grandparental well-being [@arpinoGrandparentingEducationSubjective2018; @danielsbackaAssociationGrandparentalInvestment2016; @danielsbackaGrandparentalChildcareHealth2019]. However, Danielsbacka et al. [-@danielsbackaGrandparentalChildcareHealth2019] noted that this effect was due to between-person differences in grandparents, thus limiting a causal interpretation of frequency of grandchild care as a mechanism of development.  
 

@@ -2758,4 +2758,204 @@ for (i in 1:length(outcomes)){
   }
 }
 
+#### plots: restricted to [-2, 6] ####
+
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  pos = seq(from = 0, to = 24, by = 4)[i]
+  for (j in 1:length(datasets_restr)){
+    ### basic models
+    dataset = datasets_restr[j]
+    dataset_short = datasets_short[j]
+    obj_test = mod_summaries_restr_test[[pos + j]] # unfold list objects (lmerTest)
+    # create data.frame (with all predictors)
+    ps_mean <- as.data.frame(subset(get(dataset), !is.na(get(outcome)) & time==0) %>% 
+                               group_by(grandparent) %>% summarise(pscore = mean(pscore))) # pscore mean
+    # different time sequences for LISS/HRS
+    if (dataset_short %in% c("liss_parents", "liss_nonparents")){ 
+      dframe <- data.frame( # for LISS
+        pscore = c(rep(ps_mean[1,2], 9),  # controls
+                   rep(ps_mean[2,2], 9)), # grandparents
+        before = rep(c(0:1, rep(1, 7)), 2),
+        after = rep(c(rep(0, 2), 1:7), 2),
+        shift = rep(c(rep(0, 2), rep(1, 7)), 2),
+        grandparent = c(rep(0, 9), rep(1, 9)),
+        x = rep(-2:6, 2)
+      )
+    } else { # for HRS
+      dframe <- data.frame(
+        pscore = c(rep(ps_mean[1,2], 5), 
+                   rep(ps_mean[2,2], 5)),
+        #before = rep(c(0:2, rep(2, 4)), 2),
+        after = rep(c(0:4), 2),
+        shift = rep(c(0, rep(1, 4)), 2),
+        grandparent = c(rep(0, 5), rep(1, 5)),
+        x = rep(seq(-2, 6, by=2), 2)
+      )
+    }      
+    # predict response (again, same procedure for LISS & HRS)
+    dframe$pred <- predict(obj_test, newdata = dframe, re.form=NA)
+    # create design matrix
+    designmat <- model.matrix(as.formula(lme4::nobars(formula(obj_test))[-2]), 
+                              dframe) # [-2] drops response from formula
+    # compute standard error
+    predvar <- diag(designmat %*% vcov(obj_test) %*% t(designmat)) 
+    dframe$SE <- sqrt(predvar) # for confidence intervals
+    # add grandparent variable as a factor
+    if (dataset_short %in% c("liss_parents", "hrs_parents")){ 
+      dframe$gpgroup <- factor(dframe$grandparent, labels=c("Parent\nControls","Grandparents"))
+    } else { # for nonparent controls
+      dframe$gpgroup <- factor(dframe$grandparent, labels=c("Nonparent\nControls","Grandparents"))
+    }      
+    dframe$gpgroup <- fct_rev(dframe$gpgroup)
+    dframe_name <- paste0("dframe_", outcome, "_", dataset_short, "_restr")
+    eval(call("<-", as.name(dframe_name), dframe)) # save data.frame for later ggplot use
+    ### moderation by gender models
+    obj_test_gender = mod_summaries_restr_gender_test[[pos + j]] # unfold list objects (lmerTest)
+    # create data.frame (with all predictors)
+    ps_mean_gender <- as.data.frame(subset(get(dataset), !is.na(get(outcome)) & time==0) %>% 
+                                      group_by(grandparent, female) %>% summarise(pscore = mean(pscore)))
+    # different time sequences for LISS/HRS
+    if (dataset_short %in% c("liss_parents", "liss_nonparents")){ 
+      dframe_gender <- data.frame(
+        pscore = c(rep(ps_mean_gender[1,3], 9),  # male controls
+                   rep(ps_mean_gender[2,3], 9),  # female controls
+                   rep(ps_mean_gender[3,3], 9),  # male grandparents
+                   rep(ps_mean_gender[4,3], 9)), # female grandparents
+        before = rep(c(0:1, rep(1, 7)), 4),
+        after = rep(c(rep(0, 2), 1:7), 4),
+        shift = rep(c(rep(0, 2), rep(1, 7)), 4),
+        grandparent = c(rep(0, 18), rep(1, 18)),
+        female = rep(c(rep(0, 9), rep(1, 9)), 2),
+        x = rep(-2:6, 4)
+      )
+    } else { # for HRS
+      dframe_gender <- data.frame(
+        pscore = c(rep(ps_mean_gender[1,3], 5),  # male controls
+                   rep(ps_mean_gender[2,3], 5),  # female controls
+                   rep(ps_mean_gender[3,3], 5),  # male grandparents
+                   rep(ps_mean_gender[4,3], 5)), # female grandparents
+        #before = rep(c(0:2, rep(2, 4)), 4),
+        after = rep(c(0:4), 4),
+        shift = rep(c(0, rep(1, 4)), 4),
+        grandparent = c(rep(0, 10), rep(1, 10)),
+        female = rep(c(rep(0, 5), rep(1, 5)), 2),
+        x = rep(seq(-2, 6, by=2), 4)
+      )
+    }      
+    # predict response (again, same procedure for LISS & HRS)
+    dframe_gender$pred <- predict(obj_test_gender, newdata = dframe_gender, re.form=NA)
+    # create design matrix
+    designmat_gender <- model.matrix(as.formula(lme4::nobars(formula(obj_test_gender))[-2]), 
+                                     dframe_gender) # [-2] drops response from formula
+    # compute standard error
+    predvar_gender <- diag(designmat_gender %*% vcov(obj_test_gender) %*% t(designmat_gender)) 
+    dframe_gender$SE <- sqrt(predvar_gender) # for confidence intervals
+    # add grandparent variable as a factor
+    if (dataset_short %in% c("liss_parents", "hrs_parents")){ 
+      dframe_gender$gpgroup <- factor(dframe_gender$grandparent, 
+                                      labels=c("Parent\nControls","Grandparents"))
+    } else { # for nonparent controls
+      dframe_gender$gpgroup <- factor(dframe_gender$grandparent, 
+                                      labels=c("Nonparent\nControls","Grandparents"))
+    }      
+    dframe_gender$gpgroup <- fct_rev(dframe_gender$gpgroup)
+    # add female variable as a factor
+    dframe_gender$gender <- factor(dframe_gender$female, labels=c("Men","Women"))
+    dframe_gender$gender <- fct_rev(dframe_gender$gender)
+    dframe_name_gender <- paste0("dframe_", outcome, "_", dataset_short, "_restr_gender")
+    eval(call("<-", as.name(dframe_name_gender), dframe_gender)) # save data.frame for later ggplot use
+  }
+}
+
+outcomes_plots <- c(rep("Agreeableness", 4), rep("Conscientiousness", 4), rep("Extraversion", 4),  
+                    rep("Neuroticism", 4), rep("Openness", 4), rep("Life Satisfaction", 4))
+# y-axis limits (same span but different sections)
+limits_lower <- c(rep(3, 4), rep(3, 4), rep(2.5, 4), rep(1.5, 4), rep(2.5, 4), rep(4.25, 4)) 
+limits_upper <- c(rep(4.5, 4), rep(4.5, 4), rep(4, 4), rep(3, 4), rep(4, 4), rep(5.75, 4))
+limits <- cbind(limits_lower, limits_upper)
+rownames(limits) <- outcomes_plots
+
+# collect data frames in correct order (ACENO+LS -> LISS-p, LISS-np, HRS-p, HRS-np)
+dframes_restr <- c(sort(ls()[grep("^(?=.*dframe_agree)(?=.*restr)(?!.*gender)", 
+                            ls(), perl=T)], decreasing=T),
+             sort(ls()[grep("^(?=.*dframe_con)(?=.*restr)(?!.*gender)", 
+                            ls(), perl=T)], decreasing=T),
+             sort(ls()[grep("^(?=.*dframe_extra)(?=.*restr)(?!.*gender)", 
+                            ls(), perl=T)], decreasing=T),
+             sort(ls()[grep("^(?=.*dframe_neur)(?=.*restr)(?!.*gender)", 
+                            ls(), perl=T)], decreasing=T),
+             sort(ls()[grep("^(?=.*dframe_open)(?=.*restr)(?!.*gender)", 
+                            ls(), perl=T)], decreasing=T),
+             sort(ls()[grep("^(?=.*dframe_swls)(?=.*restr)(?!.*gender)", 
+                            ls(), perl=T)], decreasing=T))
+dframes_restr_gender <- c(sort(ls()[grep("^(?=.*dframe_agree)(?=.*restr_gender)", ls(), perl=T)], decreasing=T),
+                    sort(ls()[grep("^(?=.*dframe_con)(?=.*restr_gender)", ls(), perl=T)], decreasing=T),
+                    sort(ls()[grep("^(?=.*dframe_extra)(?=.*restr_gender)", ls(), perl=T)], decreasing=T),
+                    sort(ls()[grep("^(?=.*dframe_neur)(?=.*restr_gender)", ls(), perl=T)], decreasing=T),    
+                    sort(ls()[grep("^(?=.*dframe_open)(?=.*restr_gender)", ls(), perl=T)], decreasing=T),
+                    sort(ls()[grep("^(?=.*dframe_swls)(?=.*restr_gender)", ls(), perl=T)], decreasing=T))
+
+for (i in 1:length(dframes_restr)){
+  ### basic
+  plot <- ggplot(get(dframes_restr[i]), aes(x=x,y=pred,colour=gpgroup))+
+    geom_line(position=position_dodge(width=0.2),size=1)+
+    geom_point(position=position_dodge(width=0.2),size=1.5)+
+    scale_colour_brewer(palette = "Set1", name="Group")+ 
+    geom_errorbar(aes(ymin=pred-1.96*SE,ymax=pred+1.96*SE),width=0.6,position=position_dodge(width=0.2))+
+    coord_cartesian(ylim=c(limits[i, 1], limits[i, 2]))+ # loop over limits as defined above
+    theme(#axis.text = element_text(face="bold"), #, size=14
+      #axis.title = element_text(size=18),
+      #legend.background = element_rect(fill="gray90", size=.5, linetype="dotted"),
+      #legend.text=element_text(size=14),
+      #legend.title=element_text(size=14),
+      legend.position = "none",
+      panel.border=element_rect(colour="darkgrey", fill=NA, size=1))+
+    scale_y_continuous(name=outcomes_plots[i]) 
+  if (dframes_restr[i] %in% dframes_restr[grep("^(?=.*liss)", dframes_restr, perl=T)]){ # filter LISS
+    plot <- plot + scale_x_continuous(name="Time (in Years)",breaks=c(-2:6)) +
+      geom_vline(xintercept=-0.5, colour="darkgrey") # LISS
+  } else { 
+    plot <- plot + scale_x_continuous(name="Time (in Years)",breaks=seq(-2,6,2)) + 
+      geom_vline(xintercept=-1, colour="darkgrey") # HRS
+  }      
+  if (dframes_restr[i] %in% dframes_restr[grep("^(?=.*_parents)", 
+                                               dframes_restr, perl=T)]){ # filter parent df's
+    plot <- plot + theme(axis.title.x=element_blank())
+  } 
+  plot_name <- gsub("dframe", "plot", dframes_restr[i])
+  eval(call("<-", as.name(plot_name), plot)) # save plots for later assembly
+  ### moderation by gender
+  plot_gender <- ggplot(get(dframes_restr_gender[i]), aes(x=x,y=pred,colour=gpgroup,linetype=gender))+
+    geom_line(position=position_dodge(width=0.2),size=1)+
+    geom_point(position=position_dodge(width=0.2),size=1.5)+
+    scale_colour_brewer(palette = "Set1", name="Group")+ 
+    scale_linetype_discrete(name="Gender")+
+    geom_errorbar(aes(ymin=pred-1.96*SE,ymax=pred+1.96*SE),width=0.6,position=position_dodge(width=0.2))+
+    coord_cartesian(ylim=c(limits[i, 1], limits[i, 2]))+ # loop over limits as defined above
+    theme(#axis.text = element_text(face="bold"), #, size=14
+      #axis.title = element_text(size=18),
+      #legend.background = element_rect(fill="gray90", size=.5, linetype="dotted"),
+      #legend.text=element_text(size=14),
+      #legend.title=element_text(size=14),
+      panel.border=element_rect(colour="darkgrey", fill=NA, size=1),
+      axis.title.y=element_blank())+
+    guides(colour = guide_legend(order = 1), linetype = guide_legend(order = 2))+ # legend element order
+    scale_y_continuous() # name=outcomes_plots[i]
+  if (dframes_restr_gender[i] %in% 
+      dframes_restr_gender[grep("^(?=.*liss)", dframes_restr_gender, perl=T)]){ # filter LISS
+    plot_gender <- plot_gender + scale_x_continuous(name="Time (in Years)",breaks=c(-2:6)) +
+      geom_vline(xintercept=-0.5, colour="darkgrey") # LISS
+  } else { 
+    plot_gender <- plot_gender + scale_x_continuous(name="Time (in Years)",breaks=seq(-2,6,2)) + 
+      geom_vline(xintercept=-1, colour="darkgrey") # HRS
+  }      
+  if (dframes_restr_gender[i] %in% 
+      dframes_restr_gender[grep("^(?=.*_parents_)", dframes_restr_gender, perl=T)]){ 
+    plot_gender <- plot_gender + theme(axis.title.x=element_blank()) # omit x-axis title for parent plots
+  } 
+  plot_name_gender <- gsub("dframe", "plot", dframes_restr_gender[i])
+  eval(call("<-", as.name(plot_name_gender), plot_gender)) # save plots for later assembly
+}
+
 
