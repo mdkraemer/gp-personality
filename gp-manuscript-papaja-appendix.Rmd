@@ -9,7 +9,7 @@
 \noindent
 **Model Equations**
 
-Model equation for the basic models (ignoring the additional nesting in households applied to the majority of models):
+Model equation for the basic (i.e., unmoderated) models (ignoring the additional nesting in households applied to the majority of models):
 \begin{equation}
 \begin{split}
 y_{ti} =& \beta_{0i} + \beta_{1i}before_{ti} + \beta_{2i}after_{ti} + \beta_{3i}shift_{ti} + e_{ti} \\
