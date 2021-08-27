@@ -4,7 +4,7 @@
 %
 \documentclass[
   english,
-  man, noextraspace]{apa7}
+  man, noextraspace,floatsintext]{apa7}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
@@ -127,12 +127,6 @@
 \makeatother
 \shorttitle{Grandparenthood, Big Five, and Life Satisfaction}
 \keywords{grandparenthood, Big Five, life satisfaction, development, propensity score matching\newline\indent Word count: abc}
-\DeclareDelayedFloatFlavor{ThreePartTable}{table}
-\DeclareDelayedFloatFlavor{lltable}{table}
-\DeclareDelayedFloatFlavor*{longtable}{table}
-\makeatletter
-\renewcommand{\efloat@iwrite}[1]{\immediate\expandafter\protected@write\csname efloat@post#1\endcsname{}}
-\makeatother
 \usepackage{lineno}
 
 \linenumbers
@@ -148,6 +142,7 @@
 \renewcommand\affiliation[1]{}
 \authorsnames[{1,2}, 3, 4, {1,5}]{Michael D. Krämer, Manon A. van Scheppingen, William J. Chopik, David Richter}
 \authorsaffiliations{{German Institute for Economic Research, Germany}, {International Max Planck Research School on the Life Course (LIFE), Germany}, {Tilburg University, Netherlands}, {Michigan State University, USA}, {Freie Universität Berlin, Germany}}
+\raggedbottom
 \ifxetex
   % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
   \usepackage{polyglossia}
@@ -283,6 +278,17 @@ In both samples, life satisfaction was assessed using the 5-item Satisfaction wi
 The procedure to obtain information on the transition to grandparenthood generally followed the same steps in both samples. The items this coding was based on, however, differed slightly: In the LISS, respondents performing paid work were asked \enquote{Do you have children and/or grandchildren?} with \enquote{children}, \enquote{grandchildren}, and \enquote{no children or grandchildren} as possible answer categories. In the HRS, all respondents were asked for the total number of grandchildren: \enquote{Altogether, how many grandchildren do you (or your husband / wife / partner, or your late husband / wife / partner) have? Include as grandchildren any children of your (or your {[}late{]} husband's / wife's / partner's) biological, step- or adopted children}.\footnote{The listing of biological, step-, or adopted children has been added since wave 2006.}\\
 In both samples, we tracked grandparenthood status over time. Due to longitudinally inconsistent data in some cases, we included in the grandparent group only respondents with one transition from 0 (\emph{no grandchildren}) to 1 (\emph{at least one grandchild}) in this status variable, and no transitions backwards (see Figure \ref{fig:flowchart-participant}). We marked respondents who consistently indicated that they had no grandchildren as potential members of the control groups.
 
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{Figs/flowchart-participant-1} 
+
+}
+
+\caption{Participant flowchart demonstrating the composition of the four analysis samples via matching (1:4 matching ratio with replacement). \emph{obs.} = longitudinal observations.}\label{fig:flowchart-participant}
+\end{figure}
+
 \hypertarget{moderators}{%
 \subsubsection{Moderators}\label{moderators}}
 
@@ -311,14 +317,73 @@ Estimating propensity scores required complete covariate data. Therefore, we per
 
 The time of matching preceded the survey year when the transition to grandparenthood was first reported by at least two years (aside from that choosing the smallest available gap between matching and transition). This ensured that the covariates were not affected by the event itself or its anticipation (i.e., matching occurred well prior to one's child being pregnant with their first child; Greenland, 2003; Rosenbaum, 1984; VanderWeele et al., 2020). Propensity score matching was performed using the \emph{MatchIt} R package (Ho et al., 2011) with exact matching on gender combined with Mahalanobis distance matching on the propensity score. Four matchings were performed; two per sample (LISS; HRS) and two per control group (parents; nonparents). We matched 1:4 with replacement because of the relatively small pools of available controls. This meant that each grandparent was matched with four control observations in each matching procedure, and that control observations were allowed to be used multiple times for matching\footnote{In the LISS, 250 grandparent observations were matched with 1000 control observations; these control observations corresponded to 523 unique person-year observations stemming from 270 unique respondents for the parent control group, and to 464 unique person-year observations stemming from 189 unique respondents for the nonparent control group. In the HRS, 846 grandparent observations were matched with 3384 control observations; these control observations corresponded to 1393 unique person-year observations stemming from 982 unique respondents for the parent control group, and to 1008 unique person-year observations stemming from 704 unique respondents for the nonparent control group.}. We did not specify a caliper because our goal was to find matches for all grandparents, and because we achieved good covariate balance this way.\\
 We evaluated the matching procedure in terms of covariate balance and, graphically, in terms of overlap of the distributions of the propensity score (Stuart, 2010). Covariate balance as indicated by the standardized difference in means between the grandparent and the controls after matching was good (see Tables \ref{tab:stddiffmeans-balance-liss} \& \ref{tab:stddiffmeans-balance-hrs}) lying below 0.25 as recommended in the literature (Stuart, 2010), and below 0.10 with few exceptions (Austin, 2011). Graphically, group differences in the distribution of propensity scores were small and indicated no substantial missing overlap (see Figure \ref{fig:pscore-overlap}).\\
-After matching, each matched control observation received the same value as their matched grandparent in the \emph{time} variable describing the temporal relation to treatment, and the control respondent's other longitudinal observations were centered around this matched observation. Thereby, we coded a counterfactual transition time frame for each control respondent. Due to left- and right-censored longitudinal data (i.e., panel entry or attrition), we restricted the final analysis samples to six years before and six years after the transition as shown in Table \ref{tab:piecewise-coding-scheme}.\footnote{As an additional robustness check, we also re-estimated mean-level trajectories after further restricting the analysis time frame by excluding time points earlier than two years before the transition (i.e., before the latest time of matching). This served the purpose to assess whether including time points from before matching (as preregistered) would distort the trajectories in any way. However, results were highly similar across all outcomes (see \emph{gp\_restricted\_models.pdf} on \url{https://osf.io/75a4r/?view_only=ac929a2c41fb4afd9d1a64a3909848d0}).}\\
+After matching, each matched control observation received the same value as their matched grandparent in the \emph{time} variable describing the temporal relation to treatment, and the control respondent's other longitudinal observations were centered around this matched observation. Thereby, we coded a counterfactual transition time frame for each control respondent. Due to left- and right-censored longitudinal data (i.e., panel entry or attrition), we restricted the final analysis samples to six years before and six years after the transition as shown in Table \ref{tab:piecewise-coding-scheme}.
+
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} obs. = observations. \(time=0\) marks the first year where the transition to grandparenthood has been reported. The number of grandparent respondents included in the final samples is \(N_{LISS}=\) 250 and \(N_{HRS}=\) 846.}
+\end{TableNotes}
+
+\small{
+
+\begin{longtable}{lccccccccccccc}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:piecewise-coding-scheme}Longitudinal Sample Size in the Analysis Samples and Coding Scheme for the Piecewise Regression Coefficients.}\\
+\toprule
+ & \multicolumn{6}{c}{Pre-transition years} & \multicolumn{7}{c}{Post-transition years} \\
+\cmidrule(r){2-7} \cmidrule(r){8-14}
+ & -6 & -5 & -4 & -3 & -2 & -1 & 0 & 1 & 2 & 3 & 4 & 5 & 6\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:piecewise-coding-scheme} continued}}\\
+\toprule
+ & \multicolumn{6}{c}{Pre-transition years} & \multicolumn{7}{c}{Post-transition years} \\
+\cmidrule(r){2-7} \cmidrule(r){8-14}
+ & -6 & -5 & -4 & -3 & -2 & -1 & 0 & 1 & 2 & 3 & 4 & 5 & 6\\
+\midrule
+\endhead
+LISS: Analysis samples &  &  &  &  &  &  &  &  &  &  &  &  & \\
+\ \ \ Grandparents: obs. \textcolor{white}{L} & 92 & 105 & 108 & 121 & 156 & 116 & 133 & 138 & 108 & 108 & 69 & 62 & 52\\
+\ \ \ Grandparents: \% women \textcolor{white}{L} & 51.09 & 48.57 & 52.78 & 51.24 & 56.41 & 62.93 & 47.37 & 52.90 & 51.85 & 50.00 & 56.52 & 66.13 & 53.85\\
+\ \ \ Parent controls: obs. \textcolor{white}{L} & 335 & 425 & 381 & 540 & 740 & 351 & 450 & 488 & 333 & 394 & 365 & 164 & 201\\
+\ \ \ Parent controls: \% women \textcolor{white}{L} & 57.61 & 51.06 & 55.12 & 51.48 & 55.00 & 56.13 & 53.11 & 54.10 & 56.76 & 51.27 & 56.99 & 59.76 & 48.76\\
+\ \ \ Nonparent controls: obs. \textcolor{white}{L} & 331 & 399 & 407 & 554 & 739 & 354 & 473 & 516 & 367 & 477 & 375 & 146 & 202\\
+\ \ \ Nonparent controls: \% women \textcolor{white}{L} & 52.57 & 54.89 & 57.99 & 52.71 & 55.21 & 54.52 & 49.26 & 54.46 & 52.86 & 52.83 & 54.67 & 48.63 & 51.49\\
+LISS: Coding scheme &  &  &  &  &  &  &  &  &  &  &  &  & \\
+\ \ \ Before-slope \textcolor{white}{L} & 0 & 1 & 2 & 3 & 4 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5\\
+\ \ \ After-slope \textcolor{white}{L} & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7\\
+\ \ \ Shift \textcolor{white}{L} & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\
+HRS: Analysis samples &  &  &  &  &  &  &  &  &  &  &  &  & \\
+\ \ \ Grandparents: obs. \textcolor{white}{H} & 162 &  & 388 &  & 461 &  & 380 &  & 444 &  & 195 &  & 232\\
+\ \ \ Grandparents: \% women \textcolor{white}{H} & 57.41 &  & 54.12 &  & 55.53 &  & 53.95 &  & 55.41 &  & 56.41 &  & 53.45\\
+\ \ \ Parent controls: obs. \textcolor{white}{H} & 619 &  & 1540 &  & 1844 &  & 1228 &  & 1504 &  & 658 &  & 864\\
+\ \ \ Parent controls: \% women \textcolor{white}{H} & 55.41 &  & 54.03 &  & 55.53 &  & 54.64 &  & 56.45 &  & 56.08 &  & 57.64\\
+\ \ \ Nonparent controls: obs. \textcolor{white}{H} & 620 &  & 1541 &  & 1844 &  & 1205 &  & 1448 &  & 688 &  & 821\\
+\ \ \ Nonparent controls: \% women \textcolor{white}{H} & 56.45 &  & 54.06 &  & 55.53 &  & 56.10 &  & 58.91 &  & 57.56 &  & 60.54\\
+HRS: Coding scheme &  &  &  &  &  &  &  &  &  &  &  &  & \\
+\ \ \ Before-slope \textcolor{white}{H} & 0 &  & 1 &  & 2 &  & 2 &  & 2 &  & 2 &  & 2\\
+\ \ \ After-slope \textcolor{white}{H} & 0 &  & 0 &  & 0 &  & 1 &  & 2 &  & 3 &  & 4\\
+\ \ \ Shift \textcolor{white}{H} & 0 &  & 0 &  & 0 &  & 1 &  & 1 &  & 1 &  & 1\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
 The final LISS analysis samples (see Figure \ref{fig:flowchart-participant}) contained 250 grandparents with 1368 longitudinal observations, matched with 1000 control respondents with either 5167 (parent control group) or 5340 longitudinal observations (nonparent control group). The final HRS analysis samples contained 846 grandparents with 2262 longitudinal observations, matched with 3384 control respondents with either 8257 (parent control group) or 8167 longitudinal observations (nonparent control group). In the HRS, there were a few additional missing values in the outcomes ranging from 18 to 105 longitudinal observations which were listwise deleted in the respective analyses.
 
 \hypertarget{analytical-strategy}{%
 \subsection{Analytical Strategy}\label{analytical-strategy}}
 
 We used R (Version 4.0.4; R Core Team, 2021) and the R-packages \emph{lme4} (Version 1.1.26; Bates et al., 2015), and \emph{lmerTest} (Version 3.1.3; Kuznetsova et al., 2017) for multilevel modeling, as well as \emph{tidyverse} (Wickham et al., 2019) for data wrangling, and \emph{papaja} (Aust \& Barth, 2020) for reproducible manuscript production. A complete list of software we used is provided in the supplemental materials. Scripts for data wrangling, analyses, and to reproduce this manuscript can be found on the OSF (\url{https://osf.io/75a4r/?view_only=ac929a2c41fb4afd9d1a64a3909848d0/}) and on GitHub (\url{https://github.com/} {[}blinded{]}). Following Benjamin et al.~(2018), we set the \(\alpha\)-level for confirmatory analyses to \(.005\).\\
-Our design can be referred to as an interrupted time-series with a \enquote{nonequivalent no-treatment control group} (Shadish et al., 2002, p. 182) where treatment, that is, the transition to grandparenthood, is not deliberately manipulated. First, to analyze mean-level changes (research question 1), we used linear piecewise regression coefficients in multilevel models with person-year observations nested within respondents and households (Hoffman, 2015). To model change over time in relation to the transition to grandparenthood, we coded three piecewise regression coefficients: a \emph{before-slope} representing linear change in the years leading up to the transition to grandparenthood, an \emph{after-slope} representing linear change in the years after the transition, and a \emph{shift} coefficient shifting the intercept directly after the transition was first reported, thus representing sudden changes that go beyond changes already modeled by the \emph{after-slope} {[}see Table \ref{tab:piecewise-coding-scheme} for the coding scheme of these coefficients{]}. Other studies of personality development have recently adopted similar piecewise coefficients (e.g., Schwaba \& Bleidorn, 2019; Krämer \& Rodgers, 2020; van Scheppingen \& Leopold, 2020).\\
+Our design can be referred to as an interrupted time-series with a \enquote{nonequivalent no-treatment control group} (Shadish et al., 2002, p. 182) where treatment, that is, the transition to grandparenthood, is not deliberately manipulated. First, to analyze mean-level changes (research question 1), we used linear piecewise regression coefficients in multilevel models with person-year observations nested within respondents and households (Hoffman, 2015). To model change over time in relation to the transition to grandparenthood, we coded three piecewise regression coefficients: a \emph{before-slope} representing linear change in the years leading up to the transition to grandparenthood, an \emph{after-slope} representing linear change in the years after the transition, and a \emph{shift} coefficient shifting the intercept directly after the transition was first reported, thus representing sudden changes that go beyond changes already modeled by the \emph{after-slope} (see Table \ref{tab:piecewise-coding-scheme} for the coding scheme of these coefficients\footnote{As an additional robustness check, we re-estimated the mean-level trajectories after further restricting the analysis time frame by excluding time points earlier than two years before the transition (i.e., before the latest time of matching). This served the purpose to assess whether including time points from before matching (as preregistered) would distort the trajectories in any way. However, results were highly similar across all outcomes (see \emph{gp\_restricted\_models.pdf} on \url{https://osf.io/75a4r/?view_only=ac929a2c41fb4afd9d1a64a3909848d0}).}). Other studies of personality development have recently adopted similar piecewise coefficients (e.g., Schwaba \& Bleidorn, 2019; Krämer \& Rodgers, 2020; van Scheppingen \& Leopold, 2020).\\
 All effects of the transition to grandparenthood on the Big Five and life satisfaction were modeled as deviations from patterns in the matched control groups by interacting the three piecewise coefficients with the treatment variable (0 = \emph{control}, 1 = \emph{grandparent}). In additional models, we interacted these coefficients with the moderator variables resulting in two- and three-way interactions. To test differences in the growth parameters between two groups in cases where these differences were represented by multiple fixed-effects coefficients, we defined linear contrasts using the \emph{linearHypothesis} command from the \emph{car} package (Fox \& Weisberg, 2019). All models of mean-level changes were estimated using maximum likelihood and included random intercepts but no random slopes. We included the propensity score as a level-2 covariate for a double-robust approach (Austin, 2017). Model equations can be found in the supplemental materials.\\
 Second, to assess interindividual differences in change (research question 2), we added random slopes to the models. In other words, we allowed for differences between individuals in their trajectories of change to be modeled, that is, differences in the \emph{before-slope}, \emph{after-slope}, and \emph{shift} coefficients. Because multiple simultaneous random slopes are often not computationally feasible, we added random slopes one at a time and used likelihood ratio tests to determine whether the addition of the respective random slope led to a significant improvement in model fit. To statistically test differences in the random slope variance between the grandparent group and each control group, we respecified the models as heterogeneous variance models using the \emph{nlme} R package (Pinheiro et al., 2021), which allowed for separate random slope variances to be estimated in the grandparent group and the control group within the same model. Model fit of these heterogeneous variance models was compared to corresponding models with a homogeneous (single) random slope variance via likelihood ratio tests.\\
 Third, to examine rank-order stability in the Big Five and life satisfaction over the transition to grandparenthood (research question 3), we computed the test-retest correlation of measurements prior to the transition to grandparenthood (at the time of matching) and the first available measurement afterwards. To test differences in test-retest correlations between grandparents and either of the control groups, we entered the pre-treatment measure, the treatment variable (0 = \emph{control}, 1 = \emph{grandparent}), and their interaction into regression models predicting the Big Five and life satisfaction. The interaction tests for significant differences in the rank-order stability between those who experienced the transition to grandparenthood and those who did not (see Denissen et al., 2019; McCrae, 1993).
@@ -327,6 +392,22 @@ Third, to examine rank-order stability in the Big Five and life satisfaction ove
 \section{Results}\label{results}}
 
 Throughout the results section, we referred to statistical tests with \(.005 < p < .05\) as \emph{suggestive evidence} as stated in our preregistration.
+
+
+
+\begin{figure}
+\centering
+\includegraphics{Figs/effects-basic-plot-1.pdf}
+\caption{\label{fig:effects-basic-plot}Unstandardized Effect Sizes of the Basic Models Across Analysis Samples (Regression Coefficients \(\hat{\gamma}\) or Linear Contrasts \(\hat{\gamma}_{c}\) From Multilevel Models, see Tables \ref{tab:H1-agree-tab}, \ref{tab:H1-agree-contrasts}, \ref{tab:H1-con-tab}, \ref{tab:H1-con-contrasts}, \ref{tab:H1-extra-tab}, \ref{tab:H1-extra-contrasts}, \ref{tab:H1-neur-tab}, \ref{tab:H1-neur-contrasts}, \ref{tab:H1-open-tab}, \ref{tab:H1-open-contrasts}, \ref{tab:H1-swls-tab}, \ref{tab:H1-swls-contrasts}). Error Bars Represent 95\% Confidence Intervals.}
+\end{figure}
+
+
+
+\begin{figure}
+\centering
+\includegraphics{Figs/effects-gender-plot-1.pdf}
+\caption{\label{fig:effects-gender-plot}Unstandardized Effect Sizes of the Models Including the Gender Interaction Across Analysis Samples (Regression Coefficients \(\hat{\gamma}\) or Linear Contrasts \(\hat{\gamma}_{c}\) From Multilevel Models, see Tables \ref{tab:H1-agree-gender-tab}, \ref{tab:H1-agree-gender-contrasts}, \ref{tab:H1-con-gender-tab}, \ref{tab:H1-con-gender-contrasts}, \ref{tab:H1-extra-gender-tab}, \ref{tab:H1-extra-gender-contrasts}, \ref{tab:H1-neur-gender-tab}, \ref{tab:H1-neur-gender-contrasts}, \ref{tab:H1-open-gender-tab}, \ref{tab:H1-open-gender-contrasts}, \ref{tab:H1-swls-gender-tab}, \ref{tab:H1-swls-gender-contrasts}). Error Bars Represent 95\% Confidence Intervals.}
+\end{figure}
 
 \hypertarget{descriptive-results}{%
 \subsection{Descriptive Results}\label{descriptive-results}}
@@ -344,11 +425,312 @@ Figures \ref{fig:effects-basic-plot} and \ref{fig:effects-gender-plot} summarize
 In the basic models (see Tables \ref{tab:H1-agree-tab} \& \ref{tab:H1-agree-contrasts} and Figure \ref{fig:H1-agree-fig}), grandparents in the LISS increased slightly in agreeableness in the years after the transition to grandparenthood as compared to the parent controls, \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.01, 0.03]\), \(p\) = .003. However, this effect was quite small and not significant when compared against the nonparent controls, or against either control sample in the HRS sample (suggestive evidence in the HRS nonparents: \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.01, 0.04]\), \(p\) = .006). The models including the gender interaction (see Tables \ref{tab:H1-agree-gender-tab} \& \ref{tab:H1-agree-gender-contrasts} and Figure \ref{fig:H1-agree-fig}) indicated that grandfathers' post-transition increases in agreeableness were more pronounced as compared to parent (LISS: \(\hat{\gamma}_{21} = 0.03\), 95\% CI \([0.01, 0.05]\), \(p\) \textless{} .001; HRS: \(\hat{\gamma}_{21} = 0.04\), 95\% CI \([0.01, 0.06]\), \(p\) = .003) and nonparent controls (HRS: \(\hat{\gamma}_{21} = 0.03\), 95\% CI \([0.01, 0.05]\), \(p\) = .004), whereas grandmothers did not differ from female controls.\\
 There was no consistent evidence for moderation by paid work (see Tables \ref{tab:H1-agree-work-tab} \& \ref{tab:H1-agree-work-contrasts} and Figure \ref{fig:H1-agree-work-fig}). Grandparents providing substantial grandchild care increased in agreeableness after the transition to grandparenthood compared to matched nonparent controls (difference in \emph{after} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = 0.04, 95\% CI {[}0.01, 0.06{]}, \(p\) = .002; suggestive evidence in the parent sample: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = 0.04, 95\% CI {[}0.01, 0.06{]}, \(p\) = .006; see Tables \ref{tab:H1-agree-care-tab} \& \ref{tab:H1-agree-care-contrasts} and Figure \ref{fig:H1-agree-care-fig}). However, differences between caring and non-caring grandparents---as specified in hypothesis H1b---were not significant in either sample.
 
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-agree-tab}Fixed Effects of Agreeableness Over the Transition to Grandparenthood.}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-agree-tab} continued}}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endhead
+LISS &  &  &  &  &  &  &  & \\
+\ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 3.86 & [3.80, 3.92] & 131.70 & < .001 & 3.90 & [3.83, 3.97] & 112.97 & < .001\\
+\ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{L} & -0.02 & [-0.10, 0.05] & -0.56 & .572 & -0.01 & [-0.08, 0.06] & -0.20 & .838\\
+\ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.00] & -0.25 & .802 & -0.01 & [-0.01, 0.00] & -1.81 & .070\\
+\ \ \ After-slope, $\hat{\gamma}_{20}$ \textcolor{white}{L} & -0.02 & [-0.02, -0.01] & -6.76 & < .001 & -0.01 & [-0.01, 0.00] & -3.32 & .001\\
+\ \ \ Shift, $\hat{\gamma}_{30}$ \textcolor{white}{L} & 0.04 & [0.01, 0.06] & 3.12 & .002 & 0.03 & [0.00, 0.05] & 1.98 & .048\\
+\ \ \ Grandparent, $\hat{\gamma}_{01}$ \textcolor{white}{L} & 0.06 & [-0.03, 0.15] & 1.33 & .183 & 0.01 & [-0.08, 0.11] & 0.30 & .768\\
+\ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{L} & -0.01 & [-0.02, 0.01] & -1.06 & .289 & 0.00 & [-0.01, 0.01] & -0.26 & .791\\
+\ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{L} & 0.02 & [0.01, 0.03] & 2.99 & .003 & 0.01 & [0.00, 0.02] & 1.44 & .149\\
+\ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{L} & -0.01 & [-0.06, 0.04] & -0.37 & .714 & 0.00 & [-0.06, 0.06] & 0.08 & .937\\
+HRS &  &  &  &  &  &  &  & \\
+\ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{H} & 3.46 & [3.43, 3.50] & 196.32 & < .001 & 3.48 & [3.44, 3.52] & 166.19 & < .001\\
+\ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{H} & 0.08 & [0.02, 0.14] & 2.51 & .012 & 0.05 & [-0.01, 0.11] & 1.51 & .131\\
+\ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{H} & 0.01 & [0.00, 0.02] & 1.37 & .169 & -0.01 & [-0.02, 0.00] & -1.33 & .184\\
+\ \ \ After-slope, $\hat{\gamma}_{20}$ \textcolor{white}{H} & -0.01 & [-0.02, 0.00] & -2.87 & .004 & -0.02 & [-0.02, -0.01] & -5.16 & < .001\\
+\ \ \ Shift, $\hat{\gamma}_{30}$ \textcolor{white}{H} & 0.01 & [-0.01, 0.03] & 0.71 & .476 & 0.04 & [0.02, 0.06] & 4.30 & < .001\\
+\ \ \ Grandparent, $\hat{\gamma}_{01}$ \textcolor{white}{H} & 0.02 & [-0.03, 0.08] & 0.88 & .378 & 0.01 & [-0.04, 0.07] & 0.44 & .662\\
+\ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{H} & -0.01 & [-0.04, 0.01] & -0.87 & .384 & 0.00 & [-0.02, 0.03] & 0.28 & .781\\
+\ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{H} & 0.01 & [0.00, 0.03] & 1.71 & .088 & 0.02 & [0.01, 0.04] & 2.78 & .006\\
+\ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{H} & -0.01 & [-0.05, 0.04] & -0.35 & .729 & -0.04 & [-0.09, 0.00] & -1.97 & .049\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-agree-gender-tab}Fixed Effects of Agreeableness Over the Transition to Grandparenthood Moderated by Gender.}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-agree-gender-tab} continued}}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endhead
+LISS &  &  &  &  &  &  &  & \\
+\ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 3.65 & [3.58, 3.73] & 93.02 & < .001 & 3.66 & [3.57, 3.75] & 79.73 & < .001\\
+\ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{L} & -0.01 & [-0.08, 0.07] & -0.21 & .833 & 0.02 & [-0.05, 0.08] & 0.45 & .653\\
+\ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.01] & 0.02 & .984 & 0.00 & [-0.01, 0.01] & -0.37 & .712\\
+\ \ \ After-slope, $\hat{\gamma}_{20}$ \textcolor{white}{L} & -0.02 & [-0.03, -0.02] & -6.37 & < .001 & -0.01 & [-0.02, 0.00] & -2.49 & .013\\
+\ \ \ Shift, $\hat{\gamma}_{30}$ \textcolor{white}{L} & 0.03 & [-0.01, 0.07] & 1.66 & .097 & 0.07 & [0.03, 0.11] & 3.66 & < .001\\
+\ \ \ Grandparent, $\hat{\gamma}_{01}$ \textcolor{white}{L} & 0.06 & [-0.06, 0.17] & 0.92 & .356 & 0.04 & [-0.09, 0.17] & 0.60 & .550\\
+\ \ \ Female, $\hat{\gamma}_{02}$ \textcolor{white}{L} & 0.38 & [0.27, 0.48] & 7.16 & < .001 & 0.44 & [0.32, 0.56] & 7.11 & < .001\\
+\ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{L} & -0.01 & [-0.03, 0.01] & -0.73 & .466 & 0.00 & [-0.02, 0.01] & -0.50 & .615\\
+\ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{L} & 0.03 & [0.01, 0.05] & 3.43 & .001 & 0.01 & [0.00, 0.03] & 1.64 & .101\\
+\ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{L} & -0.01 & [-0.09, 0.07] & -0.33 & .739 & -0.05 & [-0.14, 0.03] & -1.23 & .217\\
+\ \ \ Before-slope * Female, $\hat{\gamma}_{12}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.01] & -0.26 & .799 & -0.01 & [-0.02, 0.00] & -1.14 & .254\\
+\ \ \ After-slope * Female, $\hat{\gamma}_{22}$ \textcolor{white}{L} & 0.01 & [0.00, 0.02] & 2.34 & .019 & 0.00 & [-0.01, 0.01] & 0.28 & .781\\
+\ \ \ Shift * Female, $\hat{\gamma}_{32}$ \textcolor{white}{L} & 0.02 & [-0.03, 0.06] & 0.60 & .550 & -0.08 & [-0.14, -0.03] & -3.18 & .001\\
+\ \ \ Grandparent * Female, $\hat{\gamma}_{03}$ \textcolor{white}{L} & 0.01 & [-0.15, 0.17] & 0.15 & .883 & -0.05 & [-0.22, 0.12] & -0.57 & .568\\
+\ \ \ Before-slope * Grandparent * Female, $\hat{\gamma}_{13}$ \textcolor{white}{L} & 0.00 & [-0.03, 0.02] & -0.05 & .959 & 0.00 & [-0.02, 0.03] & 0.35 & .728\\
+\ \ \ After-slope * Grandparent * Female, $\hat{\gamma}_{23}$ \textcolor{white}{L} & -0.02 & [-0.04, 0.00] & -1.92 & .056 & -0.01 & [-0.03, 0.01] & -0.93 & .351\\
+\ \ \ Shift * Grandparent * Female, $\hat{\gamma}_{33}$ \textcolor{white}{L} & 0.01 & [-0.10, 0.12] & 0.21 & .836 & 0.11 & [-0.01, 0.23] & 1.87 & .061\\
+HRS &  &  &  &  &  &  &  & \\
+\ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{H} & 3.27 & [3.23, 3.32] & 132.82 & < .001 & 3.38 & [3.33, 3.43] & 122.35 & < .001\\
+\ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{H} & 0.09 & [0.03, 0.15] & 2.91 & .004 & 0.04 & [-0.03, 0.10] & 1.12 & .261\\
+\ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{H} & 0.02 & [0.01, 0.04] & 2.98 & .003 & -0.01 & [-0.02, 0.01] & -1.12 & .262\\
+\ \ \ After-slope, $\hat{\gamma}_{20}$ \textcolor{white}{H} & -0.02 & [-0.03, -0.01] & -3.95 & < .001 & -0.02 & [-0.03, -0.01] & -3.43 & .001\\
+\ \ \ Shift, $\hat{\gamma}_{30}$ \textcolor{white}{H} & 0.04 & [0.01, 0.07] & 2.77 & .006 & 0.03 & [0.00, 0.06] & 1.68 & .093\\
+\ \ \ Grandparent, $\hat{\gamma}_{01}$ \textcolor{white}{H} & 0.08 & [0.00, 0.16] & 1.97 & .048 & -0.01 & [-0.09, 0.08] & -0.16 & .877\\
+\ \ \ Female, $\hat{\gamma}_{02}$ \textcolor{white}{H} & 0.33 & [0.27, 0.39] & 10.55 & < .001 & 0.20 & [0.13, 0.26] & 5.76 & < .001\\
+\ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{H} & -0.04 & [-0.08, 0.00] & -2.18 & .030 & -0.01 & [-0.04, 0.03] & -0.47 & .640\\
+\ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{H} & 0.04 & [0.01, 0.06] & 3.00 & .003 & 0.03 & [0.01, 0.05] & 2.85 & .004\\
+\ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{H} & -0.05 & [-0.12, 0.02] & -1.50 & .133 & -0.03 & [-0.10, 0.03] & -1.04 & .298\\
+\ \ \ Before-slope * Female, $\hat{\gamma}_{12}$ \textcolor{white}{H} & -0.03 & [-0.05, -0.01] & -2.84 & .004 & 0.00 & [-0.02, 0.02] & 0.38 & .702\\
+\ \ \ After-slope * Female, $\hat{\gamma}_{22}$ \textcolor{white}{H} & 0.02 & [0.01, 0.03] & 2.74 & .006 & 0.00 & [-0.01, 0.01] & 0.08 & .937\\
+\ \ \ Shift * Female, $\hat{\gamma}_{32}$ \textcolor{white}{H} & -0.06 & [-0.11, -0.02] & -3.07 & .002 & 0.03 & [-0.01, 0.07] & 1.50 & .134\\
+\ \ \ Grandparent * Female, $\hat{\gamma}_{03}$ \textcolor{white}{H} & -0.10 & [-0.20, 0.01] & -1.77 & .077 & 0.03 & [-0.07, 0.14] & 0.64 & .521\\
+\ \ \ Before-slope * Grandparent * Female, $\hat{\gamma}_{13}$ \textcolor{white}{H} & 0.06 & [0.01, 0.11] & 2.20 & .028 & 0.02 & [-0.03, 0.07] & 0.86 & .392\\
+\ \ \ After-slope * Grandparent * Female, $\hat{\gamma}_{23}$ \textcolor{white}{H} & -0.04 & [-0.07, -0.01] & -2.48 & .013 & -0.02 & [-0.05, 0.01] & -1.34 & .180\\
+\ \ \ Shift * Grandparent * Female, $\hat{\gamma}_{33}$ \textcolor{white}{H} & 0.08 & [-0.01, 0.17] & 1.73 & .084 & -0.01 & [-0.10, 0.07] & -0.31 & .758\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+\begin{figure}
+\centering
+\includegraphics{Figs/H1-agree-fig-1.pdf}
+\caption{\label{fig:H1-agree-fig}Change trajectories of agreeableness based on the basic models (left column) and the models including the gender interaction (right column). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
+\end{figure}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. \(caring=1\) indicates more than 100 hours of grandchild care since the last assessment.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-agree-care-tab}Fixed Effects of Agreeableness Over the Transition to Grandparenthood Moderated by Grandchild Care.}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-agree-care-tab} continued}}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endhead
+Intercept, $\hat{\gamma}_{00}$ & 3.47 & [3.43, 3.52] & 155.84 & < .001 & 3.47 & [3.42, 3.53] & 130.92 & < .001\\
+Propensity score, $\hat{\gamma}_{02}$ & 0.16 & [0.08, 0.24] & 3.91 & < .001 & 0.15 & [0.07, 0.23] & 3.67 & < .001\\
+After-slope, $\hat{\gamma}_{20}$ & -0.02 & [-0.03, -0.01] & -4.36 & < .001 & -0.02 & [-0.03, -0.01] & -3.63 & < .001\\
+Grandparent, $\hat{\gamma}_{01}$ & -0.04 & [-0.11, 0.03] & -1.16 & .246 & -0.05 & [-0.12, 0.02] & -1.49 & .137\\
+Caring, $\hat{\gamma}_{10}$ & 0.00 & [-0.04, 0.03] & -0.27 & .784 & 0.02 & [-0.01, 0.05] & 1.09 & .276\\
+After-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.03 & [0.00, 0.05] & 2.36 & .018 & 0.02 & [0.00, 0.04] & 2.02 & .044\\
+After-slope * Caring, $\hat{\gamma}_{30}$ & 0.00 & [-0.01, 0.02] & 0.29 & .773 & 0.00 & [-0.02, 0.01] & -0.60 & .550\\
+Grandparent * Caring, $\hat{\gamma}_{11}$ & 0.02 & [-0.07, 0.11] & 0.46 & .645 & 0.00 & [-0.09, 0.08] & -0.09 & .925\\
+After-slope * Grandparent * Caring, $\hat{\gamma}_{31}$ & 0.01 & [-0.02, 0.04] & 0.57 & .572 & 0.02 & [-0.02, 0.05] & 1.00 & .319\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+\begin{figure}
+\centering
+\includegraphics{Figs/H1-agree-care-fig-1.pdf}
+\caption{\label{fig:H1-agree-care-fig}Change trajectories of agreeableness based on the models of moderation by grandchild care (see Table \ref{tab:H1-agree-care-tab}). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figure \ref{fig:H1-agree-fig} (basic models) but restricted to the post-transition period for better comparability.}
+\end{figure}
+
 \hypertarget{conscientiousness}{%
 \subsubsection{Conscientiousness}\label{conscientiousness}}
 
 We found a slight post-transition increase in grandparents' conscientiousness in comparison to the controls in the HRS (parents: \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.01, 0.04]\), \(p\) = .002; nonparents: \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.01, 0.04]\), \(p\) = .003; suggestive evidence in the LISS parent sample: \(\hat{\gamma}_{21} = 0.02\), 95\% CI \([0.00, 0.03]\), \(p\) = .006; see Tables \ref{tab:H1-con-tab} \& \ref{tab:H1-con-contrasts} and Figure \ref{fig:H1-con-fig}). Grandparents' conscientiousness trajectories were not significantly moderated by gender (see Tables \ref{tab:H1-con-gender-tab} \& \ref{tab:H1-con-gender-contrasts} and Figure \ref{fig:H1-con-fig}).\\
 There were significant differences in conscientiousness depending on grandparents' work status (see Tables \ref{tab:H1-con-work-tab} \& \ref{tab:H1-con-work-contrasts} and Figure \ref{fig:H1-con-work-fig}): non-working grandparents saw more pronounced increases in conscientiousness in the years before the transition to grandparenthood compared to non-working parent, \(\hat{\gamma}_{21} = 0.08\), 95\% CI \([0.04, 0.13]\), \(p\) \textless{} .001, and nonparent controls, \(\hat{\gamma}_{21} = 0.07\), 95\% CI \([0.03, 0.12]\), \(p\) = .002, and compared to working grandparents (difference in \emph{before} parameter; parents: {[}\(\hat{\gamma}_{30}\) + \(\hat{\gamma}_{31}\){]} = -0.08, 95\% CI {[}-0.13, -0.03{]}, \(p\) = .002; nonparents: {[}\(\hat{\gamma}_{30}\) + \(\hat{\gamma}_{31}\){]} = -0.08, 95\% CI {[}-0.12, -0.03{]}, \(p\) = .001). Grandparents providing substantial grandchild care increased in conscientiousness to a greater degree than the matched respondents (difference in \emph{after} parameter; parents: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = 0.04, 95\% CI {[}0.02, 0.07{]}, \(p\) \textless{} .001; nonparents: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = 0.05, 95\% CI {[}0.03, 0.07{]}, \(p\) \textless{} .001; see Tables \ref{tab:H1-con-care-tab} \& \ref{tab:H1-con-care-contrasts} and Figure \ref{fig:H1-con-care-fig}). There was only suggestive evidence that grandparents who provided substantial grandchild care increased more strongly in conscientiousness after the transition compared to grandparents who did not (difference in \emph{after} parameter; parents: {[}\(\hat{\gamma}_{30}\) + \(\hat{\gamma}_{31}\){]} = 0.03, 95\% CI {[}0.00, 0.06{]}, \(p\) = .034; nonparents: {[}\(\hat{\gamma}_{30}\) + \(\hat{\gamma}_{31}\){]} = 0.03, 95\% CI {[}0.00, 0.06{]}, \(p\) = .022).
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-con-tab}Fixed Effects of Conscientiousness Over the Transition to Grandparenthood.}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-con-tab} continued}}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endhead
+LISS &  &  &  &  &  &  &  & \\
+\ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 3.77 & [3.72, 3.83] & 130.27 & < .001 & 3.82 & [3.75, 3.88] & 112.10 & < .001\\
+\ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{L} & 0.00 & [-0.08, 0.08] & -0.02 & .987 & 0.01 & [-0.06, 0.08] & 0.24 & .813\\
+\ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.00] & -0.84 & .402 & 0.00 & [-0.01, 0.01] & -0.26 & .796\\
+\ \ \ After-slope, $\hat{\gamma}_{20}$ \textcolor{white}{L} & -0.02 & [-0.02, -0.01] & -6.17 & < .001 & 0.01 & [0.00, 0.01] & 3.45 & .001\\
+\ \ \ Shift, $\hat{\gamma}_{30}$ \textcolor{white}{L} & 0.04 & [0.02, 0.07] & 3.14 & .002 & 0.00 & [-0.03, 0.02] & -0.15 & .881\\
+\ \ \ Grandparent, $\hat{\gamma}_{01}$ \textcolor{white}{L} & -0.01 & [-0.10, 0.08] & -0.24 & .813 & -0.06 & [-0.15, 0.04] & -1.22 & .225\\
+\ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.02] & 0.77 & .439 & 0.00 & [-0.01, 0.02] & 0.50 & .617\\
+\ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{L} & 0.02 & [0.00, 0.03] & 2.73 & .006 & -0.01 & [-0.02, 0.00] & -1.61 & .107\\
+\ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{L} & -0.04 & [-0.10, 0.01] & -1.49 & .137 & 0.00 & [-0.06, 0.06] & 0.01 & .989\\
+HRS &  &  &  &  &  &  &  & \\
+\ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{H} & 3.41 & [3.38, 3.44] & 206.26 & < .001 & 3.35 & [3.31, 3.38] & 172.70 & < .001\\
+\ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{H} & 0.08 & [0.03, 0.14] & 2.86 & .004 & 0.17 & [0.11, 0.23] & 5.74 & < .001\\
+\ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{H} & 0.00 & [-0.01, 0.01] & 0.31 & .754 & 0.00 & [-0.01, 0.01] & 0.72 & .473\\
+\ \ \ After-slope, $\hat{\gamma}_{20}$ \textcolor{white}{H} & -0.01 & [-0.02, -0.01] & -4.11 & < .001 & -0.01 & [-0.02, -0.01] & -3.84 & < .001\\
+\ \ \ Shift, $\hat{\gamma}_{30}$ \textcolor{white}{H} & 0.02 & [0.00, 0.04] & 1.93 & .053 & 0.00 & [-0.02, 0.02] & 0.01 & .991\\
+\ \ \ Grandparent, $\hat{\gamma}_{01}$ \textcolor{white}{H} & 0.02 & [-0.04, 0.07] & 0.60 & .547 & 0.03 & [-0.02, 0.08] & 1.08 & .280\\
+\ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{H} & 0.01 & [-0.02, 0.03] & 0.55 & .580 & 0.00 & [-0.02, 0.03] & 0.43 & .664\\
+\ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{H} & 0.02 & [0.01, 0.04] & 3.06 & .002 & 0.02 & [0.01, 0.04] & 3.01 & .003\\
+\ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{H} & -0.05 & [-0.09, -0.01] & -2.36 & .018 & -0.03 & [-0.07, 0.01] & -1.59 & .111\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+\begin{figure}
+\centering
+\includegraphics{Figs/H1-con-fig-1.pdf}
+\caption{\label{fig:H1-con-fig}Change trajectories of conscientiousness based on the basic models (left column) and the models including the gender interaction (right column). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
+\end{figure}
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. \(caring=1\) indicates more than 100 hours of grandchild care since the last assessment.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-con-care-tab}Fixed Effects of Conscientiousness Over the Transition to Grandparenthood Moderated by Grandchild Care.}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-con-care-tab} continued}}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endhead
+Intercept, $\hat{\gamma}_{00}$ & 3.44 & [3.40, 3.48] & 168.69 & < .001 & 3.34 & [3.30, 3.39] & 138.33 & < .001\\
+Propensity score, $\hat{\gamma}_{02}$ & 0.08 & [0.00, 0.15] & 2.03 & .042 & 0.29 & [0.22, 0.37] & 7.78 & < .001\\
+After-slope, $\hat{\gamma}_{20}$ & -0.02 & [-0.03, -0.01] & -3.80 & < .001 & -0.01 & [-0.02, 0.00] & -2.74 & .006\\
+Grandparent, $\hat{\gamma}_{01}$ & -0.02 & [-0.08, 0.05] & -0.51 & .610 & -0.02 & [-0.09, 0.04] & -0.74 & .462\\
+Caring, $\hat{\gamma}_{10}$ & 0.00 & [-0.03, 0.03] & 0.03 & .972 & 0.02 & [0.00, 0.05] & 1.64 & .102\\
+After-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.01 & [-0.01, 0.03] & 1.37 & .170 & 0.01 & [-0.01, 0.02] & 0.73 & .468\\
+After-slope * Caring, $\hat{\gamma}_{30}$ & 0.00 & [-0.01, 0.01] & 0.01 & .993 & -0.01 & [-0.02, 0.00] & -1.72 & .085\\
+Grandparent * Caring, $\hat{\gamma}_{11}$ & -0.04 & [-0.12, 0.04] & -0.93 & .355 & -0.07 & [-0.14, 0.01] & -1.74 & .081\\
+After-slope * Grandparent * Caring, $\hat{\gamma}_{31}$ & 0.03 & [0.00, 0.06] & 1.88 & .060 & 0.04 & [0.01, 0.07] & 2.82 & .005\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+\begin{figure}
+\centering
+\includegraphics{Figs/H1-con-care-fig-1.pdf}
+\caption{\label{fig:H1-con-care-fig}Change trajectories of conscientiousness based on the models of moderation by grandchild care (see Table \ref{tab:H1-con-care-tab}). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figure \ref{fig:H1-con-fig} (basic models) but restricted to the post-transition period for better comparability.}
+\end{figure}
 
 \hypertarget{extraversion}{%
 \subsubsection{Extraversion}\label{extraversion}}
@@ -358,7 +740,71 @@ The trajectories of grandparents' extraversion closely followed those of the mat
 \hypertarget{neuroticism}{%
 \subsubsection{Neuroticism}\label{neuroticism}}
 
-The basic models for neuroticism (see Tables \ref{tab:H1-neur-tab} \& \ref{tab:H1-neur-contrasts} and Figure \ref{fig:H1-neur-fig}) showed only minor differences between grandparents and matched controls: Compared to HRS parent controls, HRS grandparents shifted slightly downward in their neuroticism immediately after the transition to grandparenthood (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.08, 95\% CI {[}-0.12, -0.03{]}, \(p\) \textless{} .001), which was not the case in the three other samples (HRS nonparents, LISS parents, and LISS nonparents). The models including the gender interaction (see Tables \ref{tab:H1-neur-gender-tab} \& \ref{tab:H1-neur-gender-contrasts} and Figure \ref{fig:H1-neur-fig}) showed one significant effect in the comparison of grandparents and controls: In the HRS, grandfathers, compared to male parent controls, shifted downward in neuroticism directly after the transition to grandparenthood (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.16, 95\% CI {[}-0.22, -0.09{]}, \(p\) \textless{} .001; suggestive evidence in the nonparent sample: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.07, 95\% CI {[}-0.14, -0.01{]}, \(p\) = .024). Thus, the effect present in the basic models seemed to be mostly due to differences in the grandfathers (vs.~male controls).\\
+The basic models for neuroticism (see Tables \ref{tab:H1-neur-tab} \& \ref{tab:H1-neur-contrasts} and Figure \ref{fig:H1-neur-fig}) showed only minor differences between grandparents and matched controls: Compared to HRS parent controls, HRS grandparents shifted slightly downward in their neuroticism immediately after the transition to grandparenthood (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.08, 95\% CI {[}-0.12, -0.03{]}, \(p\) \textless{} .001), which was not the case in the three other samples (HRS nonparents, LISS parents, and LISS nonparents). The models including the gender interaction (see Tables \ref{tab:H1-neur-gender-tab} \& \ref{tab:H1-neur-gender-contrasts} and Figure \ref{fig:H1-neur-fig}) showed one significant effect in the comparison of grandparents and controls: In the HRS, grandfathers, compared to male parent controls, shifted downward in neuroticism directly after the transition to grandparenthood (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.16, 95\% CI {[}-0.22, -0.09{]}, \(p\) \textless{} .001; suggestive evidence in the nonparent sample: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = -0.07, 95\% CI {[}-0.14, -0.01{]}, \(p\) = .024). Thus, the effect present in the basic models seemed to be mostly due to differences in the grandfathers (vs.~male controls).
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.}
+\end{TableNotes}
+
+\footnotesize{
+
+\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H1-neur-tab}Fixed Effects of Neuroticism Over the Transition to Grandparenthood.}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H1-neur-tab} continued}}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
+\midrule
+\endhead
+LISS &  &  &  &  &  &  &  & \\
+\ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 2.48 & [2.40, 2.56] & 63.09 & < .001 & 2.45 & [2.35, 2.54] & 51.88 & < .001\\
+\ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{L} & 0.01 & [-0.09, 0.11] & 0.19 & .852 & 0.00 & [-0.09, 0.09] & 0.04 & .967\\
+\ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.01] & -0.56 & .575 & -0.01 & [-0.02, -0.01] & -3.66 & < .001\\
+\ \ \ After-slope, $\hat{\gamma}_{20}$ \textcolor{white}{L} & 0.00 & [0.00, 0.01] & 0.94 & .350 & 0.00 & [0.00, 0.01] & 1.31 & .190\\
+\ \ \ Shift, $\hat{\gamma}_{30}$ \textcolor{white}{L} & -0.05 & [-0.08, -0.02] & -2.96 & .003 & -0.03 & [-0.06, 0.01] & -1.58 & .115\\
+\ \ \ Grandparent, $\hat{\gamma}_{01}$ \textcolor{white}{L} & -0.08 & [-0.20, 0.03] & -1.37 & .170 & -0.04 & [-0.17, 0.08] & -0.67 & .500\\
+\ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.02] & 0.43 & .668 & 0.02 & [0.00, 0.03] & 1.83 & .067\\
+\ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{L} & 0.00 & [-0.02, 0.01] & -0.33 & .744 & 0.00 & [-0.02, 0.01] & -0.48 & .635\\
+\ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{L} & -0.02 & [-0.09, 0.06] & -0.41 & .684 & -0.04 & [-0.12, 0.04] & -1.01 & .312\\
+HRS &  &  &  &  &  &  &  & \\
+\ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{H} & 2.07 & [2.03, 2.11] & 94.42 & < .001 & 2.07 & [2.02, 2.12] & 79.36 & < .001\\
+\ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{H} & 0.00 & [-0.07, 0.08] & 0.12 & .902 & 0.15 & [0.07, 0.23] & 3.70 & < .001\\
+\ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{H} & -0.01 & [-0.03, 0.00] & -1.90 & .057 & -0.03 & [-0.04, -0.02] & -4.70 & < .001\\
+\ \ \ After-slope, $\hat{\gamma}_{20}$ \textcolor{white}{H} & -0.01 & [-0.01, 0.00] & -1.20 & .230 & -0.01 & [-0.02, -0.01] & -3.18 & .001\\
+\ \ \ Shift, $\hat{\gamma}_{30}$ \textcolor{white}{H} & 0.01 & [-0.02, 0.03] & 0.42 & .675 & -0.03 & [-0.06, -0.01] & -2.36 & .018\\
+\ \ \ Grandparent, $\hat{\gamma}_{01}$ \textcolor{white}{H} & -0.06 & [-0.13, 0.01] & -1.64 & .100 & -0.12 & [-0.19, -0.05] & -3.31 & .001\\
+\ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{H} & 0.02 & [-0.01, 0.05] & 1.28 & .201 & 0.04 & [0.01, 0.07] & 2.42 & .016\\
+\ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{H} & -0.02 & [-0.04, 0.00] & -1.52 & .127 & -0.01 & [-0.03, 0.01] & -0.80 & .424\\
+\ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{H} & -0.06 & [-0.12, 0.00] & -2.12 & .034 & -0.03 & [-0.08, 0.03] & -0.88 & .381\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+
+
+\begin{figure}
+\centering
+\includegraphics{Figs/H1-neur-fig-1.pdf}
+\caption{\label{fig:H1-neur-fig}Change trajectories of neuroticism based on the basic models (left column) and the models including the gender interaction (right column). The error bars are 95\% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.}
+\end{figure}
+
 Grandparents' trajectories of neuroticism as compared to the controls were significantly moderated by paid work (see Tables \ref{tab:H1-neur-work-tab} \& \ref{tab:H1-neur-work-contrasts} and Figure \ref{fig:H1-neur-work-fig}): Compared to working nonparent controls, working grandparents increased more strongly in neuroticism in the years before the transition to grandparenthood (difference in \emph{before} parameter: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = 0.06, 95\% CI {[}0.03, 0.10{]}, \(p\) \textless{} .001; suggestive evidence in the parent sample: {[}\(\hat{\gamma}_{21}\) + \(\hat{\gamma}_{31}\){]} = 0.05, 95\% CI {[}0.01, 0.08{]}, \(p\) = .015). At the first post-transition assessment, working grandparents shifted downward in neuroticism compared to working parent controls (difference in \emph{shift} parameter: {[}\(\hat{\gamma}_{41}\) + \(\hat{\gamma}_{61}\) + \(\hat{\gamma}_{51}\) + \(\hat{\gamma}_{71}\){]} = -0.08, 95\% CI {[}-0.14, -0.03{]}, \(p\) = .004; suggestive evidence in the nonparent sample: {[}\(\hat{\gamma}_{41}\) + \(\hat{\gamma}_{61}\) + \(\hat{\gamma}_{51}\) + \(\hat{\gamma}_{71}\){]} = -0.06, 95\% CI {[}-0.11, 0.00{]}, \(p\) = .034). There was suggestive evidence that grandparents providing substantial grandchild care decreased more strongly in neuroticism after the transition to grandparenthood than grandparents who did not (difference in \emph{after} parameter; parents: {[}\(\hat{\gamma}_{30}\) + \(\hat{\gamma}_{31}\){]} = -0.04, 95\% CI {[}-0.07, 0.00{]}, \(p\) = .044; nonparents: {[}\(\hat{\gamma}_{30}\) + \(\hat{\gamma}_{31}\){]} = -0.04, 95\% CI {[}-0.07, 0.00{]}, \(p\) = .048; see Tables \ref{tab:H1-neur-care-tab} \& \ref{tab:H1-neur-care-contrasts} and Figure \ref{fig:H1-neur-care-fig}).
 
 \hypertarget{openness}{%
@@ -385,7 +831,60 @@ We found partial evidence for larger interindividual differences in grandparents
 \hypertarget{rank-order-stability}{%
 \subsection{Rank-Order Stability}\label{rank-order-stability}}
 
-As indicators of rank-order stability, we computed test-retest correlations for the Big Five and life satisfaction for the matched sample, as well as separately for grandparents only and controls only (see Table \ref{tab:H3-rankorder-tab}). In 6 out of 24 comparisons grandparents' test-retest correlation was lower than that of the respective control group. However, differences in rank-order stability between grandparents and control respondents did not reach significance in any of these comparisons. Overall, we found no confirmatory evidence in support of hypothesis H3.\footnote{In addition to the preregistered retest interval, we have also computed a maximally large retest interval between the first available pre-transition assessment and the last available post-transition assessment within the observation period. Here, 5 out of 24 comparisons indicated that rank-order stability was lower in the grandparents. There was only one significant difference in rank-order stability in accordance with our hypothesis: HRS grandparents' rank-order stability in openness was lower than that of the nonparents, \(p\) \textless{} .001 (see Table \ref{tab:H3-rankordermax-tab}). Another analysis also failed to provide convincing evidence that grandparents' rank-order stability was lower: we followed the preregistered approach but then excluded any duplicate control respondents resulting from matching with replacement who might bias results towards greater stability in the controls. Descriptively, 14 out of 24 comparisons showed lower rank-order stability in the grandparents compared to either control group (see Table \ref{tab:H3-rankorderuni-tab}). However, differences between groups were small and nonsignificant throughout.}
+As indicators of rank-order stability, we computed test-retest correlations for the Big Five and life satisfaction for the matched sample, as well as separately for grandparents only and controls only (see Table \ref{tab:H3-rankorder-tab}). In 6 out of 24 comparisons grandparents' test-retest correlation was lower than that of the respective control group. However, differences in rank-order stability between grandparents and control respondents did not reach significance in any of these comparisons. Overall, we found no confirmatory evidence
+
+
+
+
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Test-retest correlations as indicators of rank-order stability, and p-values indicating significant group differences therein between grandparents and each control group. The average retest intervals in years are 3.06 (\(SD\) = 0.91) for the LISS parent sample, 3.06 (\(SD\) = 0.89) for the LISS nonparent sample, 4.15 (\(SD\) = 0.77) for the HRS parent sample, and 4.11 (\(SD\) = 0.67) for the HRS nonparent sample. \(Cor\) = correlation; \(GP\) = grandparents; \(con\) = controls.}
+\end{TableNotes}
+
+\small{
+
+\begin{longtable}{lrrrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:H3-rankorder-tab}Rank-Order Stability.}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Outcome & $Cor_{all}$ & $Cor_{GP}$ & $Cor_{con}$ & $p$ & $Cor_{all}$ & $Cor_{GP}$ & $Cor_{con}$ & $p$\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:H3-rankorder-tab} continued}}\\
+\toprule
+ & \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
+\cmidrule(r){2-5} \cmidrule(r){6-9}
+Outcome & $Cor_{all}$ & $Cor_{GP}$ & $Cor_{con}$ & $p$ & $Cor_{all}$ & $Cor_{GP}$ & $Cor_{con}$ & $p$\\
+\midrule
+\endhead
+LISS &  &  &  &  &  &  &  & \\
+\ \ \ Agreeableness \textcolor{white}{L} & 0.79 & 0.81 & 0.78 & .619 & 0.76 & 0.81 & 0.75 & .009\\
+\ \ \ Conscientiousness \textcolor{white}{L} & 0.76 & 0.80 & 0.75 & .102 & 0.79 & 0.80 & 0.78 & .480\\
+\ \ \ Extraversion \textcolor{white}{L} & 0.81 & 0.86 & 0.80 & .768 & 0.86 & 0.86 & 0.85 & .284\\
+\ \ \ Neuroticism \textcolor{white}{L} & 0.71 & 0.77 & 0.68 & .060 & 0.76 & 0.77 & 0.76 & .262\\
+\ \ \ Openness \textcolor{white}{L} & 0.75 & 0.79 & 0.74 & .126 & 0.79 & 0.79 & 0.79 & .531\\
+\ \ \ Life Satisfaction \textcolor{white}{L} & 0.69 & 0.66 & 0.70 & .647 & 0.63 & 0.66 & 0.62 & .674\\
+HRS &  &  &  &  &  &  &  & \\
+\ \ \ Agreeableness \textcolor{white}{H} & 0.68 & 0.70 & 0.67 & .506 & 0.73 & 0.70 & 0.74 & .304\\
+\ \ \ Conscientiousness \textcolor{white}{H} & 0.71 & 0.69 & 0.72 & .201 & 0.70 & 0.69 & 0.70 & .467\\
+\ \ \ Extraversion \textcolor{white}{H} & 0.72 & 0.75 & 0.71 & .007 & 0.74 & 0.75 & 0.74 & .029\\
+\ \ \ Neuroticism \textcolor{white}{H} & 0.66 & 0.71 & 0.65 & .654 & 0.68 & 0.71 & 0.67 & .709\\
+\ \ \ Openness \textcolor{white}{H} & 0.69 & 0.73 & 0.67 & .015 & 0.76 & 0.73 & 0.76 & .241\\
+\ \ \ Life Satisfaction \textcolor{white}{H} & 0.51 & 0.55 & 0.50 & .090 & 0.55 & 0.55 & 0.55 & .439\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+\noindent
+in support of hypothesis H3.\footnote{In addition to the preregistered retest interval, we have also computed a maximally large retest interval between the first available pre-transition assessment and the last available post-transition assessment within the observation period. Here, 5 out of 24 comparisons indicated that rank-order stability was lower in the grandparents. There was only one significant difference in rank-order stability in accordance with our hypothesis: HRS grandparents' rank-order stability in openness was lower than that of the nonparents, \(p\) \textless{} .001 (see Table \ref{tab:H3-rankordermax-tab}). Another analysis also failed to provide convincing evidence that grandparents' rank-order stability was lower: we followed the preregistered approach but then excluded any duplicate control respondents resulting from matching with replacement who might bias results towards greater stability in the controls. Descriptively, 14 out of 24 comparisons showed lower rank-order stability in the grandparents compared to either control group (see Table \ref{tab:H3-rankorderuni-tab}). However, differences between groups were small and nonsignificant throughout.}
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
@@ -1111,74 +1610,6 @@ HRS: Nonparent controls &  &  &  &  &  & \\
 
 
 
-
-
-\begin{lltable}
-
-\begin{TableNotes}[para]
-\normalsize{\textit{Note.} obs. = observations. \(time=0\) marks
-the first year where the transition to grandparenthood has been
-reported. The number of grandparent respondents included in the final
-samples is \(N_{LISS}=\) 250 and \(N_{HRS}=\) 846.}
-\end{TableNotes}
-
-\small{
-
-\begin{longtable}{lccccccccccccc}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
-\caption{\label{tab:piecewise-coding-scheme}Longitudinal Sample Size in the
-Analysis Samples and Coding Scheme for the Piecewise Regression
-Coefficients.}\\
-\toprule
-& \multicolumn{6}{c}{Pre-transition years} & \multicolumn{7}{c}{Post-transition years} \\
-\cmidrule(r){2-7} \cmidrule(r){8-14}
-& -6 & -5 & -4 & -3 & -2 & -1 & 0 & 1 & 2 & 3 & 4 & 5 & 6\\
-\midrule
-\endfirsthead
-\caption*{\normalfont{Table \ref{tab:piecewise-coding-scheme} continued}}\\
-\toprule
-& \multicolumn{6}{c}{Pre-transition years} & \multicolumn{7}{c}{Post-transition years} \\
-\cmidrule(r){2-7} \cmidrule(r){8-14}
-& -6 & -5 & -4 & -3 & -2 & -1 & 0 & 1 & 2 & 3 & 4 & 5 & 6\\
-\midrule
-\endhead
-LISS: Analysis samples &  &  &  &  &  &  &  &  &  &  &  &  & \\
-\ \ \ Grandparents: obs. \textcolor{white}{L} & 92 & 105 & 108 & 121 & 156 & 116 & 133 & 138 & 108 & 108 & 69 & 62 & 52\\
-\ \ \ Grandparents: \% women \textcolor{white}{L} & 51.09 & 48.57 & 52.78 & 51.24 & 56.41 & 62.93 & 47.37 & 52.90 & 51.85 & 50.00 & 56.52 & 66.13 & 53.85\\
-\ \ \ Parent controls: obs. \textcolor{white}{L} & 335 & 425 & 381 & 540 & 740 & 351 & 450 & 488 & 333 & 394 & 365 & 164 & 201\\
-\ \ \ Parent controls: \% women \textcolor{white}{L} & 57.61 & 51.06 & 55.12 & 51.48 & 55.00 & 56.13 & 53.11 & 54.10 & 56.76 & 51.27 & 56.99 & 59.76 & 48.76\\
-\ \ \ Nonparent controls: obs. \textcolor{white}{L} & 331 & 399 & 407 & 554 & 739 & 354 & 473 & 516 & 367 & 477 & 375 & 146 & 202\\
-\ \ \ Nonparent controls: \% women \textcolor{white}{L} & 52.57 & 54.89 & 57.99 & 52.71 & 55.21 & 54.52 & 49.26 & 54.46 & 52.86 & 52.83 & 54.67 & 48.63 & 51.49\\
-LISS: Coding scheme &  &  &  &  &  &  &  &  &  &  &  &  & \\
-\ \ \ Before-slope \textcolor{white}{L} & 0 & 1 & 2 & 3 & 4 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5\\
-\ \ \ After-slope \textcolor{white}{L} & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7\\
-\ \ \ Shift \textcolor{white}{L} & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\
-HRS: Analysis samples &  &  &  &  &  &  &  &  &  &  &  &  & \\
-\ \ \ Grandparents: obs. \textcolor{white}{H} & 162 &  & 388 &  & 461 &  & 380 &  & 444 &  & 195 &  & 232\\
-\ \ \ Grandparents: \% women \textcolor{white}{H} & 57.41 &  & 54.12 &  & 55.53 &  & 53.95 &  & 55.41 &  & 56.41 &  & 53.45\\
-\ \ \ Parent controls: obs. \textcolor{white}{H} & 619 &  & 1540 &  & 1844 &  & 1228 &  & 1504 &  & 658 &  & 864\\
-\ \ \ Parent controls: \% women \textcolor{white}{H} & 55.41 &  & 54.03 &  & 55.53 &  & 54.64 &  & 56.45 &  & 56.08 &  & 57.64\\
-\ \ \ Nonparent controls: obs. \textcolor{white}{H} & 620 &  & 1541 &  & 1844 &  & 1205 &  & 1448 &  & 688 &  & 821\\
-\ \ \ Nonparent controls: \% women \textcolor{white}{H} & 56.45 &  & 54.06 &  & 55.53 &  & 56.10 &  & 58.91 &  & 57.56 &  & 60.54\\
-HRS: Coding scheme &  &  &  &  &  &  &  &  &  &  &  &  & \\
-\ \ \ Before-slope \textcolor{white}{H} & 0 &  & 1 &  & 2 &  & 2 &  & 2 &  & 2 &  & 2\\
-\ \ \ After-slope \textcolor{white}{H} & 0 &  & 0 &  & 0 &  & 1 &  & 2 &  & 3 &  & 4\\
-\ \ \ Shift \textcolor{white}{H} & 0 &  & 0 &  & 0 &  & 1 &  & 1 &  & 1 &  & 1\\
-\bottomrule
-\addlinespace
-\insertTableNotes
-\end{longtable}
-
-}
-
-\end{lltable}
-
-
-
-
-
-
-
-
 \begin{lltable}
 
 \begin{TableNotes}[para]
@@ -1541,68 +1972,6 @@ interviewyear & Date of interview - year & *A501 & -0.33 & -0.05 & -0.18 & -0.05
 
 
 
-\begin{lltable}
-
-\begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two
-samples (LISS, HRS): grandparents matched with parent controls and with
-nonparent controls. CI = confidence interval.}
-\end{TableNotes}
-
-\footnotesize{
-
-\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
-\caption{\label{tab:H1-agree-tab}Fixed Effects of Agreeableness Over the
-Transition to Grandparenthood.}\\
-\toprule
-& \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
-\cmidrule(r){2-5} \cmidrule(r){6-9}
-Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
-\midrule
-\endfirsthead
-\caption*{\normalfont{Table \ref{tab:H1-agree-tab} continued}}\\
-\toprule
-& \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
-\cmidrule(r){2-5} \cmidrule(r){6-9}
-Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
-\midrule
-\endhead
-LISS &  &  &  &  &  &  &  & \\
-\ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 3.86 & [3.80, 3.92] & 131.70 & < .001 & 3.90 & [3.83, 3.97] & 112.97 & < .001\\
-\ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{L} & -0.02 & [-0.10, 0.05] & -0.56 & .572 & -0.01 & [-0.08, 0.06] & -0.20 & .838\\
-\ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.00] & -0.25 & .802 & -0.01 & [-0.01, 0.00] & -1.81 & .070\\
-\ \ \ After-slope, $\hat{\gamma}_{20}$ \textcolor{white}{L} & -0.02 & [-0.02, -0.01] & -6.76 & < .001 & -0.01 & [-0.01, 0.00] & -3.32 & .001\\
-\ \ \ Shift, $\hat{\gamma}_{30}$ \textcolor{white}{L} & 0.04 & [0.01, 0.06] & 3.12 & .002 & 0.03 & [0.00, 0.05] & 1.98 & .048\\
-\ \ \ Grandparent, $\hat{\gamma}_{01}$ \textcolor{white}{L} & 0.06 & [-0.03, 0.15] & 1.33 & .183 & 0.01 & [-0.08, 0.11] & 0.30 & .768\\
-\ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{L} & -0.01 & [-0.02, 0.01] & -1.06 & .289 & 0.00 & [-0.01, 0.01] & -0.26 & .791\\
-\ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{L} & 0.02 & [0.01, 0.03] & 2.99 & .003 & 0.01 & [0.00, 0.02] & 1.44 & .149\\
-\ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{L} & -0.01 & [-0.06, 0.04] & -0.37 & .714 & 0.00 & [-0.06, 0.06] & 0.08 & .937\\
-HRS &  &  &  &  &  &  &  & \\
-\ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{H} & 3.46 & [3.43, 3.50] & 196.32 & < .001 & 3.48 & [3.44, 3.52] & 166.19 & < .001\\
-\ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{H} & 0.08 & [0.02, 0.14] & 2.51 & .012 & 0.05 & [-0.01, 0.11] & 1.51 & .131\\
-\ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{H} & 0.01 & [0.00, 0.02] & 1.37 & .169 & -0.01 & [-0.02, 0.00] & -1.33 & .184\\
-\ \ \ After-slope, $\hat{\gamma}_{20}$ \textcolor{white}{H} & -0.01 & [-0.02, 0.00] & -2.87 & .004 & -0.02 & [-0.02, -0.01] & -5.16 & < .001\\
-\ \ \ Shift, $\hat{\gamma}_{30}$ \textcolor{white}{H} & 0.01 & [-0.01, 0.03] & 0.71 & .476 & 0.04 & [0.02, 0.06] & 4.30 & < .001\\
-\ \ \ Grandparent, $\hat{\gamma}_{01}$ \textcolor{white}{H} & 0.02 & [-0.03, 0.08] & 0.88 & .378 & 0.01 & [-0.04, 0.07] & 0.44 & .662\\
-\ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{H} & -0.01 & [-0.04, 0.01] & -0.87 & .384 & 0.00 & [-0.02, 0.03] & 0.28 & .781\\
-\ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{H} & 0.01 & [0.00, 0.03] & 1.71 & .088 & 0.02 & [0.01, 0.04] & 2.78 & .006\\
-\ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{H} & -0.01 & [-0.05, 0.04] & -0.35 & .729 & -0.04 & [-0.09, 0.00] & -1.97 & .049\\
-\bottomrule
-\addlinespace
-\insertTableNotes
-\end{longtable}
-
-}
-
-\end{lltable}
-
-
-
-
-
-
-
-
 
 \begin{lltable}
 
@@ -1656,83 +2025,6 @@ $\hat{\gamma}_{31}$) \textcolor{white}{H} & 0.00 & 0.03 & .859 & 0.00 & 0.03 & .
 $\hat{\gamma}_{11}$) \textcolor{white}{H} & 0.00 & 0.09 & .762 & 0.00 & 0.11 & .743\\
 \ \ \ After-slope of the grandparents vs. 0 ($\hat{\gamma}_{20}$ + 
 $\hat{\gamma}_{21}$) \textcolor{white}{H} & 0.00 & 0.23 & .633 & 0.00 & 0.28 & .596\\
-\bottomrule
-\addlinespace
-\insertTableNotes
-\end{longtable}
-
-}
-
-\end{lltable}
-
-
-
-
-
-
-
-\begin{lltable}
-
-\begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the
-two samples (LISS, HRS): grandparents matched with parent controls and
-with nonparent controls. CI = confidence interval.}
-\end{TableNotes}
-
-\footnotesize{
-
-\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
-\caption{\label{tab:H1-agree-gender-tab}Fixed Effects of Agreeableness Over the
-Transition to Grandparenthood Moderated by Gender.}\\
-\toprule
-& \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
-\cmidrule(r){2-5} \cmidrule(r){6-9}
-Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
-\midrule
-\endfirsthead
-\caption*{\normalfont{Table \ref{tab:H1-agree-gender-tab} continued}}\\
-\toprule
-& \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
-\cmidrule(r){2-5} \cmidrule(r){6-9}
-Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
-\midrule
-\endhead
-LISS &  &  &  &  &  &  &  & \\
-\ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 3.65 & [3.58, 3.73] & 93.02 & < .001 & 3.66 & [3.57, 3.75] & 79.73 & < .001\\
-\ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{L} & -0.01 & [-0.08, 0.07] & -0.21 & .833 & 0.02 & [-0.05, 0.08] & 0.45 & .653\\
-\ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.01] & 0.02 & .984 & 0.00 & [-0.01, 0.01] & -0.37 & .712\\
-\ \ \ After-slope, $\hat{\gamma}_{20}$ \textcolor{white}{L} & -0.02 & [-0.03, -0.02] & -6.37 & < .001 & -0.01 & [-0.02, 0.00] & -2.49 & .013\\
-\ \ \ Shift, $\hat{\gamma}_{30}$ \textcolor{white}{L} & 0.03 & [-0.01, 0.07] & 1.66 & .097 & 0.07 & [0.03, 0.11] & 3.66 & < .001\\
-\ \ \ Grandparent, $\hat{\gamma}_{01}$ \textcolor{white}{L} & 0.06 & [-0.06, 0.17] & 0.92 & .356 & 0.04 & [-0.09, 0.17] & 0.60 & .550\\
-\ \ \ Female, $\hat{\gamma}_{02}$ \textcolor{white}{L} & 0.38 & [0.27, 0.48] & 7.16 & < .001 & 0.44 & [0.32, 0.56] & 7.11 & < .001\\
-\ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{L} & -0.01 & [-0.03, 0.01] & -0.73 & .466 & 0.00 & [-0.02, 0.01] & -0.50 & .615\\
-\ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{L} & 0.03 & [0.01, 0.05] & 3.43 & .001 & 0.01 & [0.00, 0.03] & 1.64 & .101\\
-\ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{L} & -0.01 & [-0.09, 0.07] & -0.33 & .739 & -0.05 & [-0.14, 0.03] & -1.23 & .217\\
-\ \ \ Before-slope * Female, $\hat{\gamma}_{12}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.01] & -0.26 & .799 & -0.01 & [-0.02, 0.00] & -1.14 & .254\\
-\ \ \ After-slope * Female, $\hat{\gamma}_{22}$ \textcolor{white}{L} & 0.01 & [0.00, 0.02] & 2.34 & .019 & 0.00 & [-0.01, 0.01] & 0.28 & .781\\
-\ \ \ Shift * Female, $\hat{\gamma}_{32}$ \textcolor{white}{L} & 0.02 & [-0.03, 0.06] & 0.60 & .550 & -0.08 & [-0.14, -0.03] & -3.18 & .001\\
-\ \ \ Grandparent * Female, $\hat{\gamma}_{03}$ \textcolor{white}{L} & 0.01 & [-0.15, 0.17] & 0.15 & .883 & -0.05 & [-0.22, 0.12] & -0.57 & .568\\
-\ \ \ Before-slope * Grandparent * Female, $\hat{\gamma}_{13}$ \textcolor{white}{L} & 0.00 & [-0.03, 0.02] & -0.05 & .959 & 0.00 & [-0.02, 0.03] & 0.35 & .728\\
-\ \ \ After-slope * Grandparent * Female, $\hat{\gamma}_{23}$ \textcolor{white}{L} & -0.02 & [-0.04, 0.00] & -1.92 & .056 & -0.01 & [-0.03, 0.01] & -0.93 & .351\\
-\ \ \ Shift * Grandparent * Female, $\hat{\gamma}_{33}$ \textcolor{white}{L} & 0.01 & [-0.10, 0.12] & 0.21 & .836 & 0.11 & [-0.01, 0.23] & 1.87 & .061\\
-HRS &  &  &  &  &  &  &  & \\
-\ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{H} & 3.27 & [3.23, 3.32] & 132.82 & < .001 & 3.38 & [3.33, 3.43] & 122.35 & < .001\\
-\ \ \ Propensity score, $\hat{\gamma}_{04}$ \textcolor{white}{H} & 0.09 & [0.03, 0.15] & 2.91 & .004 & 0.04 & [-0.03, 0.10] & 1.12 & .261\\
-\ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{H} & 0.02 & [0.01, 0.04] & 2.98 & .003 & -0.01 & [-0.02, 0.01] & -1.12 & .262\\
-\ \ \ After-slope, $\hat{\gamma}_{20}$ \textcolor{white}{H} & -0.02 & [-0.03, -0.01] & -3.95 & < .001 & -0.02 & [-0.03, -0.01] & -3.43 & .001\\
-\ \ \ Shift, $\hat{\gamma}_{30}$ \textcolor{white}{H} & 0.04 & [0.01, 0.07] & 2.77 & .006 & 0.03 & [0.00, 0.06] & 1.68 & .093\\
-\ \ \ Grandparent, $\hat{\gamma}_{01}$ \textcolor{white}{H} & 0.08 & [0.00, 0.16] & 1.97 & .048 & -0.01 & [-0.09, 0.08] & -0.16 & .877\\
-\ \ \ Female, $\hat{\gamma}_{02}$ \textcolor{white}{H} & 0.33 & [0.27, 0.39] & 10.55 & < .001 & 0.20 & [0.13, 0.26] & 5.76 & < .001\\
-\ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{H} & -0.04 & [-0.08, 0.00] & -2.18 & .030 & -0.01 & [-0.04, 0.03] & -0.47 & .640\\
-\ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{H} & 0.04 & [0.01, 0.06] & 3.00 & .003 & 0.03 & [0.01, 0.05] & 2.85 & .004\\
-\ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{H} & -0.05 & [-0.12, 0.02] & -1.50 & .133 & -0.03 & [-0.10, 0.03] & -1.04 & .298\\
-\ \ \ Before-slope * Female, $\hat{\gamma}_{12}$ \textcolor{white}{H} & -0.03 & [-0.05, -0.01] & -2.84 & .004 & 0.00 & [-0.02, 0.02] & 0.38 & .702\\
-\ \ \ After-slope * Female, $\hat{\gamma}_{22}$ \textcolor{white}{H} & 0.02 & [0.01, 0.03] & 2.74 & .006 & 0.00 & [-0.01, 0.01] & 0.08 & .937\\
-\ \ \ Shift * Female, $\hat{\gamma}_{32}$ \textcolor{white}{H} & -0.06 & [-0.11, -0.02] & -3.07 & .002 & 0.03 & [-0.01, 0.07] & 1.50 & .134\\
-\ \ \ Grandparent * Female, $\hat{\gamma}_{03}$ \textcolor{white}{H} & -0.10 & [-0.20, 0.01] & -1.77 & .077 & 0.03 & [-0.07, 0.14] & 0.64 & .521\\
-\ \ \ Before-slope * Grandparent * Female, $\hat{\gamma}_{13}$ \textcolor{white}{H} & 0.06 & [0.01, 0.11] & 2.20 & .028 & 0.02 & [-0.03, 0.07] & 0.86 & .392\\
-\ \ \ After-slope * Grandparent * Female, $\hat{\gamma}_{23}$ \textcolor{white}{H} & -0.04 & [-0.07, -0.01] & -2.48 & .013 & -0.02 & [-0.05, 0.01] & -1.34 & .180\\
-\ \ \ Shift * Grandparent * Female, $\hat{\gamma}_{33}$ \textcolor{white}{H} & 0.08 & [-0.01, 0.17] & 1.73 & .084 & -0.01 & [-0.10, 0.07] & -0.31 & .758\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -1987,58 +2279,6 @@ $\hat{\gamma}_{51}$ + $\hat{\gamma}_{71}$) & 0.02 & 0.22 & .637 & 0.02 & 0.23 & 
 
 
 
-
-\begin{lltable}
-
-\begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed (only HRS):
-grandparents matched with parent controls and with nonparent controls.
-CI = confidence interval. \(caring=1\) indicates more than 100 hours of
-grandchild care since the last assessment.}
-\end{TableNotes}
-
-\footnotesize{
-
-\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
-\caption{\label{tab:H1-agree-care-tab}Fixed Effects of Agreeableness Over the
-Transition to Grandparenthood Moderated by Grandchild Care.}\\
-\toprule
-& \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
-\cmidrule(r){2-5} \cmidrule(r){6-9}
-Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
-\midrule
-\endfirsthead
-\caption*{\normalfont{Table \ref{tab:H1-agree-care-tab} continued}}\\
-\toprule
-& \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
-\cmidrule(r){2-5} \cmidrule(r){6-9}
-Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
-\midrule
-\endhead
-Intercept, $\hat{\gamma}_{00}$ & 3.47 & [3.43, 3.52] & 155.84 & < .001 & 3.47 & [3.42, 3.53] & 130.92 & < .001\\
-Propensity score, $\hat{\gamma}_{02}$ & 0.16 & [0.08, 0.24] & 3.91 & < .001 & 0.15 & [0.07, 0.23] & 3.67 & < .001\\
-After-slope, $\hat{\gamma}_{20}$ & -0.02 & [-0.03, -0.01] & -4.36 & < .001 & -0.02 & [-0.03, -0.01] & -3.63 & < .001\\
-Grandparent, $\hat{\gamma}_{01}$ & -0.04 & [-0.11, 0.03] & -1.16 & .246 & -0.05 & [-0.12, 0.02] & -1.49 & .137\\
-Caring, $\hat{\gamma}_{10}$ & 0.00 & [-0.04, 0.03] & -0.27 & .784 & 0.02 & [-0.01, 0.05] & 1.09 & .276\\
-After-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.03 & [0.00, 0.05] & 2.36 & .018 & 0.02 & [0.00, 0.04] & 2.02 & .044\\
-After-slope * Caring, $\hat{\gamma}_{30}$ & 0.00 & [-0.01, 0.02] & 0.29 & .773 & 0.00 & [-0.02, 0.01] & -0.60 & .550\\
-Grandparent * Caring, $\hat{\gamma}_{11}$ & 0.02 & [-0.07, 0.11] & 0.46 & .645 & 0.00 & [-0.09, 0.08] & -0.09 & .925\\
-After-slope * Grandparent * Caring, $\hat{\gamma}_{31}$ & 0.01 & [-0.02, 0.04] & 0.57 & .572 & 0.02 & [-0.02, 0.05] & 1.00 & .319\\
-\bottomrule
-\addlinespace
-\insertTableNotes
-\end{longtable}
-
-}
-
-\end{lltable}
-
-
-
-
-
-
-
 \begin{lltable}
 
 \begin{TableNotes}[para]
@@ -2069,68 +2309,6 @@ After-slope of caring controls vs. caring grandparents
 ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & 0.04 & 7.62 & .006 & 0.04 & 9.15 & .002\\
 After-slope of not-caring grandparents vs. caring grandparents 
 ($\hat{\gamma}_{30}$ + $\hat{\gamma}_{31}$) & 0.01 & 0.61 & .434 & 0.01 & 0.66 & .415\\
-\bottomrule
-\addlinespace
-\insertTableNotes
-\end{longtable}
-
-}
-
-\end{lltable}
-
-
-
-
-
-
-
-
-\begin{lltable}
-
-\begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two
-samples (LISS, HRS): grandparents matched with parent controls and with
-nonparent controls. CI = confidence interval.}
-\end{TableNotes}
-
-\footnotesize{
-
-\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
-\caption{\label{tab:H1-con-tab}Fixed Effects of Conscientiousness Over the
-Transition to Grandparenthood.}\\
-\toprule
-& \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
-\cmidrule(r){2-5} \cmidrule(r){6-9}
-Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
-\midrule
-\endfirsthead
-\caption*{\normalfont{Table \ref{tab:H1-con-tab} continued}}\\
-\toprule
-& \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
-\cmidrule(r){2-5} \cmidrule(r){6-9}
-Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
-\midrule
-\endhead
-LISS &  &  &  &  &  &  &  & \\
-\ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 3.77 & [3.72, 3.83] & 130.27 & < .001 & 3.82 & [3.75, 3.88] & 112.10 & < .001\\
-\ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{L} & 0.00 & [-0.08, 0.08] & -0.02 & .987 & 0.01 & [-0.06, 0.08] & 0.24 & .813\\
-\ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.00] & -0.84 & .402 & 0.00 & [-0.01, 0.01] & -0.26 & .796\\
-\ \ \ After-slope, $\hat{\gamma}_{20}$ \textcolor{white}{L} & -0.02 & [-0.02, -0.01] & -6.17 & < .001 & 0.01 & [0.00, 0.01] & 3.45 & .001\\
-\ \ \ Shift, $\hat{\gamma}_{30}$ \textcolor{white}{L} & 0.04 & [0.02, 0.07] & 3.14 & .002 & 0.00 & [-0.03, 0.02] & -0.15 & .881\\
-\ \ \ Grandparent, $\hat{\gamma}_{01}$ \textcolor{white}{L} & -0.01 & [-0.10, 0.08] & -0.24 & .813 & -0.06 & [-0.15, 0.04] & -1.22 & .225\\
-\ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.02] & 0.77 & .439 & 0.00 & [-0.01, 0.02] & 0.50 & .617\\
-\ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{L} & 0.02 & [0.00, 0.03] & 2.73 & .006 & -0.01 & [-0.02, 0.00] & -1.61 & .107\\
-\ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{L} & -0.04 & [-0.10, 0.01] & -1.49 & .137 & 0.00 & [-0.06, 0.06] & 0.01 & .989\\
-HRS &  &  &  &  &  &  &  & \\
-\ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{H} & 3.41 & [3.38, 3.44] & 206.26 & < .001 & 3.35 & [3.31, 3.38] & 172.70 & < .001\\
-\ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{H} & 0.08 & [0.03, 0.14] & 2.86 & .004 & 0.17 & [0.11, 0.23] & 5.74 & < .001\\
-\ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{H} & 0.00 & [-0.01, 0.01] & 0.31 & .754 & 0.00 & [-0.01, 0.01] & 0.72 & .473\\
-\ \ \ After-slope, $\hat{\gamma}_{20}$ \textcolor{white}{H} & -0.01 & [-0.02, -0.01] & -4.11 & < .001 & -0.01 & [-0.02, -0.01] & -3.84 & < .001\\
-\ \ \ Shift, $\hat{\gamma}_{30}$ \textcolor{white}{H} & 0.02 & [0.00, 0.04] & 1.93 & .053 & 0.00 & [-0.02, 0.02] & 0.01 & .991\\
-\ \ \ Grandparent, $\hat{\gamma}_{01}$ \textcolor{white}{H} & 0.02 & [-0.04, 0.07] & 0.60 & .547 & 0.03 & [-0.02, 0.08] & 1.08 & .280\\
-\ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{H} & 0.01 & [-0.02, 0.03] & 0.55 & .580 & 0.00 & [-0.02, 0.03] & 0.43 & .664\\
-\ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{H} & 0.02 & [0.01, 0.04] & 3.06 & .002 & 0.02 & [0.01, 0.04] & 3.01 & .003\\
-\ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{H} & -0.05 & [-0.09, -0.01] & -2.36 & .018 & -0.03 & [-0.07, 0.01] & -1.59 & .111\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -2516,58 +2694,6 @@ After-slope of not-working grandparents vs. working grandparents
 Shift of not-working grandparents vs. working grandparents 
 ($\hat{\gamma}_{50}$ + $\hat{\gamma}_{70}$ + 
 $\hat{\gamma}_{51}$ + $\hat{\gamma}_{71}$) & 0.05 & 2.62 & .106 & 0.05 & 2.89 & .089\\
-\bottomrule
-\addlinespace
-\insertTableNotes
-\end{longtable}
-
-}
-
-\end{lltable}
-
-
-
-
-
-
-
-
-\begin{lltable}
-
-\begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed (only HRS):
-grandparents matched with parent controls and with nonparent controls.
-CI = confidence interval. \(caring=1\) indicates more than 100 hours of
-grandchild care since the last assessment.}
-\end{TableNotes}
-
-\footnotesize{
-
-\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
-\caption{\label{tab:H1-con-care-tab}Fixed Effects of Conscientiousness Over the
-Transition to Grandparenthood Moderated by Grandchild Care.}\\
-\toprule
-& \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
-\cmidrule(r){2-5} \cmidrule(r){6-9}
-Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
-\midrule
-\endfirsthead
-\caption*{\normalfont{Table \ref{tab:H1-con-care-tab} continued}}\\
-\toprule
-& \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
-\cmidrule(r){2-5} \cmidrule(r){6-9}
-Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
-\midrule
-\endhead
-Intercept, $\hat{\gamma}_{00}$ & 3.44 & [3.40, 3.48] & 168.69 & < .001 & 3.34 & [3.30, 3.39] & 138.33 & < .001\\
-Propensity score, $\hat{\gamma}_{02}$ & 0.08 & [0.00, 0.15] & 2.03 & .042 & 0.29 & [0.22, 0.37] & 7.78 & < .001\\
-After-slope, $\hat{\gamma}_{20}$ & -0.02 & [-0.03, -0.01] & -3.80 & < .001 & -0.01 & [-0.02, 0.00] & -2.74 & .006\\
-Grandparent, $\hat{\gamma}_{01}$ & -0.02 & [-0.08, 0.05] & -0.51 & .610 & -0.02 & [-0.09, 0.04] & -0.74 & .462\\
-Caring, $\hat{\gamma}_{10}$ & 0.00 & [-0.03, 0.03] & 0.03 & .972 & 0.02 & [0.00, 0.05] & 1.64 & .102\\
-After-slope * Grandparent, $\hat{\gamma}_{21}$ & 0.01 & [-0.01, 0.03] & 1.37 & .170 & 0.01 & [-0.01, 0.02] & 0.73 & .468\\
-After-slope * Caring, $\hat{\gamma}_{30}$ & 0.00 & [-0.01, 0.01] & 0.01 & .993 & -0.01 & [-0.02, 0.00] & -1.72 & .085\\
-Grandparent * Caring, $\hat{\gamma}_{11}$ & -0.04 & [-0.12, 0.04] & -0.93 & .355 & -0.07 & [-0.14, 0.01] & -1.74 & .081\\
-After-slope * Grandparent * Caring, $\hat{\gamma}_{31}$ & 0.03 & [0.00, 0.06] & 1.88 & .060 & 0.04 & [0.01, 0.07] & 2.82 & .005\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -3157,68 +3283,6 @@ After-slope of caring controls vs. caring grandparents
 ($\hat{\gamma}_{21}$ + $\hat{\gamma}_{31}$) & 0.04 & 10.45 & .001 & 0.04 & 7.39 & .007\\
 After-slope of not-caring grandparents vs. caring grandparents 
 ($\hat{\gamma}_{30}$ + $\hat{\gamma}_{31}$) & 0.03 & 2.98 & .084 & 0.03 & 3.37 & .066\\
-\bottomrule
-\addlinespace
-\insertTableNotes
-\end{longtable}
-
-}
-
-\end{lltable}
-
-
-
-
-
-
-
-
-\begin{lltable}
-
-\begin{TableNotes}[para]
-\normalsize{\textit{Note.} Two models were computed for each of the two
-samples (LISS, HRS): grandparents matched with parent controls and with
-nonparent controls. CI = confidence interval.}
-\end{TableNotes}
-
-\footnotesize{
-
-\begin{longtable}{lrcrrrcrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
-\caption{\label{tab:H1-neur-tab}Fixed Effects of Neuroticism Over the Transition
-to Grandparenthood.}\\
-\toprule
-& \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
-\cmidrule(r){2-5} \cmidrule(r){6-9}
-Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
-\midrule
-\endfirsthead
-\caption*{\normalfont{Table \ref{tab:H1-neur-tab} continued}}\\
-\toprule
-& \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
-\cmidrule(r){2-5} \cmidrule(r){6-9}
-Parameter & $\hat{\gamma}$ & 95\% CI & $t$ & $p$ & $\hat{\gamma}$ & 95\% CI & $t$ & $p$\\
-\midrule
-\endhead
-LISS &  &  &  &  &  &  &  & \\
-\ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{L} & 2.48 & [2.40, 2.56] & 63.09 & < .001 & 2.45 & [2.35, 2.54] & 51.88 & < .001\\
-\ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{L} & 0.01 & [-0.09, 0.11] & 0.19 & .852 & 0.00 & [-0.09, 0.09] & 0.04 & .967\\
-\ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.01] & -0.56 & .575 & -0.01 & [-0.02, -0.01] & -3.66 & < .001\\
-\ \ \ After-slope, $\hat{\gamma}_{20}$ \textcolor{white}{L} & 0.00 & [0.00, 0.01] & 0.94 & .350 & 0.00 & [0.00, 0.01] & 1.31 & .190\\
-\ \ \ Shift, $\hat{\gamma}_{30}$ \textcolor{white}{L} & -0.05 & [-0.08, -0.02] & -2.96 & .003 & -0.03 & [-0.06, 0.01] & -1.58 & .115\\
-\ \ \ Grandparent, $\hat{\gamma}_{01}$ \textcolor{white}{L} & -0.08 & [-0.20, 0.03] & -1.37 & .170 & -0.04 & [-0.17, 0.08] & -0.67 & .500\\
-\ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{L} & 0.00 & [-0.01, 0.02] & 0.43 & .668 & 0.02 & [0.00, 0.03] & 1.83 & .067\\
-\ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{L} & 0.00 & [-0.02, 0.01] & -0.33 & .744 & 0.00 & [-0.02, 0.01] & -0.48 & .635\\
-\ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{L} & -0.02 & [-0.09, 0.06] & -0.41 & .684 & -0.04 & [-0.12, 0.04] & -1.01 & .312\\
-HRS &  &  &  &  &  &  &  & \\
-\ \ \ Intercept, $\hat{\gamma}_{00}$ \textcolor{white}{H} & 2.07 & [2.03, 2.11] & 94.42 & < .001 & 2.07 & [2.02, 2.12] & 79.36 & < .001\\
-\ \ \ Propensity score, $\hat{\gamma}_{02}$ \textcolor{white}{H} & 0.00 & [-0.07, 0.08] & 0.12 & .902 & 0.15 & [0.07, 0.23] & 3.70 & < .001\\
-\ \ \ Before-slope, $\hat{\gamma}_{10}$ \textcolor{white}{H} & -0.01 & [-0.03, 0.00] & -1.90 & .057 & -0.03 & [-0.04, -0.02] & -4.70 & < .001\\
-\ \ \ After-slope, $\hat{\gamma}_{20}$ \textcolor{white}{H} & -0.01 & [-0.01, 0.00] & -1.20 & .230 & -0.01 & [-0.02, -0.01] & -3.18 & .001\\
-\ \ \ Shift, $\hat{\gamma}_{30}$ \textcolor{white}{H} & 0.01 & [-0.02, 0.03] & 0.42 & .675 & -0.03 & [-0.06, -0.01] & -2.36 & .018\\
-\ \ \ Grandparent, $\hat{\gamma}_{01}$ \textcolor{white}{H} & -0.06 & [-0.13, 0.01] & -1.64 & .100 & -0.12 & [-0.19, -0.05] & -3.31 & .001\\
-\ \ \ Before-slope * Grandparent, $\hat{\gamma}_{11}$ \textcolor{white}{H} & 0.02 & [-0.01, 0.05] & 1.28 & .201 & 0.04 & [0.01, 0.07] & 2.42 & .016\\
-\ \ \ After-slope * Grandparent, $\hat{\gamma}_{21}$ \textcolor{white}{H} & -0.02 & [-0.04, 0.00] & -1.52 & .127 & -0.01 & [-0.03, 0.01] & -0.80 & .424\\
-\ \ \ Shift * Grandparent, $\hat{\gamma}_{31}$ \textcolor{white}{H} & -0.06 & [-0.12, 0.00] & -2.12 & .034 & -0.03 & [-0.08, 0.03] & -0.88 & .381\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -5222,70 +5286,6 @@ HRS &  &  &  &  &  &  &  &  &  & \\
 
 
 
-\begin{lltable}
-
-\begin{TableNotes}[para]
-\normalsize{\textit{Note.} Test-retest correlations as indicators of
-rank-order stability, and p-values indicating significant group
-differences therein between grandparents and each control group. The
-average retest intervals in years are 3.06 (\(SD\) = 0.91) for the LISS
-parent sample, 3.06 (\(SD\) = 0.89) for the LISS nonparent sample, 4.15
-(\(SD\) = 0.77) for the HRS parent sample, and 4.11 (\(SD\) = 0.67) for
-the HRS nonparent sample. \(Cor\) = correlation; \(GP\) = grandparents;
-\(con\) = controls.}
-\end{TableNotes}
-
-\small{
-
-\begin{longtable}{lrrrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
-\caption{\label{tab:H3-rankorder-tab}Rank-Order Stability.}\\
-\toprule
-& \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
-\cmidrule(r){2-5} \cmidrule(r){6-9}
-Outcome & $Cor_{all}$ & $Cor_{GP}$ & $Cor_{con}$ & $p$ & $Cor_{all}$ & $Cor_{GP}$ & $Cor_{con}$ & $p$\\
-\midrule
-\endfirsthead
-\caption*{\normalfont{Table \ref{tab:H3-rankorder-tab} continued}}\\
-\toprule
-& \multicolumn{4}{c}{Parent controls} & \multicolumn{4}{c}{Nonparent controls} \\
-\cmidrule(r){2-5} \cmidrule(r){6-9}
-Outcome & $Cor_{all}$ & $Cor_{GP}$ & $Cor_{con}$ & $p$ & $Cor_{all}$ & $Cor_{GP}$ & $Cor_{con}$ & $p$\\
-\midrule
-\endhead
-LISS &  &  &  &  &  &  &  & \\
-\ \ \ Agreeableness \textcolor{white}{L} & 0.79 & 0.81 & 0.78 & .619 & 0.76 & 0.81 & 0.75 & .009\\
-\ \ \ Conscientiousness \textcolor{white}{L} & 0.76 & 0.80 & 0.75 & .102 & 0.79 & 0.80 & 0.78 & .480\\
-\ \ \ Extraversion \textcolor{white}{L} & 0.81 & 0.86 & 0.80 & .768 & 0.86 & 0.86 & 0.85 & .284\\
-\ \ \ Neuroticism \textcolor{white}{L} & 0.71 & 0.77 & 0.68 & .060 & 0.76 & 0.77 & 0.76 & .262\\
-\ \ \ Openness \textcolor{white}{L} & 0.75 & 0.79 & 0.74 & .126 & 0.79 & 0.79 & 0.79 & .531\\
-\ \ \ Life Satisfaction \textcolor{white}{L} & 0.69 & 0.66 & 0.70 & .647 & 0.63 & 0.66 & 0.62 & .674\\
-HRS &  &  &  &  &  &  &  & \\
-\ \ \ Agreeableness \textcolor{white}{H} & 0.68 & 0.70 & 0.67 & .506 & 0.73 & 0.70 & 0.74 & .304\\
-\ \ \ Conscientiousness \textcolor{white}{H} & 0.71 & 0.69 & 0.72 & .201 & 0.70 & 0.69 & 0.70 & .467\\
-\ \ \ Extraversion \textcolor{white}{H} & 0.72 & 0.75 & 0.71 & .007 & 0.74 & 0.75 & 0.74 & .029\\
-\ \ \ Neuroticism \textcolor{white}{H} & 0.66 & 0.71 & 0.65 & .654 & 0.68 & 0.71 & 0.67 & .709\\
-\ \ \ Openness \textcolor{white}{H} & 0.69 & 0.73 & 0.67 & .015 & 0.76 & 0.73 & 0.76 & .241\\
-\ \ \ Life Satisfaction \textcolor{white}{H} & 0.51 & 0.55 & 0.50 & .090 & 0.55 & 0.55 & 0.55 & .439\\
-\bottomrule
-\addlinespace
-\insertTableNotes
-\end{longtable}
-
-}
-
-\end{lltable}
-
-
-
-
-
-
-
-
-
-
-
-
 
 \begin{lltable}
 
@@ -5412,21 +5412,6 @@ HRS &  &  &  &  &  &  &  & \\
 
 
 
-
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{Figs/flowchart-participant-1} 
-
-}
-
-\caption{Participant flowchart demonstrating the
-composition of the four analysis samples via matching (1:4 matching
-ratio with replacement). obs. = longitudinal observations.}\label{fig:flowchart-participant}
-\end{figure}
-
-
-
-
 \begin{figure}
 \centering
 \includegraphics{Figs/pscore-overlap-1.pdf}
@@ -5501,24 +5486,6 @@ Over Time and LOESS Line.}
 
 
 
-\begin{figure}
-\centering
-\includegraphics{Figs/H1-agree-fig-1.pdf}
-\caption{\label{fig:H1-agree-fig}Change trajectories of agreeableness based on the
-basic models (left column) and the models including the gender
-interaction (right column). The error bars are 95\% confidence intervals
-of the predicted values which only account for the fixed-effects portion
-of the model. The vertical line indicates the approximate time of the
-transition to grandparenthood.}
-\end{figure}
-
-
-
-
-
-
-
-
 
 
 \begin{figure}
@@ -5542,44 +5509,6 @@ models) and added here for better comparability.}
 
 
 
-\begin{figure}
-\centering
-\includegraphics{Figs/H1-agree-care-fig-1.pdf}
-\caption{\label{fig:H1-agree-care-fig}Change trajectories of agreeableness based
-on the models of moderation by grandchild care (see Table
-\ref{tab:H1-agree-care-tab}). The error bars are 95\% confidence
-intervals of the predicted values which only account for the
-fixed-effects portion of the model. The plots in the left column are the
-same as in Figure \ref{fig:H1-agree-fig} (basic models) but restricted
-to the post-transition period for better comparability.}
-\end{figure}
-
-
-
-
-
-
-
-
-\begin{figure}
-\centering
-\includegraphics{Figs/H1-con-fig-1.pdf}
-\caption{\label{fig:H1-con-fig}Change trajectories of conscientiousness based on
-the basic models (left column) and the models including the gender
-interaction (right column). The error bars are 95\% confidence intervals
-of the predicted values which only account for the fixed-effects portion
-of the model. The vertical line indicates the approximate time of the
-transition to grandparenthood.}
-\end{figure}
-
-
-
-
-
-
-
-
-
 
 \begin{figure}
 \centering
@@ -5592,26 +5521,6 @@ of the model. The vertical line indicates the approximate time of the
 transition to grandparenthood. The plots in the left column are the same
 as in Figure \ref{fig:H1-con-fig} (basic models) and added here for
 better comparability.}
-\end{figure}
-
-
-
-
-
-
-
-
-
-\begin{figure}
-\centering
-\includegraphics{Figs/H1-con-care-fig-1.pdf}
-\caption{\label{fig:H1-con-care-fig}Change trajectories of conscientiousness based
-on the models of moderation by grandchild care (see Table
-\ref{tab:H1-con-care-tab}). The error bars are 95\% confidence intervals
-of the predicted values which only account for the fixed-effects portion
-of the model. The plots in the left column are the same as in Figure
-\ref{fig:H1-con-fig} (basic models) but restricted to the
-post-transition period for better comparability.}
 \end{figure}
 
 
@@ -5672,24 +5581,6 @@ intervals of the predicted values which only account for the
 fixed-effects portion of the model. The plots in the left column are the
 same as in Figure \ref{fig:H1-extra-fig} (basic models) but restricted
 to the post-transition period for better comparability.}
-\end{figure}
-
-
-
-
-
-
-
-
-\begin{figure}
-\centering
-\includegraphics{Figs/H1-neur-fig-1.pdf}
-\caption{\label{fig:H1-neur-fig}Change trajectories of neuroticism based on the
-basic models (left column) and the models including the gender
-interaction (right column). The error bars are 95\% confidence intervals
-of the predicted values which only account for the fixed-effects portion
-of the model. The vertical line indicates the approximate time of the
-transition to grandparenthood.}
 \end{figure}
 
 
@@ -5852,60 +5743,6 @@ intervals of the predicted values which only account for the
 fixed-effects portion of the model. The plots in the left column are the
 same as in Figure \ref{fig:H1-swls-fig} (basic models) but restricted to
 the post-transition period for better comparability.}
-\end{figure}
-
-
-
-
-
-
-
-
-
-
-
-
-\begin{figure}
-\centering
-\includegraphics{Figs/effects-basic-plot-1.pdf}
-\caption{\label{fig:effects-basic-plot}Unstandardized Effect Sizes of the Basic
-Models Across Analysis Samples (Regression Coefficients \(\hat{\gamma}\)
-or Linear Contrasts \(\hat{\gamma}_{c}\) From Multilevel Models, see
-Tables \ref{tab:H1-agree-tab}, \ref{tab:H1-agree-contrasts},
-\ref{tab:H1-con-tab}, \ref{tab:H1-con-contrasts},
-\ref{tab:H1-extra-tab}, \ref{tab:H1-extra-contrasts},
-\ref{tab:H1-neur-tab}, \ref{tab:H1-neur-contrasts},
-\ref{tab:H1-open-tab}, \ref{tab:H1-open-contrasts},
-\ref{tab:H1-swls-tab}, \ref{tab:H1-swls-contrasts}). Error Bars
-Represent 95\% Confidence Intervals.}
-\end{figure}
-
-
-
-
-
-
-
-
-
-
-
-
-
-\begin{figure}
-\centering
-\includegraphics{Figs/effects-gender-plot-1.pdf}
-\caption{\label{fig:effects-gender-plot}Unstandardized Effect Sizes of the Models
-Including the Gender Interaction Across Analysis Samples (Regression
-Coefficients \(\hat{\gamma}\) or Linear Contrasts \(\hat{\gamma}_{c}\)
-From Multilevel Models, see Tables \ref{tab:H1-agree-gender-tab},
-\ref{tab:H1-agree-gender-contrasts}, \ref{tab:H1-con-gender-tab},
-\ref{tab:H1-con-gender-contrasts}, \ref{tab:H1-extra-gender-tab},
-\ref{tab:H1-extra-gender-contrasts}, \ref{tab:H1-neur-gender-tab},
-\ref{tab:H1-neur-gender-contrasts}, \ref{tab:H1-open-gender-tab},
-\ref{tab:H1-open-gender-contrasts}, \ref{tab:H1-swls-gender-tab},
-\ref{tab:H1-swls-gender-contrasts}). Error Bars Represent 95\%
-Confidence Intervals.}
 \end{figure}
 
 \newpage
