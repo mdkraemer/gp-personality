@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  27 AUG 2021 11:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  27 AUG 2021 16:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2109,48 +2109,48 @@ pdf>] [86 <./Figs/H1-swls-care-fig-1.pdf>] [87] [88] [89]pdfTeX warning (ext4):
 cate ignored
 <to be read again> 
                    \relax 
-l.5857 \hypertarget{refs}{}
+l.5858 \hypertarget{refs}{}
                            pdfTeX warning (ext4): destination with the same ide
 ntifier (name{ref-R-papaja}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.5862 \leavevmode\hypertarget{ref-R-papaja}{}
+l.5863 \leavevmode\hypertarget{ref-R-papaja}{}
                                               %pdfTeX warning (ext4): destinati
 on with the same identifier (name{ref-austinIntroductionPropensityScore2011}) h
 as been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.5866 ...austinIntroductionPropensityScore2011}{}
+l.5867 ...austinIntroductionPropensityScore2011}{}
                                                   %pdfTeX warning (ext4): desti
 nation with the same identifier (name{ref-R-lme4}) has been already used, dupli
 cate ignored
 <to be read again> 
                    \relax 
-l.5880 \leavevmode\hypertarget{ref-R-lme4}{}
+l.5881 \leavevmode\hypertarget{ref-R-lme4}{}
                                             % [90]pdfTeX warning (ext4): destin
 ation with the same identifier (name{ref-car2019}) has been already used, dupli
 cate ignored
 <to be read again> 
                    \relax 
-l.5913 \leavevmode\hypertarget{ref-car2019}{}
+l.5914 \leavevmode\hypertarget{ref-car2019}{}
                                              %pdfTeX warning (ext4): destinatio
 n with the same identifier (name{ref-R-lmerTest}) has been already used, duplic
 ate ignored
 <to be read again> 
                    \relax 
-l.5957 \leavevmode\hypertarget{ref-R-lmerTest}{}
+l.5958 \leavevmode\hypertarget{ref-R-lmerTest}{}
                                                 % [91]pdfTeX warning (ext4): de
 stination with the same identifier (name{ref-R-base}) has been already used, du
 plicate ignored
 <to be read again> 
                    \relax 
-l.5988 \leavevmode\hypertarget{ref-R-base}{}
+l.5989 \leavevmode\hypertarget{ref-R-base}{}
                                             %pdfTeX warning (ext4): destination
  with the same identifier (name{ref-stuartMatchingMethodsCausal2010}) has been 
 already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.6002 ...t{ref-stuartMatchingMethodsCausal2010}{}
+l.6003 ...t{ref-stuartMatchingMethodsCausal2010}{}
                                                   % [92] [93] AED endfloat: Pro
 cessing end Figures and Tables [94] (./gp-manuscript-papaja.aux)
 Package rerunfilecheck Info: File `gp-manuscript-papaja.out' has not changed.

@@ -1,12 +1,8 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
 # gp-personality
 Changes in Big Five personality traits and life satisfaction over the transition to grandparenthood.
 
 For the complete preprint including the supplemental materials, see *gp-manuscript-papaja.pdf*.
+For the OSF project page, see https://osf.io/75a4r/?view_only=ac929a2c41fb4afd9d1a64a3909848d0
 
 ## Instructions to Reproduce
 
@@ -37,22 +33,23 @@ data
 
 ### Generating the Analysis Samples
 
-In the folder on your computer where the subfolder *data* is now contained, create another subfolder called *scripts* and download the following files into it:
-
-* gp-compilesample-imp-HRS.R
-* gp-compilesample-imp-LISS.R
-* gp-compilesample-psm-HRS.R
-* gp-compilesample-psm-LISS.R
-
-First, to load and clean the data and conduct multiple imputations on the covariate data, execute *gp-compilesample-imp-HRS.R* and *gp-compilesample-imp-LISS.R*. This will take several hours on most machines. Second, to perform the propensity score matching creating the final four analysis samples, execute *gp-compilesample-psm-HRS.R* and *gp-compilesample-psm-LISS.R* (this only takes a couple of minutes). The analysis samples are saved in the *processed* subfolders. The Excel sheet *gp-covariates-overview.xlsx* is needed for the covariate data frame created in the latter two scripts. Please download it into the superordinate folder.  
+1. Download *gp-personality.Rproj* into the folder on your computer where the subfolder *data* is now contained. All paths are defined in relation to this R Project.  
+2. In the same folder, create another subfolder called *scripts* and download the following files into it:
+    + gp-compilesample-imp-HRS.R  
+    + gp-compilesample-imp-LISS.R  
+    + gp-compilesample-psm-HRS.R  
+    + gp-compilesample-psm-LISS.R  
+3. Open the R-project (run all scripts from within it).  
+4. To load and clean the data and conduct multiple imputations on the covariate data, execute *gp-compilesample-imp-HRS.R* and *gp-compilesample-imp-LISS.R*. This will take several hours on most machines.  
+5. Download the Excel sheet *gp-covariates-overview.xlsx* into the superordinate folder (where the R-project is). This file is needed for the covariate data frame created in the next two scripts.  
+6. To perform the propensity score matching creating the final four analysis samples, execute *gp-compilesample-psm-HRS.R* and *gp-compilesample-psm-LISS.R* (this only takes a couple of minutes). The analysis samples are now saved in the *processed* subfolders.  
 
 ### Reproducing the Manuscript
 
 The manuscript was generated using the *papaja* (Preparing APA Journal Articles) R package by Frederik Aust and Marius Barth. See https://github.com/crsh/papaja/ for instructions on how to install this package and http://frederikaust.com/papaja_man/ for more specific instructions on how to write APA manuscripts using *papaja*. Another requirement is a TeX distribution for which I used *tinytex* which can easily be installed via R.  
 Please follow these steps to reproduce the manuscript. If you run into errors you can’t fix easily, it is generally a good idea to re-install R and RStudio. I used R version 4.0.4 and RStudio version 1.3.1093.  
 
-1. Download the following files to the superordinate folder where the subfolders *data* and *scripts* are contained:
-    + *gp-personality.Rproj*: The R Project from which all scripts are opened and all paths defined
+1. Download the following files to the superordinate folder (where the R Project is):
     + *gp-manuscript-papaja.Rmd*: The main R markdown script that renders the final PDF manuscript
     + *gp-manuscript-papaja-appendix.Rmd*: Additional R markdown script that renders the supplemental materials (executed from the main script)
     + *gp-participant-flowchart.png*: Figure that was created externally and is loaded into R in the main script
@@ -68,7 +65,7 @@ Mac users might get an error message here that a certain directory is not writab
 `if(!"devtools" %in% rownames(installed.packages())) install.packages("devtools")`  
 `devtools::install_github("crsh/papaja")`  
 `remotes::install_github("mariusbarth/papaja@devel")`  
-When installing *devtools* or one of the packages not on CRAN, you might get asked for updates of packages or "Do you want to install from sources the packages which need compilation?". I usually answer "Yes" / "All". Sometimes, though, the installation fails nonetheless. In this case trial & error between the different options usually leads me to a successful installation. It can also be helpful to "Restart R" (under Session) between steps.  
+When installing *devtools* or one of the packages not on CRAN, you might get asked for updates of packages or "Do you want to install from sources the packages which need compilation?". This can unfortunately sometimes require a bit of trial & error between the different options until successful installation. Usually, answering "Yes" / "All" throughout works fine. It can also be helpful to "Restart R" (under Session) between steps.  
 5. Install package *citr* which is currently not on CRAN (https://github.com/crsh/citr/). Execute in the R console:  
 `devtools::install_github("crsh/citr")`  
 If this fails (on Windows), try the following steps: "Restart R" (under Session), and then type into the console `install.packages("cachem")`. Choose Option 3 (no update) when prompted. Then re-try the install command for *citr*.  
