@@ -52,8 +52,8 @@ note: "\\clearpage"
 authornote: |
   Authornote1  
   Authornote2  
-  Authornote3
-  Authornote4 
+  Authornote3  
+  Authornote4  
 
 abstract: |
  Intergenerational relations have received increased attention in the context of population aging and increased childcare provision by grandparents. However, few studies have investigated the psychological consequences of becoming a grandparent. For the Big Five personality traits, the transition to grandparenthood has been proposed as a developmental task in middle adulthood and old age that contributes to personality development through the adoption of a new role---in line with the social investment principle. In this preregistered study, we used nationally representative panel data from the Netherlands (*N* = 520) and the United States (*N* = 2,239) to analyze first-time grandparents' development of the Big Five and life satisfaction in terms of mean-level changes, interindividual differences in change, and rank-order stability. We tested gender, paid work, and grandchild care as moderators of change trajectories. To address confounding bias, we employed propensity score matching using two procedures: matching grandparents with parents and with nonparents to achieve balance in different sets of carefully selected covariates. Longitudinal multilevel models demonstrated relative stability in the Big Five and life satisfaction over the transition to grandparenthood, and no consistent moderation effects. The few small effects of grandparenthood on personality development did not replicate across samples. Contrary to expectations, we also found no consistent evidence of larger interindividual differences in change in grandparents compared to the controls or of lower rank-order stability. Our findings add to recent critical re-examinations of the social investment principle and are discussed in light of characteristics of grandparenthood that might moderate personality development.  

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  25 SEP 2021 13:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  25 SEP 2021 13:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2153,7 +2153,7 @@ Package rerunfilecheck Info: File `gp-manuscript-papaja.out' has not changed.
 Here is how much of TeX's memory you used:
  25737 strings out of 480962
  469418 string characters out of 5906169
- 838001 words of memory out of 5000000
+ 838002 words of memory out of 5000000
  41905 multiletter control sequences out of 15000+600000
  496100 words of font info for 104 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -2211,7 +2211,7 @@ ts/type1/public/lm/lmri10.pfb></Users/michaelkramer/Library/TinyTeX/texmf-dist/
 fonts/type1/public/lm/lmri12.pfb></Users/michaelkramer/Library/TinyTeX/texmf-di
 st/fonts/type1/public/lm/lmss8.pfb></Users/michaelkramer/Library/TinyTeX/texmf-
 dist/fonts/type1/public/lm/lmsy10.pfb>
-Output written on gp-manuscript-papaja.pdf (177 pages, 3222236 bytes).
+Output written on gp-manuscript-papaja.pdf (177 pages, 3222229 bytes).
 PDF statistics:
  2030 PDF objects out of 2073 (max. 8388607)
  1710 compressed objects within 18 object streams
