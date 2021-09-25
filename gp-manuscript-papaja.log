@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  25 SEP 2021 12:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  25 SEP 2021 13:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1159,7 +1159,7 @@ LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 2
 (/Users/michaelkramer/Library/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [12] [13] [14] [15] [16]
-<Figs/flowchart-participant-1.pdf, id=265, 505.89pt x 505.89pt>
+<Figs/flowchart-participant-1.pdf, id=260, 505.89pt x 505.89pt>
 File: Figs/flowchart-participant-1.pdf Graphic file (type pdf)
 <use Figs/flowchart-participant-1.pdf>
 Package pdftex.def Info: Figs/flowchart-participant-1.pdf  used on input line 2
@@ -1202,13 +1202,13 @@ Overfull \hbox (10.13573pt too wide) in alignment at lines 370--375
 ] [25
 
 ] [26]
-<Figs/effects-basic-plot-1.pdf, id=354, 578.16pt x 433.62pt>
+<Figs/effects-basic-plot-1.pdf, id=349, 578.16pt x 433.62pt>
 File: Figs/effects-basic-plot-1.pdf Graphic file (type pdf)
 <use Figs/effects-basic-plot-1.pdf>
 Package pdftex.def Info: Figs/effects-basic-plot-1.pdf  used on input line 406.
 
 (pdftex.def)             Requested size: 469.75385pt x 352.31538pt.
-<Figs/effects-gender-plot-1.pdf, id=367, 578.16pt x 650.43pt>
+<Figs/effects-gender-plot-1.pdf, id=362, 578.16pt x 650.43pt>
 File: Figs/effects-gender-plot-1.pdf Graphic file (type pdf)
 <use Figs/effects-gender-plot-1.pdf>
 Package pdftex.def Info: Figs/effects-gender-plot-1.pdf  used on input line 414
@@ -1221,7 +1221,7 @@ df>] [30] [31
 
 
 ] [33]
-<Figs/H1-agree-fig-1.pdf, id=480, 505.89pt x 650.43pt>
+<Figs/H1-agree-fig-1.pdf, id=475, 505.89pt x 650.43pt>
 File: Figs/H1-agree-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-agree-fig-1.pdf>
 Package pdftex.def Info: Figs/H1-agree-fig-1.pdf  used on input line 564.
@@ -1233,7 +1233,7 @@ LaTeX Warning: Float too large for page by 66.28012pt on input line 566.
 
 
 ]
-<Figs/H1-agree-care-fig-1.pdf, id=496, 505.89pt x 433.62pt>
+<Figs/H1-agree-care-fig-1.pdf, id=491, 505.89pt x 433.62pt>
 File: Figs/H1-agree-care-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-agree-care-fig-1.pdf>
 Package pdftex.def Info: Figs/H1-agree-care-fig-1.pdf  used on input line 616.
@@ -1243,7 +1243,7 @@ Package pdftex.def Info: Figs/H1-agree-care-fig-1.pdf  used on input line 616.
  <./Figs/H1-agree-care-fig-1.pdf>] [37] [38
 
 ]
-<Figs/H1-con-fig-1.pdf, id=558, 505.89pt x 650.43pt>
+<Figs/H1-con-fig-1.pdf, id=553, 505.89pt x 650.43pt>
 File: Figs/H1-con-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-con-fig-1.pdf>
 Package pdftex.def Info: Figs/H1-con-fig-1.pdf  used on input line 690.
@@ -1255,7 +1255,7 @@ LaTeX Warning: Float too large for page by 66.28012pt on input line 692.
 
 
 ]
-<Figs/H1-con-care-fig-1.pdf, id=574, 505.89pt x 433.62pt>
+<Figs/H1-con-care-fig-1.pdf, id=569, 505.89pt x 433.62pt>
 File: Figs/H1-con-care-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-con-care-fig-1.pdf>
 Package pdftex.def Info: Figs/H1-con-care-fig-1.pdf  used on input line 742.
@@ -1265,7 +1265,7 @@ Package pdftex.def Info: Figs/H1-con-care-fig-1.pdf  used on input line 742.
  <./Figs/H1-con-care-fig-1.pdf>] [42] [43
 
 ]
-<Figs/H1-neur-fig-1.pdf, id=612, 505.89pt x 650.43pt>
+<Figs/H1-neur-fig-1.pdf, id=607, 505.89pt x 650.43pt>
 File: Figs/H1-neur-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-neur-fig-1.pdf>
 Package pdftex.def Info: Figs/H1-neur-fig-1.pdf  used on input line 814.
@@ -1883,53 +1883,53 @@ l.5419 \end{lltable}
 
 
 ]
-<Figs/pscore-overlap-1.pdf, id=1500, 505.89pt x 505.89pt>
+<Figs/pscore-overlap-1.pdf, id=1495, 505.89pt x 505.89pt>
 File: Figs/pscore-overlap-1.pdf Graphic file (type pdf)
 <use Figs/pscore-overlap-1.pdf>
 Package pdftex.def Info: Figs/pscore-overlap-1.pdf  used on input line 5428.
 (pdftex.def)             Requested size: 469.76265pt x 469.76265pt.
-<Figs/loess-agree-1.pdf, id=1501, 505.89pt x 505.89pt>
+<Figs/loess-agree-1.pdf, id=1496, 505.89pt x 505.89pt>
 File: Figs/loess-agree-1.pdf Graphic file (type pdf)
 <use Figs/loess-agree-1.pdf>
 Package pdftex.def Info: Figs/loess-agree-1.pdf  used on input line 5438.
 (pdftex.def)             Requested size: 469.76265pt x 469.76265pt.
-<Figs/loess-con-1.pdf, id=1502, 505.89pt x 505.89pt>
+<Figs/loess-con-1.pdf, id=1497, 505.89pt x 505.89pt>
 File: Figs/loess-con-1.pdf Graphic file (type pdf)
 <use Figs/loess-con-1.pdf>
 Package pdftex.def Info: Figs/loess-con-1.pdf  used on input line 5448.
 (pdftex.def)             Requested size: 469.76265pt x 469.76265pt.
-<Figs/loess-extra-1.pdf, id=1503, 505.89pt x 505.89pt>
+<Figs/loess-extra-1.pdf, id=1498, 505.89pt x 505.89pt>
 File: Figs/loess-extra-1.pdf Graphic file (type pdf)
 <use Figs/loess-extra-1.pdf>
 Package pdftex.def Info: Figs/loess-extra-1.pdf  used on input line 5458.
 (pdftex.def)             Requested size: 469.76265pt x 469.76265pt.
-<Figs/loess-neur-1.pdf, id=1504, 505.89pt x 505.89pt>
+<Figs/loess-neur-1.pdf, id=1499, 505.89pt x 505.89pt>
 File: Figs/loess-neur-1.pdf Graphic file (type pdf)
 <use Figs/loess-neur-1.pdf>
 Package pdftex.def Info: Figs/loess-neur-1.pdf  used on input line 5468.
 (pdftex.def)             Requested size: 469.76265pt x 469.76265pt.
-<Figs/loess-open-1.pdf, id=1505, 505.89pt x 505.89pt>
+<Figs/loess-open-1.pdf, id=1500, 505.89pt x 505.89pt>
 File: Figs/loess-open-1.pdf Graphic file (type pdf)
 <use Figs/loess-open-1.pdf>
 Package pdftex.def Info: Figs/loess-open-1.pdf  used on input line 5478.
 (pdftex.def)             Requested size: 469.76265pt x 469.76265pt.
-<Figs/loess-swls-1.pdf, id=1506, 505.89pt x 505.89pt>
+<Figs/loess-swls-1.pdf, id=1501, 505.89pt x 505.89pt>
 File: Figs/loess-swls-1.pdf Graphic file (type pdf)
 <use Figs/loess-swls-1.pdf>
 Package pdftex.def Info: Figs/loess-swls-1.pdf  used on input line 5488.
 (pdftex.def)             Requested size: 469.76265pt x 469.76265pt.
-<Figs/H1-agree-work-fig-1.pdf, id=1507, 505.89pt x 433.62pt>
+<Figs/H1-agree-work-fig-1.pdf, id=1502, 505.89pt x 433.62pt>
 File: Figs/H1-agree-work-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-agree-work-fig-1.pdf>
 Package pdftex.def Info: Figs/H1-agree-work-fig-1.pdf  used on input line 5504.
 
 (pdftex.def)             Requested size: 469.76265pt x 402.65372pt.
-<Figs/H1-con-work-fig-1.pdf, id=1510, 505.89pt x 433.62pt>
+<Figs/H1-con-work-fig-1.pdf, id=1505, 505.89pt x 433.62pt>
 File: Figs/H1-con-work-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-con-work-fig-1.pdf>
 Package pdftex.def Info: Figs/H1-con-work-fig-1.pdf  used on input line 5526.
 (pdftex.def)             Requested size: 469.76265pt x 402.65372pt.
-<Figs/H1-extra-fig-1.pdf, id=1513, 505.89pt x 650.43pt>
+<Figs/H1-extra-fig-1.pdf, id=1508, 505.89pt x 650.43pt>
 File: Figs/H1-extra-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-extra-fig-1.pdf>
 Package pdftex.def Info: Figs/H1-extra-fig-1.pdf  used on input line 5546.
@@ -1937,29 +1937,29 @@ Package pdftex.def Info: Figs/H1-extra-fig-1.pdf  used on input line 5546.
 
 LaTeX Warning: Float too large for page by 66.28012pt on input line 5553.
 
-<Figs/H1-extra-work-fig-1.pdf, id=1514, 505.89pt x 433.62pt>
+<Figs/H1-extra-work-fig-1.pdf, id=1509, 505.89pt x 433.62pt>
 File: Figs/H1-extra-work-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-extra-work-fig-1.pdf>
 Package pdftex.def Info: Figs/H1-extra-work-fig-1.pdf  used on input line 5566.
 
 (pdftex.def)             Requested size: 469.76265pt x 402.65372pt.
-<Figs/H1-extra-care-fig-1.pdf, id=1517, 505.89pt x 433.62pt>
+<Figs/H1-extra-care-fig-1.pdf, id=1512, 505.89pt x 433.62pt>
 File: Figs/H1-extra-care-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-extra-care-fig-1.pdf>
 Package pdftex.def Info: Figs/H1-extra-care-fig-1.pdf  used on input line 5587.
 
 (pdftex.def)             Requested size: 469.76265pt x 402.65372pt.
-<Figs/H1-neur-work-fig-1.pdf, id=1520, 505.89pt x 433.62pt>
+<Figs/H1-neur-work-fig-1.pdf, id=1515, 505.89pt x 433.62pt>
 File: Figs/H1-neur-work-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-neur-work-fig-1.pdf>
 Package pdftex.def Info: Figs/H1-neur-work-fig-1.pdf  used on input line 5608.
 (pdftex.def)             Requested size: 469.76265pt x 402.65372pt.
-<Figs/H1-neur-care-fig-1.pdf, id=1523, 505.89pt x 433.62pt>
+<Figs/H1-neur-care-fig-1.pdf, id=1518, 505.89pt x 433.62pt>
 File: Figs/H1-neur-care-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-neur-care-fig-1.pdf>
 Package pdftex.def Info: Figs/H1-neur-care-fig-1.pdf  used on input line 5629.
 (pdftex.def)             Requested size: 469.76265pt x 402.65372pt.
-<Figs/H1-open-fig-1.pdf, id=1526, 505.89pt x 650.43pt>
+<Figs/H1-open-fig-1.pdf, id=1521, 505.89pt x 650.43pt>
 File: Figs/H1-open-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-open-fig-1.pdf>
 Package pdftex.def Info: Figs/H1-open-fig-1.pdf  used on input line 5648.
@@ -1967,17 +1967,17 @@ Package pdftex.def Info: Figs/H1-open-fig-1.pdf  used on input line 5648.
 
 LaTeX Warning: Float too large for page by 66.28012pt on input line 5655.
 
-<Figs/H1-open-work-fig-1.pdf, id=1527, 505.89pt x 433.62pt>
+<Figs/H1-open-work-fig-1.pdf, id=1522, 505.89pt x 433.62pt>
 File: Figs/H1-open-work-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-open-work-fig-1.pdf>
 Package pdftex.def Info: Figs/H1-open-work-fig-1.pdf  used on input line 5668.
 (pdftex.def)             Requested size: 469.76265pt x 402.65372pt.
-<Figs/H1-open-care-fig-1.pdf, id=1530, 505.89pt x 433.62pt>
+<Figs/H1-open-care-fig-1.pdf, id=1525, 505.89pt x 433.62pt>
 File: Figs/H1-open-care-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-open-care-fig-1.pdf>
 Package pdftex.def Info: Figs/H1-open-care-fig-1.pdf  used on input line 5689.
 (pdftex.def)             Requested size: 469.76265pt x 402.65372pt.
-<Figs/H1-swls-fig-1.pdf, id=1533, 505.89pt x 650.43pt>
+<Figs/H1-swls-fig-1.pdf, id=1528, 505.89pt x 650.43pt>
 File: Figs/H1-swls-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-swls-fig-1.pdf>
 Package pdftex.def Info: Figs/H1-swls-fig-1.pdf  used on input line 5708.
@@ -1985,12 +1985,12 @@ Package pdftex.def Info: Figs/H1-swls-fig-1.pdf  used on input line 5708.
 
 LaTeX Warning: Float too large for page by 66.28012pt on input line 5715.
 
-<Figs/H1-swls-work-fig-1.pdf, id=1534, 505.89pt x 433.62pt>
+<Figs/H1-swls-work-fig-1.pdf, id=1529, 505.89pt x 433.62pt>
 File: Figs/H1-swls-work-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-swls-work-fig-1.pdf>
 Package pdftex.def Info: Figs/H1-swls-work-fig-1.pdf  used on input line 5728.
 (pdftex.def)             Requested size: 469.76265pt x 402.65372pt.
-<Figs/H1-swls-care-fig-1.pdf, id=1537, 505.89pt x 433.62pt>
+<Figs/H1-swls-care-fig-1.pdf, id=1532, 505.89pt x 433.62pt>
 File: Figs/H1-swls-care-fig-1.pdf Graphic file (type pdf)
 <use Figs/H1-swls-care-fig-1.pdf>
 Package pdftex.def Info: Figs/H1-swls-care-fig-1.pdf  used on input line 5749.
@@ -2151,10 +2151,10 @@ Package rerunfilecheck Info: File `gp-manuscript-papaja.out' has not changed.
 (rerunfilecheck)             Checksum: CCF0B49DEFCC611C92ED8D294A841A23;5286.
  ) 
 Here is how much of TeX's memory you used:
- 25769 strings out of 480962
- 470237 string characters out of 5906169
- 839582 words of memory out of 5000000
- 41937 multiletter control sequences out of 15000+600000
+ 25737 strings out of 480962
+ 469418 string characters out of 5906169
+ 838001 words of memory out of 5000000
+ 41905 multiletter control sequences out of 15000+600000
  496100 words of font info for 104 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  102i,19n,103p,2535b,771s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2211,10 +2211,10 @@ ts/type1/public/lm/lmri10.pfb></Users/michaelkramer/Library/TinyTeX/texmf-dist/
 fonts/type1/public/lm/lmri12.pfb></Users/michaelkramer/Library/TinyTeX/texmf-di
 st/fonts/type1/public/lm/lmss8.pfb></Users/michaelkramer/Library/TinyTeX/texmf-
 dist/fonts/type1/public/lm/lmsy10.pfb>
-Output written on gp-manuscript-papaja.pdf (177 pages, 3224495 bytes).
+Output written on gp-manuscript-papaja.pdf (177 pages, 3222236 bytes).
 PDF statistics:
- 2035 PDF objects out of 2073 (max. 8388607)
- 1715 compressed objects within 18 object streams
+ 2030 PDF objects out of 2073 (max. 8388607)
+ 1710 compressed objects within 18 object streams
  493 named destinations out of 1000 (max. 500000)
  441 words of extra memory for PDF output out of 10000 (max. 10000000)
 
