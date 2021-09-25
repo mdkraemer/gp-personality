@@ -3930,7 +3930,7 @@ plot_grid(title_liss, loess_plot_swls_liss, title_HRS, loess_plot_swls_hrs,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:H1-agree-work-fig-cap) Change trajectories of `r df_outcomes["agree", "min"]` based on the models of moderation by paid work (see Table \@ref(tab:H1-agree-work-tab)). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-agree-fig) (basic models) and added here for better comparability.
+(ref:H1-agree-work-fig-cap) Change trajectories of `r df_outcomes["agree", "min"]` based on the models of moderation by paid work (see Table \@ref(tab:H1-agree-work-tab)). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-agree-fig) (basic models) and added here for better comparability.
 
 ```{r H1-agree-work-fig, fig.cap = "(ref:H1-agree-work-fig-cap)", fig.height=6, fig.width=7, cache=T}
 # extract the legends
@@ -3961,7 +3961,7 @@ plot_grid(title_HRS, grid_agree_work,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:H1-con-work-fig-cap) Change trajectories of `r df_outcomes["con", "min"]` based on the models of moderation by paid work (see Table \@ref(tab:H1-con-work-tab)). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-con-fig) (basic models) and added here for better comparability.
+(ref:H1-con-work-fig-cap) Change trajectories of `r df_outcomes["con", "min"]` based on the models of moderation by paid work (see Table \@ref(tab:H1-con-work-tab)). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-con-fig) (basic models) and added here for better comparability.
 
 ```{r H1-con-work-fig, fig.cap = "(ref:H1-con-work-fig-cap)", fig.height=6, fig.width=7, cache=T}
 # extract the legends
@@ -3992,7 +3992,7 @@ plot_grid(title_HRS, grid_con_work,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:H1-extra-fig-cap) Change trajectories of `r df_outcomes["extra", "min"]` based on the basic models (left column) and the models including the gender interaction (right column). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
+(ref:H1-extra-fig-cap) Change trajectories of `r df_outcomes["extra", "min"]` based on the basic models (left column) and the models including the gender interaction (right column). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
 
 ```{r H1-extra-fig, fig.cap = "(ref:H1-extra-fig-cap)", fig.height=9, fig.width=7, cache=T}
 # extract the legends
@@ -4037,7 +4037,7 @@ plot_grid(title_liss, grid_extra_liss, title_HRS, grid_extra_hrs,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:H1-extra-work-fig-cap) Change trajectories of `r df_outcomes["extra", "min"]` based on the models of moderation by paid work (see Table \@ref(tab:H1-extra-work-tab)). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-extra-fig) (basic models) and added here for better comparability.
+(ref:H1-extra-work-fig-cap) Change trajectories of `r df_outcomes["extra", "min"]` based on the models of moderation by paid work (see Table \@ref(tab:H1-extra-work-tab)). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-extra-fig) (basic models) and added here for better comparability.
 
 ```{r H1-extra-work-fig, fig.cap = "(ref:H1-extra-work-fig-cap)", fig.height=6, fig.width=7, cache=T}
 # extract the legends
@@ -4068,7 +4068,7 @@ plot_grid(title_HRS, grid_extra_work,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:H1-extra-care-fig-cap) Change trajectories of `r df_outcomes["extra", "min"]` based on the models of moderation by grandchild care (see Table \@ref(tab:H1-extra-care-tab)). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figure \@ref(fig:H1-extra-fig) (basic models) but restricted to the post-transition period for better comparability.
+(ref:H1-extra-care-fig-cap) Change trajectories of `r df_outcomes["extra", "min"]` based on the models of moderation by grandchild care (see Table \@ref(tab:H1-extra-care-tab)). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figure \@ref(fig:H1-extra-fig) (basic models) but restricted to the post-transition period for better comparability.
 
 ```{r H1-extra-care-fig, fig.cap = "(ref:H1-extra-care-fig-cap)", fig.height=6, fig.width=7, cache=T}
 # extract the legends 
@@ -4099,7 +4099,7 @@ plot_grid(title_HRS, grid_extra_care,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:H1-neur-work-fig-cap) Change trajectories of `r df_outcomes["neur", "min"]` based on the models of moderation by paid work (see Table \@ref(tab:H1-neur-work-tab)). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-neur-fig) (basic models) and added here for better comparability.
+(ref:H1-neur-work-fig-cap) Change trajectories of `r df_outcomes["neur", "min"]` based on the models of moderation by paid work (see Table \@ref(tab:H1-neur-work-tab)). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-neur-fig) (basic models) and added here for better comparability.
 
 ```{r H1-neur-work-fig, fig.cap = "(ref:H1-neur-work-fig-cap)", fig.height=6, fig.width=7, cache=T}
 # extract the legends
@@ -4130,7 +4130,7 @@ plot_grid(title_HRS, grid_neur_work,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:H1-neur-care-fig-cap) Change trajectories of `r df_outcomes["neur", "min"]` based on the models of moderation by grandchild care (see Table \@ref(tab:H1-neur-care-tab)). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figure \@ref(fig:H1-neur-fig) (basic models) but restricted to the post-transition period for better comparability.
+(ref:H1-neur-care-fig-cap) Change trajectories of `r df_outcomes["neur", "min"]` based on the models of moderation by grandchild care (see Table \@ref(tab:H1-neur-care-tab)). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figure \@ref(fig:H1-neur-fig) (basic models) but restricted to the post-transition period for better comparability.
 
 ```{r H1-neur-care-fig, fig.cap = "(ref:H1-neur-care-fig-cap)", fig.height=6, fig.width=7, cache=T}
 # extract the legends 
@@ -4161,7 +4161,7 @@ plot_grid(title_HRS, grid_neur_care,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:H1-open-fig-cap) Change trajectories of `r df_outcomes["open", "min"]` based on the basic models (left column) and the models including the gender interaction (right column). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
+(ref:H1-open-fig-cap) Change trajectories of `r df_outcomes["open", "min"]` based on the basic models (left column) and the models including the gender interaction (right column). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
 
 ```{r H1-open-fig, fig.cap = "(ref:H1-open-fig-cap)", fig.height=9, fig.width=7, cache=T}
 # extract the legends
@@ -4206,7 +4206,7 @@ plot_grid(title_liss, grid_open_liss, title_HRS, grid_open_hrs,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:H1-open-work-fig-cap) Change trajectories of `r df_outcomes["open", "min"]` based on the models of moderation by paid work (see Table \@ref(tab:H1-open-work-tab)). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-open-fig) (basic models) and added here for better comparability.
+(ref:H1-open-work-fig-cap) Change trajectories of `r df_outcomes["open", "min"]` based on the models of moderation by paid work (see Table \@ref(tab:H1-open-work-tab)). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-open-fig) (basic models) and added here for better comparability.
 
 ```{r H1-open-work-fig, fig.cap = "(ref:H1-open-work-fig-cap)", fig.height=6, fig.width=7, cache=T}
 # extract the legends
@@ -4237,7 +4237,7 @@ plot_grid(title_HRS, grid_open_work,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:H1-open-care-fig-cap) Change trajectories of `r df_outcomes["open", "min"]` based on the models of moderation by grandchild care (see Table \@ref(tab:H1-open-care-tab)). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figure \@ref(fig:H1-open-fig) (basic models) but restricted to the post-transition period for better comparability.
+(ref:H1-open-care-fig-cap) Change trajectories of `r df_outcomes["open", "min"]` based on the models of moderation by grandchild care (see Table \@ref(tab:H1-open-care-tab)). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figure \@ref(fig:H1-open-fig) (basic models) but restricted to the post-transition period for better comparability.
 
 ```{r H1-open-care-fig, fig.cap = "(ref:H1-open-care-fig-cap)", fig.height=6, fig.width=7, cache=T}
 # extract the legends 
@@ -4268,7 +4268,7 @@ plot_grid(title_HRS, grid_open_care,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:H1-swls-fig-cap) Change trajectories of `r df_outcomes["swls", "min"]` based on the basic models (left column) and the models including the gender interaction (right column). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
+(ref:H1-swls-fig-cap) Change trajectories of `r df_outcomes["swls", "min"]` based on the basic models (left column) and the models including the gender interaction (right column). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
 
 ```{r H1-swls-fig, fig.cap = "(ref:H1-swls-fig-cap)", fig.height=9, fig.width=7, cache=T}
 # extract the legends
@@ -4313,7 +4313,7 @@ plot_grid(title_liss, grid_swls_liss, title_HRS, grid_swls_hrs,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:H1-swls-work-fig-cap) Change trajectories of `r df_outcomes["swls", "min"]` based on the models of moderation by paid work (see Table \@ref(tab:H1-swls-work-tab)). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-swls-fig) (basic models) and added here for better comparability.
+(ref:H1-swls-work-fig-cap) Change trajectories of `r df_outcomes["swls", "min"]` based on the models of moderation by paid work (see Table \@ref(tab:H1-swls-work-tab)). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-swls-fig) (basic models) and added here for better comparability.
 
 ```{r H1-swls-work-fig, fig.cap = "(ref:H1-swls-work-fig-cap)", fig.height=6, fig.width=7, cache=T}
 # extract the legends
@@ -4344,7 +4344,7 @@ plot_grid(title_HRS, grid_swls_work,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:H1-swls-care-fig-cap) Change trajectories of `r df_outcomes["swls", "min"]` based on the models of moderation by grandchild care (see Table \@ref(tab:H1-swls-care-tab)). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figure \@ref(fig:H1-swls-fig) (basic models) but restricted to the post-transition period for better comparability.
+(ref:H1-swls-care-fig-cap) Change trajectories of `r df_outcomes["swls", "min"]` based on the models of moderation by grandchild care (see Table \@ref(tab:H1-swls-care-tab)). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figure \@ref(fig:H1-swls-fig) (basic models) but restricted to the post-transition period for better comparability.
 
 ```{r H1-swls-care-fig, fig.cap = "(ref:H1-swls-care-fig-cap)", fig.height=6, fig.width=7, cache=T}
 # extract the legends 
@@ -4376,7 +4376,7 @@ plot_grid(title_HRS, grid_swls_care,
 ```
 
 <!-- # the following figures are no longer needed for the main version of the appendix
-(ref:H1-agree-restr-fig-cap) Change trajectories of `r df_outcomes["agree", "min"]` based on the *restricted* (time [-2, 6]) basic models (left column) and the models including the gender interaction (right column). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
+(ref:H1-agree-restr-fig-cap) Change trajectories of `r df_outcomes["agree", "min"]` based on the *restricted* (time [-2, 6]) basic models (left column) and the models including the gender interaction (right column). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
 
 ```{r H1-agree-restr-fig, fig.cap = "(ref:H1-agree-restr-fig-cap)", fig.height=9, fig.width=7, cache=T}
 # add the legend to the row we made earlier - adjust width via rel_widths
@@ -4407,7 +4407,7 @@ plot_grid(title_liss, grid_restr_agree_liss, title_HRS, grid_restr_agree_hrs,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:H1-con-restr-fig-cap) Change trajectories of `r df_outcomes["con", "min"]` based on the *restricted* (time [-2, 6]) basic models (left column) and the models including the gender interaction (right column). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
+(ref:H1-con-restr-fig-cap) Change trajectories of `r df_outcomes["con", "min"]` based on the *restricted* (time [-2, 6]) basic models (left column) and the models including the gender interaction (right column). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
 
 ```{r H1-con-restr-fig, fig.cap = "(ref:H1-con-restr-fig-cap)", fig.height=9, fig.width=7, cache=T}
 # add the legend to the row we made earlier - adjust width via rel_widths
@@ -4438,7 +4438,7 @@ plot_grid(title_liss, grid_restr_con_liss, title_HRS, grid_restr_con_hrs,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:H1-extra-restr-fig-cap) Change trajectories of `r df_outcomes["extra", "min"]` based on the *restricted* (time [-2, 6]) basic models (left column) and the models including the gender interaction (right column). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
+(ref:H1-extra-restr-fig-cap) Change trajectories of `r df_outcomes["extra", "min"]` based on the *restricted* (time [-2, 6]) basic models (left column) and the models including the gender interaction (right column). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
 
 ```{r H1-extra-restr-fig, fig.cap = "(ref:H1-extra-restr-fig-cap)", fig.height=9, fig.width=7, cache=T}
 # add the legend to the row we made earlier - adjust width via rel_widths
@@ -4469,7 +4469,7 @@ plot_grid(title_liss, grid_restr_extra_liss, title_HRS, grid_restr_extra_hrs,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:H1-neur-restr-fig-cap) Change trajectories of `r df_outcomes["neur", "min"]` based on the *restricted* (time [-2, 6]) basic models (left column) and the models including the gender interaction (right column). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
+(ref:H1-neur-restr-fig-cap) Change trajectories of `r df_outcomes["neur", "min"]` based on the *restricted* (time [-2, 6]) basic models (left column) and the models including the gender interaction (right column). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
 
 ```{r H1-neur-restr-fig, fig.cap = "(ref:H1-neur-restr-fig-cap)", fig.height=9, fig.width=7, cache=T}
 # add the legend to the row we made earlier - adjust width via rel_widths
@@ -4500,7 +4500,7 @@ plot_grid(title_liss, grid_restr_neur_liss, title_HRS, grid_restr_neur_hrs,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:H1-open-restr-fig-cap) Change trajectories of `r df_outcomes["open", "min"]` based on the *restricted* (time [-2, 6]) basic models (left column) and the models including the gender interaction (right column). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
+(ref:H1-open-restr-fig-cap) Change trajectories of `r df_outcomes["open", "min"]` based on the *restricted* (time [-2, 6]) basic models (left column) and the models including the gender interaction (right column). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
 
 ```{r H1-open-restr-fig, fig.cap = "(ref:H1-open-restr-fig-cap)", fig.height=9, fig.width=7, cache=T}
 # add the legend to the row we made earlier - adjust width via rel_widths
@@ -4531,7 +4531,7 @@ plot_grid(title_liss, grid_restr_open_liss, title_HRS, grid_restr_open_hrs,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:H1-swls-restr-fig-cap) Change trajectories of `r df_outcomes["swls", "min"]` based on the *restricted* (time [-2, 6]) basic models (left column) and the models including the gender interaction (right column). The error bars are 95% confidence intervals of the predicted values which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
+(ref:H1-swls-restr-fig-cap) Change trajectories of `r df_outcomes["swls", "min"]` based on the *restricted* (time [-2, 6]) basic models (left column) and the models including the gender interaction (right column). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
 
 ```{r H1-swls-restr-fig, fig.cap = "(ref:H1-swls-restr-fig-cap)", fig.height=9, fig.width=7, cache=T}
 # add the legend to the row we made earlier - adjust width via rel_widths
