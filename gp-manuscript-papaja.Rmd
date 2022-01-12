@@ -6,7 +6,7 @@ shorttitle        : "Grandparenthood, Big Five, and Life Satisfaction"
 
 author: 
   - name          : "Author1" 
-    affiliation   : "1,2"
+    affiliation   : "1,2,3"
     corresponding : yes    # Define only one corresponding author
     address       : "Address1"
     email         : "Email1"
@@ -19,17 +19,17 @@ author:
       - Writing - Original Draft Preparation
       - Writing - Review & Editing
   - name          : "Author2"
-    affiliation   : "3"
-    role:
-      - Methodology
-      - Writing - Review & Editing
-  - name          : "Author3"
     affiliation   : "4"
     role:
       - Methodology
       - Writing - Review & Editing
+  - name          : "Author3"
+    affiliation   : "5"
+    role:
+      - Methodology
+      - Writing - Review & Editing
   - name          : "Author4"
-    affiliation   : "1,4"
+    affiliation   : "1,3"
     role:
       - Supervision
       - Methodology
@@ -88,7 +88,7 @@ header-includes:
   - \captionsetup[figure]{font={stretch=1.5}}
   - \renewcommand\author[1]{} # these four lines are to prevent "and &" on title page
   - \renewcommand\affiliation[1]{}
-  - \authorsnames[{1,2}, 3, 4, {1,5}]{Author1, Author2, Author3, Author4}
+  - \authorsnames[{1,2,3}, 4, 5, {1,3}]{Author1, Author2, Author3, Author4}
   - \authorsaffiliations{{Institution1}, {Institution2}, {Institution3}, {Institution4}, {Institution5}}
   - \raggedbottom # prevents LaTeX from varying the spacing between paragraphs to minimise empty space on pages
 #  - \usepackage{floatrow}  # https://github.com/crsh/papaja/issues/342
@@ -3447,7 +3447,7 @@ apa_table(
 ```
 
 \noindent
-control groups (parents and nonparents). We found suggestive evidence that grandparents providing substantial grandchild care increased slightly more strongly in conscientiousness and decreased slightly more strongly in neuroticism than grandparents who did not (H1b), as well as partial evidence for moderation of mean-level trajectories of conscientiousness, neuroticism, and openness by performing paid work. There was no consistent evidence that grandmothers reached higher levels of life satisfaction following the transition to grandparenthood (H1c). Although interindividual differences in change were present for all parameters of change, they were only greater in the grandparents compared to the controls in a small minority of the model comparisons conducted (H2). Finally, rank-order stability did not differ between grandparents and either control group, or it was larger in the control group---contrary to expectations (H3).  
+control groups (parents and nonparents). We found suggestive evidence that grandparents providing substantial grandchild care increased slightly more strongly in conscientiousness and decreased slightly more strongly in neuroticism than grandparents who did not (H1b), as well as partial evidence for moderation of mean-level trajectories of conscientiousness, neuroticism, and openness by performing paid work. There was no consistent evidence that grandmothers reached higher levels of life satisfaction following the transition to grandparenthood (H1c). Although interindividual differences in change were present for all parameters of change, they were only greater in the grandparents compared to the controls in a small minority of the model comparisons conducted (H2). Finally, rank-order stability did not differ between grandparents and either control group, or it was lower<!-- 'larger' in the submitted version --> in the control group---contrary to expectations (H3).  
 
 ## Social Investment Principle
 
