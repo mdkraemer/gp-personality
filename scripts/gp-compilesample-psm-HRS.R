@@ -3,9 +3,11 @@
 # run 'gp-compilesample-imp-HRS.R' first to obtain the files that are loaded here 
 # (imputations have a very long run time)
 
-library(tidyverse)
+library(tidyverse) 
 library(MatchIt)
 library(readxl)
+
+set.seed(3000)
 
 # load .rda
 load(file = "data/processed/HRS/hrslong_cleaned.rda")
@@ -93,7 +95,7 @@ impdata <- impdata %>%
               kid3educ = ifelse(thirdkid==1, KAEDUC_3, 0),
               livetogether = ifelse(livetogether %in% c(1,3), 1, 0)
   )) %>%
-  map(~select(., -c(birthyr, race, laborforce, marital, children10m, farmranch, ownrent,
+  map(~dplyr::select(., -c(birthyr, race, laborforce, marital, children10m, farmranch, ownrent,
               difficultybills, bornusa, safetyneighborhood, secondhome,
               hhincome, hhwealth, selfratedhealth, attendreligion, 
               typehome, rooms, jobstatus, gender, coupleness, 
@@ -172,7 +174,7 @@ hrsimp_matching_1 %>%
 hrsimp_parents_ps_1 <- hrsimp_matching_1 %>% 
   filter((grandparent==1 & nokids==0 & valid==-1 & droplater==F & !is.na(kid1age)) | 
          (grandparent==0 & nokids==0 & kid1age %in% c(15:65))) %>% 
-  select(-c(droplater, time, valid, nokids))
+  dplyr::select(-c(droplater, time, valid, nokids))
 # two GP observations (500298010, 500298020) have NA for kid1age
 hrslongvalid %>% filter(HHIDPN %in% c(500298010, 500298020)) %>% print(width=Inf)
 # these report having kids for the first time in 2014 (but have personality assessments at 2008, 2012, 2016)
@@ -187,6 +189,10 @@ if(nrow(hrs_sampleflow_gp)==3){ # added this condition in case I only execute th
   hrs_sampleflow_gp[nrow(hrs_sampleflow_gp)+1, ] <- 
     c(4, (hrsimp_parents_ps_1 %>% group_by(grandparent) %>% summarise(n = n(), N = n_distinct(HHIDPN)))[2,3]) # add step 4
 }
+if(nrow(hrs_sampleflow_gp)==4){ # update existing row (if script is run more than once)
+  hrs_sampleflow_gp[4, ] <- 
+    c(4, (hrsimp_parents_ps_1 %>% group_by(grandparent) %>% summarise(n = n(), N = n_distinct(HHIDPN)))[2,3]) # add step 4
+}
 save(hrs_sampleflow_gp, file = "data/processed/HRS/hrs_sampleflow_gp.rda") # save for later import
 
 # another one for the non-grandparent control subjects
@@ -199,7 +205,7 @@ hrs_sampleflow_nongp[nrow(hrs_sampleflow_nongp)+1, ] <-
 hrsimp_nonparents_ps_1 <- hrsimp_matching_1 %>% 
   filter((grandparent==1 & nokids==0 & valid==-1 & droplater==F & !is.na(kid1age)) | 
          (grandparent %in% c(0, NA) & nokids==1)) %>% 
-  select(-c(droplater, time, valid, nokids, childrenclose, contains("kid"))) %>% 
+  dplyr::select(-c(droplater, time, valid, nokids, childrenclose, contains("kid"))) %>% 
   mutate(grandparent = replace_na(grandparent, 0)) 
 # Because we know that that these respondents have no children, we can infer 
 # that their grandparent status is 0.
@@ -220,48 +226,48 @@ save(hrs_sampleflow_nongp, file = "data/processed/HRS/hrs_sampleflow_nongp.rda")
 hrsimp_parents_ps_2 <- hrsimp_matching_2 %>% 
   filter((grandparent==0 & nokids==0 & kid1age %in% c(15:65)) | 
          (grandparent==1 & nokids==0 & valid==-1 & droplater==F & !is.na(kid1age))) %>% 
-  select(-c(droplater, time, valid, nokids))
+  dplyr::select(-c(droplater, time, valid, nokids))
 
 hrsimp_nonparents_ps_2 <- hrsimp_matching_2 %>% 
   filter((grandparent %in% c(0, NA) & nokids==1) | 
          (grandparent==1 & nokids==0 & valid==-1 & droplater==F & !is.na(kid1age))) %>% 
-  select(-c(droplater, time, valid, nokids, childrenclose, contains("kid"))) %>% 
+  dplyr::select(-c(droplater, time, valid, nokids, childrenclose, contains("kid"))) %>% 
   mutate(grandparent = replace_na(grandparent, 0)) 
 
 # 3
 hrsimp_parents_ps_3 <- hrsimp_matching_3 %>% 
   filter((grandparent==0 & nokids==0 & kid1age %in% c(15:65)) | 
          (grandparent==1 & nokids==0 & valid==-1 & droplater==F & !is.na(kid1age))) %>% 
-  select(-c(droplater, time, valid, nokids))
+  dplyr::select(-c(droplater, time, valid, nokids))
 
 hrsimp_nonparents_ps_3 <- hrsimp_matching_3 %>% 
   filter((grandparent %in% c(0, NA) & nokids==1) | 
          (grandparent==1 & nokids==0 & valid==-1 & droplater==F & !is.na(kid1age))) %>% 
-  select(-c(droplater, time, valid, nokids, childrenclose, contains("kid"))) %>% 
+  dplyr::select(-c(droplater, time, valid, nokids, childrenclose, contains("kid"))) %>% 
   mutate(grandparent = replace_na(grandparent, 0)) 
 
 # 4
 hrsimp_parents_ps_4 <- hrsimp_matching_4 %>% 
   filter((grandparent==0 & nokids==0 & kid1age %in% c(15:65)) | 
          (grandparent==1 & nokids==0 & valid==-1 & droplater==F & !is.na(kid1age))) %>% 
-  select(-c(droplater, time, valid, nokids))
+  dplyr::select(-c(droplater, time, valid, nokids))
 
 hrsimp_nonparents_ps_4 <- hrsimp_matching_4 %>% 
   filter((grandparent %in% c(0, NA) & nokids==1) | 
          (grandparent==1 & nokids==0 & valid==-1 & droplater==F & !is.na(kid1age))) %>% 
-  select(-c(droplater, time, valid, nokids, childrenclose, contains("kid"))) %>% 
+  dplyr::select(-c(droplater, time, valid, nokids, childrenclose, contains("kid"))) %>% 
   mutate(grandparent = replace_na(grandparent, 0)) 
 
 # 5
 hrsimp_parents_ps_5 <- hrsimp_matching_5 %>% 
   filter((grandparent==0 & nokids==0 & kid1age %in% c(15:65)) | 
          (grandparent==1 & nokids==0 & valid==-1 & droplater==F & !is.na(kid1age))) %>% 
-  select(-c(droplater, time, valid, nokids))
+  dplyr::select(-c(droplater, time, valid, nokids))
 
 hrsimp_nonparents_ps_5 <- hrsimp_matching_5 %>% 
   filter((grandparent %in% c(0, NA) & nokids==1) | 
          (grandparent==1 & nokids==0 & valid==-1 & droplater==F & !is.na(kid1age))) %>% 
-  select(-c(droplater, time, valid, nokids, childrenclose, contains("kid"))) %>% 
+  dplyr::select(-c(droplater, time, valid, nokids, childrenclose, contains("kid"))) %>% 
   mutate(grandparent = replace_na(grandparent, 0)) 
 
 
@@ -273,7 +279,7 @@ table(hrsimp_parents_ps_1$grandparent, hrsimp_parents_ps_1$rentother)
 # Therefore, I'll remove all these variables here. (see "Overview covariates.xlsx" -> Sheet "Frequencies")
 remove_infrequent_hrs <- function(x) { 
   x %>% 
-    select(-c(spouseabsent, rentother, homeother), # too infrequent
+    dplyr::select(-c(spouseabsent, rentother, homeother), # too infrequent
            -c(hhmembers, marriagesnum, doctor, hospital, psyche, bmi, cancer, # these are not important (substantively) / or redundant
               diabetes, stroke, heart, hiemployer, higovt, hispousal, hiother, 
               partnered, separated, nevermarried, ranchfarm, rentfree, mobilehome, 
@@ -331,7 +337,7 @@ hrsimp_matching_parents <- hrsimp_parents_ps_2 %>%
 # compute mean propensity score of imp=5 imputed datasets 
 
 hrsimp_matching_parents <- hrsimp_matching_parents %>% 
-  select(HHIDPN, year, female, grandparent, pscore) 
+  dplyr::select(HHIDPN, year, female, grandparent, pscore) 
 
 # 2) Nonparent control group
 ps_model_nonparents <- as.formula("grandparent ~ . - year - female - HHIDPN") # all vars but ...
@@ -360,7 +366,7 @@ hrsimp_matching_nonparents <- hrsimp_nonparents_ps_2 %>%
 # compute mean propensity score of imp=5 imputed datasets 
 
 hrsimp_matching_nonparents <- hrsimp_matching_nonparents %>% 
-  select(HHIDPN, year, female, grandparent, pscore) 
+  dplyr::select(HHIDPN, year, female, grandparent, pscore) 
 
 # to help with memory capacity issues
 rm(h96data, h98data, h00data, h02data, h04data, h06data, 
@@ -376,7 +382,7 @@ table(hrsimp_matching_parents$grandparent, hrsimp_matching_parents$year)
 hrsimp_parents <- left_join(hrsimp_matching_parents, 
                                        hrsimp_matching_1, by=c("HHIDPN", "year")) %>% 
   filter(droplater==F) %>% 
-  select(HHIDPN, year, female.x, grandparent.x, pscore, time, valid) %>% 
+  dplyr::select(HHIDPN, year, female.x, grandparent.x, pscore, time, valid) %>% 
   rename(female = female.x, grandparent = grandparent.x)
 
 table(hrsimp_parents$grandparent, hrsimp_parents$time)
@@ -393,7 +399,7 @@ str(hrs_data_parents)
 hrs_data_parents <- hrs_data_parents %>% group_by(subclass) %>% 
   mutate(time = ifelse(is.na(time), max(time, na.rm = T), time),
          valid = ifelse(is.na(valid), max(valid, na.rm = T), valid)) %>% ungroup %>% 
-  ungroup() %>% select(-weights, -id) # -subclass,  -- need subclass later for recoding of moderator care
+  ungroup() %>% dplyr::select(-weights, -id) # -subclass,  -- need subclass later for recoding of moderator care
 
 # "with replacement" in two ways: 
 # - the same control observation appearing multiple times in the matched data 
@@ -421,16 +427,16 @@ hrs_data_parents <- left_join(hrs_data_parents, hrsimp_parents_ps_1,
 
 # for balance assessment (at the time of matching - using the variables containing imputed values)
 hrs_bal_parents <- hrs_data_parents %>%
-  select(HHIDPN, grandparent, pscore, female, everything(), -time, -year, -valid, -subclass)
+  dplyr::select(HHIDPN, grandparent, pscore, female, everything(), -time, -year, -valid, -subclass)
 
 hrs_data_parents <- hrs_data_parents %>% 
-  select(HHIDPN, year, grandparent, time, valid, pscore, subclass) %>% 
+  dplyr::select(HHIDPN, year, grandparent, time, valid, pscore, subclass) %>% 
   rename(match_year = year, time_match = time, valid_match = valid) %>% 
   mutate(match_number = row_number()) # if we allow duplicate matches, we need an unambiguous identifier for later
 
 # compile analysis sample with all longitudinal observations
 hrsanalysis_parents <- left_join(hrs_data_parents, hrslongvalid,
-                                            by = c("HHIDPN", "grandparent")) %>% select(-droplater)
+                                            by = c("HHIDPN", "grandparent")) %>% dplyr::select(-droplater)
 
 # create time variable for controls relative to the time point of matching 
 hrsanalysis_parents <- hrsanalysis_parents %>% mutate(
@@ -460,14 +466,14 @@ hrsanalysis_parents <- hrsanalysis_parents %>% group_by(match_number) %>%
   mutate(helpcount = row_number()) %>% ungroup()
 hrsanalysis_parents <- hrsanalysis_parents %>% 
   mutate(valid = ifelse(is.na(valid) & grandparent==0, helpcount - lastcount - 1, valid)) %>% 
-  select(-helpcount, -lastcount)
+  dplyr::select(-helpcount, -lastcount)
 
 table(hrsanalysis_parents$grandparent, hrsanalysis_parents$time)
 table(hrsanalysis_parents$grandparent, hrsanalysis_parents$valid)
 table(hrsanalysis_parents$grandparent, hrsanalysis_parents$year)
 
 hrsanalysis_parents <- hrsanalysis_parents %>% filter(time %in% c(-6:6)) %>% 
-  select(-match_year, -valid_match)
+  dplyr::select(-match_year, -valid_match)
 
 # save .rda 
 save(hrsanalysis_parents, file = "data/processed/HRS/hrsanalysis_parents.rda")
@@ -484,7 +490,7 @@ table(hrsimp_matching_nonparents$grandparent, hrsimp_matching_nonparents$year)
 hrsimp_nonparents <- left_join(hrsimp_matching_nonparents, 
                                           hrsimp_matching_1, by=c("HHIDPN", "year")) %>% 
   filter(droplater==F) %>% 
-  select(HHIDPN, year, female.x, grandparent.x, pscore, time, valid) %>% 
+  dplyr::select(HHIDPN, year, female.x, grandparent.x, pscore, time, valid) %>% 
   rename(female = female.x, grandparent = grandparent.x)
 
 table(hrsimp_nonparents$grandparent, hrsimp_nonparents$time)
@@ -501,7 +507,7 @@ str(hrs_data_nonparents)
 hrs_data_nonparents <- hrs_data_nonparents %>% group_by(subclass) %>% 
   mutate(time = ifelse(is.na(time), max(time, na.rm = T), time),
          valid = ifelse(is.na(valid), max(valid, na.rm = T), valid)) %>% ungroup %>% 
-  ungroup() %>% select(-weights, -id) # -subclass,  -- need subclass later for recoding of moderator care
+  ungroup() %>% dplyr::select(-weights, -id) # -subclass,  -- need subclass later for recoding of moderator care
 
 # "with replacement" in two ways: 
 # - the same control observation appearing multiple times in the matched data 
@@ -530,10 +536,10 @@ hrs_data_nonparents <- left_join(hrs_data_nonparents, hrsimp_nonparents_ps_1,
 
 # for balance assessment (at the time of matching - using the variables containing imputed values)
 hrs_bal_nonparents <- hrs_data_nonparents %>%
-  select(HHIDPN, grandparent, pscore, female, everything(), -time, -year, -valid, -subclass)
+  dplyr::select(HHIDPN, grandparent, pscore, female, everything(), -time, -year, -valid, -subclass)
 
 hrs_data_nonparents <- hrs_data_nonparents %>% 
-  select(HHIDPN, year, grandparent, time, valid, pscore, subclass) %>% 
+  dplyr::select(HHIDPN, year, grandparent, time, valid, pscore, subclass) %>% 
   rename(match_year = year, time_match = time, valid_match = valid) %>% 
   mutate(match_number = row_number()) # if we allow duplicate matches, we need an unambiguous identifier for later
 
@@ -547,7 +553,7 @@ hrsanalysis_nonparents <- hrslongvalid %>%
 
 hrsanalysis_nonparents <- left_join(hrs_data_nonparents, 
                                                hrsanalysis_nonparents,
-                                               by = c("HHIDPN", "grandparent")) %>% select(-droplater)
+                                               by = c("HHIDPN", "grandparent")) %>% dplyr::select(-droplater)
 
 table(hrsanalysis_nonparents$grandparent, hrsanalysis_nonparents$time_match) # already transferred to controls 
 table(hrsanalysis_nonparents$grandparent, hrsanalysis_nonparents$valid)
@@ -581,14 +587,14 @@ hrsanalysis_nonparents <- hrsanalysis_nonparents %>% group_by(match_number) %>%
   mutate(helpcount = row_number()) %>% ungroup()
 hrsanalysis_nonparents <- hrsanalysis_nonparents %>% 
   mutate(valid = ifelse(is.na(valid) & grandparent==0, helpcount - lastcount - 1, valid)) %>% 
-  select(-helpcount, -lastcount)
+  dplyr::select(-helpcount, -lastcount)
 
 table(hrsanalysis_nonparents$grandparent, hrsanalysis_nonparents$time)
 table(hrsanalysis_nonparents$grandparent, hrsanalysis_nonparents$valid)
 table(hrsanalysis_nonparents$grandparent, hrsanalysis_nonparents$year)
 
 hrsanalysis_nonparents <- hrsanalysis_nonparents %>% filter(time %in% c(-6:6)) %>% 
-  select(-match_year, -valid_match)
+  dplyr::select(-match_year, -valid_match)
 
 # save .rda 
 save(hrsanalysis_nonparents, file = "data/processed/HRS/hrsanalysis_nonparents.rda")
@@ -613,8 +619,8 @@ stdmeandiff <- function(var, treat, data) {
 # balance BEFORE matching
 hrs_bal_parents_before <- hrsimp_parents_ps_2 %>% # this already has the correct number of covars
   mutate(pscore = (pscore_m1 + pscore_m2 + pscore_m3 + pscore_m4 + pscore_m5)/5) %>% 
-  select(-starts_with("pscore_m"), -year) %>% 
-  select(HHIDPN, grandparent, pscore, female, everything())
+  dplyr::select(-starts_with("pscore_m"), -year) %>% 
+  dplyr::select(HHIDPN, grandparent, pscore, female, everything())
 summary(hrs_bal_parents_before)
 
 names(hrs_bal_parents_before) # column names must be aligned!
@@ -622,8 +628,8 @@ names(hrs_bal_parents)
 
 hrs_bal_nonparents_before <- hrsimp_nonparents_ps_2 %>% # this already has the correct number of covars
   mutate(pscore = (pscore_m1 + pscore_m2 + pscore_m3 + pscore_m4 + pscore_m5)/5) %>% 
-  select(-starts_with("pscore_m"), -year) %>% 
-  select(HHIDPN, grandparent, pscore, female, everything())
+  dplyr::select(-starts_with("pscore_m"), -year) %>% 
+  dplyr::select(HHIDPN, grandparent, pscore, female, everything())
 summary(hrs_bal_nonparents_before)
 
 names(hrs_bal_nonparents_before) # column names must be aligned!
@@ -703,6 +709,6 @@ covar_info <- read_excel("gp-covariates-overview.xlsx", sheet = 1, range = "B4:D
 hrs_balance_df <- left_join(covar_info,
                             hrs_balance_df,
                             by = "Covariate") %>% # sets correct order
-  select(Covariate, everything())
+  dplyr::select(Covariate, everything())
 save(hrs_balance_df, file = "data/processed/HRS/hrs_balance_df.rda")
 

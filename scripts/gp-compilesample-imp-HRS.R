@@ -1,18 +1,22 @@
 ### Transition to Grandparenthood Paper - HRS Sample - drawing variables and performing imputations ###
-
+library(tidyverse) 
 library(haven)
-library(tidyverse)
 library(psych)
+library(mice) 
 
 set.seed(3000)
 
 #### HRS data: draw raw data, select variables ####
 
-# load raw data files (SAS format, downloaded from HRS website)
+### This part of reading in the HRS data and recoding it uses snippets of code  
+### originally written by Sara J. Weston ( https://osf.io/2psu4/ ) and adapted 
+### for purposes of this article. Thanks to Sara for allowing us to use these part of her code!
+
+# load files
 hrsrand <- read_sas("data/raw/HRS/randhrs1992_2018v1.sas7bdat")
 # loading other files later (all at once create memory issues)
 
-#from main tracker file, select variables of interest
+# from main tracker file, select variables of interest
 hrsdata <- hrsrand %>%
   select(#demographics
     HACOHORT, HHID, PN, RABYEAR, 
@@ -52,7 +56,7 @@ hrsdata <- hrsrand %>%
   select(-starts_with("RE"), -ends_with("INLBRF"), -ends_with("PMBMI")) %>% 
   rename(R1MOBILA = R1MOBILW)
 
-#rename columns in RAND file
+# rename columns in RAND file
 colnames(hrsdata) <- gsub("^RA","",colnames(hrsdata)) # ^ means "begins with"
 colnames(hrsdata)[colnames(hrsdata) == "BYEAR"] <- "birthyr"
 colnames(hrsdata)[colnames(hrsdata) == "RACEM"] <- "race"
@@ -64,7 +68,7 @@ colnames(hrsdata) <- ifelse(grepl("^(H)([0-9]+)", colnames(hrsdata)), # for HwHH
                             gsub("^(H)([0-9]+)", "", paste("R", colnames(hrsdata), sep="")), colnames(hrsdata))
 colnames(hrsdata) <- gsub("^RH","R",colnames(hrsdata))
 
-#separate out AHEAD cohort, because their waves are in slightly different years
+# separate out AHEAD cohort, because their waves are in slightly different years
 ahead <- subset(hrsdata, HACOHORT %in% c(0,1))
 hrsdata <- subset(hrsdata, !(HACOHORT %in% c(0,1)))
 
@@ -153,7 +157,7 @@ colnames(ahead) <- ifelse(grepl("R1",colnames(ahead)),
 hrsdata <- merge(hrsdata, ahead, all.x=T, all.y=T)
 rm(ahead)
 
-#nit picky renaming
+# rename
 colnames(hrsdata) <- gsub("MSTAT","marital",colnames(hrsdata))
 colnames(hrsdata) <- gsub("SHLT","selfratedhealth",colnames(hrsdata))
 colnames(hrsdata) <- gsub("DOCTOR","doctor",colnames(hrsdata))
@@ -187,14 +191,13 @@ colnames(hrsdata) <- gsub("CANCRE","cancer",colnames(hrsdata))
 colnames(hrsdata) <- gsub("DIABE","diabetes",colnames(hrsdata))
 colnames(hrsdata) <- gsub("HEARTE","heart",colnames(hrsdata))
 
-
-#reverse code self-rated health variables
+# reverse code self-rated health variables
 hrsdata[,grepl("selfratedhealth",
                colnames(hrsdata))] <- hrsdata[,grepl("selfratedhealth",
                                                      colnames(hrsdata))]*-1 + 6
 
-#RAND HRS Detailed Imputations File 2016 (v.2) -> I'll just take the imputations contained in the 
-#regular longitudinal file instead (however, the following is based on households not on respondents as above)
+# RAND HRS Detailed Imputations File 2016 (v.2) -> I'll just take the imputations contained in the 
+# regular longitudinal file instead (however, the following is based on households not on respondents as above)
 hrsdata_imp <- hrsrand %>%
   select(
     HHIDPN, HHID, PN,
@@ -203,7 +206,7 @@ hrsdata_imp <- hrsrand %>%
 hrs_cohortinfo <- hrsdata %>% select(HHID, PN, HACOHORT)
 hrsdata_imp <- left_join(hrsdata_imp, hrs_cohortinfo)
 
-#separate out AHEAD cohort, because their waves are in slightly different years
+# separate out AHEAD cohort, because their waves are in slightly different years
 ahead_imp <- subset(hrsdata_imp, HACOHORT %in% c(0,1))
 hrsdata_imp <- subset(hrsdata_imp, !(HACOHORT %in% c(0,1)))
 
@@ -292,23 +295,23 @@ colnames(ahead_imp) <- ifelse(grepl("H1",colnames(ahead_imp)),
 hrsdata_imp <- merge(hrsdata_imp, ahead_imp, all.x=T, all.y=T)
 rm(ahead_imp)
 
-#save working memory by removing RAND file
+# save working memory by removing RAND file
 rm(hrsrand)
 rm(hrs_cohortinfo)
 
 colnames(hrsdata_imp) <- gsub("ATOTB","hhwealth",colnames(hrsdata_imp))
 colnames(hrsdata_imp) <- gsub("ITOT","hhincome",colnames(hrsdata_imp))
 
-# load RAND fat files
+# load RAND fat files (These are updated/corrected from time to time -- reading in a newer version should work, too, in most cases)
 h06data <- read_sas("data/raw/HRS/h06f3a.sas7bdat")
 h08data <- read_sas("data/raw/HRS/h08f3a.sas7bdat")
-h10data <- read_sas("data/raw/HRS/hd10f5e.sas7bdat")
-h12data <- read_sas("data/raw/HRS/h12f2a.sas7bdat")
-h14data <- read_sas("data/raw/HRS/h14f2a.sas7bdat")
-h16data <- read_sas("data/raw/HRS/h16f2a.sas7bdat")
+h10data <- read_sas("data/raw/HRS/hd10f5f.sas7bdat")
+h12data <- read_sas("data/raw/HRS/h12f3a.sas7bdat")
+h14data <- read_sas("data/raw/HRS/h14f2b.sas7bdat")
+h16data <- read_sas("data/raw/HRS/h16f2b.sas7bdat")
 h18data <- read_sas("data/raw/HRS/h18e1a.sas7bdat")
 
-#subset leave-behind questionnaires so only personality items remain (and SWLS items)
+# select variables from leave-behind questionnaires (personality and SWLS items)
 h06pers <- h06data %>%
   select_if(grepl("\\bHHIDPN\\b",colnames(.)) | grepl("KLB033",colnames(.)) | grepl("KLB003",colnames(.))) %>%
   mutate(n_respond = rowSums(!is.na(.))) %>%
@@ -585,12 +588,12 @@ allpers <- h06pers %>%
   full_join(h16pers) %>%
   full_join(h18pers) %>%
   # arrange in long-form
-  gather(key="key", value="value", which(grepl("_", names(.)))) %>%
+  tidyr::gather(key="key", value="value", which(grepl("_", names(.)))) %>%
   # removing missing years for each participant
   filter(!is.na(value)) %>%
-  separate(col="key", into=c("key","year")) %>%
+  tidyr::separate(col="key", into=c("key","year")) %>%
   mutate(year = as.numeric(year)) %>%
-  spread(key="key", value="value") %>%
+  tidyr::spread(key="key", value="value") %>%
   # select first personality assessment -> no, we'll use all waves
   arrange(HHIDPN, year) #%>%
   #group_by(HHIDPN) %>%
@@ -602,7 +605,7 @@ allpers <- allpers %>%
   mutate_at(vars(starts_with(c("extra", "agree", "neur", "con", "open"))), 
             funs(dplyr::recode(., `1`=4L, `2`=3L, `3`=2L, `4`=1L)))
 
-#calculate alphas
+# calculate alphas
 alpha.extra <- allpers %>%
   select_if(grepl("extra", names(.))) %>%
   psych::alpha(check.keys = TRUE)
@@ -627,7 +630,7 @@ alpha.swls <- allpers %>%
   select_if(grepl("swls", names(.))) %>%
   psych::alpha(check.keys = TRUE)
 
-#score traits 
+# score traits 
 allpers$extra <- allpers%>%
   select_if(grepl("extra", names(.))) %>%
   reverse.code(keys=alpha.extra$keys, items = .) %>%
@@ -653,12 +656,12 @@ allpers$swls <- allpers%>%
   reverse.code(keys=alpha.swls$keys, items = .) %>%
   rowMeans(na.rm=T)
 
-#needed for retrospective coding of grandparenthood:
+# needed for retrospective coding of grandparenthood:
 # (I put this part behind the pre-processing of the rand hrs cross-wave file 
 #  because I'd get a memory allocation error otherwise)
 h96data <- read_sas("data/raw/HRS/h96f4a.sas7bdat")
 h98data <- read_sas("data/raw/HRS/h98f2c.sas7bdat")
-h00data <- read_sas("data/raw/HRS/h00f1c.sas7bdat")
+h00data <- read_sas("data/raw/HRS/h00f1d.sas7bdat")
 h02data <- read_sas("data/raw/HRS/h02f2c.sas7bdat")
 h04data <- read_sas("data/raw/HRS/h04f1c.sas7bdat")
 
@@ -844,7 +847,7 @@ h12cov <- h12data %>%
          NE012, NE022, NE046, NE060, NE063, NE065, NE066, NH001, NH002, NH004,
          NA099, NA100, NA501, NLB040,
          NZ230, NH150, NH151, NQ400, NB082, NH147, N066, NJ020, NJ021, NJ005M1,
-         NXF065_R, NA030) %>%
+         NX065_R, NA030) %>%
   mutate(HHIDPN = as.numeric(HHIDPN)) %>% 
   mutate(n_respond = rowSums(!is.na(.))) %>%
   filter(n_respond > 1) %>%
@@ -875,7 +878,7 @@ h12cov <- h12data %>%
          paidwork_2012              = NJ020,   # working for pay 
          selfemployed_2012          = NJ021,   # work for someone else/slf-employed
          jobstatus_2012             = NJ005M1, # current job status- 1 -> 6=homemaker
-         coupleness_2012            = NXF065_R, # coupleness status - updated
+         coupleness_2012            = NX065_R, # coupleness status - updated
          livetogether_2012          = NA030     # couple live together
   )
 
@@ -884,7 +887,7 @@ h14cov <- h14data %>%
          OE012, OE022, OE046, OE060, OE063, OE065, OE066, OH001, OH002, OH004,
          OA099, OA100, OA501, 
          OLB035, OZ230, OH150, OH151, OQ400, OB082, OH147, O066, OJ020, OJ021, OJ005M1,
-         OXF065_R, OA030) %>%
+         OX065_R, OA030) %>%
   mutate(HHIDPN = as.numeric(HHIDPN)) %>% 
   mutate(n_respond = rowSums(!is.na(.))) %>%
   filter(n_respond > 1) %>%
@@ -915,7 +918,7 @@ h14cov <- h14data %>%
          paidwork_2014              = OJ020,   # working for pay
          selfemployed_2014          = OJ021,   # work for someone else/slf-employed
          jobstatus_2014             = OJ005M1, # current job status- 1 -> 6=homemaker
-         coupleness_2014            = OXF065_R, # coupleness status - updated
+         coupleness_2014            = OX065_R, # coupleness status - updated
          livetogether_2014          = OA030     # couple live together
   )
 
@@ -1018,7 +1021,7 @@ hrsfam <- hrsfam %>% group_by(HHIDPN) %>% mutate(kidnr = row_number()) %>% # cou
   ungroup() %>% filter(kidnr %in% c(1:3)) # for PSM covars, we focus on 3 oldest kids
 # reshape to wide dataset (one row per parent)
 hrsfam <- hrsfam %>% select(-KIDID) %>% 
-  pivot_wider(names_from = kidnr, 
+  tidyr::pivot_wider(names_from = kidnr, 
               values_from = c(KAGENDERBG, KABYEARBG, KAEDUC))
 # flag if parent only has 1 or 2 children
 hrsfam <- hrsfam %>% mutate(has_ch1 = 1,
@@ -1044,12 +1047,12 @@ allcov <- h96cov %>%
   full_join(h16cov) %>%
   full_join(h18cov) %>%
   # arrange in long-form
-  gather(key="key", value="value", which(grepl("_", names(.)))) %>%
+  tidyr::gather(key="key", value="value", which(grepl("_", names(.)))) %>%
   # removing missing years for each participant
   filter(!is.na(value)) %>%
-  separate(col="key", into=c("key","year")) %>%
+  tidyr::separate(col="key", into=c("key","year")) %>%
   mutate(year = as.numeric(year)) %>%
-  spread(key="key", value="value") %>%
+  tidyr::spread(key="key", value="value") %>%
   arrange(HHIDPN, year)
 
 #convert to long form
@@ -1058,27 +1061,39 @@ hrslong <- hrsdata %>%
          PN = as.numeric(PN),
          HHIDPN = HHID*1000 + PN) %>% 
   select(-HHID, -PN, -HACOHORT) %>%
-  gather(key="variable", value="value", which(grepl("_", names(.)))) %>%
-  separate(col="variable", into = c("variable","year")) %>%
+  tidyr::gather(key="variable", value="value", which(grepl("_", names(.)))) %>%
+  tidyr::separate(col="variable", into = c("variable","year")) %>%
   mutate(year = as.numeric(year)) %>%
   subset(!is.na(value)) %>%
-  spread(key = "variable", value="value") %>%
+  tidyr::spread(key = "variable", value="value") %>%
   arrange(HHIDPN, year)
 
 #same for income/wealth imputations dataset
 hrslong_imp <- hrsdata_imp %>%
   select(-HHID, -PN, -HACOHORT) %>%
-  gather(key="variable", value="value", which(grepl("_", names(.)))) %>%
-  separate(col="variable", into = c("variable","year")) %>%
+  tidyr::gather(key="variable", value="value", which(grepl("_", names(.)))) %>%
+  tidyr::separate(col="variable", into = c("variable","year")) %>%
   mutate(year = as.numeric(year)) %>%
   subset(!is.na(value)) %>%
-  spread(key = "variable", value="value") %>% 
+  tidyr::spread(key = "variable", value="value") %>% 
   arrange(HHIDPN, year)
 
 # merge
 hrslong <- left_join(hrslong, hrslong_imp,  by=c('HHIDPN', 'year'))
 hrslong <- left_join(hrslong, allcov,  by=c('HHIDPN', 'year'))
 hrslong <- left_join(hrslong, allpers,  by=c('HHIDPN', 'year'))
+
+# HRS error correction: Before merging with family data (2014 version), we need to correct one case number.
+# Copied from documentation: "In 2018, two Respondents married another HRS Respondent. HHIPDN = 906126010, 
+# who entered the survey in 2010, married HHIPDN = 906543010. We changed HHIDPN = 906126010 to be HHIPDN = 
+# 906543020 and set RAOHRSID = 906126010, RAOVRLAP = 3 and RAOVRAYR = 2010. "HHIPDN = 544849010, who 
+# entered the survey in 2016, married HHIPDN = 540162010. We changed HHIDPN = 544849010 to be HHIPDN = 
+# 540162020 and set RAOHRSID = 544849010, RAOVRLAP = 3 and RAOVRAYR = 2016."
+# --> However, in the (non-updated) family data 2014 (released in 2018), this person is still listed as 906126010.
+# (540162020/544849010 is not relevant, here, because they only entered the survey in 2016 ->  no family data yet, anyways)
+hrsfam <- hrsfam %>% mutate(
+  HHIDPN = ifelse(HHIDPN==906126010, 906543020, HHIDPN)
+)
 hrslong <- left_join(hrslong, hrsfam,  by=c('HHIDPN'))
 
 # recode missing codes in grandparent variable
@@ -1111,7 +1126,7 @@ grand %>% group_by(year) %>%
 
 grand_wide <- grand %>% select(HHIDPN, year, grandchildren) %>% 
   arrange(HHIDPN, year) %>% 
-  pivot_wider(names_from = year,
+  tidyr::pivot_wider(names_from = year,
               names_prefix = "grandchildren_",
               values_from = grandchildren
   ) %>% 
@@ -1392,7 +1407,7 @@ grand_wide_identify <- grand_wide %>% filter(grandparent %in% c(0,1)) %>%
 grand_transits <- grand_wide %>% 
   filter(grandparent %in% c(0,1)) %>% 
   select(HHIDPN, starts_with("transit")) %>% 
-  pivot_longer(cols = starts_with("transit"), 
+  tidyr::pivot_longer(cols = starts_with("transit"), 
                names_to = "year",
                names_prefix = "transit",
                values_to = "transit",
@@ -1675,8 +1690,10 @@ summary(hrsimp2014)
 
 # perform multiple imputations 
 # (required for pscore matching, although imputed data will not be used in later analyses)
-library(mice)
-library(lattice)
+#library(mice) # now loaded above 
+#library(lattice)
+
+set.seed(3000)
 
 imp <- 5 # Number of multiple imputations
 

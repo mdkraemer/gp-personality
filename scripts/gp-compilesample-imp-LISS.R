@@ -1,14 +1,18 @@
 ### Transition to Grandparenthood Paper - LISS Sample - drawing variables and performing imputations ###
 
-library(tidyverse)
-library(psych)
+library(tidyverse) 
 library(foreign)
+library(psych)
+library(mice) 
 
 set.seed(3000)
 
 #### LISS data: draw raw data, select variables ####
 
-### Background Variables datasets 2008-2019 (thanks to Ted Schwaba / Jaap Denissen for the basis of this code)
+# Thanks to Ted Schwaba / Jaap Denissen for the basis of this code (reading in 
+# and recoding the LISS data) which we adapted for the purposes of this article.
+
+### Background Variables datasets 2007-2021 
 
 #first, specify the path and the .sav extension
 path <- "data/raw/LISS/Background Variables"
@@ -30,7 +34,7 @@ eve.all$timeline <- (eve.all$year-2007)*12 + eve.all$month
 # eve.all <- filter(eve.all, month == 1)
 # this does not work if someone misses the Jan wave -> instead select first available wave per year
 eve.all <- eve.all %>% group_by(nomem_encr, year) %>% arrange(nomem_encr, year, month) %>% 
-  mutate(first = row_number()) %>% ungroup() %>% filter(first==1) %>% select(-first)
+  mutate(first = row_number()) %>% ungroup() %>% filter(first==1) %>% dplyr::select(-first)
 
 eve.all$age <- eve.all$year - eve.all$gebjaar 
 eve.all$female <- eve.all$geslacht-1
@@ -46,12 +50,12 @@ eve.all$urban <- eve.all$sted
 eve.all <- eve.all %>% arrange(nomem_encr, year) %>% 
   group_by(nomem_encr) %>% mutate(participation = row_number()) %>% ungroup()
   
-eve.all <- eve.all %>% select(nomem_encr, nohouse_encr, year, age, female, 
+eve.all <- eve.all %>% dplyr::select(nomem_encr, nohouse_encr, year, age, female, 
                               employment_status, education, hhmembers,
                               totalresidentkids, marital, ownrent, urban, 
                               nettoink, participation)
 
-### Personality datasets 2008-2019 (thanks to Ted Schwaba / Jaap Denissen for this code)
+### Personality datasets 2008-2021 (thanks to Ted Schwaba / Jaap Denissen for basis of this code)
 per08 <- read.spss('data/raw/LISS/Personality/cp08a_1p_EN.sav', use.value.labels=F, to.data.frame=T)
 per09 <- read.spss('data/raw/LISS/Personality/cp09b_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
 per10 <- read.spss('data/raw/LISS/Personality/cp10c_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
@@ -60,11 +64,12 @@ per12 <- read.spss('data/raw/LISS/Personality/cp12e_1.0p_EN.sav', use.value.labe
 per13 <- read.spss('data/raw/LISS/Personality/cp13f_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 per14 <- read.spss('data/raw/LISS/Personality/cp14g_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 per15 <- read.spss('data/raw/LISS/Personality/cp15h_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-#per16 <- read.spss('data/raw/LISS/Personality/cp16i_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+#per16 <- read.spss('data/raw/LISS/Personality/cp16i_EN_1.0p.sav', use.value.labels=F, to.data.frame=T) # not available (gap)
 per17 <- read.spss('data/raw/LISS/Personality/cp17i_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 per18 <- read.spss('data/raw/LISS/Personality/cp18j_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 per19 <- read.spss('data/raw/LISS/Personality/cp19k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 per20 <- read.spss('data/raw/LISS/Personality/cp20l_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+per21 <- read.spss('data/raw/LISS/Personality/cp21m_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 
 #Make the names uniform by removing the wave qualifier (e.g., "08a")
 names(per08) <- gsub("08a", "", names(per08))
@@ -80,26 +85,27 @@ names(per17) <- gsub("17i", "", names(per17))
 names(per18) <- gsub("18j", "", names(per18))
 names(per19) <- gsub("19k", "", names(per19))
 names(per20) <- gsub("20l", "", names(per20))
+names(per21) <- gsub("21m", "", names(per21))
 
 # cp190 "Starting time questionnaire" is factor in some waves and numerical in others
 # cp192 "End time questionnaire" --> remove both variables!
 remove_timevar <- function(x) { 
   x %>%       
-    select(-c(cp190, cp192))
+    dplyr::select(-c(cp190, cp192))
 }
-listper <- list(per08, per09, per10, per11, per12, per13, per14, per15, per17, per18, per19, per20) %>%
+listper <- list(per08, per09, per10, per11, per12, per13, per14, per15, per17, per18, per19, per20, per21) %>%
   lapply(remove_timevar)
 names(listper) <- c("per08", "per09", "per10", "per11", "per12", "per13", "per14", 
-                    "per15", "per17", "per18", "per19", "per20")
+                    "per15", "per17", "per18", "per19", "per20", "per21")
 list2env(listper, .GlobalEnv)
 
 #Merge them all together
 per.all <- bind_rows(per08, per09, per10, per11, per12, per13, 
-                     per14, per15, per17, per18, per19, per20)
+                     per14, per15, per17, per18, per19, per20, per21)
 length(unique(per.all$nomem_encr))
 
 rm(per08, per09, per10, per11, per12, per13, 
-   per14, per15, per17, per18, per19, per20)
+   per14, per15, per17, per18, per19, per20, per21)
 
 #Rename "c_m" into "wave"
 names(per.all)[3] <- c("wave")
@@ -233,11 +239,11 @@ per.all$swls <- per.all%>%
 #   all Big 5 personality variables
 #   SWLS 
 per.all <- per.all %>% 
-  select(nomem_encr, year, permonth, pertimeline,
+  dplyr::select(nomem_encr, year, permonth, pertimeline,
          contains("open"), contains("con"), contains("extra"), contains("agree"), contains("neur"),
          contains("swls"))
 
-### Work and Schooling datasets 2008-2019 (thanks to Ted Schwaba / Jaap Denissen for this code)
+### Work and Schooling datasets 2008-2021 (thanks to Ted Schwaba / Jaap Denissen for basis of this code)
 wed08 <- read.spss('data/raw/LISS/Work and Schooling/cw08a_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
 wed09 <- read.spss('data/raw/LISS/Work and Schooling/cw09b_EN_3.0p.sav', use.value.labels=F, to.data.frame=T)
 wed10 <- read.spss('data/raw/LISS/Work and Schooling/cw10c_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
@@ -245,12 +251,13 @@ wed11 <- read.spss('data/raw/LISS/Work and Schooling/cw11d_EN_1.0p.sav', use.val
 wed12 <- read.spss('data/raw/LISS/Work and Schooling/cw12e_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 wed13 <- read.spss('data/raw/LISS/Work and Schooling/cw13f_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 wed14 <- read.spss('data/raw/LISS/Work and Schooling/cw14g_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-wed15 <- read.spss('data/raw/LISS/Work and Schooling/cw15h_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-wed16 <- read.spss('data/raw/LISS/Work and Schooling/cw16i_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-wed17 <- read.spss('data/raw/LISS/Work and Schooling/cw17j_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-wed18 <- read.spss('data/raw/LISS/Work and Schooling/cw18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-wed19 <- read.spss('data/raw/LISS/Work and Schooling/cw19l_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
-#wed20 not available yet
+wed15 <- read.spss('data/raw/LISS/Work and Schooling/cw15h_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
+wed16 <- read.spss('data/raw/LISS/Work and Schooling/cw16i_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
+wed17 <- read.spss('data/raw/LISS/Work and Schooling/cw17j_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
+wed18 <- read.spss('data/raw/LISS/Work and Schooling/cw18k_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
+wed19 <- read.spss('data/raw/LISS/Work and Schooling/cw19l_EN_3.0p.sav', use.value.labels=F, to.data.frame=T)
+wed20 <- read.spss('data/raw/LISS/Work and Schooling/cw20m_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+wed21 <- read.spss('data/raw/LISS/Work and Schooling/cw21n_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 
 #Make the names uniform by removing the wave qualifier (e.g., "08a")
 names(wed08) <- gsub("08a", "", names(wed08))
@@ -265,6 +272,8 @@ names(wed16) <- gsub("16i", "", names(wed16))
 names(wed17) <- gsub("17j", "", names(wed17))
 names(wed18) <- gsub("18k", "", names(wed18))
 names(wed19) <- gsub("19l", "", names(wed19))
+names(wed20) <- gsub("20m", "", names(wed20))
+names(wed21) <- gsub("21n", "", names(wed21))
 
 # cw502 "Starting time questionnaire" is factor in some waves and numerical in others
 # cw504 "End time questionnaire" 
@@ -272,23 +281,22 @@ names(wed19) <- gsub("19l", "", names(wed19))
 # --> remove these variables!
 remove_timevar <- function(x) { 
   x %>%       
-    select(-c(cw502, cw504))
+    dplyr::select(-c(cw502, cw504))
 }
-listwed <- list(wed08, wed09, wed10, wed11, wed12, wed13, wed14, wed15, wed16, wed17, wed18, wed19) %>%
+listwed <- list(wed08, wed09, wed10, wed11, wed12, wed13, wed14, wed15, wed16, wed17, wed18, wed19, wed20, wed21) %>%
   lapply(remove_timevar)
 names(listwed) <- c("wed08", "wed09", "wed10", "wed11", "wed12", "wed13", "wed14", 
-                    "wed15", "wed16", "wed17", "wed18", "wed19")
+                    "wed15", "wed16", "wed17", "wed18", "wed19", "wed20", "wed21")
 list2env(listwed, .GlobalEnv)
-wed11 <- wed11 %>% select(-cw530)
-wed18 <- wed18 %>% select(-cw530)
+wed11 <- wed11 %>% dplyr::select(-cw530)
 
 #Merge them all together
 wed.all <- bind_rows(wed08, wed09, wed10, wed11, wed12, wed13, wed14, wed15,
-                     wed16, wed17, wed18, wed19)
+                     wed16, wed17, wed18, wed19, wed20, wed21)
 length(unique(wed.all$nomem_encr))
 
 rm(wed08, wed09, wed10, wed11, wed12, wed13, wed14, wed15,
-   wed16, wed17, wed18, wed19)
+   wed16, wed17, wed18, wed19, wed20, wed21)
 
 #Rename "c_m" into "wave"
 names(wed.all)[3] <- c("wave")
@@ -337,18 +345,18 @@ wed.all$informal_care_work_less   <- wed.all$cw451 # Are you currently working l
 
 #select relevant variables: 
 wed.all <- wed.all %>% 
-  select(nomem_encr, year, wedmonth, wedtimeline,
+  dplyr::select(nomem_encr, year, wedmonth, wedtimeline,
          retire_early, retirement, paid_work, more_paid_work, disabled, jobhours, 
          children, grandchildren, no_offspring, young_kids,
          contains("work_less"), contains("informal_care"))
 
-### Income datasets 2008-2019 
+### Income datasets 2008-2021
 inc08 <- read.spss('data/raw/LISS/Income/ci08a_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
 inc09 <- read.spss('data/raw/LISS/Income/ci09b_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
 inc10 <- read.spss('data/raw/LISS/Income/ci10c_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 inc11 <- read.spss('data/raw/LISS/Income/ci11d_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 inc12 <- read.spss('data/raw/LISS/Income/ci12e_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
-inc13 <- read.spss('data/raw/LISS/Income/ci13f_1.1p_EN.sav', use.value.labels=F, to.data.frame=T)
+inc13 <- read.spss('data/raw/LISS/Income/ci13f_EN_1.2p.sav', use.value.labels=F, to.data.frame=T)
 inc14 <- read.spss('data/raw/LISS/Income/ci14g_1.0p_EN.sav', use.value.labels=F, to.data.frame=T)
 inc15 <- read.spss('data/raw/LISS/Income/ci15h_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
 inc16 <- read.spss('data/raw/LISS/Income/ci16i_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
@@ -356,6 +364,7 @@ inc17 <- read.spss('data/raw/LISS/Income/ci17j_EN_2.0p.sav', use.value.labels=F,
 inc18 <- read.spss('data/raw/LISS/Income/ci18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 inc19 <- read.spss('data/raw/LISS/Income/ci19l_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
 inc20 <- read.spss('data/raw/LISS/Income/ci20m_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+inc21 <- read.spss('data/raw/LISS/Income/ci21n_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 
 #Make the names uniform by removing the wave qualifier (e.g., "08a")
 names(inc08) <- gsub("08a", "", names(inc08))
@@ -371,26 +380,27 @@ names(inc17) <- gsub("17j", "", names(inc17))
 names(inc18) <- gsub("18k", "", names(inc18))
 names(inc19) <- gsub("19l", "", names(inc19))
 names(inc20) <- gsub("20m", "", names(inc20))
+names(inc21) <- gsub("21n", "", names(inc21))
 
 # ci319 "Starting time questionnaire" is factor in some waves and numerical in others
 # ci321 "End time questionnaire" 
 # --> remove these variables!
 remove_timevar <- function(x) { 
   x %>%       
-    select(-c(ci319, ci321))
+    dplyr::select(-c(ci319, ci321))
 }
-listinc <- list(inc08, inc09, inc10, inc11, inc12, inc13, inc14, inc15, inc16, inc17, inc18, inc19, inc20) %>%
+listinc <- list(inc08, inc09, inc10, inc11, inc12, inc13, inc14, inc15, inc16, inc17, inc18, inc19, inc20, inc21) %>%
   lapply(remove_timevar)
 names(listinc) <- c("inc08", "inc09", "inc10", "inc11", "inc12", "inc13", "inc14", 
-                    "inc15", "inc16", "inc17", "inc18", "inc19", "inc20")
+                    "inc15", "inc16", "inc17", "inc18", "inc19", "inc20", "inc21")
 list2env(listinc, .GlobalEnv)
 
 #Merge them all together
 inc.all <- bind_rows(inc08, inc09, inc10, inc11, inc12, inc13, inc14, inc15, 
-                     inc16, inc17, inc18, inc19, inc20)
+                     inc16, inc17, inc18, inc19, inc20, inc21)
 
 rm(inc08, inc09, inc10, inc11, inc12, inc13, inc14, inc15, 
-   inc16, inc17, inc18, inc19, inc20)
+   inc16, inc17, inc18, inc19, inc20, inc21)
 
 #Rename "c_m" into "wave" to be consistent with "eve.all"
 names(inc.all)[3] <- c("wave")
@@ -402,9 +412,9 @@ inc.all$incmonth <- as.numeric(substr(inc.all$wave,5,6))
 inc.all$financialsit <- inc.all$ci252 # only Household head / Wedded partner / Unwedded partner
 inc.all$difficultybills <- inc.all$ci292 # Were you in arrears on one or more bills on 31 December X? -> 1 = No
 
-inc.all <- select(inc.all, nomem_encr, year, incmonth, financialsit, difficultybills)
+inc.all <- dplyr::select(inc.all, nomem_encr, year, incmonth, financialsit, difficultybills)
 
-### Housing datasets 2008-2019 
+### Housing datasets 2008-2021 
 hom08 <- read.spss('data/raw/LISS/Housing/cd08a_EN_1.2p.sav', use.value.labels=F, to.data.frame=T)
 hom09 <- read.spss('data/raw/LISS/Housing/cd09b_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 hom10 <- read.spss('data/raw/LISS/Housing/cd10c_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
@@ -418,6 +428,7 @@ hom17 <- read.spss('data/raw/LISS/Housing/cd17j_EN_1.0p.sav', use.value.labels=F
 hom18 <- read.spss('data/raw/LISS/Housing/cd18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 hom19 <- read.spss('data/raw/LISS/Housing/cd19l_EN_2.0p.sav', use.value.labels=F, to.data.frame=T)
 hom20 <- read.spss('data/raw/LISS/Housing/cd20m_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+hom21 <- read.spss('data/raw/LISS/Housing/cd21n_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 
 #Make the names uniform by removing the wave qualifier (e.g., "08a")
 names(hom08) <- gsub("08a", "", names(hom08))
@@ -433,26 +444,27 @@ names(hom17) <- gsub("17j", "", names(hom17))
 names(hom18) <- gsub("18k", "", names(hom18))
 names(hom19) <- gsub("19l", "", names(hom19))
 names(hom20) <- gsub("20m", "", names(hom20))
+names(hom21) <- gsub("21n", "", names(hom21))
 
 # cd079 "Starting time questionnaire" is factor in some waves and numerical in others
 # cd081 "End time questionnaire" 
 # --> remove these variables!
 remove_timevar <- function(x) { 
   x %>%       
-    select(-c(cd079, cd081))
+    dplyr::select(-c(cd079, cd081))
 }
-listhom <- list(hom08, hom09, hom10, hom11, hom12, hom13, hom14, hom15, hom16, hom17, hom18, hom19, hom20) %>%
+listhom <- list(hom08, hom09, hom10, hom11, hom12, hom13, hom14, hom15, hom16, hom17, hom18, hom19, hom20, hom21) %>%
   lapply(remove_timevar)
 names(listhom) <- c("hom08", "hom09", "hom10", "hom11", "hom12", "hom13", "hom14", 
-                    "hom15", "hom16", "hom17", "hom18", "hom19", "hom20")
+                    "hom15", "hom16", "hom17", "hom18", "hom19", "hom20", "hom21")
 list2env(listhom, .GlobalEnv)
 
 #Merge them all together
 hom.all <- bind_rows(hom08, hom09, hom10, hom11, hom12, hom13, hom14, hom15, 
-                     hom16, hom17, hom18, hom19, hom20)
+                     hom16, hom17, hom18, hom19, hom20, hom21)
 
 rm(hom08, hom09, hom10, hom11, hom12, hom13, hom14, hom15, 
-   hom16, hom17, hom18, hom19, hom20)
+   hom16, hom17, hom18, hom19, hom20, hom21)
 
 #Rename "c_m" into "wave" to be consistent with "eve.all"
 names(hom.all)[3] <- c("wave")
@@ -465,10 +477,10 @@ hom.all$movedinyear <- hom.all$cd036 #In what year did you or your household tak
 hom.all$typedwelling <- hom.all$cd038 # What type of dwelling do you inhabit?
 hom.all$secondhouse <- hom.all$cd058 # Do you have (or rent) a second dwelling?
 
-hom.all <- select(hom.all, nomem_encr, year, hommonth, rooms, movedinyear, 
+hom.all <- dplyr::select(hom.all, nomem_encr, year, hommonth, rooms, movedinyear, 
                   typedwelling, secondhouse)
 
-### Religion and Ethnicity datasets 2008-2018
+### Religion and Ethnicity datasets 2008-2020
 rel08 <- read.spss('data/raw/LISS/Religion/cr08a_1p_EN.sav', use.value.labels=F, to.data.frame=T)
 rel09 <- read.spss('data/raw/LISS/Religion/cr09b_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 rel10 <- read.spss('data/raw/LISS/Religion/cr10c_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
@@ -482,6 +494,7 @@ rel17 <- read.spss('data/raw/LISS/Religion/cr17j_EN_2.0p.sav', use.value.labels=
 rel18 <- read.spss('data/raw/LISS/Religion/cr18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 rel19 <- read.spss('data/raw/LISS/Religion/cr19l_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
 rel20 <- read.spss('data/raw/LISS/Religion/cr20m_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
+# 21 not yet available (not a problem later because we don't need covariate data in the last wave)
 
 #Make the names uniform by removing the wave qualifier (e.g., "08a")
 names(rel08) <- gsub("08a", "", names(rel08))
@@ -503,7 +516,7 @@ names(rel20) <- gsub("20m", "", names(rel20))
 # --> remove these variables!
 remove_timevar <- function(x) { 
   x %>%       
-    select(-c(cr117, cr119))
+    dplyr::select(-c(cr117, cr119))
 }
 listrel <- list(rel08, rel09, rel10, rel11, rel12, rel13, rel14, rel15, rel16, rel17, rel18, rel19, rel20) %>%
   lapply(remove_timevar)
@@ -530,9 +543,9 @@ rel.all <- rel.all %>% mutate(religion = ifelse(year %in% c(2019,2020), religion
 
 rel.all$speakdutch <- rel.all$cr089 # At home, do you generally speak Dutch or another language?
 
-rel.all <- select(rel.all, nomem_encr, year, relmonth, religion, speakdutch)
+rel.all <- dplyr::select(rel.all, nomem_encr, year, relmonth, religion, speakdutch)
 
-### Family and Household datasets 2008-2019 (thanks to Ted Schwaba / Jaap Denissen for this code)
+### Family and Household datasets 2008-2020
 fam08 <- read.spss('data/raw/LISS/Family and Household/cf08a_2p_EN.sav', use.value.labels=F, to.data.frame=T)
 fam09 <- read.spss('data/raw/LISS/Family and Household/cf09b_EN_2.2p.sav', use.value.labels=F, to.data.frame=T)
 fam10 <- read.spss('data/raw/LISS/Family and Household/cf10c_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
@@ -545,7 +558,8 @@ fam16 <- read.spss('data/raw/LISS/Family and Household/cf16i_EN_1.0p.sav', use.v
 fam17 <- read.spss('data/raw/LISS/Family and Household/cf17j_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 fam18 <- read.spss('data/raw/LISS/Family and Household/cf18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 fam19 <- read.spss('data/raw/LISS/Family and Household/cf19l_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-#fam20 -> not available yet
+fam20 <- read.spss('data/raw/LISS/Family and Household/cf20m_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+# 21 not yet available (not a problem later because we don't need covariate data in the last wave)
 
 #Make the names uniform by removing the wave qualifier (e.g., "08a")
 names(fam08) <- gsub("08a", "", names(fam08))
@@ -560,24 +574,25 @@ names(fam16) <- gsub("16i", "", names(fam16))
 names(fam17) <- gsub("17j", "", names(fam17))
 names(fam18) <- gsub("18k", "", names(fam18))
 names(fam19) <- gsub("19l", "", names(fam19))
+names(fam20) <- gsub("20m", "", names(fam20))
 
 # cf394 "Starting time questionnaire" is factor in some waves and numerical in others
 # cf396 "End time questionnaire" 
 # --> remove these variables!
 remove_timevar <- function(x) { 
   x %>%       
-    select(-c(cf394, cf396))
+    dplyr::select(-c(cf394, cf396))
 }
-listfam <- list(fam08, fam09, fam10, fam11, fam12, fam13, fam14, fam15, fam16, fam17, fam18, fam19) %>%
+listfam <- list(fam08, fam09, fam10, fam11, fam12, fam13, fam14, fam15, fam16, fam17, fam18, fam19, fam20) %>%
   lapply(remove_timevar)
 names(listfam) <- c("fam08", "fam09", "fam10", "fam11", "fam12", "fam13", "fam14", 
-                    "fam15", "fam16", "fam17", "fam18", "fam19")
+                    "fam15", "fam16", "fam17", "fam18", "fam19", "fam20")
 list2env(listfam, .GlobalEnv)
 
 #Merge them all together
-fam.all <- bind_rows(fam08, fam09, fam10, fam11, fam12, fam13, fam14, fam15, fam16, fam17, fam18, fam19)
+fam.all <- bind_rows(fam08, fam09, fam10, fam11, fam12, fam13, fam14, fam15, fam16, fam17, fam18, fam19, fam20)
 
-rm(fam08, fam09, fam10, fam11, fam12, fam13, fam14, fam15, fam16, fam17, fam18, fam19)
+rm(fam08, fam09, fam10, fam11, fam12, fam13, fam14, fam15, fam16, fam17, fam18, fam19, fam20)
 
 #Rename "c_m" into "wave" to be consistent with "eve.all"
 names(fam.all)[3] <- c("wave")
@@ -643,7 +658,7 @@ fam.reshape <- fam.all %>% arrange(nomem_encr, year) %>% filter(year %in% c(2008
   kidyearold_7 = cf043, 
   kidyearold_8 = cf044, 
   kidyearold_9 = cf045,
-  kidgender_1 = cf068, #2008-2018
+  kidgender_1 = cf068, #2008-2020
   kidgender_2 = cf069, 
   kidgender_3 = cf070, 
   kidgender_4 = cf071, 
@@ -652,7 +667,7 @@ fam.reshape <- fam.all %>% arrange(nomem_encr, year) %>% filter(year %in% c(2008
   kidgender_7 = cf074, 
   kidgender_8 = cf075, 
   kidgender_9 = cf076, 
-  kidhome_1 = cf083, #2008-2018
+  kidhome_1 = cf083, #2008-2020
   kidhome_2 = cf084, 
   kidhome_3 = cf085, 
   kidhome_4 = cf086, 
@@ -663,7 +678,7 @@ fam.reshape <- fam.all %>% arrange(nomem_encr, year) %>% filter(year %in% c(2008
   kidhome_9 = cf091,
   childrenold = cf035, # Have you had any children? Please include any deceased children as well. (2008-2014)
   totalchildrenold = cf036) %>% # How many children have you had in total? (2008-2014)
-  select(nomem_encr, year, childrenold, totalchildrenold, starts_with("kiddied"), 
+  dplyr::select(nomem_encr, year, childrenold, totalchildrenold, starts_with("kiddied"), 
          starts_with("kidyearold"), starts_with("kidgender"), starts_with("kidhome"))
 
 # Sometimes, there is a package conflict here, and I need to re-install 'tidyverse'
@@ -699,7 +714,7 @@ table(fam.reshape$kiddied) # 2036 deceased kids
 
 fam.reshape <- fam.reshape %>% filter(is.na(kiddied)) %>% # drop deceased kids
   group_by(nomem_encr, year) %>% mutate(kidnr = row_number()) %>% # recount kids
-  ungroup() %>% select(-kiddied) # all NA
+  ungroup() %>% dplyr::select(-kiddied) # all NA
 
 # reshape back to person-year format
 fam.reshape <- fam.reshape %>% pivot_wider(names_from = kidnr,
@@ -711,7 +726,7 @@ summary(fam.reshape) # 43167 person-years
 fam.all <- left_join(fam.all, fam.reshape)
 summary(fam.all$sumdec) # 43167 
 
-# create longitudinal variables for 2008-2019
+# create longitudinal variables for 2008-2020
 
 fam.all <- fam.all %>% 
   mutate(children = ifelse(year %in% c(2008:2014), 2-childrenold, 2-childrennew), # children dummy (1=yes)
@@ -731,9 +746,9 @@ fam.all <- fam.all %>%
 # birth year children 1-3 (only LIVING children)
 # from 2008-2014: cf037, cf038, cf039 -> included deceased children -> corrected versions in kidyearold_
 # from 2015-2018: cf456, cf457, cf458 -> renamed to kidyearnew_
-fam.all <- fam.all %>% mutate(kid1byear = ifelse(year %in% c(2015:2019), kidyearnew_1, kidyearold_1),
-                              kid2byear = ifelse(year %in% c(2015:2019), kidyearnew_2, kidyearold_2),
-                              kid3byear = ifelse(year %in% c(2015:2019), kidyearnew_3, kidyearold_3))
+fam.all <- fam.all %>% mutate(kid1byear = ifelse(year %in% c(2015:2020), kidyearnew_1, kidyearold_1),
+                              kid2byear = ifelse(year %in% c(2015:2020), kidyearnew_2, kidyearold_2),
+                              kid3byear = ifelse(year %in% c(2015:2020), kidyearnew_3, kidyearold_3))
 
 fam.all %>% filter(!is.na(kid1byear) & !is.na(kid2byear)) %>% 
   mutate(diff = kid2byear-kid1byear) %>% group_by(diff) %>% 
@@ -743,38 +758,38 @@ fam.all %>% filter(!is.na(kid1byear) & !is.na(kid2byear)) %>%
 # -> we correct this below by re-ordering!
 
 # gender children 1-3  (1=boy, 2=girl)
-# from 2008-2018 cf068, cf069, cf070
+# from 2008-2020 cf068, cf069, cf070
 # However, values from 2008-2014 were corrected above by removing deceased children. Although
 # gender (& living-at-home) was never asked regarding deceased children, the positioning was wrong
 # which created (incorrect) missing values.
-fam.all <- fam.all %>% mutate(kid1gender = ifelse(year %in% c(2015:2019), cf068, kidgender_1),
-                              kid2gender = ifelse(year %in% c(2015:2019), cf069, kidgender_2),
-                              kid3gender = ifelse(year %in% c(2015:2019), cf070, kidgender_3))
+fam.all <- fam.all %>% mutate(kid1gender = ifelse(year %in% c(2015:2020), cf068, kidgender_1),
+                              kid2gender = ifelse(year %in% c(2015:2020), cf069, kidgender_2),
+                              kid3gender = ifelse(year %in% c(2015:2020), cf070, kidgender_3))
 
 # living at home children 1-3  (1=living at home, 2=living independently)
-# from 2008-2018 cf083, cf084, cf085
+# from 2008-2020 cf083, cf084, cf085
 # --> see above
-fam.all <- fam.all %>% mutate(kid1home = ifelse(year %in% c(2015:2019), cf083, kidhome_1),
-                              kid2home = ifelse(year %in% c(2015:2019), cf084, kidhome_2),
-                              kid3home = ifelse(year %in% c(2015:2019), cf085, kidhome_3))
+fam.all <- fam.all %>% mutate(kid1home = ifelse(year %in% c(2015:2020), cf083, kidhome_1),
+                              kid2home = ifelse(year %in% c(2015:2020), cf084, kidhome_2),
+                              kid3home = ifelse(year %in% c(2015:2020), cf085, kidhome_3))
 
 fam.all %>% filter(is.na(totalchildren)) %>%
-  select(nomem_encr, year, children, totalchildren, 
+  dplyr::select(nomem_encr, year, children, totalchildren, 
          contains(c("kid1", "kid2", "kid3"))) %>% print(n=100) # looks good
 fam.all %>% filter(totalchildren==0) %>%
-  select(nomem_encr, year, children, totalchildren, 
+  dplyr::select(nomem_encr, year, children, totalchildren, 
          contains(c("kid1", "kid2", "kid3"))) %>% print(n=200) # also looks good
 fam.all %>% filter(totalchildren>=1) %>%
-  select(nomem_encr, year, children, totalchildren, 
+  dplyr::select(nomem_encr, year, children, totalchildren, 
          contains(c("kid1", "kid2", "kid3"))) %>% print(n=300) # no inconsistencies
 
 # are there any respondents who report kid2 but no kid1?
 fam.all %>% arrange(nomem_encr, year) %>% filter(is.na(kid1byear) & !is.na(kid2byear)) %>%
-  select(nomem_encr, year, children, totalchildren, 
+  dplyr::select(nomem_encr, year, children, totalchildren, 
          contains(c("kid1", "kid2", "kid3"))) %>% print(n=100)
 # 1 respondent 896685 -> longitudinal gap that can be corrected
 fam.all %>% arrange(nomem_encr, year) %>% filter(nomem_encr==896685) %>% 
-  select(nomem_encr, year, children, totalchildren, 
+  dplyr::select(nomem_encr, year, children, totalchildren, 
          contains(c("kid1", "kid2", "kid3"))) %>% print(width=Inf)
 fam.all <- fam.all %>% mutate(
   kid1byear = ifelse(is.na(kid1byear) & nomem_encr==896685 & year==2014, 1964, kid1byear), 
@@ -785,17 +800,17 @@ fam.all <- fam.all %>% mutate(
 fam.all %>% filter(totalchildren>=1) %>% group_by(kid1byear) %>% summarise(n=n()) %>% print(n=Inf)
 # 319 NAs in kid1byear
 fam.all %>% filter(totalchildren>=1 & is.na(kid1byear)) %>%
-  select(nomem_encr, year, totalchildren, 
+  dplyr::select(nomem_encr, year, totalchildren, 
          contains(c("kid1", "kid2", "kid3"))) %>% print(n=100)
 # pick a few examples to check longitudinally 
 fam.all %>% filter(nomem_encr %in% c(814129, 823611, 862847, 882214)) %>%
-  select(nomem_encr, year, totalchildren, 
+  dplyr::select(nomem_encr, year, totalchildren, 
          contains(c("kid1", "kid2", "kid3"))) %>% print(n=100)
 # for some of these missings information on children can be inferred longitudinally 
 # but maybe this is in too broad strokes... few missings anyways!
 
 # re-order kid1, kid2, kid3 by birth year
-fam.reshape2 <- fam.all %>% select(nomem_encr, year, contains(c("kid1", "kid2", "kid3")))
+fam.reshape2 <- fam.all %>% dplyr::select(nomem_encr, year, contains(c("kid1", "kid2", "kid3")))
 
 fam.reshape2 <- fam.reshape2 %>% pivot_longer(cols = starts_with("kid"),
                                               names_to = c("kidnr", ".value"),
@@ -812,7 +827,7 @@ fam.reshape2 <- fam.reshape2 %>% pivot_wider(names_from = kidnr,
                                              names_glue = "kid{kidnr}{.value}")
 
 # merge re-ordered variables
-fam.all <- fam.all %>% select(-contains(c("kid1", "kid2", "kid3")))
+fam.all <- fam.all %>% dplyr::select(-contains(c("kid1", "kid2", "kid3")))
 fam.all <- left_join(fam.all, fam.reshape2)
 
 # no older kid2's, anymore (yay)
@@ -831,30 +846,31 @@ fam.all <- fam.all %>% mutate(nokids =    ifelse(!is.na(totalchildren), ifelse(t
   mutate_at(vars(contains("kid3")), funs(ifelse(is.na(.) & thirdkid==0, 0, .)))
 
 fam.all %>% filter(is.na(kid1gender)) %>%
-  select(nomem_encr, year, totalchildren, 
+  dplyr::select(nomem_encr, year, totalchildren, 
          contains(c("kid1", "kid2", "kid3"))) %>% print(n=100) # look like genuine missings
 fam.all %>% filter(is.na(kid1gender)) %>% group_by(year) %>% summarise(n=n())
 # no missings due to deceased children, anymore
 
-fam.all <- fam.all %>% select(nomem_encr, year, fammonth, currentpartner, livetogether,
+fam.all <- fam.all %>% dplyr::select(nomem_encr, year, fammonth, currentpartner, livetogether,
                               totalchildren, contains(c("kid1", "kid2", "kid3")),
                               nokids, secondkid, thirdkid)
 
-### Health datasets 2007-2018
-#hel07 <- read.spss('data/raw/LISS/Health/ch07a_2p_EN.sav', use.value.labels=F, to.data.frame=T)
+### Health datasets 2008-2020
+#hel07 <- read.spss('data/raw/LISS/Health/ch07a_2p_EN.sav', use.value.labels=F, to.data.frame=T) # not needed because no pers data in 07
 hel08 <- read.spss('data/raw/LISS/Health/ch08b_EN_1.3p.sav', use.value.labels=F, to.data.frame=T)
 hel09 <- read.spss('data/raw/LISS/Health/ch09c_EN_1.1p.sav', use.value.labels=F, to.data.frame=T)
 hel10 <- read.spss('data/raw/LISS/Health/ch10d_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 hel11 <- read.spss('data/raw/LISS/Health/ch11e_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 hel12 <- read.spss('data/raw/LISS/Health/ch12f_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 hel13 <- read.spss('data/raw/LISS/Health/ch13g_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
-#hel14 <- read.spss('data/raw/LISS/Health/ch14g_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+#hel14 <- read.spss('data/raw/LISS/Health/ch14g_EN_1.0p.sav', use.value.labels=F, to.data.frame=T) # not available (gap)
 hel15 <- read.spss('data/raw/LISS/Health/ch15h_EN_1.2p.sav', use.value.labels=F, to.data.frame=T)
 hel16 <- read.spss('data/raw/LISS/Health/ch16i_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 hel17 <- read.spss('data/raw/LISS/Health/ch17j_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 hel18 <- read.spss('data/raw/LISS/Health/ch18k_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 hel19 <- read.spss('data/raw/LISS/Health/ch19l_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
 hel20 <- read.spss('data/raw/LISS/Health/ch20m_EN_1.0p.sav', use.value.labels=F, to.data.frame=T)
+# 21 not yet available
 
 #Make the names uniform by removing the wave qualifier (e.g., "08a")
 #names(hel07) <- gsub("07a", "", names(hel07))
@@ -877,7 +893,7 @@ names(hel20) <- gsub("20m", "", names(hel20))
 # --> remove these variables!
 remove_timevar <- function(x) { 
   x %>%       
-    select(-c(ch256, ch258))
+    dplyr::select(-c(ch256, ch258))
 }
 listhel <- list(hel08, hel09, hel10, hel11, hel12, hel13, hel15, hel16, hel17, hel18, hel19, hel20) %>%
   lapply(remove_timevar)
@@ -924,7 +940,7 @@ hel.all$dep05 <- 7-hel.all$ch015
 dep_items <- c("dep01", "dep02", "dep03", "dep04", "dep05")
 hel.all$dep <- rowMeans(hel.all[dep_items], na.rm = TRUE)
 
-hel.all <- select(hel.all, nomem_encr, year, helmonth, subjhealth, bmi, chronicdisease,
+hel.all <- dplyr::select(hel.all, nomem_encr, year, helmonth, subjhealth, bmi, chronicdisease,
                   heartattack, stroke, cancer, diabetes, nodisease, mobility, dep)
 
 #### LISS data: merge datasets ####
@@ -943,20 +959,20 @@ merged_liss <- left_join(merged_liss, hel.all, by=c("nomem_encr", "year"))
 # these questions were only answered by the hh head and pertain to the whole hh
 liss_housing_merge <- merged_liss %>% 
   filter(!is.na(rooms) | !is.na(movedinyear) | !is.na(typedwelling) | !is.na(secondhouse)) %>% 
-  select(nomem_encr, nohouse_encr, year, rooms, movedinyear, typedwelling, secondhouse)
+  dplyr::select(nomem_encr, nohouse_encr, year, rooms, movedinyear, typedwelling, secondhouse)
 # however, some hh have multiple entries which creates come unwanted duplicates later
 liss_housing_merge <- liss_housing_merge %>% group_by(nohouse_encr, year) %>% 
   mutate(duplicates = n()) %>% ungroup()
 # split into two versions, one identified by 'nohouse_encr' & 'year', and the 
 # other by 'nomem_encr' and 'year'
 liss_housing_merge_hh <- liss_housing_merge %>% 
-  filter(duplicates==1) %>% select(-nomem_encr, -duplicates)
+  filter(duplicates==1) %>% dplyr::select(-nomem_encr, -duplicates)
 liss_housing_merge_pp <- liss_housing_merge %>% 
-  filter(duplicates>1) %>% select(-nohouse_encr, -duplicates)
+  filter(duplicates>1) %>% dplyr::select(-nohouse_encr, -duplicates)
 
 ############# code more elegantly with 'mutate_at'
 
-merged_liss <- merged_liss %>% select(-rooms, -movedinyear, -typedwelling, -secondhouse)
+merged_liss <- merged_liss %>% dplyr::select(-rooms, -movedinyear, -typedwelling, -secondhouse)
 merged_liss <- left_join(merged_liss, liss_housing_merge_hh) #merge by 'nohouse_encr'
 merged_liss <- left_join(merged_liss, liss_housing_merge_pp, by=c("nomem_encr", "year"))
 merged_liss <- merged_liss %>% mutate(
@@ -964,7 +980,7 @@ merged_liss <- merged_liss %>% mutate(
   movedinyear = ifelse(!is.na(movedinyear.x), movedinyear.x, movedinyear.y),
   typedwelling = ifelse(!is.na(typedwelling.x), typedwelling.x, typedwelling.y),
   secondhouse = ifelse(!is.na(secondhouse.x), secondhouse.x, secondhouse.y)
-) %>% select(-starts_with("rooms."), -starts_with("movedinyear."), 
+) %>% dplyr::select(-starts_with("rooms."), -starts_with("movedinyear."), 
              -starts_with("typedwelling."), -starts_with("secondhouse."), )
 
 # to determine the final N, two datasets are relevant: 
@@ -976,7 +992,7 @@ table(merged_liss$validper, merged_liss$validfam)
 table(merged_liss$validwed, merged_liss$validfam)
 
 # for grandparenthood coding we rely on variables from the Work and Education datasets 
-liss_grand <- merged_liss %>% filter(validwed==1) %>% select(nomem_encr, year, grandchildren)
+liss_grand <- merged_liss %>% filter(validwed==1) %>% dplyr::select(nomem_encr, year, grandchildren)
 liss_grand %>% group_by(grandchildren) %>% summarise(n()) 
 
 # however, outcome variables are in the Personality datasets
@@ -987,53 +1003,19 @@ lisslong %>% filter(validfam==1) %>% group_by(grandchildren) %>%
   summarise(n = n(), N = n_distinct(nomem_encr), meanage = mean(age, na.rm=T)) 
 # we will loose a few more cases due to missing Family information 
 
-lisslong %>% 
-  group_by(year) %>% 
-  filter(year!=2016) %>% 
-  dplyr::summarise(
-    A_count = sum(!is.na(agree)),
-    A_meano = mean(agree, na.rm=T),
-    A_sd = sd(agree, na.rm=T),
-    C_count = sum(!is.na(con)),
-    C_meano = mean(con, na.rm=T),
-    C_sd = sd(con, na.rm=T),
-    N_count = sum(!is.na(neur)),
-    N_meano = mean(neur, na.rm=T),
-    N_sd = sd(neur, na.rm=T),
-    E_count = sum(!is.na(extra)),
-    E_meano = mean(extra, na.rm=T),
-    E_sd = sd(extra, na.rm=T),
-    O_count = sum(!is.na(open)),
-    O_meano = mean(open, na.rm=T),
-    O_sd = sd(open, na.rm=T),
-    swls_count = sum(!is.na(swls)),
-    swls_meano = mean(swls, na.rm=T),
-    swls_sd = sd(swls, na.rm=T)
-  ) %>% 
-  pivot_longer(cols = -year, 
-               names_to = c(".value", "neurt"),
-               names_pattern = "(.*)_(.*)") %>% 
-  pivot_longer(cols = (A:swls),
-               names_to = "outcome",
-               values_to = "val") %>% 
-  filter(neurt=="meano") %>% 
-  print(n=Inf) %>% 
-  ggplot(mapping = aes(y=val, x=outcome, fill=factor(year))) +
-  geom_bar(position="dodge", stat="identity")
-
 
 #### identify transitions to grandparenthood ####
 liss_grand %>% group_by(year) %>% 
   dplyr::summarise(mean = mean(grandchildren, na.rm = T))
 
-liss_grand_wide <- liss_grand %>% select(nomem_encr, year, grandchildren) %>% 
+liss_grand_wide <- liss_grand %>% dplyr::select(nomem_encr, year, grandchildren) %>% 
   arrange(nomem_encr, year) %>% 
   pivot_wider(names_from = year,
               names_prefix = "grandchildren_",
               values_from = grandchildren
-  ) %>% select(sort(tidyselect::peek_vars())) %>% glimpse()
+  ) %>% dplyr::select(sort(tidyselect::peek_vars())) %>% glimpse()
 
-liss_grand_wide %>% select(starts_with("grandchildren")) %>% psych::describe()
+liss_grand_wide %>% dplyr::select(starts_with("grandchildren")) %>% psych::describe()
 
 # first step: code all the 0 to 1 transitions
 liss_grand_wide <- liss_grand_wide %>% mutate(
@@ -1058,7 +1040,11 @@ liss_grand_wide <- liss_grand_wide %>% mutate(
   transit2018 = ifelse(is.na(grandchildren_2017) | is.na(grandchildren_2018), 0,
                        ifelse(grandchildren_2017==0 & grandchildren_2018==1, 1, 0)),
   transit2019 = ifelse(is.na(grandchildren_2018) | is.na(grandchildren_2019), 0,
-                       ifelse(grandchildren_2018==0 & grandchildren_2019==1, 1, 0)))
+                       ifelse(grandchildren_2018==0 & grandchildren_2019==1, 1, 0)),
+  transit2020 = ifelse(is.na(grandchildren_2019) | is.na(grandchildren_2020), 0,
+                       ifelse(grandchildren_2019==0 & grandchildren_2020==1, 1, 0)),
+  transit2021 = ifelse(is.na(grandchildren_2020) | is.na(grandchildren_2021), 0,
+                       ifelse(grandchildren_2020==0 & grandchildren_2021==1, 1, 0)))
 
 # second step: code all the 1 to 0 transitions (inconsistent longitudinal data)
 liss_grand_wide <- liss_grand_wide %>% mutate(
@@ -1083,17 +1069,21 @@ liss_grand_wide <- liss_grand_wide %>% mutate(
   goback2018 = ifelse(is.na(grandchildren_2017) | is.na(grandchildren_2018), 0,
                        ifelse(grandchildren_2017==1 & grandchildren_2018==0, 1, 0)),
   goback2019 = ifelse(is.na(grandchildren_2018) | is.na(grandchildren_2019), 0,
-                       ifelse(grandchildren_2018==1 & grandchildren_2019==0, 1, 0)))
+                       ifelse(grandchildren_2018==1 & grandchildren_2019==0, 1, 0)),
+  goback2020 = ifelse(is.na(grandchildren_2019) | is.na(grandchildren_2020), 0,
+                      ifelse(grandchildren_2019==1 & grandchildren_2020==0, 1, 0)),
+  goback2021 = ifelse(is.na(grandchildren_2020) | is.na(grandchildren_2021), 0,
+                      ifelse(grandchildren_2020==1 & grandchildren_2021==0, 1, 0)))
 
 # third step: count both per person
 liss_grand_wide <- liss_grand_wide %>% 
   mutate(
-    sum_transit = rowSums(select(., starts_with("transit"))),
-    sum_goback  = rowSums(select(., starts_with("goback"))))
+    sum_transit = rowSums(dplyr::select(., starts_with("transit"))),
+    sum_goback  = rowSums(dplyr::select(., starts_with("goback"))))
 
 # identify eligible grandparents (to-be): respondents with exactly 1 transition to 
 # grandparenthood and no subsequent transitions back
-liss_grand_wide %>% filter(sum_transit==1) %>% group_by(sum_goback) %>% summarise(n = n()) # N=343
+liss_grand_wide %>% filter(sum_transit==1) %>% group_by(sum_goback) %>% summarise(n = n()) # N=386
 
 # identify eligible non-grandparents: respondents starting out with no grandchildren 
 # with 0 transitions throughout the observation period
@@ -1103,8 +1093,9 @@ liss_grand_wide %>%
          grandchildren_2012 %in% c(0, NA) & grandchildren_2013 %in% c(0, NA) & 
          grandchildren_2014 %in% c(0, NA) & grandchildren_2015 %in% c(0, NA) & 
          grandchildren_2016 %in% c(0, NA) & grandchildren_2017 %in% c(0, NA) & 
-         grandchildren_2018 %in% c(0, NA) & grandchildren_2019 %in% c(0, NA)) %>% 
-  group_by(sum_transit) %>% summarise(n()) # N=12879
+         grandchildren_2018 %in% c(0, NA) & grandchildren_2019 %in% c(0, NA) &
+         grandchildren_2020 %in% c(0, NA) & grandchildren_2021 %in% c(0, NA)) %>% 
+  group_by(sum_transit) %>% summarise(n()) # N=14085
 
 #code variable to denote eligiblity
 liss_grand_wide <- liss_grand_wide %>% 
@@ -1115,7 +1106,8 @@ liss_grand_wide <- liss_grand_wide %>%
        grandchildren_2012 %in% c(0, NA) & grandchildren_2013 %in% c(0, NA) & 
        grandchildren_2014 %in% c(0, NA) & grandchildren_2015 %in% c(0, NA) & 
        grandchildren_2016 %in% c(0, NA) & grandchildren_2017 %in% c(0, NA) & 
-       grandchildren_2018 %in% c(0, NA) & grandchildren_2019 %in% c(0, NA)),
+       grandchildren_2018 %in% c(0, NA) & grandchildren_2019 %in% c(0, NA) & 
+       grandchildren_2020 %in% c(0, NA) & grandchildren_2021 %in% c(0, NA)),
       0, NA))
     )
 table(liss_grand_wide$grandparent)
@@ -1123,7 +1115,7 @@ table(liss_grand_wide$grandparent)
 #problem: we still have a few respondents with missing data who go back to 0 after a 1, 
 #e.g. 846987, 848046
 liss_grand_wide %>% filter(grandparent==1 & grandchildren_2019==0) %>% 
-  select(nomem_encr, starts_with("grandchildren")) %>% print(width=Inf)
+  dplyr::select(nomem_encr, starts_with("grandchildren")) %>% print(width=Inf)
 
 #recode for 1-year-gap
 liss_grand_wide <- liss_grand_wide %>% mutate(
@@ -1146,7 +1138,11 @@ liss_grand_wide <- liss_grand_wide %>% mutate(
   goback2018 = replace(goback2018, grandchildren_2016==1 & is.na(grandchildren_2017) &
                          grandchildren_2018==0, 1),
   goback2019 = replace(goback2019, grandchildren_2017==1 & is.na(grandchildren_2018) &
-                         grandchildren_2019==0, 1))
+                         grandchildren_2019==0, 1),
+  goback2020 = replace(goback2020, grandchildren_2018==1 & is.na(grandchildren_2019) &
+                         grandchildren_2020==0, 1),
+  goback2021 = replace(goback2021, grandchildren_2019==1 & is.na(grandchildren_2020) &
+                         grandchildren_2021==0, 1))
 # 815386 846987 848046 855929 896304
 
 #recode for 2-year-gap
@@ -1168,7 +1164,11 @@ liss_grand_wide <- liss_grand_wide %>% mutate(
   goback2018 = replace(goback2018, grandchildren_2015==1 & is.na(grandchildren_2016) &
                          is.na(grandchildren_2017) & grandchildren_2018==0, 1),
   goback2019 = replace(goback2019, grandchildren_2016==1 & is.na(grandchildren_2017) &
-                         is.na(grandchildren_2018) & grandchildren_2019==0, 1))
+                         is.na(grandchildren_2018) & grandchildren_2019==0, 1),
+  goback2020 = replace(goback2020, grandchildren_2017==1 & is.na(grandchildren_2018) &
+                         is.na(grandchildren_2019) & grandchildren_2020==0, 1),
+  goback2021 = replace(goback2021, grandchildren_2018==1 & is.na(grandchildren_2019) &
+                         is.na(grandchildren_2020) & grandchildren_2021==0, 1))
 # plus 888903
 
 #recode for 3-year-gap
@@ -1188,7 +1188,11 @@ liss_grand_wide <- liss_grand_wide %>% mutate(
   goback2018 = replace(goback2018, grandchildren_2014==1 & is.na(grandchildren_2015) & is.na(grandchildren_2016) &
                          is.na(grandchildren_2017) & grandchildren_2018==0, 1),
   goback2019 = replace(goback2019, grandchildren_2015==1 & is.na(grandchildren_2016) & is.na(grandchildren_2017) &
-                         is.na(grandchildren_2018) & grandchildren_2019==0, 1))
+                         is.na(grandchildren_2018) & grandchildren_2019==0, 1),
+  goback2020 = replace(goback2020, grandchildren_2016==1 & is.na(grandchildren_2017) & is.na(grandchildren_2018) &
+                         is.na(grandchildren_2019) & grandchildren_2020==0, 1),
+  goback2021 = replace(goback2021, grandchildren_2017==1 & is.na(grandchildren_2018) & is.na(grandchildren_2019) &
+                         is.na(grandchildren_2020) & grandchildren_2021==0, 1))
 # no cases with 3-year-gap
 
 #recode for 4-year-gap
@@ -1206,23 +1210,27 @@ liss_grand_wide <- liss_grand_wide %>% mutate(
   goback2018 = replace(goback2018, grandchildren_2013==1 & is.na(grandchildren_2014) & is.na(grandchildren_2015) & is.na(grandchildren_2016) &
                          is.na(grandchildren_2017) & grandchildren_2018==0, 1),
   goback2019 = replace(goback2019, grandchildren_2014==1 & is.na(grandchildren_2015) & is.na(grandchildren_2016) & is.na(grandchildren_2017) &
-                         is.na(grandchildren_2018) & grandchildren_2019==0, 1))
+                         is.na(grandchildren_2018) & grandchildren_2019==0, 1),
+  goback2020 = replace(goback2020, grandchildren_2015==1 & is.na(grandchildren_2016) & is.na(grandchildren_2017) & is.na(grandchildren_2018) &
+                         is.na(grandchildren_2019) & grandchildren_2020==0, 1),
+  goback2021 = replace(goback2021, grandchildren_2016==1 & is.na(grandchildren_2017) & is.na(grandchildren_2018) & is.na(grandchildren_2019) &
+                         is.na(grandchildren_2020) & grandchildren_2021==0, 1))
 # no cases with 4-year-gap
 
 # update count
 liss_grand_wide <- liss_grand_wide %>% 
   mutate(
-    sum_goback  = rowSums(select(., starts_with("goback"))))
+    sum_goback  = rowSums(dplyr::select(., starts_with("goback"))))
 
 liss_grand_wide %>% filter(grandparent==1 & sum_goback>=1) %>% 
-  select(nomem_encr, starts_with("grandchildren")) %>% print(width=Inf)
+  dplyr::select(nomem_encr, starts_with("grandchildren")) %>% print(width=Inf)
 # 815386 846987 848046 855929 888903 896304 -> 6 cases where NAs obscured inconsistent 
 # longitudinal data 
 
 liss_grand_wide <- liss_grand_wide %>% 
   mutate(grandparent = replace(grandparent, grandparent==1 & sum_goback>=1, NA))
          
-table(liss_grand_wide$grandparent) # check count: N=337
+table(liss_grand_wide$grandparent) # check count: N=380
 
 # build a data frame that I can later import into the .Rmd file in order to report the sample size flow
 liss_sampleflow_gp <- data.frame(step = numeric(0), grandparents = numeric(0))
@@ -1231,18 +1239,18 @@ liss_sampleflow_gp[nrow(liss_sampleflow_gp)+1, ] <- c(1, table(liss_grand_wide$g
 # drop non-grandparents where more than half of years are missing
 # -> these will not be very useful for matching
 liss_grand_wide <- liss_grand_wide %>% 
-  mutate(sum_missings = rowSums(is.na(select(., starts_with("grandchildren")))))
-liss_grand_wide <- liss_grand_wide %>% filter((grandparent==0 & sum_missings<=6) | grandparent==1) %>% 
-  select(-sum_missings)
+  mutate(sum_missings = rowSums(is.na(dplyr::select(., starts_with("grandchildren")))))
+liss_grand_wide <- liss_grand_wide %>% filter((grandparent==0 & sum_missings<=7) | grandparent==1) %>% 
+  dplyr::select(-sum_missings)
 table(liss_grand_wide$grandparent)
 
 liss_grand_wide_identify <- liss_grand_wide %>% filter(grandparent %in% c(0,1)) %>% 
-  select(nomem_encr, grandparent) # for later merge with long data
+  dplyr::select(nomem_encr, grandparent) # for later merge with long data
 
 # reshape again & merge with full dataset
 liss_grand_transits <- liss_grand_wide %>% 
   filter(grandparent %in% c(0,1)) %>% 
-  select(nomem_encr, starts_with("transit")) %>% 
+  dplyr::select(nomem_encr, starts_with("transit")) %>% 
   pivot_longer(cols = starts_with("transit"), 
                names_to = "year",
                names_prefix = "transit",
@@ -1258,7 +1266,7 @@ liss_grand %>% filter(grandparent==0) %>% group_by(year) %>% summarise(n()) %>% 
 liss_grand %>% filter(grandparent==1) %>% group_by(year) %>% summarise(n()) %>% print(n=Inf)
 table(liss_grand$grandparent)
 
-liss_grand %>% group_by(grandparent) %>% summarise(ndist = n_distinct(nomem_encr)) # N = 337 grandparents
+liss_grand %>% group_by(grandparent) %>% summarise(ndist = n_distinct(nomem_encr)) # N = 380 grandparents
 liss_grand %>% filter(grandparent==1) %>% group_by(grandchildren) %>% summarise(n())
 
 #### code time in relation to transition ####
@@ -1273,17 +1281,17 @@ liss_grand <- liss_grand %>%
 #    participation = row_number(),
 #    participation_max = n())         # better to count based on Background Variables data (above)
 
-liss_grand_merge <- liss_grand %>% select(nomem_encr, transit, transityr) %>% 
+liss_grand_merge <- liss_grand %>% dplyr::select(nomem_encr, transit, transityr) %>% 
   filter(transit==1) %>% 
   rename(transitever=transit,
          transityear=transityr)
 
 liss_grand <- left_join(liss_grand, liss_grand_merge) %>% 
-  select(-(transityr))
+  dplyr::select(-(transityr))
 
 liss_grand <- liss_grand %>% 
   mutate(time = year - transityear) %>% #coding time variable
-  select(-grandchildren)
+  dplyr::select(-grandchildren)
 liss_grand %>% group_by(time) %>% filter(grandparent==1) %>% summarise(n = n()) %>% 
   print(n=Inf)
 
@@ -1295,7 +1303,8 @@ options(pillar.sigfig = 5)
 lisslong %>% group_by(grandparent) %>% filter(transit==1 | grandparent==0) %>% 
   summarise(meanage = mean((age), na.rm=T), n = n())
 lisslong %>% group_by(grandparent) %>% summarise(n=n(), N=n_distinct(nomem_encr))
-  
+# N = 378 grandparents (2 less because these have to pers data)
+
 # save .rda 
 save(lisslong, file = "data/processed/LISS/lisslong_cleaned.rda")
 
@@ -1307,8 +1316,9 @@ load(file = "data/processed/LISS/lisslong_cleaned.rda")
 
 lisslongvalid <- lisslong  %>% 
   filter(!is.na(extra) | !is.na(con) | !is.na(open) | !is.na(agree) | !is.na(neur) | !is.na(swls))
-# only 1 missing remains across all outcomes (in 'agree')
+# only 12missing remain across all outcomes (in 'agree' / 'open')
 summary(lisslongvalid$agree)
+summary(lisslongvalid$open)
 
 # some respondents have different missing waves in the Personality and 
 # Work and Education datasets -> we have some waves with valid personality data, which
@@ -1329,27 +1339,27 @@ lisslongvalid <- lisslongvalid %>% arrange(nomem_encr, year) %>% group_by(nomem_
 # -> Revised approach: instead of filter(time<0) I use filter(time < -1). This is to make sure
 # that at the time of matching, a respondent's children are not already pregnant with the grandchild
 liss_last_time_point <- lisslongvalid %>% filter(time < -1) %>% group_by(nomem_encr) %>% 
-  slice(which.max(time)) %>% select(nomem_encr, time) %>% rename(matchtime = time)
+  slice(which.max(time)) %>% dplyr::select(nomem_encr, time) %>% rename(matchtime = time)
 table(liss_last_time_point$matchtime)
-# N = 270 grandparents (with a valid pre-transition assessment earlier than time==-1)
-# -5  -4  -3  -2 
-#  1  21  75 173 
+# N = 303 grandparents (with a valid pre-transition assessment earlier than time==-1)
+# -12  -7  -5  -4  -3  -2 
+#   1   1   1  20  94 186 
 
 lisslongvalid <- left_join(lisslongvalid, liss_last_time_point) %>% arrange(nomem_encr, year)
 
-# N = 335 grandparents (in total) - 65 with no valid assessment at least 2 years before 
-# transition to GP -> 270
+# N = 378 grandparents (in total - with some pers data) - 75 with no valid assessment at least 2 years before 
+# transition to GP -> 303
 lisslongvalid %>% group_by(grandparent, matchtime) %>% summarise(n = n(), ndist = n_distinct(nomem_encr))
 
 # build a data frame that I can later import into the .Rmd file in order to report the sample size flow
 liss_sampleflow_gp[nrow(liss_sampleflow_gp)+1, ] <- 
   c(2, (lisslongvalid %>% group_by(grandparent) %>% summarise(ndist = n_distinct(nomem_encr)))[2,2]) # add step 2
 
-# Of these 270, all at least appear in Family and Household data
+# Of these 303, all at least appear in Family and Household data
 lisslongvalid %>% filter(validfam==1) %>% group_by(grandparent, matchtime) %>% 
   summarise(n = n(), ndist = n_distinct(nomem_encr))
 
-# N = 135 grandparents (with a valid pre-transition assessment AND a t=0 post-treatment assessment)
+# N = 172 grandparents (with a valid pre-transition assessment AND a t=0 post-treatment assessment)
 lisslongvalid %>% filter(transit==1 & !is.na(matchtime)) %>% summarise(ndist = n_distinct(nomem_encr))
 # however, there are additional grandparents with valid pre- and post-transition assessments 
 # (just not at t=0, but later)
@@ -1357,10 +1367,10 @@ lisslongvalid %>% filter(transit==1 & !is.na(matchtime)) %>% summarise(ndist = n
 # create 'valid' variable numbering valid assessments before/after the transition
 summary(lisslongvalid$time)
 lisslongvalid_neg <- lisslongvalid %>% filter(time %in% c(-20:-1)) %>% # for time<0
-  select(nomem_encr, year, time) %>% group_by(nomem_encr) %>% mutate(valid = min_rank(desc(time))) %>% 
+  dplyr::select(nomem_encr, year, time) %>% group_by(nomem_encr) %>% mutate(valid = min_rank(desc(time))) %>% 
   mutate(valid = valid - 2*valid) # flip algebraic sign
 lisslongvalid_pos <- lisslongvalid %>% filter(time %in% c(0:20)) %>% # for time>=0
-  select(nomem_encr, year, time) %>% group_by(nomem_encr) %>% mutate(valid = min_rank(time) - 1)
+  dplyr::select(nomem_encr, year, time) %>% group_by(nomem_encr) %>% mutate(valid = min_rank(time) - 1)
 
 # merge
 lisslongvalid <- left_join(lisslongvalid, bind_rows(lisslongvalid_neg, lisslongvalid_pos))
@@ -1369,7 +1379,7 @@ rm(lisslongvalid_neg, lisslongvalid_pos)
 # Variable 'valid' now counts the valid assessments before the transition (negative values), 
 # and afterwards with 0 being the first valid assessment after the transition to GP
 # This new count is irrespective of the actual timing of the survey years.
-lisslongvalid %>% select(nomem_encr, year, time, valid, matchtime, grandparent, transit, transityear) %>% 
+lisslongvalid %>% dplyr::select(nomem_encr, year, time, valid, matchtime, grandparent, transit, transityear) %>% 
   filter(grandparent==1) %>% print(n=50)
 table(lisslongvalid$valid, lisslongvalid$matchtime)
 
@@ -1381,10 +1391,10 @@ save(liss_sampleflow_gp, file = "data/processed/LISS/liss_sampleflow_gp.rda") # 
 # Restrict sample to those with at least 1 valid pre- and 1 valid post-treatment assessment
 # -> ALSO, pre-treatment assessment has to be at time==-2 (or earlier)
 lisslongvalid <- lisslongvalid %>% 
-  mutate(help = ifelse(grandparent==1, ifelse(valid==0 & !is.na(matchtime), 0, 1), NA)) %>% 
+  mutate(help = ifelse(grandparent==1, ifelse(valid==0 & matchtime %in% c(-5:-2), 0, 1), NA)) %>% 
   group_by(nomem_encr) %>% mutate(droplater = min(help, na.rm = T)==1) %>% 
-  ungroup() %>% select(-help)
-# after imputations: drop 362 obs. (82 resp.) 
+  ungroup() %>% dplyr::select(-help)
+# after imputations: drop 416 obs. (93 resp.) 
 # -> no pre-treatment assessment earlier than time==-1 / no post-treatment assessment
 lisslongvalid %>% group_by(grandparent, droplater) %>% summarise(n = n(), N=n_distinct(nomem_encr))
 
@@ -1403,7 +1413,7 @@ load(file = "data/processed/LISS/lisslong_valid.rda")
 #### multiple imputations for variables needed for PSM covariates ####
 
 liss_for_implong <- lisslongvalid %>% 
-  select(nomem_encr, year, 
+  dplyr::select(nomem_encr, year, 
          retire_early, retirement, paid_work, more_paid_work, #for covars
          financialsit, difficultybills, rooms, movedinyear, jobhours, 
          typedwelling, secondhouse, religion, speakdutch, 
@@ -1419,7 +1429,7 @@ liss_for_implong <- lisslongvalid %>%
 # will not impute the 1st child's birthyear, because this variable will be used
 # to filter one of the control groups (and will not be used as a PSM covariate
 # in the other second control group)
-liss_for_implong <- liss_for_implong %>% select(-kid1byear)
+liss_for_implong <- liss_for_implong %>% dplyr::select(-kid1byear)
 
 # some covars have very large proportions of missing values (per design -> filtered questions)
 # difficult to deal with in imputations --> recode 
@@ -1434,8 +1444,10 @@ summary(liss_for_implong)
 
 # do multiple imputations 
 # (required for pscore matching, although imputed data will not be used in later analyses)
-library(mice)
-library(lattice)
+#library(mice) # loaded above (at start of script)
+#library(lattice)
+
+set.seed(3000)
 
 imp <- 5 # Number of multiple imputations
 
@@ -1446,11 +1458,11 @@ imp <- 5 # Number of multiple imputations
 # not in 2016: swls, agree, con, extra, neur, open 
 # -> Won't include 2016
 
-# seperate imputations for each wave - 2019/2020 not needed because we always match in pre-treat wave
+# seperate imputations for each wave - 2021 not needed because we always match in pre-treat wave
 help1 <- NULL;
 help2 <- NULL;
 help3 <- NULL;
-for (yr in c(2008:2013, 2015, 2017:2018)){
+for (yr in c(2008:2013, 2015, 2017:2020)){
     help1 <- paste("liss_for_imp", yr, sep="")
     help2 <- liss_for_implong$year
     help3 <- paste("liss_imp", yr, sep="")
@@ -1473,7 +1485,7 @@ summary(liss_imp2017)
 # 2014 separately because some variables are missing per design
 # (2016 won't be done because the missing outcome variables are too important) (?)
 liss_for_imp2014 <- liss_for_implong %>% filter(year==2014) %>% 
-  select(-c(subjhealth, bmi, chronicdisease, heartattack, stroke, cancer, diabetes, 
+  dplyr::select(-c(subjhealth, bmi, chronicdisease, heartattack, stroke, cancer, diabetes, 
             nodisease, mobility, dep))
 liss_imp2014 <- mice(liss_for_imp2014, method = "cart", m = imp, maxit = 5, seed = 3000)
 summary(liss_for_imp2014)
@@ -1483,7 +1495,7 @@ summary(liss_imp2014)
 # create imp=5 datasets per imp'yr' object (these contain the imputed values, i.e. no missings)
 help1 <- NULL;
 help2 <- NULL;
-for (yr in c(2008:2015, 2017:2018)){
+for (yr in c(2008:2015, 2017:2020)){
   for(i in 1:imp){
     help1 <- paste("liss_imp", yr, "number", i, sep="_")
     help2 <- paste("liss_imp", yr, sep="")
@@ -1512,15 +1524,18 @@ for (i in 1:imp){
   d15 <- paste("liss_imp_2015_number", i, sep="_")
   d17 <- paste("liss_imp_2017_number", i, sep="_")
   d18 <- paste("liss_imp_2018_number", i, sep="_")
+  d19 <- paste("liss_imp_2019_number", i, sep="_")
+  d20 <- paste("liss_imp_2020_number", i, sep="_")
   eval(call("<-", as.name(x), bind_rows(get(d08), get(d09), get(d10), get(d11), get(d12), 
-                                        get(d13), get(d14), get(d15), get(d17), get(d18))))
+                                        get(d13), get(d14), get(d15), get(d17), get(d18),
+                                        get(d19), get(d20))))
 }
 
 # merge variables that identify (or describe) the treatment groups and the 
 # timing of treatment (including year of birth of 1st child - we don't want 
 # imputed values for this variable)
 liss_merge_gp <- lisslongvalid %>% 
-  select(nomem_encr, year, grandparent, time, matchtime, participation, valid, droplater, 
+  dplyr::select(nomem_encr, year, grandparent, time, matchtime, participation, valid, droplater, 
          kid1byear, nokids, secondkid, thirdkid)
 lissimp_matching_1 <- left_join(lissimp_matching_1, liss_merge_gp)
 lissimp_matching_2 <- left_join(lissimp_matching_2, liss_merge_gp)

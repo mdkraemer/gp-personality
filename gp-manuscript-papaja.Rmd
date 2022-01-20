@@ -99,8 +99,17 @@ appendix: gp-manuscript-papaja-appendix.Rmd
 ---
 
 ```{r setup, include = FALSE}
-library("papaja") # not on CRAN, see https://github.com/crsh/papaja
-library("citr")
+# all packages on CRAN are loaded via 'groundhog' package, see http://datacolada.org/95
+# If you encounter an error at this point, it might help to run the following lines separately, 
+# after restarting R (see 'Session')
+#library(groundhog)
+#groundhog.day="2020-11-01"
+#pkgs=c('dplyr', 'tidyr', 'purrr', 'multcomp', 'Hmisc', 'psych', 'GPArotation', 
+#       'lme4', 'lmerTest', 'cowplot', 'scales', 'car', 'magick', 'png', 'grid')
+#groundhog.library(pkgs, groundhog.day, tolerate.R.version='4.0.4')
+
+library("papaja") # not on CRAN, see https://github.com/crsh/papaja & "Instructions to Reproduce" on OSF
+library("citr") # not on CRAN, see https://github.com/crsh/citr
 library("multcomp") # for confint of linearHypothesis
 library("Hmisc")
 library("tidyverse")
@@ -121,6 +130,7 @@ library("car") # for linearHypothesis
 library("magick") # needed for figure cropping
 library("png") # appendix: external png file
 library("grid") # also needed for external png file because knitr::include_graphics() is buggy
+
 r_refs("references-r.bib")
 ```
 
@@ -225,128 +235,128 @@ Even though we have published using the LISS and HRS data before (see preregistr
 # internal consistencies at the time of matching (we use omega but need alpha object for 'keys')
 # life satisfaction
 alpha_swls_liss <- lissanalysis_parents %>% # LISS
-  select(starts_with("swls"), -swls) %>%
+  dplyr::select(starts_with("swls"), -swls) %>%
   psych::alpha(check.keys = TRUE)
 omega_swls_liss_p <- lissanalysis_parents %>% filter(matchtime==time) %>% # parents
-  select(starts_with("swls"), -swls) %>% 
+  dplyr::select(starts_with("swls"), -swls) %>% 
   psych::omega(m = ., keys = alpha.swls_liss$keys, plot = FALSE, nfactors=1)
 omega_swls_liss_np <- lissanalysis_nonparents %>% filter(matchtime==time) %>% # nonparents
-  select(starts_with("swls"), -swls) %>% 
+  dplyr::select(starts_with("swls"), -swls) %>% 
   psych::omega(m = ., keys = alpha.swls_liss$keys, plot = FALSE, nfactors=1)
 
 alpha_swls_hrs <- hrsanalysis_parents %>% # HRS
-  select(starts_with("swls"), -swls) %>%
+  dplyr::select(starts_with("swls"), -swls) %>%
   psych::alpha(check.keys = TRUE)
 omega_swls_hrs_p <- hrsanalysis_parents %>% filter(time_match==time) %>% # parents
-  select(starts_with("swls"), -swls) %>% 
+  dplyr::select(starts_with("swls"), -swls) %>% 
   psych::omega(m = ., keys = alpha.swls_hrs$keys, plot = FALSE, nfactors=1)
 omega_swls_hrs_np <- hrsanalysis_nonparents %>% filter(time_match==time) %>% # nonparents
-  select(starts_with("swls"), -swls) %>% 
+  dplyr::select(starts_with("swls"), -swls) %>% 
   psych::omega(m = ., keys = alpha.swls_hrs$keys, plot = FALSE, nfactors=1)
 
 # Big Five: openness to experience
 alpha_open_liss <- lissanalysis_parents %>% # LISS
-  select(starts_with("open"), -open) %>%
+  dplyr::select(starts_with("open"), -open) %>%
   psych::alpha(check.keys = TRUE)
 omega_open_liss_p <- lissanalysis_parents %>% filter(matchtime==time) %>% # parents
-  select(starts_with("open"), -open) %>% 
+  dplyr::select(starts_with("open"), -open) %>% 
   psych::omega(m = ., keys = alpha.open_liss$keys, plot = FALSE, nfactors=1)
 omega_open_liss_np <- lissanalysis_nonparents %>% filter(matchtime==time) %>% # nonparents
-  select(starts_with("open"), -open) %>% 
+  dplyr::select(starts_with("open"), -open) %>% 
   psych::omega(m = ., keys = alpha.open_liss$keys, plot = FALSE, nfactors=1)
 
 alpha_open_hrs <- hrsanalysis_parents %>% # HRS
-  select(starts_with("open"), -open) %>%
+  dplyr::select(starts_with("open"), -open) %>%
   psych::alpha(check.keys = TRUE)
 omega_open_hrs_p <- hrsanalysis_parents %>% filter(time_match==time) %>% # parents
-  select(starts_with("open"), -open) %>% 
+  dplyr::select(starts_with("open"), -open) %>% 
   psych::omega(m = ., keys = alpha.open_hrs$keys, plot = FALSE, nfactors=1)
 omega_open_hrs_np <- hrsanalysis_nonparents %>% filter(time_match==time) %>% # nonparents
-  select(starts_with("open"), -open) %>% 
+  dplyr::select(starts_with("open"), -open) %>% 
   psych::omega(m = ., keys = alpha.open_hrs$keys, plot = FALSE, nfactors=1)
 
 # Big Five: conscientiousness
 alpha_con_liss <- lissanalysis_parents %>% # LISS
-  select(starts_with("con"), -con) %>%
+  dplyr::select(starts_with("con"), -con) %>%
   psych::alpha(check.keys = TRUE)
 omega_con_liss_p <- lissanalysis_parents %>% filter(matchtime==time) %>% # parents
-  select(starts_with("con"), -con) %>% 
+  dplyr::select(starts_with("con"), -con) %>% 
   psych::omega(m = ., keys = alpha.con_liss$keys, plot = FALSE, nfactors=1)
 omega_con_liss_np <- lissanalysis_nonparents %>% filter(matchtime==time) %>% # nonparents
-  select(starts_with("con"), -con) %>% 
+  dplyr::select(starts_with("con"), -con) %>% 
   psych::omega(m = ., keys = alpha.con_liss$keys, plot = FALSE, nfactors=1)
 
 alpha_con_hrs <- hrsanalysis_parents %>% # HRS
-  select(starts_with("con"), -con) %>%
+  dplyr::select(starts_with("con"), -con) %>%
   psych::alpha(check.keys = TRUE)
 omega_con_hrs_p <- hrsanalysis_parents %>% filter(time_match==time) %>% # parents
-  select(starts_with("con"), -con) %>% 
+  dplyr::select(starts_with("con"), -con) %>% 
   psych::omega(m = ., keys = alpha.con_hrs$keys, plot = FALSE, nfactors=1)
 omega_con_hrs_np <- hrsanalysis_nonparents %>% filter(time_match==time) %>% # nonparents
-  select(starts_with("con"), -con) %>% 
+  dplyr::select(starts_with("con"), -con) %>% 
   psych::omega(m = ., keys = alpha.con_hrs$keys, plot = FALSE, nfactors=1)
 
 # Big Five: extraversion
 alpha_extra_liss <- lissanalysis_parents %>% # LISS
-  select(starts_with("extra"), -extra) %>%
+  dplyr::select(starts_with("extra"), -extra) %>%
   psych::alpha(check.keys = TRUE)
 omega_extra_liss_p <- lissanalysis_parents %>% filter(matchtime==time) %>% # parents
-  select(starts_with("extra"), -extra) %>% 
+  dplyr::select(starts_with("extra"), -extra) %>% 
   psych::omega(m = ., keys = alpha.extra_liss$keys, plot = FALSE, nfactors=1)
 omega_extra_liss_np <- lissanalysis_nonparents %>% filter(matchtime==time) %>% # nonparents
-  select(starts_with("extra"), -extra) %>% 
+  dplyr::select(starts_with("extra"), -extra) %>% 
   psych::omega(m = ., keys = alpha.extra_liss$keys, plot = FALSE, nfactors=1)
 
 alpha_extra_hrs <- hrsanalysis_parents %>% # HRS
-  select(starts_with("extra"), -extra) %>%
+  dplyr::select(starts_with("extra"), -extra) %>%
   psych::alpha(check.keys = TRUE)
 omega_extra_hrs_p <- hrsanalysis_parents %>% filter(time_match==time) %>% # parents
-  select(starts_with("extra"), -extra) %>% 
+  dplyr::select(starts_with("extra"), -extra) %>% 
   psych::omega(m = ., keys = alpha.extra_hrs$keys, plot = FALSE, nfactors=1)
 omega_extra_hrs_np <- hrsanalysis_nonparents %>% filter(time_match==time) %>% # nonparents
-  select(starts_with("extra"), -extra) %>% 
+  dplyr::select(starts_with("extra"), -extra) %>% 
   psych::omega(m = ., keys = alpha.extra_hrs$keys, plot = FALSE, nfactors=1)
 
 # Big Five: agreeableness
 alpha_agree_liss <- lissanalysis_parents %>% # LISS
-  select(starts_with("agree"), -agree) %>%
+  dplyr::select(starts_with("agree"), -agree) %>%
   psych::alpha(check.keys = TRUE)
 omega_agree_liss_p <- lissanalysis_parents %>% filter(matchtime==time) %>% # parents
-  select(starts_with("agree"), -agree) %>% 
+  dplyr::select(starts_with("agree"), -agree) %>% 
   psych::omega(m = ., keys = alpha.agree_liss$keys, plot = FALSE, nfactors=1)
 omega_agree_liss_np <- lissanalysis_nonparents %>% filter(matchtime==time) %>% # nonparents
-  select(starts_with("agree"), -agree) %>% 
+  dplyr::select(starts_with("agree"), -agree) %>% 
   psych::omega(m = ., keys = alpha.agree_liss$keys, plot = FALSE, nfactors=1)
 
 alpha_agree_hrs <- hrsanalysis_parents %>% # HRS
-  select(starts_with("agree"), -agree) %>%
+  dplyr::select(starts_with("agree"), -agree) %>%
   psych::alpha(check.keys = TRUE)
 omega_agree_hrs_p <- hrsanalysis_parents %>% filter(time_match==time) %>% # parents
-  select(starts_with("agree"), -agree) %>% 
+  dplyr::select(starts_with("agree"), -agree) %>% 
   psych::omega(m = ., keys = alpha.agree_hrs$keys, plot = FALSE, nfactors=1)
 omega_agree_hrs_np <- hrsanalysis_nonparents %>% filter(time_match==time) %>% # nonparents
-  select(starts_with("agree"), -agree) %>% 
+  dplyr::select(starts_with("agree"), -agree) %>% 
   psych::omega(m = ., keys = alpha.agree_hrs$keys, plot = FALSE, nfactors=1)
 
 # Big Five: neuroticism
 alpha_neur_liss <- lissanalysis_parents %>% # LISS
-  select(starts_with("neur"), -neur) %>%
+  dplyr::select(starts_with("neur"), -neur) %>%
   psych::alpha(check.keys = TRUE)
 omega_neur_liss_p <- lissanalysis_parents %>% filter(matchtime==time) %>% # parents
-  select(starts_with("neur"), -neur) %>% 
+  dplyr::select(starts_with("neur"), -neur) %>% 
   psych::omega(m = ., keys = alpha.neur_liss$keys, plot = FALSE, nfactors=1)
 omega_neur_liss_np <- lissanalysis_nonparents %>% filter(matchtime==time) %>% # nonparents
-  select(starts_with("neur"), -neur) %>% 
+  dplyr::select(starts_with("neur"), -neur) %>% 
   psych::omega(m = ., keys = alpha.neur_liss$keys, plot = FALSE, nfactors=1)
 
 alpha_neur_hrs <- hrsanalysis_parents %>% # HRS
-  select(starts_with("neur"), -neur) %>%
+  dplyr::select(starts_with("neur"), -neur) %>%
   psych::alpha(check.keys = TRUE)
 omega_neur_hrs_p <- hrsanalysis_parents %>% filter(time_match==time) %>% # parents
-  select(starts_with("neur"), -neur) %>% 
+  dplyr::select(starts_with("neur"), -neur) %>% 
   psych::omega(m = ., keys = alpha.neur_hrs$keys, plot = FALSE, nfactors=1)
 omega_neur_hrs_np <- hrsanalysis_nonparents %>% filter(time_match==time) %>% # nonparents
-  select(starts_with("neur"), -neur) %>% 
+  dplyr::select(starts_with("neur"), -neur) %>% 
   psych::omega(m = ., keys = alpha.neur_hrs$keys, plot = FALSE, nfactors=1)
 
 # put all BIg Five omegas in one table 
@@ -554,7 +564,7 @@ sample_time_hrs_np <- sample_time_hrs_np %>% filter(grandparent==0)
 
 (ref:piecewise-coding-scheme-cap) Longitudinal Sample Size in the Analysis Samples and Coding Scheme for the Piecewise Regression Coefficients.
 
-(ref:piecewise-coding-scheme-note) obs. = observations. $time=0$ marks the first year where the transition to grandparenthood has been reported. The number of grandparent respondents included in the final samples is $N_{LISS}=$ 250 and $N_{HRS}=$ 846. 
+(ref:piecewise-coding-scheme-note) obs. = observations. $time=0$ marks the first year where the transition to grandparenthood has been reported. The number of grandparent respondents included in the final samples is $N_{LISS}=$ 282 and $N_{HRS}=$ 847. 
 
 ```{r piecewise-coding-scheme, results="asis", warning=FALSE, message=FALSE}
 sample_time_liss <- as.data.frame(rbind(sample_time_liss_p, sample_time_liss_np))
@@ -621,7 +631,9 @@ observations, matched with `r hrs_final_n_parents$n[1]` control respondents with
 
 ## Transparency and Openness
 
-We used `r cite_r("references-r.bib", pkgs = c("lme4", "lmerTest"), withhold = FALSE)` for multilevel modeling, as well as *tidyverse* [@tidyverse2019] for data wrangling, and *papaja* [@R-papaja] for reproducible manuscript production. A complete list of software we used is provided in the supplemental materials. The preregistration and scripts for data wrangling, analyses, and to reproduce this manuscript can be found on the OSF (https://osf.io/75a4r/?view_only=ac929a2c41fb4afd9d1a64a3909848d0) and on GitHub (https://github.com/ [blinded]). LISS and HRS data are available online after registering accounts. Following Benjamin et al. [-@benjaminRedefineStatisticalSignificance2018], we set the $\alpha$-level for confirmatory analyses to $.005$.  
+We used `r cite_r("references-r.bib", pkgs = c("lme4", "lmerTest"), withhold = FALSE)` for multilevel modeling, as well as *tidyverse* [@tidyverse2019] for data wrangling, and *papaja* [@R-papaja] for reproducible manuscript production. A complete list of software we used is provided in the supplemental materials. The preregistration and scripts for data wrangling, analyses, and to reproduce this manuscript[^f17] can be found on the OSF (https://osf.io/75a4r/?view_only=ac929a2c41fb4afd9d1a64a3909848d0) and on GitHub (https://github.com/ [blinded]). LISS and HRS data are available online after registering accounts. Following Benjamin et al. [-@benjaminRedefineStatisticalSignificance2018], we set the $\alpha$-level for confirmatory analyses to $.005$.  
+
+[^f17]: We also provide '*Instructions to Reproduce.pdf*' on the OSF.  
 
 ## Analytical Strategy
 
@@ -642,19 +654,19 @@ lissanalysis_allgroups <- bind_rows(
   lissanalysis_nonparents %>% 
     filter(grandparent==0) %>% 
     mutate(group = factor(0, labels="Nonparent Controls")) %>% 
-    select(-grandparent),
+    dplyr::select(-grandparent),
   lissanalysis_parents %>% 
     mutate(group = factor(grandparent, labels=c("Parent Controls","Grandparents"))) %>% 
-    select(-grandparent)
+    dplyr::select(-grandparent)
     )
 hrsanalysis_allgroups <- bind_rows(
   hrsanalysis_nonparents %>% 
     filter(grandparent==0) %>% 
     mutate(group = factor(0, labels="Nonparent Controls")) %>% 
-    select(-grandparent),
+    dplyr::select(-grandparent),
   hrsanalysis_parents %>% 
     mutate(group = factor(grandparent, labels=c("Parent Controls","Grandparents"))) %>% 
-    select(-grandparent)
+    dplyr::select(-grandparent)
 )
 # for-loop did not work for some reason
 # LISS
@@ -2239,7 +2251,7 @@ for (i in 1:length(outcomes)){
     comp_anov <- comp_anov %>% mutate(
       chi2 = printnum(V1),
       p = scales::pvalue(V2, prefix = c("$p$ < ", "$p$ = ", "$p$ > ")),
-      ) %>% select(chi2, p)
+      ) %>% dplyr::select(chi2, p)
     comp_anov["p"] <- # remove "0" from the chr's
       lapply(comp_anov["p"], gsub, pattern="0\\.", replacement="\\.")
     rownames(comp_anov) <- c("before", "after", "shift")
@@ -2269,13 +2281,27 @@ for (i in 1:length(outcomes)){
                   after:dummy(grandparent,"0") + after:dummy(grandparent,"1") +
                   shift:dummy(grandparent,"0") + shift:dummy(grandparent,"1")', sep = "~"))
     ### before-slope -> random slope
-    before_mod_hetvar_slopes <- 
-      nlme::lme(fixed = dummyfixed,
-                random=list(pid = nlme::pdBlocked(list(nlme::pdSymm(~ 0 + dummy(grandparent,"0") +
-                                                                  before:dummy(grandparent,"0")),
-                                                       nlme::pdSymm(~ 0 + dummy(grandparent,"1") + 
-                                                                  before:dummy(grandparent,"1"))))), 
-                data = get(dataset), method = 'REML', na.action = 'na.omit')
+    # built an if/else condition here, because:
+    # different 'control' settings for one of the models needed that would not converge otherwise
+    # https://stackoverflow.com/questions/68122117/nlminb-problem-convergence-error-code-1-message-iteration-limit-reached-wit
+    if (outcome=="con" & dataset=="lissanalysis_nonparents"){
+      before_mod_hetvar_slopes <- 
+        nlme::lme(fixed = dummyfixed,
+                  random=list(pid = nlme::pdBlocked(list(nlme::pdSymm(~ 0 + dummy(grandparent,"0") +
+                                                                        before:dummy(grandparent,"0")),
+                                                         nlme::pdSymm(~ 0 + dummy(grandparent,"1") + 
+                                                                        before:dummy(grandparent,"1"))))), 
+                  data = get(dataset), method = 'REML', na.action = 'na.omit', 
+                  control=list(msMaxIter = 1000, msMaxEval = 1000))
+    } else { # all other models
+      before_mod_hetvar_slopes <- 
+        nlme::lme(fixed = dummyfixed,
+                  random=list(pid = nlme::pdBlocked(list(nlme::pdSymm(~ 0 + dummy(grandparent,"0") +
+                                                                        before:dummy(grandparent,"0")),
+                                                         nlme::pdSymm(~ 0 + dummy(grandparent,"1") + 
+                                                                        before:dummy(grandparent,"1"))))), 
+                  data = get(dataset), method = 'REML', na.action = 'na.omit')
+    }
     # base model with same FE specification but uniform random slope variance
     before_mod_hetvar_base <- 
       nlme::lme(fixed = dummyfixed,
@@ -2284,13 +2310,27 @@ for (i in 1:length(outcomes)){
                                                        nlme::pdSymm(~ 0 + before)))), 
                 data = get(dataset), method = 'REML', na.action = 'na.omit')
     ### after-slope -> random slope
-    after_mod_hetvar_slopes <- 
-      nlme::lme(fixed = dummyfixed,
-                random=list(pid = nlme::pdBlocked(list(nlme::pdSymm(~ 0 + dummy(grandparent,"0") +
-                                                                      after:dummy(grandparent,"0")),
-                                                       nlme::pdSymm(~ 0 + dummy(grandparent,"1") + 
-                                                                      after:dummy(grandparent,"1"))))), 
-                data = get(dataset), method = 'REML', na.action = 'na.omit')
+    # built an if/else condition here, because:
+    # different 'control' settings for one of the models that would not converge otherwise
+    # https://stackoverflow.com/questions/68122117/nlminb-problem-convergence-error-code-1-message-iteration-limit-reached-wit
+    if (outcome=="open" & dataset=="lissanalysis_parents"){
+      after_mod_hetvar_slopes <- 
+        nlme::lme(fixed = dummyfixed,
+                  random=list(pid = nlme::pdBlocked(list(nlme::pdSymm(~ 0 + dummy(grandparent,"0") +
+                                                                        after:dummy(grandparent,"0")),
+                                                         nlme::pdSymm(~ 0 + dummy(grandparent,"1") + 
+                                                                        after:dummy(grandparent,"1"))))), 
+                  data = get(dataset), method = 'REML', na.action = 'na.omit',
+                  control=list(msMaxIter = 1000, msMaxEval = 1000))
+    } else { # all other models
+      after_mod_hetvar_slopes <- 
+        nlme::lme(fixed = dummyfixed,
+                  random=list(pid = nlme::pdBlocked(list(nlme::pdSymm(~ 0 + dummy(grandparent,"0") +
+                                                                        after:dummy(grandparent,"0")),
+                                                         nlme::pdSymm(~ 0 + dummy(grandparent,"1") + 
+                                                                        after:dummy(grandparent,"1"))))), 
+                  data = get(dataset), method = 'REML', na.action = 'na.omit')
+    }
     # base model with same FE specification but uniform random slope variance
     after_mod_hetvar_base <- 
       nlme::lme(fixed = dummyfixed,
@@ -2354,7 +2394,7 @@ for (i in 1:length(outcomes)){
     comp_hetvar_anov <- comp_hetvar_anov %>% mutate(
       lratio = printnum(as.numeric(V1)),
       p = scales::pvalue(as.numeric(V2), prefix = c("$p$ < ", "$p$ = ", "$p$ > ")),
-    ) %>% select(lratio, p, gp_greater = V3)
+    ) %>% dplyr::select(lratio, p, gp_greater = V3)
     comp_hetvar_anov["p"] <- # remove "0" from the chr's 
       lapply(comp_hetvar_anov["p"], gsub, pattern="0\\.", replacement="\\.")
     rownames(comp_hetvar_anov) <- varest_names
@@ -2375,13 +2415,13 @@ for (i in 1:length(outcomes)){
 draw_below <- function(x) { 
   x %>% 
     filter(time==matchtime) %>% 
-    select(match_number, grandparent, time_pre = time, # using match_number instead of pid
+    dplyr::select(match_number, grandparent, time_pre = time, # using match_number instead of pid
            agree_pre = agree, con_pre = con, extra_pre = extra, 
            neur_pre = neur, open_pre = open, swls_pre = swls) }
 draw_above <- function(x) { 
   x %>% 
   filter(time>=0) %>% group_by(match_number) %>% slice_min(time) %>% ungroup() %>% 
-  select(match_number, grandparent, time, all_of(outcomes)) }
+  dplyr::select(match_number, grandparent, time, all_of(outcomes)) }
 
 list_below <- list(lissanalysis_parents, lissanalysis_nonparents,
                    hrsanalysis_parents, hrsanalysis_nonparents) %>% lapply(draw_below)
@@ -2443,13 +2483,13 @@ for (i in 1:length(outcomes)){
 draw_below_max <- function(x) { 
   x %>% 
     filter(time<0) %>% group_by(match_number) %>% slice_min(time) %>% ungroup() %>%
-    select(match_number, grandparent, time_pre = time, # using match_number instead of pid
+    dplyr::select(match_number, grandparent, time_pre = time, # using match_number instead of pid
            agree_pre = agree, con_pre = con, extra_pre = extra, 
            neur_pre = neur, open_pre = open, swls_pre = swls) }
 draw_above_max <- function(x) { 
   x %>% 
   filter(time>=0) %>% group_by(match_number) %>% slice_max(time) %>% ungroup() %>% 
-  select(match_number, grandparent, time, all_of(outcomes)) }
+  dplyr::select(match_number, grandparent, time, all_of(outcomes)) }
 
 list_below_max <- list(lissanalysis_parents, lissanalysis_nonparents,
                        hrsanalysis_parents, hrsanalysis_nonparents) %>% lapply(draw_below_max)
@@ -2513,14 +2553,14 @@ draw_below_uni <- function(x) {
   group_by(pid) %>% 
   filter(time==matchtime) %>% arrange(desc(time)) %>% # match time closest to transition 
   slice(n=1) %>% ungroup() %>% # only 1 row per pid
-  select(pid, grandparent, time_pre = time, 
+  dplyr::select(pid, grandparent, time_pre = time, 
          agree_pre = agree, con_pre = con, extra_pre = extra, 
          neur_pre = neur, open_pre = open, swls_pre = swls) }
 draw_above_uni <- function(x) { 
   x %>% 
   filter(time>=0) %>% group_by(match_number) %>% slice_min(time) %>% ungroup() %>% 
   group_by(pid) %>% slice(n=1) %>% ungroup() %>% # 1 row per pid (closest to transition)
-  select(pid, grandparent, time, all_of(outcomes)) }
+  dplyr::select(pid, grandparent, time, all_of(outcomes)) }
 
 list_below_uni <- list(lissanalysis_parents, lissanalysis_nonparents,
                        hrsanalysis_parents, hrsanalysis_nonparents) %>% lapply(draw_below_uni)
@@ -2818,8 +2858,8 @@ Figures \@ref(fig:effects-basic-plot) and \@ref(fig:effects-gender-plot) summari
 
 ### Agreeableness
 
-In the basic models (see Tables \@ref(tab:H1-agree-tab) & \@ref(tab:H1-agree-contrasts) and Figure \@ref(fig:H1-agree-fig)), grandparents in the LISS increased slightly in agreeableness in the years after the transition to grandparenthood as compared to the parent controls, `r agree_liss_parents_summary$estimate$after_grandparent`, `r agree_liss_parents_p["after:grandparent",]`. However, this effect was quite small and not significant when compared against the nonparent controls, or against either control sample in the HRS sample (suggestive evidence in the HRS nonparent sample: `r agree_hrs_nonparents_summary$estimate$after_grandparent`, `r agree_hrs_nonparents_p["after:grandparent",]`). The models including the gender interaction (see Tables \@ref(tab:H1-agree-gender-tab) & \@ref(tab:H1-agree-gender-contrasts) and Figure \@ref(fig:H1-agree-fig)) indicated that grandfathers' post-transition increases in agreeableness were more pronounced as compared to the parent (LISS: `r agree_liss_parents_gender_summary$estimate$after_grandparent`, `r agree_liss_parents_gender_p["after:grandparent",]`; HRS: `r agree_hrs_parents_gender_summary$estimate$after_grandparent`, `r agree_hrs_parents_gender_p["after:grandparent",]`) and nonparent controls (HRS: `r agree_hrs_nonparents_gender_summary$estimate$after_grandparent`, `r agree_hrs_nonparents_gender_p["after:grandparent",]`), whereas grandmothers did not differ from the female controls.  
-There was no consistent evidence for moderation by paid work (see Tables \@ref(tab:H1-agree-work-tab) & \@ref(tab:H1-agree-work-contrasts) and Figure \@ref(fig:H1-agree-work-fig)). <!--There was suggestive evidence for a moderation by paid work (see Tables \@ref(tab:H1-agree-work-tab) & \@ref(tab:H1-agree-work-contrasts) and Figure \@ref(fig:H1-agree-work-fig)): non-working grandparents increased more in agreeableness than working grandparents in anticipation of the transition to grandparenthood (difference in *before* parameter; parents: `r contrasts_work_agree$hrs_parents["before_nowork_vs_work_gp", "all"]`; nonparents: `r contrasts_work_agree$hrs_nonparents["before_nowork_vs_work_gp", "all"]`). -->Grandparents providing substantial grandchild care increased in agreeableness after the transition to grandparenthood compared to matched nonparent controls (difference in *after* parameter: `r contrasts_care_agree$hrs_nonparents["after_gp_vs_control_care", "all"]`; suggestive evidence in the parent sample: `r contrasts_care_agree$hrs_parents["after_gp_vs_control_care", "all"]`; see Tables \@ref(tab:H1-agree-care-tab) & \@ref(tab:H1-agree-care-contrasts) and Figure \@ref(fig:H1-agree-care-fig)). However, differences between caring and non-caring grandparents---as specified in hypothesis H1b---were not significant in either sample.  
+In the basic models (see Tables \@ref(tab:H1-agree-tab) & \@ref(tab:H1-agree-contrasts) and Figure \@ref(fig:H1-agree-fig)), we found no evidence that grandparents increased as compared to the controls (suggestive evidence in the LISS parent sample: `r agree_liss_parents_summary$estimate$after_grandparent`, `r agree_liss_parents_p["after:grandparent",]`). The models including the gender interaction (see Tables \@ref(tab:H1-agree-gender-tab) & \@ref(tab:H1-agree-gender-contrasts) and Figure \@ref(fig:H1-agree-fig)) indicated that grandfathers slightly increased in agreeableness as compared to the parent controls (LISS: `r agree_liss_parents_gender_summary$estimate$after_grandparent`, `r agree_liss_parents_gender_p["after:grandparent",]`; suggestive evidence in the HRS: `r agree_hrs_parents_gender_summary$estimate$after_grandparent`, `r agree_hrs_parents_gender_p["after:grandparent",]`), whereas grandmothers did not differ from the female controls.  
+There was no consistent evidence for moderation by paid work (see Tables \@ref(tab:H1-agree-work-tab) & \@ref(tab:H1-agree-work-contrasts) and Figure \@ref(fig:H1-agree-work-fig)) or by providing substantial grandchild care (see Tables \@ref(tab:H1-agree-care-tab) & \@ref(tab:H1-agree-care-contrasts) and Figure \@ref(fig:H1-agree-care-fig)).  
 
 (ref:H1-agree-tab-cap) Fixed Effects of `r df_outcomes["agree", "maj"]` Over the Transition to Grandparenthood.
 (ref:H1-agree-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.
@@ -3008,195 +3048,14 @@ plot_grid(title_liss, grid_agree_liss, title_HRS, grid_agree_hrs,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:H1-agree-care-tab-cap) Fixed Effects of `r df_outcomes["agree", "maj"]` Over the Transition to Grandparenthood Moderated by Grandchild Care.
-(ref:H1-agree-care-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $caring=1$ indicates more than 100 hours of grandchild care since the last assessment.
-
-```{r H1-agree-care-tab, results="asis"}
-agree_care_df <- 
-  cbind(printnum(agree_hrs_parents_care_summary$table)[, -1],   # parents: estimate, CI, t-value
-        summary(agree_hrs_parents_care_test)$coefficients[, 5], # parents: p-value
-        printnum(agree_hrs_nonparents_care_summary$table)[, -1],    # nonparents: estimate, CI, t-value
-        summary(agree_hrs_nonparents_care_test)$coefficients[, 5])  # nonparents: p-value
-
-colnames(agree_care_df)[c(4,8)] <- c("p", "p")
-
-rownames_care_df <- c("Intercept, $\\hat{\\gamma}_{00}$",
-                      "Propensity score, $\\hat{\\gamma}_{02}$", 
-                      "After-slope, $\\hat{\\gamma}_{20}$", 
-                      "Grandparent, $\\hat{\\gamma}_{01}$", 
-                      "Caring, $\\hat{\\gamma}_{10}$", 
-                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$", 
-                      "After-slope * Caring, $\\hat{\\gamma}_{30}$", 
-                      "Grandparent * Caring, $\\hat{\\gamma}_{11}$", 
-                      "After-slope * Grandparent * Caring, $\\hat{\\gamma}_{31}$")
-rownames(agree_care_df) <- rownames_care_df
-
-apa_table(
-  agree_care_df
-  , caption = "(ref:H1-agree-care-tab-cap)"
-  , note = "(ref:H1-agree-care-tab-note)"
-  , col.names = c("Parameter", 
-                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
-                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
-  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
-  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
-                       digits = c(2,2,2,2,3,2,2,2,3),
-                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
-  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
-  , escape = F
-  , landscape = T
-  , font_size = "footnotesize"
-  , placement = "H"
-)
-```
-
-(ref:H1-agree-care-fig-cap) Change trajectories of `r df_outcomes["agree", "min"]` based on the models of moderation by grandchild care (see Table \@ref(tab:H1-agree-care-tab)). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figure \@ref(fig:H1-agree-fig) (basic models) but restricted to the post-transition period for better comparability.
-
-```{r H1-agree-care-fig, fig.cap = "(ref:H1-agree-care-fig-cap)", fig.height=6, fig.width=7, cache=T}
-# extract the legends 
-legend_care_parents <- get_legend(plot_agree_hrs_parents_care + 
-                               theme(legend.box.margin = margin(0, 0, 0, 20)))
-legend_care_nonparents <- get_legend(plot_agree_hrs_nonparents_care + 
-                                  theme(legend.box.margin = margin(0, 0, 0, 20)))
-
-# add the legend to the row we made earlier - adjust width via rel_widths
-grid_agree_care <- cowplot::plot_grid(
-  plot_agree_hrs_parents_short + theme(legend.position="none"), 
-  plot_agree_hrs_parents_care + theme(legend.position="none"),
-  plot_agree_hrs_nonparents_short + theme(legend.position="none"), 
-  plot_agree_hrs_nonparents_care + theme(legend.position="none"), 
-  align = "vh", ncol = 2)
-grid_agree_care <- cowplot::plot_grid(
-  grid_agree_care, 
-  cowplot::plot_grid(legend_care_parents, legend_care_nonparents, ncol = 1),
-  rel_widths = c(3, .80), ncol = 2)
-
-# now add the title
-title_HRS <- ggdraw() + 
-  draw_label("HRS", fontface = 'bold', x = 0, hjust = 0) +
-  theme(plot.margin = margin(0, 0, 0, 7))
-
-# print final object
-plot_grid(title_HRS, grid_agree_care, 
-          ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
-```
-
 ### Conscientiousness
 
-We found a slight post-transition increase in grandparents' conscientiousness in comparison to the controls in the HRS (parents: `r con_hrs_parents_summary$estimate$after_grandparent`, `r con_hrs_parents_p["after:grandparent",]`; nonparents: `r con_hrs_nonparents_summary$estimate$after_grandparent`, `r con_hrs_nonparents_p["after:grandparent",]`; suggestive evidence in the LISS parent sample: `r con_liss_parents_summary$estimate$after_grandparent`, `r con_liss_parents_p["after:grandparent",]`; see Tables \@ref(tab:H1-con-tab) & \@ref(tab:H1-con-contrasts) and Figure \@ref(fig:H1-con-fig)). Grandparents' conscientiousness trajectories were not significantly moderated by gender (see Tables \@ref(tab:H1-con-gender-tab) & \@ref(tab:H1-con-gender-contrasts) and Figure \@ref(fig:H1-con-fig)).  
+We no differences between grandparents and both parent and nonparent controls in their trajectories of conscientiousness (see Tables \@ref(tab:H1-con-tab) & \@ref(tab:H1-con-contrasts) and Figure \@ref(fig:H1-con-fig)). There was only inconsistent evidence for a moderation by gender (see Tables \@ref(tab:H1-con-gender-tab) & \@ref(tab:H1-con-gender-contrasts) and Figure \@ref(fig:H1-con-fig)): Grandfathers' conscientiousness decreased immediately following the transition to grandparenthood as compared to male nonparents in the HRS, `r contrasts_gender_con$hrs_nonparents["shift_gp_vs_control_men", "all"]`, but not in any of the other three analysis samples.  
 There were significant differences in conscientiousness depending on grandparents' work status (see Tables \@ref(tab:H1-con-work-tab) & \@ref(tab:H1-con-work-contrasts) and Figure \@ref(fig:H1-con-work-fig)): non-working grandparents saw more pronounced increases in conscientiousness in the years before the transition to grandparenthood compared to non-working parent, `r con_hrs_parents_work_summary$estimate$before_grandparent`, `r con_hrs_parents_work_p["before:grandparent",]`, and nonparent controls, `r con_hrs_nonparents_work_summary$estimate$before_grandparent`, `r con_hrs_nonparents_work_p["before:grandparent",]`, and compared to working grandparents (difference in *before* parameter; parents: `r contrasts_work_con$hrs_parents["before_nowork_vs_work_gp", "all"]`; nonparents: `r contrasts_work_con$hrs_nonparents["before_nowork_vs_work_gp", "all"]`). Grandparents providing substantial grandchild care increased in conscientiousness to a greater degree than the matched respondents (difference in *after* parameter; parents: `r contrasts_care_con$hrs_parents["after_gp_vs_control_care", "all"]`; nonparents: `r contrasts_care_con$hrs_nonparents["after_gp_vs_control_care", "all"]`; see Tables \@ref(tab:H1-con-care-tab) & \@ref(tab:H1-con-care-contrasts) and Figure \@ref(fig:H1-con-care-fig)). There was only suggestive evidence that grandparents who provided substantial grandchild care increased more strongly in conscientiousness after the transition compared to grandparents who did not (difference in *after* parameter; parents: `r contrasts_care_con$hrs_parents["after_nocare_vs_care_gp", "all"]`; nonparents: `r contrasts_care_con$hrs_nonparents["after_nocare_vs_care_gp", "all"]`).  
 
 ### Extraversion
 
-The trajectories of grandparents' extraversion closely followed those of the matched controls. There were no significant effects indicating differences between grandparents and controls in the basic models (see Tables \@ref(tab:H1-extra-tab) & \@ref(tab:H1-extra-contrasts) and Figure \@ref(fig:H1-extra-fig)), the models including the gender interaction (see Tables \@ref(tab:H1-extra-gender-tab) & \@ref(tab:H1-extra-gender-contrasts) and Figure \@ref(fig:H1-extra-fig)), or the models of moderation by paid work (see Tables \@ref(tab:H1-extra-work-tab) & \@ref(tab:H1-extra-work-contrasts) and Figure \@ref(fig:H1-extra-work-fig)). The only significant effect for extraversion was found in the analysis of moderation by grandchild care (see Tables \@ref(tab:H1-extra-care-tab) & \@ref(tab:H1-extra-care-contrasts) and Figure \@ref(fig:H1-extra-care-fig)): compared to matched parent controls, grandparents providing  
-
-(ref:H1-con-tab-cap) Fixed Effects of `r df_outcomes["con", "maj"]` Over the Transition to Grandparenthood.
-(ref:H1-con-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.
-
-```{r H1-con-tab, results="asis"}
-con_liss_df <- 
-  cbind(printnum(con_liss_parents_summary$table)[, -1],   # parents: estimate, CI, t-value
-        summary(con_liss_parents_test)$coefficients[, 5], # parents: p-value
-        printnum(con_liss_nonparents_summary$table)[, -1],    # nonparents: estimate, CI, t-value
-        summary(con_liss_nonparents_test)$coefficients[, 5])  # nonparents: p-value
-
-con_hrs_df <- 
-  cbind(printnum(con_hrs_parents_summary$table)[, -1],   # parents: estimate, CI, t-value
-        summary(con_hrs_parents_test)$coefficients[, 5], # parents: p-value
-        printnum(con_hrs_nonparents_summary$table)[, -1],    # nonparents: estimate, CI, t-value
-        summary(con_hrs_nonparents_test)$coefficients[, 5])  # nonparents: p-value
-
-# make one large table
-colnames(con_liss_df)[c(4,8)] <- c("p", "p")
-colnames(con_hrs_df)[c(4,8)] <- c("p", "p")
-con_df <- rbind(con_liss_df, con_hrs_df)
-
-# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
-rownames_con_df <- c("Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{L}", 
-                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{L}", 
-                      "Before-slope, $\\hat{\\gamma}_{10}$ \\textcolor{white}{L}", 
-                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{L}", 
-                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{L}",
-                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{L}", 
-                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$ \\textcolor{white}{L}", 
-                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{L}", 
-                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{L}", 
-                      "Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{H}", 
-                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{H}", 
-                      "Before-slope, $\\hat{\\gamma}_{10}$ \\textcolor{white}{H}", 
-                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{H}", 
-                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{H}",
-                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{H}", 
-                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$ \\textcolor{white}{H}", 
-                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{H}", 
-                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{H}")
-rownames(con_df) <- rownames_con_df
-
-apa_table(
-  con_df
-  , caption = "(ref:H1-con-tab-cap)"
-  , note = "(ref:H1-con-tab-note)"
-  , col.names = c("Parameter", 
-                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
-                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
-  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
-  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
-                       digits = c(2,2,2,2,3,2,2,2,3),
-                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
-  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
-  #, stub_indents = list("Fixed effects" = 1:12)
-  , escape = F
-  , landscape = T
-  , font_size = "footnotesize"
-  , stub_indents = list("LISS" = 1:9, "HRS" = 10:18)
-  , placement = "H"
-)
-```
-
-(ref:H1-con-fig-cap) Change trajectories of `r df_outcomes["con", "min"]` based on the basic models (left column) and the models including the gender interaction (right column). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
-
-```{r H1-con-fig, fig.cap = "(ref:H1-con-fig-cap)", fig.height=9, fig.width=7, cache=T}
-# extract the legends
-legend_parents <- get_legend(plot_con_liss_parents_gender + 
-                               theme(legend.box.margin = margin(0, 0, 0, 20)))
-legend_nonparents <- get_legend(plot_con_liss_nonparents_gender + 
-                                  theme(legend.box.margin = margin(0, 0, 0, 20)))
-
-# add the legend to the row we made earlier - adjust width via rel_widths
-grid_con_liss <- cowplot::plot_grid(
-  plot_con_liss_parents, 
-  plot_con_liss_parents_gender + theme(legend.position="none"),
-  plot_con_liss_nonparents, 
-  plot_con_liss_nonparents_gender + theme(legend.position="none"), 
-  align = "vh", ncol = 2)
-grid_con_liss <- cowplot::plot_grid(
-  grid_con_liss, 
-  cowplot::plot_grid(legend_parents, legend_nonparents, ncol = 1),
-  rel_widths = c(3, .75), ncol = 2)
-
-grid_con_hrs <- cowplot::plot_grid(
-  plot_con_hrs_parents, 
-  plot_con_hrs_parents_gender + theme(legend.position="none"),
-  plot_con_hrs_nonparents, 
-  plot_con_hrs_nonparents_gender + theme(legend.position="none"), 
-  align = "vh", ncol = 2)
-grid_con_hrs <- cowplot::plot_grid(
-  grid_con_hrs, 
-  cowplot::plot_grid(legend_parents, legend_nonparents, ncol = 1),
-  rel_widths = c(3, .75), ncol = 2)
-
-# now add the title
-title_liss <- ggdraw() + 
-  draw_label("LISS", fontface = 'bold', x = 0, hjust = 0) +
-  theme(plot.margin = margin(0, 0, 0, 7))
-title_HRS <- ggdraw() + 
-  draw_label("HRS", fontface = 'bold', x = 0, hjust = 0) +
-  theme(plot.margin = margin(0, 0, 0, 7))
-
-# print final object
-plot_grid(title_liss, grid_con_liss, title_HRS, grid_con_hrs, 
-          ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
-```
+The trajectories of grandparents' extraversion closely followed those of the matched controls. There were no significant effects indicating differences between grandparents and controls in the basic models (see Tables \@ref(tab:H1-extra-tab) & \@ref(tab:H1-extra-contrasts) and Figure \@ref(fig:H1-extra-fig)), the models including the gender interaction (see Tables \@ref(tab:H1-extra-gender-tab) & \@ref(tab:H1-extra-gender-contrasts) and Figure \@ref(fig:H1-extra-fig)), the models of moderation by paid work (see Tables \@ref(tab:H1-extra-work-tab) & \@ref(tab:H1-extra-work-contrasts) and Figure \@ref(fig:H1-extra-work-fig)), or the models of moderation by grandchild care (see Tables \@ref(tab:H1-extra-care-tab) & \@ref(tab:H1-extra-care-contrasts) and Figure \@ref(fig:H1-extra-care-fig)).  
 
 (ref:H1-con-care-tab-cap) Fixed Effects of `r df_outcomes["con", "maj"]` Over the Transition to Grandparenthood Moderated by Grandchild Care.
 (ref:H1-con-care-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $caring=1$ indicates more than 100 hours of grandchild care since the last assessment.
@@ -3210,7 +3069,16 @@ con_care_df <-
 
 colnames(con_care_df)[c(4,8)] <- c("p", "p")
 
-rownames(con_care_df) <- rownames_care_df # defined above (agree)
+rownames_care_df <- c("Intercept, $\\hat{\\gamma}_{00}$",
+                      "Propensity score, $\\hat{\\gamma}_{02}$", 
+                      "After-slope, $\\hat{\\gamma}_{20}$", 
+                      "Grandparent, $\\hat{\\gamma}_{01}$", 
+                      "Caring, $\\hat{\\gamma}_{10}$", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$", 
+                      "After-slope * Caring, $\\hat{\\gamma}_{30}$", 
+                      "Grandparent * Caring, $\\hat{\\gamma}_{11}$", 
+                      "After-slope * Grandparent * Caring, $\\hat{\\gamma}_{31}$")
+rownames(con_care_df) <- rownames_care_df 
 
 apa_table(
   con_care_df
@@ -3262,60 +3130,41 @@ plot_grid(title_HRS, grid_con_care,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-\noindent
-substantial grandchild care increased slightly more strongly in extraversion after the transition to grandparenthood (difference in *after* parameter: `r contrasts_care_extra$hrs_parents["after_gp_vs_control_care", "all"]`; suggestive evidence in the nonparent sample: `r contrasts_care_extra$hrs_nonparents["after_gp_vs_control_care", "all"]`).  
+(ref:H1-con-work-tab-cap) Fixed Effects of `r df_outcomes["con", "maj"]` Over the Transition to Grandparenthood Moderated by Performing Paid Work.
+(ref:H1-con-work-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $working=1$ indicates being employed in paid work.
 
-### Neuroticism
+```{r H1-con-work-tab, results="asis"}
+con_work_df <- 
+  cbind(printnum(con_hrs_parents_work_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(con_hrs_parents_work_test)$coefficients[, 5], # parents: p-value
+        printnum(con_hrs_nonparents_work_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(con_hrs_nonparents_work_test)$coefficients[, 5])  # nonparents: p-value
 
-The basic models for neuroticism (see Tables \@ref(tab:H1-neur-tab) & \@ref(tab:H1-neur-contrasts) and Figure \@ref(fig:H1-neur-fig)) showed only minor differences between grandparents and matched controls: Compared to HRS parent controls, HRS grandparents shifted slightly downward in their neuroticism immediately after the transition to grandparenthood (difference in *shift* parameter: `r contrasts_neur$hrs_parents["shift_gp_vs_control", "all"]`), which was not the case in the three other samples (HRS nonparents, LISS parents, and LISS nonparents). <!--Further, in the HRS there was suggestive evidence that grandparents increased in neuroticism before the transition to grandparenthood compared to the nonparent controls, `r neur_hrs_nonparents_summary$estimate$before_grandparent`, `r neur_hrs_nonparents_p["before:grandparent",]`. -->The models including the gender interaction (see Tables \@ref(tab:H1-neur-gender-tab) & \@ref(tab:H1-neur-gender-contrasts) and Figure \@ref(fig:H1-neur-fig)) showed one significant effect in the comparison of grandparents and controls: In the HRS, grandfathers, compared to male parent controls, shifted downward in neuroticism directly after the transition to grandparenthood (difference in *shift* parameter: `r contrasts_gender_neur$hrs_parents["shift_gp_vs_control_men", "all"]`; suggestive evidence in the nonparent sample: `r contrasts_gender_neur$hrs_nonparents["shift_gp_vs_control_men", "all"]`).<!-- There was suggestive evidence that grandfathers in the HRS increased more strongly in neuroticism before the transition than male controls (parent controls: `r neur_hrs_parents_gender_summary$estimate$before_grandparent`, `r neur_hrs_parents_gender_p["before:grandparent",]`; nonparent controls: `r neur_hrs_nonparents_gender_summary$estimate$before_grandparent`, `r neur_hrs_nonparents_gender_p["before:grandparent",]`).--> Thus, the effect present in the basic models seemed to be mostly due to differences in the grandfathers (vs. male controls).  
-Grandparents' trajectories of neuroticism as compared to the controls were significantly moderated by paid work (see Tables \@ref(tab:H1-neur-work-tab) & \@ref(tab:H1-neur-work-contrasts) and Figure \@ref(fig:H1-neur-work-fig)): Compared to working nonparent controls, working grandparents increased more strongly in neuroticism in the years before the transition to grandparenthood (difference in *before* parameter: `r contrasts_work_neur$hrs_nonparents["before_gp_vs_control_work", "all"]`; suggestive evidence in the parent sample: `r contrasts_work_neur$hrs_parents["before_gp_vs_control_work", "all"]`). At the first post-transition assessment, working grandparents shifted downward in neuroticism compared to working parent controls (difference in *shift* parameter: `r contrasts_work_neur$hrs_parents["shift_gp_vs_control_work", "all"]`; suggestive evidence in the nonparent sample: `r contrasts_work_neur$hrs_nonparents["shift_gp_vs_control_work", "all"]`). There was suggestive evidence that grandparents providing substantial grandchild care decreased more strongly in neuroticism after the transition to grandparenthood than grandparents who did not (difference in *after*  
+colnames(con_work_df)[c(4,8)] <- c("p", "p")
 
-(ref:H1-neur-tab-cap) Fixed Effects of `r df_outcomes["neur", "maj"]` Over the Transition to Grandparenthood.
-(ref:H1-neur-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.
-
-```{r H1-neur-tab, results="asis"}
-neur_liss_df <- 
-  cbind(printnum(neur_liss_parents_summary$table)[, -1],   # parents: estimate, CI, t-value
-        summary(neur_liss_parents_test)$coefficients[, 5], # parents: p-value
-        printnum(neur_liss_nonparents_summary$table)[, -1],    # nonparents: estimate, CI, t-value
-        summary(neur_liss_nonparents_test)$coefficients[, 5])  # nonparents: p-value
-
-neur_hrs_df <- 
-  cbind(printnum(neur_hrs_parents_summary$table)[, -1],   # parents: estimate, CI, t-value
-        summary(neur_hrs_parents_test)$coefficients[, 5], # parents: p-value
-        printnum(neur_hrs_nonparents_summary$table)[, -1],    # nonparents: estimate, CI, t-value
-        summary(neur_hrs_nonparents_test)$coefficients[, 5])  # nonparents: p-value
-
-# make one large table
-colnames(neur_liss_df)[c(4,8)] <- c("p", "p")
-colnames(neur_hrs_df)[c(4,8)] <- c("p", "p")
-neur_df <- rbind(neur_liss_df, neur_hrs_df)
-
-# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
-rownames_neur_df <- c("Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{L}", 
-                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{L}", 
-                      "Before-slope, $\\hat{\\gamma}_{10}$ \\textcolor{white}{L}", 
-                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{L}", 
-                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{L}",
-                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{L}", 
-                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$ \\textcolor{white}{L}", 
-                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{L}", 
-                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{L}", 
-                      "Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{H}", 
-                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{H}", 
-                      "Before-slope, $\\hat{\\gamma}_{10}$ \\textcolor{white}{H}", 
-                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{H}", 
-                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{H}",
-                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{H}", 
-                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$ \\textcolor{white}{H}", 
-                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{H}", 
-                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{H}")
-rownames(neur_df) <- rownames_neur_df
+rownames_work <- c("Intercept, $\\hat{\\gamma}_{00}$",
+                      "Propensity score, $\\hat{\\gamma}_{02}$", 
+                      "Before-slope, $\\hat{\\gamma}_{20}$", 
+                      "After-slope, $\\hat{\\gamma}_{40}$", 
+                      "Shift, $\\hat{\\gamma}_{60}$",
+                      "Grandparent, $\\hat{\\gamma}_{01}$", 
+                      "Working, $\\hat{\\gamma}_{10}$", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{21}$", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{41}$", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{61}$",
+                      "Before-slope * Working, $\\hat{\\gamma}_{30}$", 
+                      "After-slope * Working, $\\hat{\\gamma}_{50}$", 
+                      "Shift * Working, $\\hat{\\gamma}_{70}$",
+                      "Grandparent * Working, $\\hat{\\gamma}_{11}$", 
+                      "Before-slope * Grandparent * Working, $\\hat{\\gamma}_{31}$", 
+                      "After-slope * Grandparent * Working, $\\hat{\\gamma}_{51}$", 
+                      "Shift * Grandparent * Working, $\\hat{\\gamma}_{71}$")
+rownames(con_work_df) <- rownames_work # defined above (agree)
 
 apa_table(
-  neur_df
-  , caption = "(ref:H1-neur-tab-cap)"
-  , note = "(ref:H1-neur-tab-note)"
+  con_work_df
+  , caption = "(ref:H1-con-work-tab-cap)"
+  , note = "(ref:H1-con-work-tab-note)"
   , col.names = c("Parameter", 
                   "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
                   "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
@@ -3328,76 +3177,61 @@ apa_table(
   , escape = F
   , landscape = T
   , font_size = "footnotesize"
-  , stub_indents = list("LISS" = 1:9, "HRS" = 10:18)
   , placement = "H"
 )
 ```
 
-(ref:H1-neur-fig-cap) Change trajectories of `r df_outcomes["neur", "min"]` based on the basic models (left column) and the models including the gender interaction (right column). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
+(ref:H1-con-work-fig-cap) Change trajectories of `r df_outcomes["con", "min"]` based on the models of moderation by paid work (see Table \@ref(tab:H1-con-work-tab)). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-con-fig) (basic models) and added here for better comparability.
 
-```{r H1-neur-fig, fig.cap = "(ref:H1-neur-fig-cap)", fig.height=9, fig.width=7, cache=T}
+```{r H1-con-work-fig, fig.cap = "(ref:H1-con-work-fig-cap)", fig.height=6, fig.width=7, cache=T}
 # extract the legends
-legend_parents <- get_legend(plot_neur_liss_parents_gender + 
+legend_work_parents <- get_legend(plot_con_hrs_parents_work + 
                                theme(legend.box.margin = margin(0, 0, 0, 20)))
-legend_nonparents <- get_legend(plot_neur_liss_nonparents_gender + 
+legend_work_nonparents <- get_legend(plot_con_hrs_nonparents_work + 
                                   theme(legend.box.margin = margin(0, 0, 0, 20)))
 
 # add the legend to the row we made earlier - adjust width via rel_widths
-grid_neur_liss <- cowplot::plot_grid(
-  plot_neur_liss_parents, 
-  plot_neur_liss_parents_gender + theme(legend.position="none"),
-  plot_neur_liss_nonparents, 
-  plot_neur_liss_nonparents_gender + theme(legend.position="none"), 
+grid_con_work <- cowplot::plot_grid(
+  plot_con_hrs_parents, 
+  plot_con_hrs_parents_work + theme(legend.position="none"),
+  plot_con_hrs_nonparents, 
+  plot_con_hrs_nonparents_work + theme(legend.position="none"), 
   align = "vh", ncol = 2)
-grid_neur_liss <- cowplot::plot_grid(
-  grid_neur_liss, 
-  cowplot::plot_grid(legend_parents, legend_nonparents, ncol = 1),
-  rel_widths = c(3, .75), ncol = 2)
-
-grid_neur_hrs <- cowplot::plot_grid(
-  plot_neur_hrs_parents, 
-  plot_neur_hrs_parents_gender + theme(legend.position="none"),
-  plot_neur_hrs_nonparents, 
-  plot_neur_hrs_nonparents_gender + theme(legend.position="none"), 
-  align = "vh", ncol = 2)
-grid_neur_hrs <- cowplot::plot_grid(
-  grid_neur_hrs, 
-  cowplot::plot_grid(legend_parents, legend_nonparents, ncol = 1),
+grid_con_work <- cowplot::plot_grid(
+  grid_con_work, 
+  cowplot::plot_grid(legend_work_parents, legend_work_nonparents, ncol = 1),
   rel_widths = c(3, .75), ncol = 2)
 
 # now add the title
-title_liss <- ggdraw() + 
-  draw_label("LISS", fontface = 'bold', x = 0, hjust = 0) +
-  theme(plot.margin = margin(0, 0, 0, 7))
 title_HRS <- ggdraw() + 
   draw_label("HRS", fontface = 'bold', x = 0, hjust = 0) +
   theme(plot.margin = margin(0, 0, 0, 7))
 
 # print final object
-plot_grid(title_liss, grid_neur_liss, title_HRS, grid_neur_hrs, 
+plot_grid(title_HRS, grid_con_work, 
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-\noindent
-parameter; parents: `r contrasts_care_neur$hrs_parents["after_nocare_vs_care_gp", "all"]`: nonparents: `r contrasts_care_neur$hrs_nonparents["after_nocare_vs_care_gp", "all"]`; see Tables \@ref(tab:H1-neur-care-tab) & \@ref(tab:H1-neur-care-contrasts) and Figure \@ref(fig:H1-neur-care-fig)).  
+### Neuroticism
+
+The basic models for neuroticism (see Tables \@ref(tab:H1-neur-tab) & \@ref(tab:H1-neur-contrasts) and Figure \@ref(fig:H1-neur-fig)) showed only minor differences between grandparents and matched controls: Compared to HRS parent controls, HRS grandparents shifted slightly downward in their neuroticism immediately after the transition to grandparenthood (difference in *shift* parameter: `r contrasts_neur$hrs_parents["shift_gp_vs_control", "all"]`; suggestive evidence in the nonparent sample: `r contrasts_neur$hrs_nonparents["shift_gp_vs_control", "all"]`), which was not the case in the LISS samples. The models including the gender interaction (see Tables \@ref(tab:H1-neur-gender-tab) & \@ref(tab:H1-neur-gender-contrasts) and Figure \@ref(fig:H1-neur-fig)) showed one significant effect in the comparison of grandparents and controls: In the HRS, grandfathers, compared to male parent controls, shifted downward in neuroticism directly after the transition to grandparenthood (difference in *shift* parameter: `r contrasts_gender_neur$hrs_parents["shift_gp_vs_control_men", "all"]`). Thus, the effect present in the basic models seemed to be mostly due to differences in the grandfathers (vs. male controls).  
+Grandparents' trajectories of neuroticism as compared to the controls were significantly moderated by paid work in one instance (see Tables \@ref(tab:H1-neur-work-tab) & \@ref(tab:H1-neur-work-contrasts) and Figure \@ref(fig:H1-neur-work-fig)): Compared to working controls, working grandparents increased more strongly in neuroticism in the years before the transition to grandparenthood (difference in *before* parameter; parents: `r contrasts_work_neur$hrs_parents["before_gp_vs_control_work", "all"]`; nonparents: `r contrasts_work_neur$hrs_nonparents["before_gp_vs_control_work", "all"]`). There was no evidence that grandparents providing substantial grandchild care differed in neuroticism from grandparents who did not (see Tables \@ref(tab:H1-neur-care-tab) & \@ref(tab:H1-neur-care-contrasts) and Figure \@ref(fig:H1-neur-care-fig)).  
 
 ### Openness
 
-For openness, we also found a high degree of similarity between grandparents and matched control respondents in their trajectories based on the basic models (see Tables \@ref(tab:H1-open-tab) & \@ref(tab:H1-open-contrasts) and Figure \@ref(fig:H1-open-fig)) and models including the gender interaction (see Tables \@ref(tab:H1-open-gender-tab) & \@ref(tab:H1-open-gender-contrasts) and Figure \@ref(fig:H1-open-fig)). Grandparents in the HRS shifted downward in openness in the first assessment after the transition to grandparenthood compared to the parent controls (difference in *shift* parameter: `r contrasts_open$hrs_parents["shift_gp_vs_control", "all"]`; suggestive evidence in the nonparent sample: `r contrasts_open$hrs_nonparents["shift_gp_vs_control", "all"]`), which was due to significant differences between grandfathers and male parent controls (difference in *shift* parameter: `r contrasts_gender_open$hrs_parents["shift_gp_vs_control_men", "all"]`).<!--  There was suggestive evidence that grandmothers in the LISS increased more strongly in openness before the transition to grandparenthood than female controls (difference in *before* parameter; parents: `r contrasts_gender_open$liss_parents["before_gp_vs_control_women", "all"]`; nonparents: `r contrasts_gender_open$liss_nonparents["before_gp_vs_control_women", "all"]`).-->  
-Performing paid work moderated grandparents' openness trajectories in subtle ways (see Tables \@ref(tab:H1-open-work-tab) & \@ref(tab:H1-open-work-contrasts) and Figure \@ref(fig:H1-open-work-fig)): Non-working grandparents increased more strongly in openness post-transition than non-working controls (parents: `r open_hrs_parents_work_summary$estimate$after_grandparent`, `r open_hrs_parents_work_p["after:grandparent",]`; nonparents: `r open_hrs_nonparents_work_summary$estimate$after_grandparent`, `r open_hrs_nonparents_work_p["after:grandparent",]`). Further, there was suggestive evidence that openness of non-working grandparents shifted downward directly after the transition compared to non-working controls (difference in *shift* parameter; parents: `r contrasts_work_open$hrs_parents["shift_gp_vs_control_nowork", "all"]`; nonparents: `r contrasts_work_open$hrs_nonparents["shift_gp_vs_control_nowork", "all"]`). However, compared to non-working grandparents, working grandparents shifted upward in openness directly after the transition (suggestive evidence for difference in *shift* parameter; parents: `r contrasts_work_open$hrs_parents["shift_nowork_vs_work_gp", "all"]`; nonparents: `r contrasts_work_open$hrs_nonparents["shift_nowork_vs_work_gp", "all"]`) and decreased afterwards (suggestive evidence for difference in *after* parameter; parents: `r contrasts_work_open$hrs_parents["after_nowork_vs_work_gp", "all"]`; nonparents: `r contrasts_work_open$hrs_nonparents["after_nowork_vs_work_gp", "all"]`). The analysis of moderation by grandchild care (see Tables \@ref(tab:H1-open-care-tab) & \@ref(tab:H1-open-care-contrasts) and Figure \@ref(fig:H1-open-care-fig)) revealed that grandparents providing substantial grandchild care increased more strongly in openness after the transition to grandparenthood than the matched nonparent controls (difference in *after* parameter: `r contrasts_care_open$hrs_nonparents["after_gp_vs_control_care", "all"]`; suggestive evidence in the parent sample: `r contrasts_care_open$hrs_parents["after_gp_vs_control_care", "all"]`). At the same time, the plotted trajectories demonstrated that the described moderation effects for openness were all quite small.  
+For openness, we also found a high degree of similarity between grandparents and matched control respondents in their trajectories based on the basic models (see Tables \@ref(tab:H1-open-tab) & \@ref(tab:H1-open-contrasts) and Figure \@ref(fig:H1-open-fig)) and models including the gender interaction (see Tables \@ref(tab:H1-open-gender-tab) & \@ref(tab:H1-open-gender-contrasts) and Figure \@ref(fig:H1-open-fig)). Grandfathers in the HRS shifted downward in openness in the first assessment after the transition to grandparenthood to a greater extent than the male parent controls (difference in *shift* parameter: `r contrasts_gender_open$hrs_parents["shift_gp_vs_control_men", "all"]`). However, this was not the case in the other three analysis samples.  
+The analysis of moderation by performing paid work revealed only one significant effect for openness trajectories (see Tables \@ref(tab:H1-open-work-tab) & \@ref(tab:H1-open-work-contrasts) and Figure \@ref(fig:H1-open-work-fig)): Non-working grandparents increased more strongly in openness post-transition than non-working parent controls (`r open_hrs_parents_work_summary$estimate$after_grandparent`, `r open_hrs_parents_work_p["after:grandparent",]`; suggestive evidence in the nonparent sample: `r open_hrs_nonparents_work_summary$estimate$after_grandparent`, `r open_hrs_nonparents_work_p["after:grandparent",]`). The analysis of moderation by grandchild care did not provide evidence for differences in openness between grandparents providing substantial grandchild care and those who did not (see Tables \@ref(tab:H1-open-care-tab) & \@ref(tab:H1-open-care-contrasts) and Figure \@ref(fig:H1-open-care-fig)).  
 
 ### Life Satisfaction
 
-The basic models for life satisfaction (see Tables \@ref(tab:H1-swls-tab) & \@ref(tab:H1-swls-contrasts) and Figure \@ref(fig:H1-swls-fig)) showed that grandparents in the LISS increased more strongly in life satisfaction directly following the transition compared to nonparent controls (difference in *shift* parameter: `r contrasts_swls$liss_nonparents["shift_gp_vs_control", "all"]`).<!-- In the HRS, there was suggestive evidence that grandparents increased more strongly in life satisfaction before the transition to grandparenthood than matched parent controls, `r swls_hrs_parents_summary$estimate$before_grandparent`, `r swls_hrs_parents_p["before:grandparent",]`.--> There was evidence in the models including the gender interaction (see Tables \@ref(tab:H1-swls-gender-tab) & \@ref(tab:H1-swls-gender-contrasts) and Figure \@ref(fig:H1-swls-fig)) that this difference was due to grandmothers, who increased more strongly in life satisfaction directly following the transition to grandparenthood than female nonparent controls in the LISS (difference in *shift* parameter: `r contrasts_gender_swls$liss_nonparents["shift_gp_vs_control_women", "all"]`). HRS grandmothers increased more strongly before the transition to grandparenthood compared to female parent controls (difference in *before* parameter: `r contrasts_gender_swls$hrs_parents["before_gp_vs_control_women", "all"]`).  
-<!--The models of moderation by paid work gave suggestive evidence that working grandparents increased in life satisfaction before the transition to grandparenthood compared to working parent controls (difference in *before* parameter: `r contrasts_work_swls$hrs_parents["before_gp_vs_control_work", "all"]`; see Tables \@ref(tab:H1-swls-work-tab) & \@ref(tab:H1-swls-work-contrasts) and Figure \@ref(fig:H1-swls-work-fig)). -->There was no consistent evidence of a moderation of life satisfaction by performing paid work (see Tables \@ref(tab:H1-swls-work-tab) & \@ref(tab:H1-swls-work-contrasts) and Figure \@ref(fig:H1-swls-work-fig)) or grandchild care (see Tables \@ref(tab:H1-swls-care-tab) & \@ref(tab:H1-swls-care-contrasts) and Figure \@ref(fig:H1-swls-care-fig)).  
+We found no consistent evidence that grandparents' life satisfaction trajectories differed significantly from those of the controls in either the basic models (see Tables \@ref(tab:H1-swls-tab) & \@ref(tab:H1-swls-contrasts) and Figure \@ref(fig:H1-swls-fig)) or the models including the gender interaction (see Tables \@ref(tab:H1-swls-gender-tab) & \@ref(tab:H1-swls-gender-contrasts) and Figure \@ref(fig:H1-swls-fig)). There was also no evidence of a moderation of life satisfaction by performing paid work (see Tables \@ref(tab:H1-swls-work-tab) & \@ref(tab:H1-swls-work-contrasts) and Figure \@ref(fig:H1-swls-work-fig)) or grandchild care (see Tables \@ref(tab:H1-swls-care-tab) & \@ref(tab:H1-swls-care-contrasts) and Figure \@ref(fig:H1-swls-care-fig)).  
 
 ## Interindividual Differences in Change
 
 First, we conducted comparisons of model fit between the random intercept models reported previously and models where a random slope variance was estimated, separately for each change parameter. These comparisons showed a substantial amount of interindividual differences in change for all random slopes in all models, as indicated by increases in model fit significant at `r anova_summaries$agree_lissanalysis_parents_comp$p[1]`.  
-Second, we estimated models with heterogeneous random slope variances of the grandparents and each control group in order to test whether interindividual differences in change were significantly larger in the grandparents. Contrary to hypothesis H2, for agreeableness, conscientiousness, and extraversion, interindividual differences in intraindividual change were greater in the control group for all tested effects (see Tables \@ref(tab:H2-hetvar-tab-agree), \@ref(tab:H2-hetvar-tab-con), & \@ref(tab:H2-hetvar-tab-extra)). In the two HRS samples, assuming group heterogeneity in the random slope variances led to significant improvements in model fit in all model comparisons. In the two LISS samples, this was the case for around half the tests.  
-Interindividual differences in change in neuroticism before the transition to grandparenthood were significantly greater in the HRS grandparents than the nonparent controls (random slope variances of the *before* parameter), *likelihood ratio* = `r hetvar_summaries$neur_hrsanalysis_nonparents_hetvar$lratio[1]`, `r hetvar_summaries$neur_hrsanalysis_nonparents_hetvar$p[1]`. However, this was not the case in the comparison of grandparents with parent controls in the HRS or either control group in the LISS (see Table \@ref(tab:H2-hetvar-tab-neur)). The other parameters of change in neuroticism did not differ significantly between groups in their random slope variances or---in the HRS---display significantly larger random slope variances in the respective control group.  
-For openness, interindividual differences in change before the transition to grandparenthood were significantly greater in the LISS grandparents than the nonparent controls (random slope variances of the *before* parameter), *likelihood ratio* = `r hetvar_summaries$open_lissanalysis_nonparents_hetvar$lratio[1]`, `r hetvar_summaries$open_lissanalysis_nonparents_hetvar$p[1]`. Again, this result could not be replicated in the other three samples, and the other parameters of change either did not differ between groups in their random slope variances or had significantly larger random slope variances in the respective control group (see Table \@ref(tab:H2-hetvar-tab-open)).  
-We found partial evidence of larger interindividual differences in grandparents' changes in life satisfaction (see Table \@ref(tab:H2-hetvar-tab-swls)): In the LISS grandparents, changes before the transition to grandparenthood varied interindividually to a larger extent compared to the parent controls (random slope variances of the *before* parameter), *likelihood ratio* = `r hetvar_summaries$swls_lissanalysis_parents_hetvar$lratio[1]`, `r hetvar_summaries$swls_lissanalysis_parents_hetvar$p[1]`, and in the HRS compared to the nonparent controls, *likelihood ratio* = `r hetvar_summaries$swls_hrsanalysis_nonparents_hetvar$lratio[1]`, `r hetvar_summaries$swls_hrsanalysis_nonparents_hetvar$p[1]`.<!-- We found suggestive evidence in the HRS for larger interindividual differences in grandparents' linear post-transition changes compared to the parent controls (random slope variances of the *after* parameter), *likelihood ratio* = `r hetvar_summaries$swls_lissanalysis_parents_hetvar$lratio[4]`, `r hetvar_summaries$swls_lissanalysis_parents_hetvar$p[4]`, and in sudden shifts directly after the transition was first reported (random slope variances of the *shift* parameter), *likelihood ratio* = `r hetvar_summaries$swls_lissanalysis_parents_hetvar$lratio[7]`, `r hetvar_summaries$swls_lissanalysis_parents_hetvar$p[7]`.--> Still, the majority of tests for heterogeneous random slope variances in life satisfaction indicated either non-significant differences or significantly larger random slope variances in the control sample.  
+Second, we estimated models with heterogeneous random slope variances of the grandparents and each control group in order to test whether interindividual differences in change were significantly larger in the grandparents. Contrary to hypothesis H2, for agreeableness, conscientiousness, extraversion, and neuroticism, interindividual differences in intraindividual change were greater in the control group for all tested effects (see Tables \@ref(tab:H2-hetvar-tab-agree), \@ref(tab:H2-hetvar-tab-con), \@ref(tab:H2-hetvar-tab-extra), & \@ref(tab:H2-hetvar-tab-neur)). In the two HRS samples, assuming group heterogeneity in the random slope variances led to significant improvements in model fit in all model comparisons. In the two LISS samples, this was the case for around half the tests.  
+For openness, interindividual differences in change before the transition to grandparenthood were significantly greater in the HRS grandparents than the nonparent controls (random slope variances of the *before* parameter), *likelihood ratio* = `r hetvar_summaries$open_hrsanalysis_nonparents_hetvar$lratio[1]`, `r hetvar_summaries$open_hrsanalysis_nonparents_hetvar$p[1]`. This result could not be replicated in the other three samples, and the other parameters of change either did not differ between groups in their random slope variances or had significantly larger random slope variances in the respective control group (see Table \@ref(tab:H2-hetvar-tab-open)).  
+We found larger interindividual differences in grandparents' changes in life satisfaction before the transition to grandparenthood compared to the nonparent controls in the HRS (random slope variances of the *before* parameter), *likelihood ratio* = `r hetvar_summaries$swls_hrsanalysis_nonparents_hetvar$lratio[1]`, `r hetvar_summaries$swls_hrsanalysis_nonparents_hetvar$p[1]` (see Table \@ref(tab:H2-hetvar-tab-swls)). This was not corroborated in the other three analysis sample and, overall, the majority of tests for heterogeneous random slope variances in life satisfaction indicated either non-significant differences or significantly larger random slope variances in the control sample.  
 
 ## Rank-Order Stability 
 

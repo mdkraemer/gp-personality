@@ -172,7 +172,7 @@ descriptives_hrs <- descriptives_hrs %>%
 descriptives_hrs <- descriptives_hrs[,-c(1,2)]
 descriptives_hrs <- descriptives_hrs %>% add_column(`-5` = "", `-3` = "", `-1` = "", 
                                                   `1` = "", `3` = "", `5` = "") %>% 
-  select(`-6`, `-5`, `-4`, `-3`, `-2`, `-1`, `0`, `1`, `2`, `3`, `4`, `5`, `6`)
+  dplyr::select(`-6`, `-5`, `-4`, `-3`, `-2`, `-1`, `0`, `1`, `2`, `3`, `4`, `5`, `6`)
 ```
 
 (ref:descriptives-liss-cap) Means and Standard Deviations of the Big Five and Life Satisfaction over Time in the LISS Panel.
@@ -240,7 +240,7 @@ apa_table(
 
 (ref:descriptives-hrs-cap) Means and Standard Deviations of the Big Five and Life Satisfaction over Time in the HRS.
 
-(ref:descriptives-hrs-note) Standard deviations shown in parentheses; $time=0$ marks the first year where the transition to grandparenthood was reported. To aid comparability with the LISS panel measures, we reverse scored all items so that higher values corresponded to higher trait levels.
+(ref:descriptives-hrs-note) Standard deviations shown in parentheses; $time=0$ marks the first year where the transition to grandparenthood was reported. To aid comparability with the LISS panel measures, we reverse scored all Big Five items so that higher values corresponded to higher trait levels.
 
 ```{r descriptives-hrs, results="asis", warning=FALSE, message=FALSE}
 # no duplicate rownames allowed :(
@@ -625,6 +625,49 @@ apa_table(
 )
 ```
 
+
+(ref:H1-agree-care-tab-cap) Fixed Effects of `r df_outcomes["agree", "maj"]` Over the Transition to Grandparenthood Moderated by Grandchild Care.
+(ref:H1-agree-care-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $caring=1$ indicates more than 100 hours of grandchild care since the last assessment.
+
+```{r H1-agree-care-tab, results="asis"}
+agree_care_df <- 
+  cbind(printnum(agree_hrs_parents_care_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(agree_hrs_parents_care_test)$coefficients[, 5], # parents: p-value
+        printnum(agree_hrs_nonparents_care_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(agree_hrs_nonparents_care_test)$coefficients[, 5])  # nonparents: p-value
+
+colnames(agree_care_df)[c(4,8)] <- c("p", "p")
+
+rownames_care_df <- c("Intercept, $\\hat{\\gamma}_{00}$",
+                      "Propensity score, $\\hat{\\gamma}_{02}$", 
+                      "After-slope, $\\hat{\\gamma}_{20}$", 
+                      "Grandparent, $\\hat{\\gamma}_{01}$", 
+                      "Caring, $\\hat{\\gamma}_{10}$", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$", 
+                      "After-slope * Caring, $\\hat{\\gamma}_{30}$", 
+                      "Grandparent * Caring, $\\hat{\\gamma}_{11}$", 
+                      "After-slope * Grandparent * Caring, $\\hat{\\gamma}_{31}$")
+rownames(agree_care_df) <- rownames_care_df
+
+apa_table(
+  agree_care_df
+  , caption = "(ref:H1-agree-care-tab-cap)"
+  , note = "(ref:H1-agree-care-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , placement = "H"
+)
+```
+
 (ref:H1-agree-care-contrasts-cap) Linear Contrasts for `r df_outcomes["agree", "maj"]` (Moderated by Grandchild Care; only HRS).
 (ref:H1-agree-care-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-agree-care-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
@@ -653,6 +696,70 @@ apa_table(
   , escape = F
   , landscape = T
   , font_size = "footnotesize"
+  , placement = "H"
+)
+```
+
+
+(ref:H1-con-tab-cap) Fixed Effects of `r df_outcomes["con", "maj"]` Over the Transition to Grandparenthood.
+(ref:H1-con-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.
+
+```{r H1-con-tab, results="asis"}
+con_liss_df <- 
+  cbind(printnum(con_liss_parents_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(con_liss_parents_test)$coefficients[, 5], # parents: p-value
+        printnum(con_liss_nonparents_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(con_liss_nonparents_test)$coefficients[, 5])  # nonparents: p-value
+
+con_hrs_df <- 
+  cbind(printnum(con_hrs_parents_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(con_hrs_parents_test)$coefficients[, 5], # parents: p-value
+        printnum(con_hrs_nonparents_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(con_hrs_nonparents_test)$coefficients[, 5])  # nonparents: p-value
+
+# make one large table
+colnames(con_liss_df)[c(4,8)] <- c("p", "p")
+colnames(con_hrs_df)[c(4,8)] <- c("p", "p")
+con_df <- rbind(con_liss_df, con_hrs_df)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_con_df <- c("Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{L}", 
+                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{L}", 
+                      "Before-slope, $\\hat{\\gamma}_{10}$ \\textcolor{white}{L}", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{L}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{L}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$ \\textcolor{white}{L}", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{L}", 
+                      "Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{H}", 
+                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{H}", 
+                      "Before-slope, $\\hat{\\gamma}_{10}$ \\textcolor{white}{H}", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{H}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{H}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{H}", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{H}")
+rownames(con_df) <- rownames_con_df
+
+apa_table(
+  con_df
+  , caption = "(ref:H1-con-tab-cap)"
+  , note = "(ref:H1-con-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  #, stub_indents = list("Fixed effects" = 1:12)
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , stub_indents = list("LISS" = 1:9, "HRS" = 10:18)
   , placement = "H"
 )
 ```
@@ -886,40 +993,6 @@ apa_table(
   , landscape = T
   , font_size = "footnotesize"
   , stub_indents = list("LISS" = 1:12, "HRS" = 13:24)
-  , placement = "H"
-)
-```
-
-(ref:H1-con-work-tab-cap) Fixed Effects of `r df_outcomes["con", "maj"]` Over the Transition to Grandparenthood Moderated by Performing Paid Work.
-(ref:H1-con-work-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $working=1$ indicates being employed in paid work.
-
-```{r H1-con-work-tab, results="asis"}
-con_work_df <- 
-  cbind(printnum(con_hrs_parents_work_summary$table)[, -1],   # parents: estimate, CI, t-value
-        summary(con_hrs_parents_work_test)$coefficients[, 5], # parents: p-value
-        printnum(con_hrs_nonparents_work_summary$table)[, -1],    # nonparents: estimate, CI, t-value
-        summary(con_hrs_nonparents_work_test)$coefficients[, 5])  # nonparents: p-value
-
-colnames(con_work_df)[c(4,8)] <- c("p", "p")
-
-rownames(con_work_df) <- rownames_work # defined above (agree)
-
-apa_table(
-  con_work_df
-  , caption = "(ref:H1-con-work-tab-cap)"
-  , note = "(ref:H1-con-work-tab-note)"
-  , col.names = c("Parameter", 
-                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
-                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
-  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
-  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
-                       digits = c(2,2,2,2,3,2,2,2,3),
-                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
-  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
-  #, stub_indents = list("Fixed effects" = 1:12)
-  , escape = F
-  , landscape = T
-  , font_size = "footnotesize"
   , placement = "H"
 )
 ```
@@ -1398,6 +1471,69 @@ apa_table(
   , escape = F
   , landscape = T
   , font_size = "footnotesize"
+  , placement = "H"
+)
+```
+
+(ref:H1-neur-tab-cap) Fixed Effects of `r df_outcomes["neur", "maj"]` Over the Transition to Grandparenthood.
+(ref:H1-neur-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.
+
+```{r H1-neur-tab, results="asis"}
+neur_liss_df <- 
+  cbind(printnum(neur_liss_parents_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(neur_liss_parents_test)$coefficients[, 5], # parents: p-value
+        printnum(neur_liss_nonparents_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(neur_liss_nonparents_test)$coefficients[, 5])  # nonparents: p-value
+
+neur_hrs_df <- 
+  cbind(printnum(neur_hrs_parents_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(neur_hrs_parents_test)$coefficients[, 5], # parents: p-value
+        printnum(neur_hrs_nonparents_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(neur_hrs_nonparents_test)$coefficients[, 5])  # nonparents: p-value
+
+# make one large table
+colnames(neur_liss_df)[c(4,8)] <- c("p", "p")
+colnames(neur_hrs_df)[c(4,8)] <- c("p", "p")
+neur_df <- rbind(neur_liss_df, neur_hrs_df)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_neur_df <- c("Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{L}", 
+                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{L}", 
+                      "Before-slope, $\\hat{\\gamma}_{10}$ \\textcolor{white}{L}", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{L}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{L}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$ \\textcolor{white}{L}", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{L}", 
+                      "Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{H}", 
+                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{H}", 
+                      "Before-slope, $\\hat{\\gamma}_{10}$ \\textcolor{white}{H}", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{H}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{H}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{H}", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{H}")
+rownames(neur_df) <- rownames_neur_df
+
+apa_table(
+  neur_df
+  , caption = "(ref:H1-neur-tab-cap)"
+  , note = "(ref:H1-neur-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  #, stub_indents = list("Fixed effects" = 1:12)
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , stub_indents = list("LISS" = 1:9, "HRS" = 10:18)
   , placement = "H"
 )
 ```
@@ -3855,10 +3991,10 @@ apa_table(
 
 ```{r pscore-overlap, fig.cap = "(ref:pscore-overlap-cap)", fig.height=7, fig.width=7, cache=T}
 # filtered data sets at the time of matching
-overlap_ps_lp <- lissanalysis_parents %>% filter(time==matchtime) %>% select(pid, grandparent, pscore)
-overlap_ps_ln <- lissanalysis_nonparents %>% filter(time==matchtime) %>% select(pid, grandparent, pscore)
-overlap_ps_hp <- hrsanalysis_parents %>% filter(time==matchtime) %>% select(pid, grandparent, pscore)
-overlap_ps_hn <- hrsanalysis_nonparents %>% filter(time==matchtime) %>% select(pid, grandparent, pscore)
+overlap_ps_lp <- lissanalysis_parents %>% filter(time==matchtime) %>% dplyr::select(pid, grandparent, pscore)
+overlap_ps_ln <- lissanalysis_nonparents %>% filter(time==matchtime) %>% dplyr::select(pid, grandparent, pscore)
+overlap_ps_hp <- hrsanalysis_parents %>% filter(time==matchtime) %>% dplyr::select(pid, grandparent, pscore)
+overlap_ps_hn <- hrsanalysis_nonparents %>% filter(time==matchtime) %>% dplyr::select(pid, grandparent, pscore)
 
 # function to create plots
 plotit<-function(data, conlab, title){
@@ -3961,26 +4097,27 @@ plot_grid(title_HRS, grid_agree_work,
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
-(ref:H1-con-work-fig-cap) Change trajectories of `r df_outcomes["con", "min"]` based on the models of moderation by paid work (see Table \@ref(tab:H1-con-work-tab)). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-con-fig) (basic models) and added here for better comparability.
 
-```{r H1-con-work-fig, fig.cap = "(ref:H1-con-work-fig-cap)", fig.height=6, fig.width=7, cache=T}
-# extract the legends
-legend_work_parents <- get_legend(plot_con_hrs_parents_work + 
+(ref:H1-agree-care-fig-cap) Change trajectories of `r df_outcomes["agree", "min"]` based on the models of moderation by grandchild care (see Table \@ref(tab:H1-agree-care-tab)). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The plots in the left column are the same as in Figure \@ref(fig:H1-agree-fig) (basic models) but restricted to the post-transition period for better comparability.
+
+```{r H1-agree-care-fig, fig.cap = "(ref:H1-agree-care-fig-cap)", fig.height=6, fig.width=7, cache=T}
+# extract the legends 
+legend_care_parents <- get_legend(plot_agree_hrs_parents_care + 
                                theme(legend.box.margin = margin(0, 0, 0, 20)))
-legend_work_nonparents <- get_legend(plot_con_hrs_nonparents_work + 
+legend_care_nonparents <- get_legend(plot_agree_hrs_nonparents_care + 
                                   theme(legend.box.margin = margin(0, 0, 0, 20)))
 
 # add the legend to the row we made earlier - adjust width via rel_widths
-grid_con_work <- cowplot::plot_grid(
-  plot_con_hrs_parents, 
-  plot_con_hrs_parents_work + theme(legend.position="none"),
-  plot_con_hrs_nonparents, 
-  plot_con_hrs_nonparents_work + theme(legend.position="none"), 
+grid_agree_care <- cowplot::plot_grid(
+  plot_agree_hrs_parents_short + theme(legend.position="none"), 
+  plot_agree_hrs_parents_care + theme(legend.position="none"),
+  plot_agree_hrs_nonparents_short + theme(legend.position="none"), 
+  plot_agree_hrs_nonparents_care + theme(legend.position="none"), 
   align = "vh", ncol = 2)
-grid_con_work <- cowplot::plot_grid(
-  grid_con_work, 
-  cowplot::plot_grid(legend_work_parents, legend_work_nonparents, ncol = 1),
-  rel_widths = c(3, .75), ncol = 2)
+grid_agree_care <- cowplot::plot_grid(
+  grid_agree_care, 
+  cowplot::plot_grid(legend_care_parents, legend_care_nonparents, ncol = 1),
+  rel_widths = c(3, .80), ncol = 2)
 
 # now add the title
 title_HRS <- ggdraw() + 
@@ -3988,7 +4125,53 @@ title_HRS <- ggdraw() +
   theme(plot.margin = margin(0, 0, 0, 7))
 
 # print final object
-plot_grid(title_HRS, grid_con_work, 
+plot_grid(title_HRS, grid_agree_care, 
+          ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
+```
+
+
+(ref:H1-con-fig-cap) Change trajectories of `r df_outcomes["con", "min"]` based on the basic models (left column) and the models including the gender interaction (right column). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
+
+```{r H1-con-fig, fig.cap = "(ref:H1-con-fig-cap)", fig.height=9, fig.width=7, cache=T}
+# extract the legends
+legend_parents <- get_legend(plot_con_liss_parents_gender + 
+                               theme(legend.box.margin = margin(0, 0, 0, 20)))
+legend_nonparents <- get_legend(plot_con_liss_nonparents_gender + 
+                                  theme(legend.box.margin = margin(0, 0, 0, 20)))
+
+# add the legend to the row we made earlier - adjust width via rel_widths
+grid_con_liss <- cowplot::plot_grid(
+  plot_con_liss_parents, 
+  plot_con_liss_parents_gender + theme(legend.position="none"),
+  plot_con_liss_nonparents, 
+  plot_con_liss_nonparents_gender + theme(legend.position="none"), 
+  align = "vh", ncol = 2)
+grid_con_liss <- cowplot::plot_grid(
+  grid_con_liss, 
+  cowplot::plot_grid(legend_parents, legend_nonparents, ncol = 1),
+  rel_widths = c(3, .75), ncol = 2)
+
+grid_con_hrs <- cowplot::plot_grid(
+  plot_con_hrs_parents, 
+  plot_con_hrs_parents_gender + theme(legend.position="none"),
+  plot_con_hrs_nonparents, 
+  plot_con_hrs_nonparents_gender + theme(legend.position="none"), 
+  align = "vh", ncol = 2)
+grid_con_hrs <- cowplot::plot_grid(
+  grid_con_hrs, 
+  cowplot::plot_grid(legend_parents, legend_nonparents, ncol = 1),
+  rel_widths = c(3, .75), ncol = 2)
+
+# now add the title
+title_liss <- ggdraw() + 
+  draw_label("LISS", fontface = 'bold', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_HRS <- ggdraw() + 
+  draw_label("HRS", fontface = 'bold', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+# print final object
+plot_grid(title_liss, grid_con_liss, title_HRS, grid_con_hrs, 
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 
@@ -4096,6 +4279,51 @@ title_HRS <- ggdraw() +
 
 # print final object
 plot_grid(title_HRS, grid_extra_care, 
+          ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
+```
+
+(ref:H1-neur-fig-cap) Change trajectories of `r df_outcomes["neur", "min"]` based on the basic models (left column) and the models including the gender interaction (right column). The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood.
+
+```{r H1-neur-fig, fig.cap = "(ref:H1-neur-fig-cap)", fig.height=9, fig.width=7, cache=T}
+# extract the legends
+legend_parents <- get_legend(plot_neur_liss_parents_gender + 
+                               theme(legend.box.margin = margin(0, 0, 0, 20)))
+legend_nonparents <- get_legend(plot_neur_liss_nonparents_gender + 
+                                  theme(legend.box.margin = margin(0, 0, 0, 20)))
+
+# add the legend to the row we made earlier - adjust width via rel_widths
+grid_neur_liss <- cowplot::plot_grid(
+  plot_neur_liss_parents, 
+  plot_neur_liss_parents_gender + theme(legend.position="none"),
+  plot_neur_liss_nonparents, 
+  plot_neur_liss_nonparents_gender + theme(legend.position="none"), 
+  align = "vh", ncol = 2)
+grid_neur_liss <- cowplot::plot_grid(
+  grid_neur_liss, 
+  cowplot::plot_grid(legend_parents, legend_nonparents, ncol = 1),
+  rel_widths = c(3, .75), ncol = 2)
+
+grid_neur_hrs <- cowplot::plot_grid(
+  plot_neur_hrs_parents, 
+  plot_neur_hrs_parents_gender + theme(legend.position="none"),
+  plot_neur_hrs_nonparents, 
+  plot_neur_hrs_nonparents_gender + theme(legend.position="none"), 
+  align = "vh", ncol = 2)
+grid_neur_hrs <- cowplot::plot_grid(
+  grid_neur_hrs, 
+  cowplot::plot_grid(legend_parents, legend_nonparents, ncol = 1),
+  rel_widths = c(3, .75), ncol = 2)
+
+# now add the title
+title_liss <- ggdraw() + 
+  draw_label("LISS", fontface = 'bold', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_HRS <- ggdraw() + 
+  draw_label("HRS", fontface = 'bold', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+# print final object
+plot_grid(title_liss, grid_neur_liss, title_HRS, grid_neur_hrs, 
           ncol = 1, rel_heights = c(0.1, 1, 0.1, 1))
 ```
 

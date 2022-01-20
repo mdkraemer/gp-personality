@@ -3,9 +3,11 @@
 # run 'gp-compilesample-imp-LISS.R' first to obtain the files that are loaded here 
 # (imputations have a very long run time)
 
-library(tidyverse)
+library(tidyverse) 
 library(MatchIt)
 library(readxl)
+
+set.seed(3000)
 
 # load .rda
 load(file = "data/processed/LISS/lisslong_cleaned.rda")
@@ -80,11 +82,11 @@ impdata <- impdata %>%
               kid3home = ifelse(thirdkid==1 & kid3home==1, 1, 0),
               livedhere = ifelse(!is.na(movedinyear), year - movedinyear, NA)
   )) %>%
-  map(~select(., -c(ownrent, typedwelling, employment_status, education, 
+  map(~dplyr::select(., -c(ownrent, typedwelling, employment_status, education, 
                     marital, urban, nettoink, subjhealth, kid1byear,
                     kid2byear, kid3byear, kid1gender, kid2gender,
                     kid3gender, movedinyear))) %>% # these are dropped because of recoding
-  map(~select(., -c(inschool, nodegreeyet, voluntary, # these are dropped because they do not
+  map(~dplyr::select(., -c(inschool, nodegreeyet, voluntary, # these are dropped because they do not
                     separated, jobother)))            # apply to anyone from the GP group (all 0s)
 
 # unlist and save as original data frames
@@ -137,11 +139,11 @@ lissimp_matching_1 %>%
   group_by(grandparent, nokids) %>% summarise(n = n(), N = n_distinct(nomem_encr))
 
 # Compared to the (old) method that does not filter by 'nokids==0', we 
-# drop 3 grandparents 
+# drop 1 grandparent
 lissimp_matching_1 %>% filter(grandparent==1 & nokids==1 & valid==-1 & droplater==F) %>% 
   as_tibble() %>% print(width=Inf)
-# 890490, 808758, 815246
-lisslongvalid %>% filter(nomem_encr %in% c(890490, 808758, 815246)) %>% as_tibble() %>% print(width=Inf)
+# 890490
+lisslongvalid %>% filter(nomem_encr==890490) %>% as_tibble() %>% print(width=Inf)
 # totalresidentkids==0, totalchildren is 0 or NA (except for 890490 in 2017) - I'd say we drop them
 
 # 2)
@@ -158,22 +160,23 @@ lissimp_matching_1 %>%
 lissimp_matching_1 %>% 
   filter(grandparent==1 & nokids==0 & time==matchtime & droplater==F & is.na(kid1age))
 
-# 7 GP observations have NA for kid1age (842779, 807870, 872305, 811608, 839028, 841723, 851635) 
+# 8 GP observations have NA for kid1age (842779, 807870, 872305, 811608, 839028, 841723, 851635, 819888) 
 lisslongvalid %>% 
-  filter(nomem_encr %in% c(842779, 807870, 872305, 811608, 839028, 841723, 851635)) %>% 
-  select(nomem_encr, year, time, totalchildren, kid1byear, kid2byear, kid3byear, validper, validfam) %>%
+  filter(nomem_encr %in% c(842779, 807870, 872305, 811608, 839028, 841723, 851635, 819888)) %>% 
+  dplyr::select(nomem_encr, year, time, totalchildren, kid1byear, kid2byear, kid3byear, validper, validfam) %>%
   print(n=50, width=Inf)
 # These missings are only present in single waves (where 'validfam' indicates that theses
 # respondents did not participate in Family and Household survey) 
 # -> missing information can be filled in!
 lissimp_matching_1 %>% 
-  filter(nomem_encr %in% c(842779, 807870, 872305, 811608, 839028, 841723, 851635)) %>% 
+  filter(nomem_encr %in% c(842779, 807870, 872305, 811608, 839028, 841723, 851635, 819888)) %>% 
   arrange(nomem_encr, year) %>% 
-  select(nomem_encr, year, time,  contains("kid"), currentpartner, livetogether, 
-         totalchildren, -totalresidentkids) %>% as_tibble() %>% print(width=Inf)
+  dplyr::select(nomem_encr, year, time,  contains("kid"), currentpartner, livetogether, 
+         totalchildren, -totalresidentkids) %>% as_tibble() %>% print(width=Inf, n=Inf)
 
 # I have literally searched multiple hours for a more elegant way to code this & failed...
 # tried: across() / mutate_at() / lag() / lead() / fill()
+# Do it per hand instead
 replace_with_laglead <- function(x) { 
     x %>%       
     mutate(secondkid = ifelse(nomem_encr==811608 & year==2013, 1, secondkid), # leading
@@ -183,6 +186,18 @@ replace_with_laglead <- function(x) {
            kid3age = ifelse(nomem_encr==811608 & year==2013, 22, kid3age),
            kid2home = ifelse(nomem_encr==811608 & year==2013, 1, kid2home),
            totalchildren = ifelse(nomem_encr==811608 & year==2013, 3, totalchildren)) %>% 
+    mutate(secondkid = ifelse(nomem_encr==819888 & year==2018, 1, secondkid),
+           kid1female = ifelse(nomem_encr==819888 & year==2018, 1, kid1female),
+           kid2female = ifelse(nomem_encr==819888 & year==2018, 1, kid2female),
+           kid1age = ifelse(nomem_encr==819888 & year==2018, 30, kid1age),
+           kid2age = ifelse(nomem_encr==819888 & year==2018, 24, kid2age),
+           totalchildren = ifelse(nomem_encr==819888 & year==2018, 2, totalchildren),
+           secondkid = ifelse(nomem_encr==819888 & year==2020, 1, secondkid),
+           kid1female = ifelse(nomem_encr==819888 & year==2020, 1, kid1female),
+           kid2female = ifelse(nomem_encr==819888 & year==2020, 1, kid2female),
+           kid1age = ifelse(nomem_encr==819888 & year==2020, 32, kid1age),
+           kid2age = ifelse(nomem_encr==819888 & year==2020, 26, kid2age),
+           totalchildren = ifelse(nomem_encr==819888 & year==2020, 2, totalchildren)) %>% 
     mutate(secondkid = ifelse(nomem_encr==839028 & year==2013, 1, secondkid),
            thirdkid = ifelse(nomem_encr==839028 & year==2013, 1, thirdkid),
            kid1female = ifelse(nomem_encr==839028 & year==2013, 1, kid1female),
@@ -228,10 +243,10 @@ list2env(list_laglead, .GlobalEnv)
 rm(list_laglead)
 
 lissimp_matching_3 %>% 
-  filter(nomem_encr %in% c(842779, 807870, 872305, 811608, 839028, 841723, 851635)) %>% 
+  filter(nomem_encr %in% c(842779, 807870, 872305, 811608, 839028, 841723, 851635, 819888)) %>% 
   arrange(nomem_encr, year) %>% 
-  select(nomem_encr, year, time,  contains("kid"), currentpartner, livetogether, 
-         totalchildren, -totalresidentkids) %>% as_tibble() %>% print(width=Inf)
+  dplyr::select(nomem_encr, year, time,  contains("kid"), currentpartner, livetogether, 
+         totalchildren, -totalresidentkids) %>% as_tibble() %>% print(width=Inf, n=Inf)
 
 # subsetting imputed datasets:
 
@@ -240,7 +255,7 @@ subset_parents_liss <- function(x) {
   x %>% 
     filter((grandparent==1 & nokids==0 & time==matchtime & droplater==F) | # cases
            (grandparent==0 & nokids==0 & kid1age %in% c(15:65))) %>%       # (potential) controls
-    select(-c(droplater, time, valid, nokids, matchtime)) }
+    dplyr::select(-c(droplater, time, valid, nokids, matchtime)) }
 
 list_subset_parents <- list(lissimp_matching_1, lissimp_matching_2, lissimp_matching_3,
                             lissimp_matching_4, lissimp_matching_5) %>%
@@ -260,6 +275,10 @@ if(nrow(liss_sampleflow_gp)==3){ # added this condition in case I only execute t
   liss_sampleflow_gp[nrow(liss_sampleflow_gp)+1, ] <- 
     c(4, (lissimp_parents_ps_1 %>% group_by(grandparent) %>% summarise(n = n(), N = n_distinct(nomem_encr)))[2,3]) # add step 4
 }
+if(nrow(liss_sampleflow_gp)==4){ # update existing row (if script is run more than once)
+  liss_sampleflow_gp[4, ] <- 
+    c(4, (lissimp_parents_ps_1 %>% group_by(grandparent) %>% summarise(n = n(), N = n_distinct(nomem_encr)))[2,3]) # add step 4
+}
 save(liss_sampleflow_gp, file = "data/processed/LISS/liss_sampleflow_gp.rda") # save for later import
 
 # another one for the non-grandparent control subjects
@@ -273,7 +292,7 @@ subset_nonparents_liss <- function(x) {
   x %>% 
     filter((grandparent==1 & nokids==0 & time==matchtime & droplater==F) | # cases
            (grandparent==0 & nokids==1)) %>%                               # (potential) controls
-    select(-c(droplater, time, valid, matchtime, nokids, 
+    dplyr::select(-c(droplater, time, valid, matchtime, nokids, 
               contains("kid"), totalchildren)) } # kid variables not used here
   
 list_subset_nonparents <- list(lissimp_matching_1, lissimp_matching_2, lissimp_matching_3,
@@ -304,7 +323,7 @@ table(lissimp_parents_ps_1$grandparent, lissimp_parents_ps_1$disability)
 # Therefore, I'll remove all these variables here. (see "Overview covariates.xlsx" -> Sheet "Frequencies")
 remove_infrequent_liss <- function(x) { 
   x %>% 
-    select(-c(retire_early, retirement, heartattack, stroke, cancer, rentfree, businessdwelling, otherdwelling, # too infrequent
+    dplyr::select(-c(retire_early, retirement, heartattack, stroke, cancer, rentfree, businessdwelling, otherdwelling, # too infrequent
               jobseeker, pensioner, disability, primaryschool),
            -c(paid_work, more_paid_work, difficultybills, secondhouse, # these are not important (substantively) / or redundant
               bmi, chronicdisease, diabetes, nodisease, flatapartment, 
@@ -350,7 +369,7 @@ for (i in c(1:imp)){
   help2 <- paste("lissimp_parents_ps", i, "main", sep="_")
   help3 <- paste("liss_ps_logit_parents_m", i, "_main", sep="")
   #save subset data (2014 separately because of missing health covariates)
-  eval(call("<-", as.name(help2), get(help1) %>% filter(year %in% c(2008:2013, 2015:2018)))) #2008:2013
+  eval(call("<-", as.name(help2), get(help1) %>% filter(year %in% c(2008:2013, 2015:2020))))
   #logistic regressions
   eval(call("<-", as.name(help3), glm(liss_ps_model_parents, family = binomial(link='logit'), data = get(help2))))
 }
@@ -387,7 +406,7 @@ for (i in c(1:imp)){
   #save subset data (2014 separately because of missing health covariates)
   eval(call("<-", as.name(help2), get(help1) %>% filter(year==2014)))
   eval(call("<-", as.name(help2), get(help2) %>% 
-              select(-c(#bmi, chronicdisease, diabetes, nodisease, # health variables not assessed in 2014 
+              dplyr::select(-c(#bmi, chronicdisease, diabetes, nodisease, # health variables not assessed in 2014 
                         mobility, dep, worsehealth, betterhealth, 
                         widowed)))) # 0 widowed GPs in 2014
                         #more_paid_work, speakdutch, farmhouse, # these were too infrequent in 2014 (in GP group)
@@ -418,7 +437,7 @@ lissimp_matching_parents <- bind_rows(lissimp_pscore_parents_main, lissimp_pscor
 #lissimp_matching_parents <- lissimp_pscore_parents_main
 
 lissimp_matching_parents <- lissimp_matching_parents %>% 
-  select(nomem_encr, year, female, grandparent, pscore) 
+  dplyr::select(nomem_encr, year, female, grandparent, pscore) 
 
 # 2) NONPARENT control group
 
@@ -432,7 +451,7 @@ for (i in c(1:imp)){
   help2 <- paste("lissimp_nonparents_ps", i, "main", sep="_")
   help3 <- paste("liss_ps_logit_nonparents_m", i, "_main", sep="")
   #save subset data (2014 separately because of missing health covariates)
-  eval(call("<-", as.name(help2), get(help1) %>% filter(year %in% c(2008:2013, 2015:2018)))) #2008:2013
+  eval(call("<-", as.name(help2), get(help1) %>% filter(year %in% c(2008:2013, 2015:2020))))
   #logistic regressions
   eval(call("<-", as.name(help3), glm(liss_ps_model_nonparents, family = binomial(link='logit'), data = get(help2))))
 }
@@ -469,7 +488,7 @@ for (i in c(1:imp)){
   #save subset data (2014 separately because of missing health covariates)
   eval(call("<-", as.name(help2), get(help1) %>% filter(year==2014)))
   eval(call("<-", as.name(help2), get(help2) %>% 
-              select(-c(#bmi, chronicdisease, diabetes, nodisease, # health variables not assessed in 2014 
+              dplyr::select(-c(#bmi, chronicdisease, diabetes, nodisease, # health variables not assessed in 2014 
                         mobility, dep, worsehealth, betterhealth, 
                         widowed)))) # no widowed GPs in 2014
                         #more_paid_work, speakdutch, farmhouse, # these were too infrequent in 2014 (in GP group)
@@ -500,7 +519,7 @@ lissimp_matching_nonparents <- bind_rows(lissimp_pscore_nonparents_main, lissimp
 #lissimp_matching_nonparents <- lissimp_pscore_nonparents_main
 
 lissimp_matching_nonparents <- lissimp_matching_nonparents %>% 
-  select(nomem_encr, year, female, grandparent, pscore) 
+  dplyr::select(nomem_encr, year, female, grandparent, pscore) 
 
 
 #### PSM: 'matchit' with replacement -> (1) parent control group ####
@@ -512,7 +531,7 @@ table(lissimp_matching_parents$grandparent, lissimp_matching_parents$year)
 lissimp_parents <- left_join(lissimp_matching_parents, 
                                        lissimp_matching_1, by=c("nomem_encr", "year")) %>% 
   filter(droplater==F) %>% 
-  select(nomem_encr, year, female.x, grandparent.x, pscore, time, valid) %>% 
+  dplyr::select(nomem_encr, year, female.x, grandparent.x, pscore, time, valid) %>% 
   rename(female = female.x, grandparent = grandparent.x)
 
 table(lissimp_parents$grandparent, lissimp_parents$time)
@@ -529,7 +548,7 @@ str(liss_data_parents)
 liss_data_parents <- liss_data_parents %>% group_by(subclass) %>% 
   mutate(time = ifelse(is.na(time), max(time, na.rm = T), time),
          valid = ifelse(is.na(valid), max(valid, na.rm = T), valid)) %>% ungroup %>% 
-  ungroup() %>% select(-weights, -id) # -subclass,  -- need subclass later 
+  ungroup() %>% dplyr::select(-weights, -id) # -subclass,  -- need subclass later 
 
 # "with replacement" in two ways: 
 # - the same control observation appearing multiple times in the matched data 
@@ -557,10 +576,10 @@ liss_data_parents <- left_join(liss_data_parents, lissimp_parents_ps_1,
 
 # for balance assessment (at the time of matching - using the variables containing imputed values)
 liss_bal_parents <- liss_data_parents %>%
-  select(nomem_encr, grandparent, pscore, female, everything(), -time, -valid, -subclass) # -year, 
+  dplyr::select(nomem_encr, grandparent, pscore, female, everything(), -time, -valid, -subclass) # -year, 
 
 liss_data_parents <- liss_data_parents %>% 
-  select(nomem_encr, year, grandparent, time, valid, pscore, subclass) %>% 
+  dplyr::select(nomem_encr, year, grandparent, time, valid, pscore, subclass) %>% 
   rename(match_year = year, time_match = time, valid_match = valid) %>% 
   mutate(match_number = row_number()) # if we allow duplicate matches, we need an unambiguous identifier for later
 
@@ -572,7 +591,7 @@ table(lissanalysis_parents$grandparent, lissanalysis_parents$time_match) # alrea
 table(lissanalysis_parents$grandparent, lissanalysis_parents$matchtime)
 
 lissanalysis_parents <- lissanalysis_parents %>%
-  select(-matchtime) %>% rename(matchtime = time_match) 
+  dplyr::select(-matchtime) %>% rename(matchtime = time_match) 
 
 table(lissanalysis_parents$grandparent, lissanalysis_parents$valid)
 table(lissanalysis_parents$grandparent, lissanalysis_parents$valid_match)
@@ -606,7 +625,7 @@ lissanalysis_parents <- lissanalysis_parents %>% group_by(match_number) %>%
   mutate(helpcount = row_number()) %>% ungroup()
 lissanalysis_parents <- lissanalysis_parents %>% 
   mutate(valid = ifelse(is.na(valid) & grandparent==0, helpcount - lastcount + valid_match, valid)) %>% 
-  select(-helpcount, -lastcount)
+  dplyr::select(-helpcount, -lastcount)
 
 table(lissanalysis_parents$grandparent, lissanalysis_parents$time)
 table(lissanalysis_parents$grandparent, lissanalysis_parents$valid)
@@ -631,7 +650,7 @@ table(lissimp_matching_nonparents$grandparent, lissimp_matching_nonparents$year)
 lissimp_nonparents <- left_join(lissimp_matching_nonparents, 
                                         lissimp_matching_1, by=c("nomem_encr", "year")) %>% 
   filter(droplater==F) %>% 
-  select(nomem_encr, year, female.x, grandparent.x, pscore, time, valid) %>% 
+  dplyr::select(nomem_encr, year, female.x, grandparent.x, pscore, time, valid) %>% 
   rename(female = female.x, grandparent = grandparent.x)
 
 table(lissimp_nonparents$grandparent, lissimp_nonparents$time)
@@ -648,7 +667,7 @@ str(liss_data_nonparents)
 liss_data_nonparents <- liss_data_nonparents %>% group_by(subclass) %>% 
   mutate(time = ifelse(is.na(time), max(time, na.rm = T), time),
          valid = ifelse(is.na(valid), max(valid, na.rm = T), valid)) %>% ungroup %>% 
-  ungroup() %>% select(-weights, -id) # -subclass,  -- need subclass later for recoding of moderator care
+  ungroup() %>% dplyr::select(-weights, -id) # -subclass,  -- need subclass later for recoding of moderator care
 
 # "with replacement" in two ways: 
 # - the same control observation appearing multiple times in the matched data 
@@ -677,10 +696,10 @@ liss_data_nonparents <- left_join(liss_data_nonparents, lissimp_nonparents_ps_1,
 
 # for balance assessment (at the time of matching - using the variables containing imputed values)
 liss_bal_nonparents <- liss_data_nonparents %>%
-  select(nomem_encr, grandparent, pscore, female, everything(), -time, -valid, -subclass) # -year, 
+  dplyr::select(nomem_encr, grandparent, pscore, female, everything(), -time, -valid, -subclass) # -year, 
 
 liss_data_nonparents <- liss_data_nonparents %>% 
-  select(nomem_encr, year, grandparent, time, valid, pscore, subclass) %>% 
+  dplyr::select(nomem_encr, year, grandparent, time, valid, pscore, subclass) %>% 
   rename(match_year = year, time_match = time, valid_match = valid) %>% 
   mutate(match_number = row_number()) # if we allow duplicate matches, we need an unambiguous identifier for later
 
@@ -692,7 +711,7 @@ table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$time_match) #
 table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$matchtime)
 
 lissanalysis_nonparents <- lissanalysis_nonparents %>%
-  select(-matchtime) %>% rename(matchtime = time_match)
+  dplyr::select(-matchtime) %>% rename(matchtime = time_match)
 
 table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$valid)
 table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$valid_match)
@@ -726,7 +745,7 @@ lissanalysis_nonparents <- lissanalysis_nonparents %>% group_by(match_number) %>
   mutate(helpcount = row_number()) %>% ungroup()
 lissanalysis_nonparents <- lissanalysis_nonparents %>% 
   mutate(valid = ifelse(is.na(valid) & grandparent==0, helpcount - lastcount + valid_match, valid)) %>% 
-  select(-helpcount, -lastcount)
+  dplyr::select(-helpcount, -lastcount)
 
 table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$time)
 table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$valid)
@@ -734,7 +753,7 @@ table(lissanalysis_nonparents$grandparent, lissanalysis_nonparents$year)
 
 # cells at time > 6 too small 
 lissanalysis_nonparents <- lissanalysis_nonparents %>% filter(time %in% c(-6:6)) %>% 
-  select(-match_year, -valid_match, -droplater)
+  dplyr::select(-match_year, -valid_match, -droplater)
 
 # save .rda 
 save(lissanalysis_nonparents, file = "data/processed/LISS/lissanalysis_nonparents.rda")
@@ -758,10 +777,10 @@ stdmeandiff <- function(var, treat, data) {
 
 # balance BEFORE matching
 liss_bal_parents_before <- lissimp_matching_parents %>% 
-  select(nomem_encr, year, grandparent, pscore) # PS averaged from imp=5
+  dplyr::select(nomem_encr, year, grandparent, pscore) # PS averaged from imp=5
 liss_bal_parents_before <- left_join(liss_bal_parents_before, lissimp_matching_1)
 liss_bal_parents_before <- liss_bal_parents_before %>% 
-  select(nomem_encr, grandparent, pscore, female, everything(), 
+  dplyr::select(nomem_encr, grandparent, pscore, female, everything(), 
          -c(time, valid, droplater, matchtime, nokids),
          -c(retire_early, retirement, heartattack, stroke, cancer, rentfree, businessdwelling, otherdwelling, # too infrequent in some cells
             jobseeker, pensioner, disability, primaryschool), 
@@ -777,10 +796,10 @@ names(liss_bal_parents_before) # column names must be aligned!
 names(liss_bal_parents)
 
 liss_bal_nonparents_before <- lissimp_matching_nonparents %>% 
-  select(nomem_encr, year, grandparent, pscore) # PS averaged from imp=5
+  dplyr::select(nomem_encr, year, grandparent, pscore) # PS averaged from imp=5
 liss_bal_nonparents_before <- left_join(liss_bal_nonparents_before, lissimp_matching_1)
 liss_bal_nonparents_before <- liss_bal_nonparents_before %>% 
-  select(nomem_encr, grandparent, pscore, female, everything(), 
+  dplyr::select(nomem_encr, grandparent, pscore, female, everything(), 
          -c(time, valid, droplater, matchtime, contains("kid"), totalchildren), 
          -c(retire_early, retirement, heartattack, stroke, cancer, rentfree, businessdwelling, otherdwelling, # too infrequent
             jobseeker, pensioner, disability, primaryschool), 
@@ -869,5 +888,5 @@ covar_info <- read_excel("gp-covariates-overview.xlsx", sheet = 1, range = "F4:H
 liss_balance_df <- left_join(covar_info,
                             liss_balance_df,
                             by = "Covariate") %>% # sets correct order
-  select(Covariate, everything())
+  dplyr::select(Covariate, everything())
 save(liss_balance_df, file = "data/processed/LISS/liss_balance_df.rda")
