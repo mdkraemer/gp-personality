@@ -232,162 +232,221 @@ Even though we have published using the LISS and HRS data before (see preregistr
 [^f4]: Publications using LISS data can be searched at https://www.dataarchive.lissdata.nl/publications/. Publications using HRS data can be searched at https://hrs.isr.umich.edu/publications/biblio/. 
 
 ```{r internal consistency, results="asis", warning=FALSE, message=FALSE}
-# internal consistencies at the time of matching (we use omega but need alpha object for 'keys')
+# internal consistencies at the time of matching
+
 # life satisfaction
-alpha_swls_liss <- lissanalysis_parents %>% # LISS
+alpha_swls_liss_p <- lissanalysis_parents %>% # LISS
+  dplyr::select(starts_with("swls"), -swls) %>%
+  psych::alpha(check.keys = TRUE)
+alpha_swls_liss_np <- lissanalysis_nonparents %>%
   dplyr::select(starts_with("swls"), -swls) %>%
   psych::alpha(check.keys = TRUE)
 omega_swls_liss_p <- lissanalysis_parents %>% filter(matchtime==time) %>% # parents
   dplyr::select(starts_with("swls"), -swls) %>% 
-  psych::omega(m = ., keys = alpha.swls_liss$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_swls_liss_p$keys, plot = FALSE, nfactors=3)
 omega_swls_liss_np <- lissanalysis_nonparents %>% filter(matchtime==time) %>% # nonparents
   dplyr::select(starts_with("swls"), -swls) %>% 
-  psych::omega(m = ., keys = alpha.swls_liss$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_swls_liss_np$keys, plot = FALSE, nfactors=3)
 
-alpha_swls_hrs <- hrsanalysis_parents %>% # HRS
+alpha_swls_hrs_p <- hrsanalysis_parents %>% # HRS
+  dplyr::select(starts_with("swls"), -swls) %>%
+  psych::alpha(check.keys = TRUE)
+alpha_swls_hrs_np <- hrsanalysis_nonparents %>%
   dplyr::select(starts_with("swls"), -swls) %>%
   psych::alpha(check.keys = TRUE)
 omega_swls_hrs_p <- hrsanalysis_parents %>% filter(time_match==time) %>% # parents
   dplyr::select(starts_with("swls"), -swls) %>% 
-  psych::omega(m = ., keys = alpha.swls_hrs$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_swls_hrs_p$keys, plot = FALSE, nfactors=3)
 omega_swls_hrs_np <- hrsanalysis_nonparents %>% filter(time_match==time) %>% # nonparents
   dplyr::select(starts_with("swls"), -swls) %>% 
-  psych::omega(m = ., keys = alpha.swls_hrs$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_swls_hrs_np$keys, plot = FALSE, nfactors=3)
 
 # Big Five: openness to experience
-alpha_open_liss <- lissanalysis_parents %>% # LISS
+alpha_open_liss_p <- lissanalysis_parents %>% # LISS
+  dplyr::select(starts_with("open"), -open) %>%
+  psych::alpha(check.keys = TRUE)
+alpha_open_liss_np <- lissanalysis_nonparents %>%
   dplyr::select(starts_with("open"), -open) %>%
   psych::alpha(check.keys = TRUE)
 omega_open_liss_p <- lissanalysis_parents %>% filter(matchtime==time) %>% # parents
   dplyr::select(starts_with("open"), -open) %>% 
-  psych::omega(m = ., keys = alpha.open_liss$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_open_liss_p$keys, plot = FALSE, nfactors=6)
 omega_open_liss_np <- lissanalysis_nonparents %>% filter(matchtime==time) %>% # nonparents
   dplyr::select(starts_with("open"), -open) %>% 
-  psych::omega(m = ., keys = alpha.open_liss$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_open_liss_np$keys, plot = FALSE, nfactors=6)
 
-alpha_open_hrs <- hrsanalysis_parents %>% # HRS
+alpha_open_hrs_p <- hrsanalysis_parents %>% # HRS
+  dplyr::select(starts_with("open"), -open) %>%
+  psych::alpha(check.keys = TRUE)
+alpha_open_hrs_np <- hrsanalysis_nonparents %>% 
   dplyr::select(starts_with("open"), -open) %>%
   psych::alpha(check.keys = TRUE)
 omega_open_hrs_p <- hrsanalysis_parents %>% filter(time_match==time) %>% # parents
   dplyr::select(starts_with("open"), -open) %>% 
-  psych::omega(m = ., keys = alpha.open_hrs$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_open_hrs_p$keys, plot = FALSE, nfactors=3)
 omega_open_hrs_np <- hrsanalysis_nonparents %>% filter(time_match==time) %>% # nonparents
   dplyr::select(starts_with("open"), -open) %>% 
-  psych::omega(m = ., keys = alpha.open_hrs$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_open_hrs_np$keys, plot = FALSE, nfactors=3)
 
 # Big Five: conscientiousness
-alpha_con_liss <- lissanalysis_parents %>% # LISS
+alpha_con_liss_p <- lissanalysis_parents %>% # LISS
+  dplyr::select(starts_with("con"), -con) %>%
+  psych::alpha(check.keys = TRUE)
+alpha_con_liss_np <- lissanalysis_nonparents %>% 
   dplyr::select(starts_with("con"), -con) %>%
   psych::alpha(check.keys = TRUE)
 omega_con_liss_p <- lissanalysis_parents %>% filter(matchtime==time) %>% # parents
   dplyr::select(starts_with("con"), -con) %>% 
-  psych::omega(m = ., keys = alpha.con_liss$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_con_liss_p$keys, plot = FALSE, nfactors=5)
 omega_con_liss_np <- lissanalysis_nonparents %>% filter(matchtime==time) %>% # nonparents
   dplyr::select(starts_with("con"), -con) %>% 
-  psych::omega(m = ., keys = alpha.con_liss$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_con_liss_np$keys, plot = FALSE, nfactors=5)
 
-alpha_con_hrs <- hrsanalysis_parents %>% # HRS
+alpha_con_hrs_p <- hrsanalysis_parents %>% # HRS
+  dplyr::select(starts_with("con"), -con) %>%
+  psych::alpha(check.keys = TRUE)
+alpha_con_hrs_np <- hrsanalysis_nonparents %>% 
   dplyr::select(starts_with("con"), -con) %>%
   psych::alpha(check.keys = TRUE)
 omega_con_hrs_p <- hrsanalysis_parents %>% filter(time_match==time) %>% # parents
   dplyr::select(starts_with("con"), -con) %>% 
-  psych::omega(m = ., keys = alpha.con_hrs$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_con_hrs_p$keys, plot = FALSE, nfactors=3)
 omega_con_hrs_np <- hrsanalysis_nonparents %>% filter(time_match==time) %>% # nonparents
   dplyr::select(starts_with("con"), -con) %>% 
-  psych::omega(m = ., keys = alpha.con_hrs$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_con_hrs_np$keys, plot = FALSE, nfactors=3)
 
 # Big Five: extraversion
-alpha_extra_liss <- lissanalysis_parents %>% # LISS
+alpha_extra_liss_p <- lissanalysis_parents %>% # LISS
+  dplyr::select(starts_with("extra"), -extra) %>%
+  psych::alpha(check.keys = TRUE)
+alpha_extra_liss_np <- lissanalysis_nonparents %>% 
   dplyr::select(starts_with("extra"), -extra) %>%
   psych::alpha(check.keys = TRUE)
 omega_extra_liss_p <- lissanalysis_parents %>% filter(matchtime==time) %>% # parents
   dplyr::select(starts_with("extra"), -extra) %>% 
-  psych::omega(m = ., keys = alpha.extra_liss$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_extra_liss_p$keys, plot = FALSE, nfactors=4)
 omega_extra_liss_np <- lissanalysis_nonparents %>% filter(matchtime==time) %>% # nonparents
   dplyr::select(starts_with("extra"), -extra) %>% 
-  psych::omega(m = ., keys = alpha.extra_liss$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_extra_liss_np$keys, plot = FALSE, nfactors=4)
 
-alpha_extra_hrs <- hrsanalysis_parents %>% # HRS
+alpha_extra_hrs_p <- hrsanalysis_parents %>% # HRS
+  dplyr::select(starts_with("extra"), -extra) %>%
+  psych::alpha(check.keys = TRUE)
+alpha_extra_hrs_np <- hrsanalysis_nonparents %>% 
   dplyr::select(starts_with("extra"), -extra) %>%
   psych::alpha(check.keys = TRUE)
 omega_extra_hrs_p <- hrsanalysis_parents %>% filter(time_match==time) %>% # parents
   dplyr::select(starts_with("extra"), -extra) %>% 
-  psych::omega(m = ., keys = alpha.extra_hrs$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_extra_hrs_p$keys, plot = FALSE, nfactors=3)
 omega_extra_hrs_np <- hrsanalysis_nonparents %>% filter(time_match==time) %>% # nonparents
   dplyr::select(starts_with("extra"), -extra) %>% 
-  psych::omega(m = ., keys = alpha.extra_hrs$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_extra_hrs_np$keys, plot = FALSE, nfactors=3)
 
 # Big Five: agreeableness
-alpha_agree_liss <- lissanalysis_parents %>% # LISS
+alpha_agree_liss_p <- lissanalysis_parents %>% # LISS
+  dplyr::select(starts_with("agree"), -agree) %>%
+  psych::alpha(check.keys = TRUE)
+alpha_agree_liss_np <- lissanalysis_nonparents %>% 
   dplyr::select(starts_with("agree"), -agree) %>%
   psych::alpha(check.keys = TRUE)
 omega_agree_liss_p <- lissanalysis_parents %>% filter(matchtime==time) %>% # parents
   dplyr::select(starts_with("agree"), -agree) %>% 
-  psych::omega(m = ., keys = alpha.agree_liss$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_agree_liss_p$keys, plot = FALSE, nfactors=4)
 omega_agree_liss_np <- lissanalysis_nonparents %>% filter(matchtime==time) %>% # nonparents
   dplyr::select(starts_with("agree"), -agree) %>% 
-  psych::omega(m = ., keys = alpha.agree_liss$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_agree_liss_np$keys, plot = FALSE, nfactors=4)
 
-alpha_agree_hrs <- hrsanalysis_parents %>% # HRS
+alpha_agree_hrs_p <- hrsanalysis_parents %>% # HRS
+  dplyr::select(starts_with("agree"), -agree) %>%
+  psych::alpha(check.keys = TRUE)
+alpha_agree_hrs_np <- hrsanalysis_nonparents %>% 
   dplyr::select(starts_with("agree"), -agree) %>%
   psych::alpha(check.keys = TRUE)
 omega_agree_hrs_p <- hrsanalysis_parents %>% filter(time_match==time) %>% # parents
   dplyr::select(starts_with("agree"), -agree) %>% 
-  psych::omega(m = ., keys = alpha.agree_hrs$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_agree_hrs_p$keys, plot = FALSE, nfactors=3)
 omega_agree_hrs_np <- hrsanalysis_nonparents %>% filter(time_match==time) %>% # nonparents
   dplyr::select(starts_with("agree"), -agree) %>% 
-  psych::omega(m = ., keys = alpha.agree_hrs$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_agree_hrs_np$keys, plot = FALSE, nfactors=3)
 
 # Big Five: neuroticism
-alpha_neur_liss <- lissanalysis_parents %>% # LISS
+alpha_neur_liss_p <- lissanalysis_parents %>% # LISS
+  dplyr::select(starts_with("neur"), -neur) %>%
+  psych::alpha(check.keys = TRUE)
+alpha_neur_liss_np <- lissanalysis_nonparents %>%
   dplyr::select(starts_with("neur"), -neur) %>%
   psych::alpha(check.keys = TRUE)
 omega_neur_liss_p <- lissanalysis_parents %>% filter(matchtime==time) %>% # parents
   dplyr::select(starts_with("neur"), -neur) %>% 
-  psych::omega(m = ., keys = alpha.neur_liss$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_neur_liss_p$keys, plot = FALSE, nfactors=4)
 omega_neur_liss_np <- lissanalysis_nonparents %>% filter(matchtime==time) %>% # nonparents
   dplyr::select(starts_with("neur"), -neur) %>% 
-  psych::omega(m = ., keys = alpha.neur_liss$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_neur_liss_np$keys, plot = FALSE, nfactors=4)
 
-alpha_neur_hrs <- hrsanalysis_parents %>% # HRS
+alpha_neur_hrs_p <- hrsanalysis_parents %>% # HRS
+  dplyr::select(starts_with("neur"), -neur) %>%
+  psych::alpha(check.keys = TRUE)
+alpha_neur_hrs_np <- hrsanalysis_nonparents %>% 
   dplyr::select(starts_with("neur"), -neur) %>%
   psych::alpha(check.keys = TRUE)
 omega_neur_hrs_p <- hrsanalysis_parents %>% filter(time_match==time) %>% # parents
   dplyr::select(starts_with("neur"), -neur) %>% 
-  psych::omega(m = ., keys = alpha.neur_hrs$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_neur_hrs_p$keys, plot = FALSE, nfactors=3)
 omega_neur_hrs_np <- hrsanalysis_nonparents %>% filter(time_match==time) %>% # nonparents
   dplyr::select(starts_with("neur"), -neur) %>% 
-  psych::omega(m = ., keys = alpha.neur_hrs$keys, plot = FALSE, nfactors=1)
+  psych::omega(m = ., keys = alpha_neur_hrs_np$keys, plot = FALSE, nfactors=3)
 
-# put all BIg Five omegas in one table 
-sample <- rep(c("LISS", "LISS", "HRS", "HRS"), 5)
-control <- rep(c("parent", "nonparent", "parent", "nonparent"), 5)
-bigfive <- c(rep("openness", 4), rep("conscientiousness", 4), rep("extraversion", 4), 
-             rep("agreeableness", 4), rep("neuroticism", 4))
-all_omega_big_five <- as.data.frame(cbind(bigfive, sample, control))
-omega <- c(omega_open_liss_p$omega.tot, omega_open_liss_np$omega.tot, 
-           omega_open_hrs_p$omega.tot, omega_open_hrs_np$omega.tot, 
-           omega_con_liss_p$omega.tot, omega_con_liss_np$omega.tot, 
-           omega_con_hrs_p$omega.tot, omega_con_hrs_np$omega.tot, 
-           omega_extra_liss_p$omega.tot, omega_extra_liss_np$omega.tot, 
-           omega_extra_hrs_p$omega.tot, omega_extra_hrs_np$omega.tot, 
-           omega_agree_liss_p$omega.tot, omega_agree_liss_np$omega.tot, 
-           omega_agree_hrs_p$omega.tot, omega_agree_hrs_np$omega.tot, 
-           omega_neur_liss_p$omega.tot, omega_neur_liss_np$omega.tot, 
-           omega_neur_hrs_p$omega.tot, omega_neur_hrs_np$omega.tot)
-all_omega_big_five <- cbind(all_omega_big_five, omega)
+# put all measures in one table (for supplement)
+int_consist <- as.data.frame(rbind(
+  rel_liss_parents_om_t = c(omega_agree_liss_p$omega.tot, omega_con_liss_p$omega.tot, 
+                            omega_extra_liss_p$omega.tot, omega_neur_liss_p$omega.tot, 
+                            omega_open_liss_p$omega.tot, omega_swls_liss_p$omega.tot), 
+  rel_liss_parents_om_h = c(omega_agree_liss_p$omega_h, omega_con_liss_p$omega_h, 
+                            omega_extra_liss_p$omega_h, omega_neur_liss_p$omega_h, 
+                            omega_open_liss_p$omega_h, omega_swls_liss_p$omega_h),
+  rel_liss_parents_alph = c(alpha_agree_liss_p$total$raw_alpha, alpha_con_liss_p$total$raw_alpha, 
+                            alpha_extra_liss_p$total$raw_alpha, alpha_neur_liss_p$total$raw_alpha, 
+                            alpha_open_liss_p$total$raw_alpha, alpha_swls_liss_p$total$raw_alpha), 
+  rel_liss_nonparents_om_t = c(omega_agree_liss_np$omega.tot, omega_con_liss_np$omega.tot, 
+                               omega_extra_liss_np$omega.tot, omega_neur_liss_np$omega.tot, 
+                               omega_open_liss_np$omega.tot, omega_swls_liss_np$omega.tot),
+  rel_liss_nonparents_om_h = c(omega_agree_liss_np$omega_h, omega_con_liss_np$omega_h, 
+                               omega_extra_liss_np$omega_h, omega_neur_liss_np$omega_h, 
+                               omega_open_liss_np$omega_h, omega_swls_liss_np$omega_h),
+  rel_liss_nonparents_alph = c(alpha_agree_liss_np$total$raw_alpha, alpha_con_liss_np$total$raw_alpha, 
+                               alpha_extra_liss_np$total$raw_alpha, alpha_neur_liss_np$total$raw_alpha, 
+                               alpha_open_liss_np$total$raw_alpha, alpha_swls_liss_np$total$raw_alpha), 
+  rel_hrs_parents_om_t = c(omega_agree_hrs_p$omega.tot, omega_con_hrs_p$omega.tot, 
+                            omega_extra_hrs_p$omega.tot, omega_neur_hrs_p$omega.tot, 
+                            omega_open_hrs_p$omega.tot, omega_swls_hrs_p$omega.tot), 
+  rel_hrs_parents_om_h = c(omega_agree_hrs_p$omega_h, omega_con_hrs_p$omega_h, 
+                            omega_extra_hrs_p$omega_h, omega_neur_hrs_p$omega_h, 
+                            omega_open_hrs_p$omega_h, omega_swls_hrs_p$omega_h),
+  rel_hrs_parents_alph = c(alpha_agree_hrs_p$total$raw_alpha, alpha_con_hrs_p$total$raw_alpha, 
+                            alpha_extra_hrs_p$total$raw_alpha, alpha_neur_hrs_p$total$raw_alpha, 
+                            alpha_open_hrs_p$total$raw_alpha, alpha_swls_hrs_p$total$raw_alpha), 
+  rel_hrs_nonparents_om_t = c(omega_agree_hrs_np$omega.tot, omega_con_hrs_np$omega.tot, 
+                               omega_extra_hrs_np$omega.tot, omega_neur_hrs_np$omega.tot, 
+                               omega_open_hrs_np$omega.tot, omega_swls_hrs_np$omega.tot),
+  rel_hrs_nonparents_om_h = c(omega_agree_hrs_np$omega_h, omega_con_hrs_np$omega_h, 
+                               omega_extra_hrs_np$omega_h, omega_neur_hrs_np$omega_h, 
+                               omega_open_hrs_np$omega_h, omega_swls_hrs_np$omega_h),
+  rel_hrs_nonparents_alph = c(alpha_agree_hrs_np$total$raw_alpha, alpha_con_hrs_np$total$raw_alpha, 
+                               alpha_extra_hrs_np$total$raw_alpha, alpha_neur_hrs_np$total$raw_alpha, 
+                               alpha_open_hrs_np$total$raw_alpha, alpha_swls_hrs_np$total$raw_alpha)))
+colnames(int_consist) <- c("agree", "con", "extra", "neur", "open", "swls")
 ```
 
 ## Measures
 
 ### Personality 
 
-In the LISS, the Big Five personality traits were assessed using the 50-item version of the IPIP Big Five Inventory scales [@goldbergDevelopmentMarkersBigFive1992]. For each trait, respondents answered ten 5-point Likert-scale items (1 = *very inaccurate*, 2 = *moderately inaccurate*, 3 = *neither inaccurate nor accurate*, 4 = *moderately accurate*, 5 = *very accurate*). Example items included "like order" (conscientiousness), "sympathize with others' feelings" (agreeableness), "worry about things" (neuroticism), "have a vivid imagination" (openness to experience), and "start conversations" (extraversion). In each wave, we took a respondent's mean of each subscale as their trait score. Internal consistencies at the time of matching, as indicated by McDonald's $\omega$ [@mcneishThanksCoefficientAlpha2018], averaged $\omega =$ `r printnum(all_omega_big_five %>% filter(sample=="LISS") %>% summarise(mean(omega)))` over all traits ranging from $\omega =$ `r printnum(all_omega_big_five %>% filter(sample=="LISS") %>% summarise(min(omega)))` (`r (all_omega_big_five %>% filter(sample=="LISS") %>% arrange(omega))[1,1]` in the `r (all_omega_big_five %>% filter(sample=="LISS") %>% arrange(omega))[1,"control"]` control group) to $\omega =$ `r printnum(all_omega_big_five %>% filter(sample=="LISS") %>% summarise(max(omega)))` (`r (all_omega_big_five %>% filter(sample=="LISS") %>% arrange(desc(omega)))[1,1]` in the `r (all_omega_big_five %>% filter(sample=="LISS") %>% arrange(desc(omega)))[1,"control"]` control group). Other studies have shown measurement invariance for these scales across time and age groups, and convergent validity with the Big Five Inventory (BFI-2) [@schwabaIndividualDifferencesPersonality2018; @denissenBigFiveInventory2020]. The Big Five and life satisfaction were administered yearly but with planned missingness in some years for certain cohorts [see @denissenTransactionsLifeEvents2019]. <!-- Thus, there are one to two years between included assessments, given no other sources of missingness.-->  
-In the HRS, the Midlife Development Inventory (MIDI) scales measured the Big Five [@lachmanMidlifeDevelopmentInventory1997] with 26 adjectives (five each for conscientiousness, agreeableness, and extraversion; four for neuroticism; seven for openness to experience). Respondents were asked to rate on a 4-point scale how well each item described them (1 = *a lot*, 2 = *some*, 3 = *a little*, 4 = *not at all*). Example adjectives included "organized" (conscientiousness), "sympathetic" (agreeableness), "worrying" (neuroticism), "imaginative" (openness to experience), and "talkative" (extraversion). For better comparability with the LISS panel, we reverse-scored all items so that higher values corresponded to higher trait levels and, in each wave, took the mean of each subscale as the trait score. Big Five trait scores showed satisfactory internal consistencies at the time of matching that averaged $\omega =$ `r printnum(all_omega_big_five %>% filter(sample=="HRS") %>% summarise(mean(omega)))` over all traits, ranging from $\omega =$ `r printnum(all_omega_big_five %>% filter(sample=="HRS") %>% summarise(min(omega)))` (`r (all_omega_big_five %>% filter(sample=="HRS") %>% arrange(omega))[1,1]` in the `r (all_omega_big_five %>% filter(sample=="HRS") %>% arrange(omega))[1,"control"]` control group) to $\omega =$ `r printnum(all_omega_big_five %>% filter(sample=="HRS") %>% summarise(max(omega)))` (`r (all_omega_big_five %>% filter(sample=="HRS") %>% arrange(desc(omega)))[1,1]` in the `r (all_omega_big_five %>% filter(sample=="HRS") %>% arrange(desc(omega)))[1,"control"]` control group).   
+In the LISS, the Big Five personality traits were assessed using the 50-item version of the IPIP Big Five Inventory scales [@goldbergDevelopmentMarkersBigFive1992]. For each trait, respondents answered ten 5-point Likert-scale items (1 = *very inaccurate*, 2 = *moderately inaccurate*, 3 = *neither inaccurate nor accurate*, 4 = *moderately accurate*, 5 = *very accurate*). Example items included "like order" (conscientiousness), "sympathize with others' feelings" (agreeableness), "worry about things" (neuroticism), "have a vivid imagination" (openness to experience), and "start conversations" (extraversion). In each wave, we took a respondent's mean of each subscale as their trait score. Internal consistencies at the time of matching, as indicated by McDonald's $\omega_h$ [@mcneishThanksCoefficientAlpha2018], averaged $\omega_h =$ `r printnum((rowMeans(int_consist["rel_liss_parents_om_h", 1:5]) + rowMeans(int_consist["rel_liss_nonparents_om_h", 1:5]))/2)` over all traits ($\omega_t =$ `r printnum((rowMeans(int_consist["rel_liss_parents_om_t", 1:5]) + rowMeans(int_consist["rel_liss_nonparents_om_t", 1:5]))/2)`; $\alpha =$ `r printnum((rowMeans(int_consist["rel_liss_parents_alph", 1:5]) + rowMeans(int_consist["rel_liss_nonparents_alph", 1:5]))/2)`; see Table \@ref(tab:int-consist)). Other studies have shown measurement invariance for these scales across time and age groups, and convergent validity with the Big Five Inventory (BFI-2) [@schwabaIndividualDifferencesPersonality2018; @denissenBigFiveInventory2020]. The Big Five and life satisfaction were administered yearly but with planned missingness in some years for certain cohorts [see @denissenTransactionsLifeEvents2019]. <!-- Thus, there are one to two years between included assessments, given no other sources of missingness.-->  
+In the HRS, the Midlife Development Inventory (MIDI) scales measured the Big Five [@lachmanMidlifeDevelopmentInventory1997] with 26 adjectives (five each for conscientiousness, agreeableness, and extraversion; four for neuroticism; seven for openness to experience). Respondents were asked to rate on a 4-point scale how well each item described them (1 = *a lot*, 2 = *some*, 3 = *a little*, 4 = *not at all*). Example adjectives included "organized" (conscientiousness), "sympathetic" (agreeableness), "worrying" (neuroticism), "imaginative" (openness to experience), and "talkative" (extraversion). For better comparability with the LISS panel, we reverse-scored all items so that higher values corresponded to higher trait levels and, in each wave, took the mean of each subscale as the trait score. Big Five trait scores showed satisfactory internal consistencies at the time of matching that averaged $\omega_h =$ `r printnum((rowMeans(int_consist["rel_hrs_parents_om_h", 1:5]) + rowMeans(int_consist["rel_hrs_nonparents_om_h", 1:5]))/2)` over all traits ($\omega_t =$ `r printnum((rowMeans(int_consist["rel_hrs_parents_om_t", 1:5]) + rowMeans(int_consist["rel_hrs_nonparents_om_t", 1:5]))/2)`; $\omega_h =$ `r printnum((rowMeans(int_consist["rel_hrs_parents_alph", 1:5]) + rowMeans(int_consist["rel_hrs_nonparents_alph", 1:5]))/2)`; see Table \@ref(tab:int-consist)).   
 
 ### Life Satisfaction 
 
-In both samples, life satisfaction was assessed using the 5-item Satisfaction with Life Scale [SWLS; @dienerSatisfactionLifeScale1985] which respondents answered on a 7-point Likert scale (1 = *strongly disagree*, 2 = *somewhat disagree*, 3 = *slightly disagree*, 4 = *neither agree or disagree*, 5 = *slightly agree*, 6 = *somewhat agree*, 7 = *strongly agree*)[^f5]. An example item was "I am satisfied with my life". Internal consistency at the time of matching was $\omega =$ `r printnum(omega_swls_liss_p$omega.tot)` in the LISS with the parent control sample ($\omega =$ `r printnum(omega_swls_liss_np$omega.tot)` with the nonparent control sample), and $\omega =$ `r printnum(omega_swls_hrs_p$omega.tot)` in the HRS with the parent control sample ($\omega =$ `r printnum(omega_swls_hrs_np$omega.tot)` with the nonparent control sample).
+In both samples, life satisfaction was assessed using the 5-item Satisfaction with Life Scale [SWLS; @dienerSatisfactionLifeScale1985] which respondents answered on a 7-point Likert scale (1 = *strongly disagree*, 2 = *somewhat disagree*, 3 = *slightly disagree*, 4 = *neither agree or disagree*, 5 = *slightly agree*, 6 = *somewhat agree*, 7 = *strongly agree*)[^f5]. An example item was "I am satisfied with my life". Internal consistency at the time of matching was $\alpha =$ `r printnum(int_consist["rel_liss_parents_alph", "swls"])` in the LISS with the parent control sample ($\alpha =$ `r printnum(int_consist["rel_liss_nonparents_alph", "swls"])` with the nonparent control sample), and $\alpha =$ `r printnum(int_consist["rel_hrs_parents_alph", "swls"])` in the HRS with the parent control sample ($\alpha =$ `r printnum(int_consist["rel_hrs_nonparents_alph", "swls"])` with the nonparent control sample).
 
 [^f5]: In the LISS, the "somewhat" was omitted and instead of "or", "nor" was used.
 
@@ -3314,11 +3373,11 @@ Regarding the Big Five's general age trajectories of rank-order stability, suppo
 ## Limitations and Future Directions
 
 The current study has a number of strengths that bolster the robustness of its inferences: It features a preregistered analysis of archival data with an internal cross-study replication, a propensity score matching design that carefully deliberated covariate choice, and a twofold comparison of all effects of the grandparents against matched parents (with children of reproductive age) and nonparents. To obtain a comprehensive picture of personality development, we analyzed mean-level changes, interindividual differences in change, and changes in rank-order stability. Both of the panel studies we used had their strengths and weaknesses: The HRS had a larger sample of first-time grandparents besides information on important moderators, but it assessed personality and life satisfaction only every four years. The LISS assessed the outcomes every year (apart from a few waves with planned missingness) but restricted the grandparent sample through filtering of the relevant questions to employed respondents, resulting in a smaller and younger sample. Together, the strengths of one dataset partially compensated for the limitations of the other.  
-Still, a number of limitations need to be addressed: First, there remains some doubt whether we were able to follow truly socially invested grandparents over time. More detailed information regarding a grandparent's relationship with their first and later grandchildren and the level of care a grandparent provides would be a valuable source of information on social investment, as would information on possible constraining factors such as length and cost of travel between grandparent and grandchild. Lacking such precise contextual information, the multidimensionality of the grandparent role [@buchananTwentyfirstCenturyGrandparents2018; @findlerConstructionValidationMultidimensional2013; @thieleNatureDimensionsGrandparent2006a] might lend itself to future investigations into grandparents' personality development using growth mixture models [@grimmSecondorderGrowthMixture2009; @ramMethodsMeasuresGrowth2009; @infurnaUtilizingPrinciplesLifeSpan2021]. On a similar note, we did not consider grandparents' subjective perception of the transition to grandparenthood in terms of the emotional significance, meaningfulness, and impact on daily lives, which might be responsible for differential individual change trajectories [@luhmannDimensionalTaxonomyPerceived2020; @kritzlerHowAreCommon2021].  
-Second, we relied on self-report personality data and did not include other-reports by family members or close friends [@luanYouSeeMy2017; @mccraeMethodBiasesSinglesource2018; @mccraeWhatPersonalityScales2019; @mottusSelfReportsInformantRatingsMeasure2019]. Thus, our results might be influenced by common method bias [@podsakoffCommonMethodBiases2003]. Large-scale panel data incorporating both self- and other-reports of personality over time would be needed to address this issue [e.g., @oltmannsPersonalityChangeLongitudinal2020].  
-Third, a causal interpretation of our results rests on a number of assumptions that are not directly testable with the data [@liUsingPropensityScore2013; @stuartMatchingMethodsCausal2010]: Most importantly, we assumed that we picked the right sets of covariates, that our model to estimate the propensity score was correctly specified, and that there was no substantial remaining bias due to unmeasured confounding. Working with archival data meant that we had no influence on data collection, and we also aimed for roughly equivalent sets of covariates across both data sets. Therefore, we had to make some compromises on covariate choice. Still, we believe that our procedure to select covariates following state-of-the-art recommendations [see *Methods*; @vanderweeleOutcomeWideLongitudinalDesigns2020], and to substantiate each covariate's selection explicitly within our preregistration improved upon previously applied practices. Regarding the propensity score estimation, we opted to estimate the grandparents' propensity scores at a specific time point at least two years before the transition to grandparenthood, which had the advantages that (*1*) the covariates were uncontaminated by anticipation of the transition, and (*2*) the matched controls had a clear counterfactual timeline of transition [for similar recent approaches analyzing life events, see @balboRoleFamilyOrientations2016; @kramerImpactHavingChildren2020; @vanscheppingenTrajectoriesLifeSatisfaction2020]. <!--Inverse probability of treatment weighting [@hernanCausalInferenceWhat2020; @thoemmesPrimerInverseProbability2016], which is able to directly account for the longitudinal effects of time-varying covariates, may constitute a valuable alternative analytical strategy for future studies. -->Regarding the timing of measurements and the transition to grandparenthood, it also has to be emphasized that we might have missed more short-term effects playing out over months instead of years.  
+Still, a number of limitations need to be addressed: First, there remains some doubt whether we were able to follow truly socially invested grandparents over time. More detailed information regarding a grandparent's relationship with their first and later grandchildren and the level of care a grandparent provides would be a valuable source of information on social investment, as would information on possible constraining factors such as length and cost of travel between grandparent and grandchild. Lacking such precise contextual information, the multidimensionality of the grandparent role [@buchananTwentyfirstCenturyGrandparents2018; @findlerConstructionValidationMultidimensional2013; @thieleNatureDimensionsGrandparent2006a] might lend itself to future investigations into grandparents' personality development using growth mixture models [@grimmSecondorderGrowthMixture2009; @ramMethodsMeasuresGrowth2009; @infurnaUtilizingPrinciplesLifeSpan2021]. On a similar note, we did not consider grandparents' subjective perception of the transition to grandparenthood in terms of the emotional significance, meaningfulness, and impact on daily lives, which might be responsible for differential individual change trajectories [@luhmannDimensionalTaxonomyPerceived2020; @kritzlerHowAreCommon2021; @haehnerPerceptionMajorLife2021].  
+Second, we relied on self-report personality data and did not include other-reports by family members or close friends [@luanYouSeeMy2017; @mccraeMethodBiasesSinglesource2018; @mccraeWhatPersonalityScales2019; @mottusSelfReportsInformantRatingsMeasure2019; @schwabaRefiningMaturityPrinciple2022]. Thus, our results might be influenced by common method bias [@podsakoffCommonMethodBiases2003]. Large-scale panel data incorporating both self- and other-reports of personality over time would be needed to address this issue [e.g., @oltmannsPersonalityChangeLongitudinal2020].  
+Third, a causal interpretation of our results rests on a number of assumptions that are not directly testable with the data [@liUsingPropensityScore2013; @stuartMatchingMethodsCausal2010]: Most importantly, we assumed that we picked the right sets of covariates, that our model to estimate the propensity score was correctly specified, and that there was no substantial remaining bias due to unmeasured confounding. Working with archival data meant that we had no influence on data collection, and we also aimed for roughly equivalent sets of covariates across both data sets. Therefore, we had to make some compromises on covariate choice. Still, we believe that our procedure to select covariates following state-of-the-art recommendations [see *Methods*; @vanderweeleOutcomeWideLongitudinalDesigns2020], and to substantiate each covariate's selection explicitly within our preregistration improved upon previously applied practices. Regarding the propensity score estimation, we opted to estimate the grandparents' propensity scores at a specific time point at least two years before the transition to grandparenthood, which had the advantages that (*1*) the covariates were uncontaminated by anticipation of the transition, and (*2*) the matched controls had a clear counterfactual timeline of transition [for similar recent approaches analyzing life events, see @balboRoleFamilyOrientations2016; @kramerImpactHavingChildren2020; @vanscheppingenTrajectoriesLifeSatisfaction2020]. Regarding the timing of measurements and the transition to grandparenthood, it also has to be emphasized that we might have missed more short-term effects playing out over months instead of years.  
 Fourth, our results only pertain to the countries for which our data are representative on a population level: the Netherlands and the United States. Personality development, and more specifically personality maturation, have been examined cross-culturally [e.g., @bleidornPersonalityMaturationWorld2013; @chopikPersonalityChangeLife2018]. On the one hand, these studies showed universal average patterns of change towards greater maturity over the life span. On the other hand, they emphasized cultural differences regarding norms and values and the temporal onset of social roles. For grandparenthood, there are substantial demographic differences between countries [@leopoldDemographyGrandparenthoodInternational2015], as well as differences in public child care systems that may demand different levels of grandparental involvement [@bordonePatternsGrandparentalChild2017; @hankGrandparentsCaringTheir2009]. In the Netherlands, people become grandparents six years later on average than in the United States [@leopoldDemographyGrandparenthoodInternational2015]. Furthermore, although both countries have largely market-based systems for early child care, parents in the Netherlands on average have access to more extensive childcare services through (capped) governmental benefits [@oecdChildcareAffordablePolicy2020]. Despite these differences, our results from the Dutch and US samples did not indicate systematic discrepancies.  
-Finally, while we assessed our dependent variables using highly reliable scales, there was a conceptual difference in the Big Five measures [see @johnBigFiveTrait1999] in the two studies: The IPIP Big Five inventory used in the LISS [@goldbergDevelopmentMarkersBigFive1992] presented statements as items, and asked respondents to indicate how accurately these statements described them (using a bipolar response scale). However, the Midlife Development Inventory used in the HRS [@lachmanMidlifeDevelopmentInventory1997] presented adjectives as items, and asked respondents how well these adjectives described them (using a unipolar response scale). This discrepancy hindered the between-sample comparison somewhat and also resulted in different distributions of the Big Five across samples (see Figures \@ref(fig:loess-agree)-\@ref(fig:loess-swls)). The possibility should also be pointed out that our analyses on the domain-level of the Big Five could be too conceptually broad to identify patterns of personality development over the transition to grandparenthood that are discernible on the level of facets or nuances [@mottusDevelopmentDetailsAge2021].  
+Finally, while we assessed our dependent variables using highly reliable scales, there was a conceptual difference in the Big Five measures [see @johnBigFiveTrait1999] in the two studies: The IPIP Big Five inventory used in the LISS [@goldbergDevelopmentMarkersBigFive1992] presented statements as items, and asked respondents to indicate how accurately these statements described them (using a bipolar response scale). However, the Midlife Development Inventory used in the HRS [@lachmanMidlifeDevelopmentInventory1997] presented adjectives as items, and asked respondents how well these adjectives described them (using a unipolar response scale). This discrepancy hindered the between-sample comparison somewhat and also resulted in different distributions of the Big Five across samples (see Figures \@ref(fig:loess-agree)-\@ref(fig:loess-swls)). The possibility should also be pointed out that our analyses on the domain-level of the Big Five could be too conceptually broad to identify patterns of personality development over the transition to grandparenthood that are discernible on the level of facets or nuances [@mottusDevelopmentDetailsAge2021; @schwabaRefiningMaturityPrinciple2022].  
 
 ## Conclusion
 Do personality traits change over the transition to grandparenthood? Using data from two nationally representative panel studies in a preregistered propensity score matching design, the current study revealed that trajectories of the Big Five personality traits and life satisfaction remained predominantly stable in first-time grandparents over this transition compared to matched parents and nonparents. We found slight post-transition increases to grandparents' agreeableness and conscientiousness in line with our hypothesis of personality development based on the social investment principle. However, these effects were minuscule and inconsistent across analysis samples. In addition, our analyses revealed (*1*) a lack of consistent moderation of personality development by grandparents providing substantial grandchild care, (*2*) interindividual differences in change that were mostly smaller in grandparents than in matched respondents, and (*3*) comparable rank-order stability in grandparents and matched respondents. Thus, we conclude that the transition to grandparenthood did not act as a straightforwardly important developmental task driving personality development in middle adulthood and old age [as previously proposed, see @huttemanDevelopmentalTasksFramework2014]. With more detailed assessment of the grandparent role, future research could investigate whether personality development occurs in a subset of grandparents who are highly socially invested.   
@@ -3336,4 +3395,3 @@ We thank Joe Rodgers, Jaap Denissen, and Julia Rohrer for helpful comments on ea
 
 <div id="refs" custom-style="Bibliography"></div>
 \endgroup
-

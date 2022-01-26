@@ -10,7 +10,7 @@ set.seed(3000)
 
 ### This part of reading in the HRS data and recoding it uses snippets of code  
 ### originally written by Sara J. Weston ( https://osf.io/2psu4/ ) and adapted 
-### for purposes of this article. Thanks to Sara for allowing us to use these part of her code!
+### for purposes of this article. Thanks to Sara for allowing us to use these parts of her code!
 
 # load files
 hrsrand <- read_sas("data/raw/HRS/randhrs1992_2018v1.sas7bdat")

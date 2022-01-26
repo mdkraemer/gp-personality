@@ -1,8 +1,3 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
 # gp-personality
 Changes in Big Five personality traits and life satisfaction over the transition to grandparenthood.
 
