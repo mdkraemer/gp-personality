@@ -73,7 +73,7 @@ draft             : no
 
 csl               : "apa.csl"
 documentclass     : "apa7"
-classoption       : "man, noextraspace"
+classoption       : "man"
 output            : papaja::apa6_pdf
 
 header-includes:
@@ -3395,3 +3395,11 @@ We thank Joe Rodgers, Jaap Denissen, and Julia Rohrer for helpful comments on ea
 
 <div id="refs" custom-style="Bibliography"></div>
 \endgroup
+
+\newpage
+
+# (APPENDIX) Appendix {-}
+
+```{r child = "gp-manuscript-papaja-appendix.Rmd"}
+```
+

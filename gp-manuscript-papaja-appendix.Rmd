@@ -6,8 +6,7 @@
 \renewcommand{\thetable}{S\arabic{table}} \setcounter{table}{0}
 \setcounter{page}{1} <!-- to reset page numbering -->
 
-\noindent
-**Model Equations**
+## Model Equations
 
 Model equation for the basic (i.e., unmoderated) models (ignoring the additional nesting in households applied to the majority of models):
 \begin{equation}
@@ -85,8 +84,80 @@ where $e_{ti} \sim N(0, \sigma_e^2)$ and $\upsilon_{0i} \sim N(0, \tau_{00})$. R
 
 \newpage
 
-\noindent
-**Supplemental Tables**  
+## Supplemental Tables
+
+<!--(ref:int-consist-cap) Internal Consistency Measures in the Four Analysis Samples at the Time of Matching.
+(ref:int-consist-note) A = agreeableness, C = conscientiousness, E = extraversion, N = neuroticism, O = openness, LS = life satisfaction. ${\\omega}_{t}$ is based on 'omega.tot' from the *psych::omega()* function, and ${\\omega}_{h}$ on 'omega_h' (Revelle, 2020). For the LISS, we based the number of lower-order factors specified in 'nfactors' on information supplied in Goldberg (1999). For the HRS, we could not find comparable information and used the default value. ${\\alpha}$ is based on 'raw_alpha' from the *psych::alpha()* function (Revelle, 2020).-->
+
+```{r int-consist, results="asis"}
+rownames(int_consist) <- c("${\\omega}_{t}$ \\textcolor{white}{LP}", 
+                           "${\\omega}_{h}$ \\textcolor{white}{LP}", 
+                           "${\\alpha}$ \\textcolor{white}{LP}", 
+                           "${\\omega}_{t}$ \\textcolor{white}{LN}", 
+                           "${\\omega}_{h}$ \\textcolor{white}{LN}", 
+                           "${\\alpha}$ \\textcolor{white}{LN}", 
+                           "${\\omega}_{t}$ \\textcolor{white}{HP}", 
+                           "${\\omega}_{h}$ \\textcolor{white}{HP}", 
+                           "${\\alpha}$ \\textcolor{white}{HP}", 
+                           "${\\omega}_{t}$ \\textcolor{white}{HN}", 
+                           "${\\omega}_{h}$ \\textcolor{white}{HN}", 
+                           "${\\alpha}$ \\textcolor{white}{HN}")
+colnames(int_consist) <- c("\\textcolor{white}{xxx}A\\textcolor{white}{xxx}",
+                        "\\textcolor{white}{xxx}C\\textcolor{white}{xxx}",
+                        "\\textcolor{white}{xxx}E\\textcolor{white}{xxx}",
+                        "\\textcolor{white}{xxx}N\\textcolor{white}{xxx}",
+                        "\\textcolor{white}{xxx}O\\textcolor{white}{xxx}", 
+                        "\\textcolor{white}{xxx}LS\\textcolor{white}{xxx}") # added some whitespace to adjust table width
+
+apa_table(
+  int_consist
+  , caption = "Internal Consistency Measures in the Four Analysis Samples at the Time of Matching."
+  , note = "A = agreeableness, C = conscientiousness, E = extraversion, N = neuroticism, O = openness, LS = life satisfaction." 
+  , align = c("l", "c", "c", "c", "c", "c", "c")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
+                       digits = c(2,2,2,2,2,2,2),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE))
+  , stub_indents = list("LISS: Parent controls" = 1:3, "LISS: Nonparent controls" = 4:6,
+                        "HRS: Parent controls" = 7:9, "HRS: Nonparent controls" = 10:12)
+  , escape = F
+  , landscape = F
+  , placement = "h"
+)
+```
+
+```{r icc-table, results="asis"}
+# object 'icc_list' is now generated in the main .Rmd together with the other models
+
+rownames(icc_list) <- c("$ICC_{pid}$ \\textcolor{white}{LP}", "$ICC_{hid}$ \\textcolor{white}{LP}", 
+                        "$ICC_{pid/hid}$ \\textcolor{white}{LP}", 
+                        "$ICC_{pid}$ \\textcolor{white}{LN}", "$ICC_{hid}$ \\textcolor{white}{LN}", 
+                        "$ICC_{pid/hid}$ \\textcolor{white}{LN}", 
+                        "$ICC_{pid}$ \\textcolor{white}{HP}", "$ICC_{hid}$ \\textcolor{white}{HP}", 
+                        "$ICC_{pid/hid}$ \\textcolor{white}{HP}", 
+                        "$ICC_{pid}$ \\textcolor{white}{HN}", "$ICC_{hid}$ \\textcolor{white}{HN}", 
+                        "$ICC_{pid/hid}$ \\textcolor{white}{HN}")
+colnames(icc_list) <- c("\\textcolor{white}{xxx}A\\textcolor{white}{xxx}",
+                        "\\textcolor{white}{xxx}C\\textcolor{white}{xxx}",
+                        "\\textcolor{white}{xxx}E\\textcolor{white}{xxx}",
+                        "\\textcolor{white}{xxx}N\\textcolor{white}{xxx}",
+                        "\\textcolor{white}{xxx}O\\textcolor{white}{xxx}", 
+                        "\\textcolor{white}{xxx}LS\\textcolor{white}{xxx}") # added some whitespace to adjust table width
+
+apa_table(
+  icc_list
+  , caption = "Intra-Class Correlations of Grandparents and Matched Controls in the Four Analysis Samples."
+  , note = "A = agreeableness, C = conscientiousness, E = extraversion, N = neuroticism, O = openness, LS = life satisfaction. Intra-class correlations are the proportion of total variation that is explained by the respective nesting factor. $ICC_{pid}$ is the proportion of total variance explained by nesting in respondents which corresponds to the correlation between two randomly selected observations from the same respondent. $ICC_{hid}$ is the proportion of total variance explained by nesting in households which corresponds to the correlation between two randomly selected observations from the same household. $ICC_{pid/hid}$ is the proportion of total variance explained by nesting in respondents and in households which corresponds to the correlation between two randomly selected observations from the same respondent and the same household." 
+  , align = c("l", "c", "c", "c", "c", "c", "c")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
+                       digits = c(2,2,2,2,2,2,2),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE))
+  , stub_indents = list("LISS: Parent controls" = 1:3, "LISS: Nonparent controls" = 4:6,
+                        "HRS: Parent controls" = 7:9, "HRS: Nonparent controls" = 10:12)
+  , escape = F
+  , landscape = F
+  , placement = "h"
+)
+```
 
 ```{r draw-descriptives, include=FALSE}
 descriptives_draw <- function(x) { 
@@ -3950,8 +4021,8 @@ apa_table(
 )
 ```
 -->
-\noindent
-**Supplemental Figures**  
+
+## Supplemental Figures
 
 (ref:pscore-overlap-cap) Distributional Overlap of the Propensity Score in the Four Analysis Samples at the Time of Matching.
 
@@ -4758,8 +4829,7 @@ plot_grid(title_liss, grid_restr_swls_liss, title_HRS, grid_restr_swls_hrs,
 -->
 \newpage
 
-\noindent 
-**Complete Software and Session Information**  
+## Complete Software and Session Information
 
 We used `r cite_r("references-r.bib")` for data wrangling, analyses, and plots.  
 The following is the output of R's *sessionInfo()* command, which shows information to aid analytic reproducibility of the analyses.
@@ -4769,11 +4839,10 @@ The following is the output of R's *sessionInfo()* command, which shows informat
 sessionInfo()
 
 ```
-
+<!-- (separate reference section only for suppl refs not allowed -> keep everything in main section)
 \newpage
 
-\noindent 
-**References**
+## References
 
 \begingroup
 \setlength{\parindent}{-0.5in}
@@ -4781,3 +4850,4 @@ sessionInfo()
 
 <div id="refs" custom-style="Bibliography"></div>
 \endgroup
+-->
