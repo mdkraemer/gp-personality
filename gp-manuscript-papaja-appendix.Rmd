@@ -4832,7 +4832,7 @@ plot_grid(title_liss, grid_restr_swls_liss, title_HRS, grid_restr_swls_hrs,
 
 ## Complete Software and Session Information
 
-We used `r cite_r("references-r.bib")` for data wrangling, analyses, and plots.  
+We used `r cite_r("references-r.bib")` for data wrangling, analyses, and plots. We used *renv* to create a reproducible environment for this R-project [Version 0.15.2; @R-renv].  
 The following is the output of R's *sessionInfo()* command, which shows information to aid analytic reproducibility of the analyses.
 
 ```{r session, results='asis'}

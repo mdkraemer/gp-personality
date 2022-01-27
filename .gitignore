@@ -2,6 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
+.Rprofile
 *.sav
 *.sas7bdat
 *.dta
@@ -16,3 +17,5 @@ playground.R
 /gp-manuscript-papaja_cache
 # ignore automatically generated figs
 /Figs
+# ignore all files in the 'renv' folder
+/renv

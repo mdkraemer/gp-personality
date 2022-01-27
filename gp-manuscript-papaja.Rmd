@@ -99,15 +99,6 @@ appendix: gp-manuscript-papaja-appendix.Rmd
 ---
 
 ```{r setup, include = FALSE}
-# all packages on CRAN are loaded via 'groundhog' package, see http://datacolada.org/95
-# If you encounter an error at this point, it might help to run the following lines separately, 
-# after restarting R (see 'Session')
-#library(groundhog)
-#groundhog.day="2020-11-01"
-#pkgs=c('dplyr', 'tidyr', 'purrr', 'multcomp', 'Hmisc', 'psych', 'GPArotation', 
-#       'lme4', 'lmerTest', 'cowplot', 'scales', 'car', 'magick', 'png', 'grid')
-#groundhog.library(pkgs, groundhog.day, tolerate.R.version='4.0.4')
-
 library("papaja") # not on CRAN, see https://github.com/crsh/papaja & "Instructions to Reproduce" on OSF
 library("citr") # not on CRAN, see https://github.com/crsh/citr
 library("multcomp") # for confint of linearHypothesis
@@ -115,23 +106,16 @@ library("Hmisc")
 library("tidyverse")
 library("psych") # for 'describe' demographics
 library("GPArotation") # needed for omega function in psych
-#library("robustlmm") # for robust estimation (appendix)
 library("lme4")
 library("lmerTest")
-#library("interactions") # for plotting interactions
-#library("jtools") # for plot config
 library("cowplot") # for plot grid
-#library("effects")
-#library("patchwork") # for plot grid
 library("scales")
 library("car") # for linearHypothesis
-#library("careless") 
-#library("corrplot") # appendix
 library("magick") # needed for figure cropping
 library("png") # appendix: external png file
 library("grid") # also needed for external png file because knitr::include_graphics() is buggy
 
-r_refs("references-r.bib")
+r_refs("references-r.bib") # has to be deleted to update list in appendix
 ```
 
 ```{r analysis-preferences}
