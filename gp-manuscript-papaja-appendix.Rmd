@@ -86,8 +86,9 @@ where $e_{ti} \sim N(0, \sigma_e^2)$ and $\upsilon_{0i} \sim N(0, \tau_{00})$. R
 
 ## Supplemental Tables
 
-<!--(ref:int-consist-cap) Internal Consistency Measures in the Four Analysis Samples at the Time of Matching.
-(ref:int-consist-note) A = agreeableness, C = conscientiousness, E = extraversion, N = neuroticism, O = openness, LS = life satisfaction. ${\\omega}_{t}$ is based on 'omega.tot' from the *psych::omega()* function, and ${\\omega}_{h}$ on 'omega_h' (Revelle, 2020). For the LISS, we based the number of lower-order factors specified in 'nfactors' on information supplied in Goldberg (1999). For the HRS, we could not find comparable information and used the default value. ${\\alpha}$ is based on 'raw_alpha' from the *psych::alpha()* function (Revelle, 2020).-->
+(ref:int-consist-cap) Internal Consistency Measures in the Four Analysis Samples at the Time of Matching.
+
+(ref:int-consist-note) A = agreeableness, C = conscientiousness, E = extraversion, N = neuroticism, O = openness, LS = life satisfaction. Omega total, ${\omega}_{t}$, is based on 'omega.tot' from the *psych::omega()* function, and omega hierarchical, ${\omega}_{h}$, on 'omega_h' [@R-psych]. For the LISS, we based the number of lower-order factors specified in 'nfactors' on information supplied in Goldberg [-@goldbergBroadbandwidthPublicDomain1999]. For the HRS, we could not find comparable information and used the default value. ${\alpha}$ is based on 'raw_alpha' from the *psych::alpha()* function [@R-psych].
 
 ```{r int-consist, results="asis"}
 rownames(int_consist) <- c("${\\omega}_{t}$ \\textcolor{white}{LP}", 
@@ -111,8 +112,8 @@ colnames(int_consist) <- c("\\textcolor{white}{xxx}A\\textcolor{white}{xxx}",
 
 apa_table(
   int_consist
-  , caption = "Internal Consistency Measures in the Four Analysis Samples at the Time of Matching."
-  , note = "A = agreeableness, C = conscientiousness, E = extraversion, N = neuroticism, O = openness, LS = life satisfaction." 
+  , caption = "(ref:int-consist-cap)"
+  , note = "(ref:int-consist-note)" 
   , align = c("l", "c", "c", "c", "c", "c", "c")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
                        digits = c(2,2,2,2,2,2,2),

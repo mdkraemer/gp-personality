@@ -274,7 +274,7 @@ Even though we have published using the LISS and HRS data before (see preregistr
 \hypertarget{personality}{%
 \subsubsection{Personality}\label{personality}}
 
-In the LISS, the Big Five personality traits were assessed using the 50-item version of the IPIP Big Five Inventory scales (Goldberg, 1992). For each trait, respondents answered ten 5-point Likert-scale items (1 = \emph{very inaccurate}, 2 = \emph{moderately inaccurate}, 3 = \emph{neither inaccurate nor accurate}, 4 = \emph{moderately accurate}, 5 = \emph{very accurate}). Example items included \enquote{like order} (conscientiousness), \enquote{sympathize with others' feelings} (agreeableness), \enquote{worry about things} (neuroticism), \enquote{have a vivid imagination} (openness to experience), and \enquote{start conversations} (extraversion). In each wave, we took a respondent's mean of each subscale as their trait score. Internal consistencies at the time of matching, as indicated by McDonald's \(\omega_h\) (McNeish, 2018), averaged \(\omega_h =\) 0.70 over all traits (\(\omega_t =\) 0.89; \(\alpha =\) 0.83; see Table \ref{tab:int-consist}). Other studies have shown measurement invariance for these scales across time and age groups, and convergent validity with the Big Five Inventory (BFI-2) (Denissen et al., 2020; Schwaba \& Bleidorn, 2018). The Big Five and life satisfaction were administered yearly but with planned missingness in some years for certain cohorts (see Denissen et al., 2019). \\
+In the LISS, the Big Five personality traits were assessed using the 50-item version of the IPIP Big Five Inventory scales (Goldberg, 1992). For each trait, respondents answered ten 5-point Likert-scale items (1 = \emph{very inaccurate}, 2 = \emph{moderately inaccurate}, 3 = \emph{neither inaccurate nor accurate}, 4 = \emph{moderately accurate}, 5 = \emph{very accurate}). Example items included \enquote{like order} (conscientiousness), \enquote{sympathize with others' feelings} (agreeableness), \enquote{worry about things} (neuroticism), \enquote{have a vivid imagination} (openness to experience), and \enquote{start conversations} (extraversion). In each wave, we took a respondent's mean of each subscale as their trait score. Internal consistencies at the time of matching, as indicated by \(\omega_h\) (McNeish, 2018), averaged \(\omega_h =\) 0.70 over all traits (\(\omega_t =\) 0.89; \(\alpha =\) 0.83; see Table \ref{tab:int-consist}). Other studies have shown measurement invariance for these scales across time and age groups, and convergent validity with the Big Five Inventory (BFI-2) (Denissen et al., 2020; Schwaba \& Bleidorn, 2018). The Big Five and life satisfaction were administered yearly but with planned missingness in some years for certain cohorts (see Denissen et al., 2019). \\
 In the HRS, the Midlife Development Inventory (MIDI) scales measured the Big Five (Lachman \& Weaver, 1997) with 26 adjectives (five each for conscientiousness, agreeableness, and extraversion; four for neuroticism; seven for openness to experience). Respondents were asked to rate on a 4-point scale how well each item described them (1 = \emph{a lot}, 2 = \emph{some}, 3 = \emph{a little}, 4 = \emph{not at all}). Example adjectives included \enquote{organized} (conscientiousness), \enquote{sympathetic} (agreeableness), \enquote{worrying} (neuroticism), \enquote{imaginative} (openness to experience), and \enquote{talkative} (extraversion). For better comparability with the LISS panel, we reverse-scored all items so that higher values corresponded to higher trait levels and, in each wave, took the mean of each subscale as the trait score. Big Five trait scores showed satisfactory internal consistencies at the time of matching that averaged \(\omega_h =\) 0.63 over all traits (\(\omega_t =\) 0.80; \(\omega_h =\) 0.72; see Table \ref{tab:int-consist}).
 
 \hypertarget{life-satisfaction}{%
@@ -1068,6 +1068,9 @@ Genz, A., \& Bretz, F. (2009). \emph{Computation of multivariate normal and t pr
 \leavevmode\hypertarget{ref-goldbergDevelopmentMarkersBigFive1992}{}%
 Goldberg, L. R. (1992). The development of markers for the Big-Five factor structure. \emph{Psychological Assessment}, \emph{4}(1), 26--42. \url{https://doi.org/10.1037/1040-3590.4.1.26}
 
+\leavevmode\hypertarget{ref-goldbergBroadbandwidthPublicDomain1999}{}%
+Goldberg, L. R. (1999). A broad-bandwidth, public domain, personality inventory measuring the lower-level facets of several five-factor models. \emph{Personality Psychology in Europe}, \emph{7}(1), 7--28.
+
 \leavevmode\hypertarget{ref-golleSchoolWorkChoice2019}{}%
 Golle, J., Rose, N., Göllner, R., Spengler, M., Stoll, G., Hübner, N., Rieger, S., Trautwein, U., Lüdtke, O., Roberts, B. W., \& Nagengast, B. (2019). School or Work? The Choice May Change Your Personality. \emph{Psychological Science}, \emph{30}(1), 32--42. \url{https://doi.org/10.1177/0956797618806298}
 
@@ -1584,6 +1587,10 @@ where \(e_{ti} \sim N(0, \sigma_e^2)\) and \(\upsilon_{0i} \sim N(0, \tau_{00})\
 \hypertarget{supplemental-tables}{%
 \subsection{Supplemental Tables}\label{supplemental-tables}}
 
+
+
+
+
 \begin{table}[h]
 
 \begin{center}
@@ -1616,7 +1623,7 @@ HRS: Nonparent controls &  &  &  &  &  & \\
 \end{tabular}
 
 \begin{tablenotes}[para]
-\normalsize{\textit{Note.} A = agreeableness, C = conscientiousness, E = extraversion, N = neuroticism, O = openness, LS = life satisfaction.}
+\normalsize{\textit{Note.} A = agreeableness, C = conscientiousness, E = extraversion, N = neuroticism, O = openness, LS = life satisfaction. Omega total, \({\omega}_{t}\), is based on \enquote{omega.tot} from the \emph{psych::omega()} function, and omega hierarchical, \({\omega}_{h}\), on \enquote{omega\_h} (Revelle, 2021). For the LISS, we based the number of lower-order factors specified in \enquote{nfactors} on information supplied in Goldberg (1999). For the HRS, we could not find comparable information and used the default value. \({\alpha}\) is based on \enquote{raw\_alpha} from the \emph{psych::alpha()} function (Revelle, 2021).}
 \end{tablenotes}
 
 \end{threeparttable}
