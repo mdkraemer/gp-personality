@@ -86,10 +86,10 @@ header-includes:
   - \AtBeginEnvironment{tablenotes}{\doublespacing}
   - \captionsetup[table]{font={stretch=1.5}}
   - \captionsetup[figure]{font={stretch=1.5}}
-  - \renewcommand\author[1]{} # these four lines are to prevent "and &" on title page
-  - \renewcommand\affiliation[1]{}
-  - \authorsnames[{1,2,3}, 4, 5, {1,3}]{Author1, Author2, Author3, Author4}
-  - \authorsaffiliations{{Institution1}, {Institution2}, {Institution3}, {Institution4}, {Institution5}}
+#  - \renewcommand\author[1]{} # these four lines are to prevent "and &" on title page -> leads to error when knitting on Windows for some reason -> deactivate for now
+#  - \renewcommand\affiliation[1]{}
+#  - \authorsnames[{1,2,3}, 4, 5, {1,3}]{Author1, Author2, Author3, Author4}
+#  - \authorsaffiliations{{Institution1}, {Institution2}, {Institution3}, {Institution4}, {Institution5}}
   - \raggedbottom # prevents LaTeX from varying the spacing between paragraphs to minimise empty space on pages
 #  - \usepackage{floatrow}  # https://github.com/crsh/papaja/issues/342
 #  - \floatsetup[figure]{capposition=top}

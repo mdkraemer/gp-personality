@@ -49,7 +49,10 @@ data
 ### Reproducing the Manuscript
 
 The manuscript was generated using the *papaja* (Preparing APA Journal Articles) R package by Frederik Aust and Marius Barth. See https://github.com/crsh/papaja/ for instructions on how to install this package and http://frederikaust.com/papaja_man/ for more specific instructions on how to write APA manuscripts using *papaja*. Another requirement is a TeX distribution for which I used *tinytex* which can easily be installed via R.  
-Please follow these steps to reproduce the manuscript. If you run into errors you can’t fix easily, it is generally a good idea to re-install R and RStudio (making sure to delete old library folders, too). I used R version 4.0.4 and RStudio version 1.3.1093. If you still run into errors on Windows machines please make sure that you have [Rtools4](https://cran.r-project.org/bin/windows/Rtools/rtools40.html) properly installed, and that you run RStudio as administrator.   
+Please follow these steps to reproduce the manuscript. If you run into errors you can’t fix easily, it is generally a good idea to first re-install R and RStudio (making sure to delete old library folders, too). I used R version 4.0.4 and RStudio version 1.3.1093. If you still run into errors on Windows machines please make sure that you have [Rtools4](https://cran.r-project.org/bin/windows/Rtools/rtools40.html) properly installed, and that you run RStudio as administrator.  
+In the following, I first describe the steps to reproduce the manuscript by installing packages manually, and second by using the *renv* package ([*link here*](https://rstudio.github.io/renv/index.html)) to manage package version control (an additional approach to bolster future reproducibility).  
+
+**Without** the *renv* package:  
 
 1. Download the following files to the superordinate folder (where the R Project is):
     + *gp-manuscript-papaja.Rmd*: The main R markdown script that renders the final PDF manuscript
@@ -81,6 +84,15 @@ output            :
          latex_engine: xelatex
 ```
 
+**With** the [*renv*](https://rstudio.github.io/renv/index.html) package:  
 
-
-
+1. Restart R. Again, sometimes a fresh install is best, ideally with version 4.0.4, and Windows users need to make sure that [Rtools4](https://cran.r-project.org/bin/windows/Rtools/rtools40.html) is also installed.  
+2. In addition to the files listed above, download *renv.lock* to the superordinate folder (where the R Project is).  
+3. Open *gp-personality.Rproj* first in RStudio and then open *gp-manuscript-papaja.Rmd*.  
+4. Install *renv* via the R console:  
+`install.packages("renv")`  
+4. Execute the following commands in the R console to 'import' all R packages as the correct versions from the *renv.lock* file:  
+`renv::activate()`  
+`renv::restore()`  
+When prompted, answer affirmatively in the console ("y" / "Y"). At this stage, I encountered an error on a Windows machine that the package *nloptr* could not be installed. This can be fixed by running `renv::equip()` and then `renv::restore()` again (as explained [here](https://stackoverflow.com/questions/60779096/error-installing-packages-using-renvrestore)). On Windows this requires that [Rtools4](https://cran.r-project.org/bin/windows/Rtools/rtools40.html) is  installed.  
+5. Create the final PDF from *gp-manuscript-papaja.Rmd* by clicking "Knit" and answering "Yes" when prompted to install further Markdown-related updates. This might take 30 minutes on the first try depending on your system. After a fresh install, this takes especially long because TeX packages are initially loaded. Chunks with computationally intense estimations are cached which means that a second "Knit" with the same setup will take considerably less time (< 1 min.) because these computations are skipped and pasted in from before (if the code is unchanged), and because TeX is all set. Make sure that you generated the analysis samples prior to this step as described in the previous section.  
