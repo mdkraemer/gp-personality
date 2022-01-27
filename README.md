@@ -49,7 +49,7 @@ data
 ### Reproducing the Manuscript
 
 The manuscript was generated using the *papaja* (Preparing APA Journal Articles) R package by Frederik Aust and Marius Barth. See https://github.com/crsh/papaja/ for instructions on how to install this package and http://frederikaust.com/papaja_man/ for more specific instructions on how to write APA manuscripts using *papaja*. Another requirement is a TeX distribution for which I used *tinytex* which can easily be installed via R.  
-Please follow these steps to reproduce the manuscript. If you run into errors you can’t fix easily, it is generally a good idea to re-install R and RStudio. I used R version 4.0.4 and RStudio version 1.3.1093.   
+Please follow these steps to reproduce the manuscript. If you run into errors you can’t fix easily, it is generally a good idea to re-install R and RStudio (making sure to delete old library folders, too). I used R version 4.0.4 and RStudio version 1.3.1093. If you still run into errors on Windows machines please make sure that you have [Rtools4](https://cran.r-project.org/bin/windows/Rtools/rtools40.html) properly installed, and that you run RStudio as administrator.   
 
 1. Download the following files to the superordinate folder (where the R Project is):
     + *gp-manuscript-papaja.Rmd*: The main R markdown script that renders the final PDF manuscript
@@ -59,20 +59,19 @@ Please follow these steps to reproduce the manuscript. If you run into errors yo
     + *references-zotero.bib*: Contains all the references used in the manuscript
     + *references-r.bib*: Contains additional references on the R-packages used here
 2. Open *gp-personality.Rproj* first in RStudio and then open *gp-manuscript-papaja.Rmd*  
-3. Install *tinytex* or use another TeX distribution. You will probably get an error message if you try to install *tinytex* but already have a different TeX distribution on your system. In this case you might need to use this distribution (or deinstall it; see [*link here*](http://frederikaust.com/papaja_man/introduction.html#software-requirements)). *tinytex* can be installed via the R console:  
+3. Install *tinytex* or use another TeX distribution. You might get an error message if you try to install *tinytex* but already have a different TeX distribution on your system. In this case you might need to use this distribution (or deinstall it; see [*link here*](http://frederikaust.com/papaja_man/introduction.html#software-requirements)). *tinytex* can be installed via the R console:  
 `if(!"tinytex" %in% rownames(installed.packages())) install.packages("tinytex")`  
 `tinytex::install_tinytex()`  
 Mac users might get an error message at this point that a certain directory is not writable. I was able to fix this by following the steps outlined [*here* (link)](https://github.com/yihui/tinytex/issues/24/).  
-4. Install *papaja* (see [*link here*](https://github.com/crsh/papaja/)). Unfortunately, for now we have to use a specific development version that can handle *lmerMod* objects (not yet implemented in the main branch of development, see thread [*linked here*](https://github.com/crsh/papaja/issues/154/)). Execute the following commands in the R console:  
-`if(!"devtools" %in% rownames(installed.packages())) install.packages("devtools")`  
-`devtools::install_github("crsh/papaja")`  
-`remotes::install_github("mariusbarth/papaja@devel")`  
-When installing *devtools* or one of the packages not on CRAN, you might get asked for updates of packages or "Do you want to install from sources the packages which need compilation?". This can unfortunately sometimes require a bit of trial & error between the different options until successful installation. Usually, answering "Yes" / "All" throughout works fine. It can also be helpful to "Restart R" (under "Session") between steps.  
+4. Install *papaja* (see [*link here*](https://github.com/crsh/papaja/)) which is not available on CRAN for the time being. Execute the following commands in the R console:  
+`if(!"remotes" %in% rownames(installed.packages())) install.packages("remotes")`  
+`remotes::install_github("crsh/papaja@devel")`  
+When installing the packages, you might get asked for updates of packages or "Do you want to install from sources the packages which need compilation?". This can unfortunately sometimes require a bit of trial & error between the different options until successful installation. Usually, answering "Yes" / "All" throughout works fine. It can also be helpful to "Restart R" (under "Session") between steps.  
 5. Install package *citr* which is currently not on CRAN (https://github.com/crsh/citr/). To install, execute in the R console:  
 `devtools::install_github("crsh/citr")`  
 If this fails (on Windows), try the following steps: "Restart R" (under Session), and then type into the console `install.packages("cachem")`. Choose Option 3 (no update) when prompted. Then re-try the install command for *citr*.  
 6. Install all other uninstalled packages specified in *gp-manuscript-papaja.Rmd* under "Chunk 1: setup". RStudio offers a button (see the banner below "Run" or "Knit") to install all missing packages that are loaded in the script.  
-7. Create the final PDF from *gp-manuscript-papaja.Rmd* by clicking "Knit". This might take 10-20 minutes on the first try depending on your system. After a fresh install, this takes especially long because TeX packages are initially loaded. Chunks with computationally intense estimations are cached which means that a second "Knit" with the same setup will take considerably less time (< 1 min.) because these computations are skipped and pasted in from before (if the code is unchanged), and because TeX is all set. Make sure that you generated the analysis samples prior to this step as described in the previous section.  
+7. Create the final PDF from *gp-manuscript-papaja.Rmd* by clicking "Knit". This might take 30 minutes on the first try depending on your system. After a fresh install, this takes especially long because TeX packages are initially loaded. Chunks with computationally intense estimations are cached which means that a second "Knit" with the same setup will take considerably less time (< 1 min.) because these computations are skipped and pasted in from before (if the code is unchanged), and because TeX is all set. Make sure that you generated the analysis samples prior to this step as described in the previous section.  
 8. On some Windows machines, I've run into errors at **Step 7** caused by certain Unicode characters contained in the script. Please make sure that you opened *gp-manuscript-papaja.Rmd* using the proper encoding: choose through the menu "File -> Reopen with Encoding -> UTF-8". If Knitting still fails, one last resort could be to choose a different TeX engine (see [*link here*](https://github.com/crsh/papaja/issues/133/)). In *gp-manuscript-papaja.Rmd* replace the line  
 `output            : papaja::apa6_pdf`  
 with  

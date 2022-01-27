@@ -1556,17 +1556,6 @@
         "rmarkdown"
       ]
     },
-    "rollmatch": {
-      "Package": "rollmatch",
-      "Version": "2.0.2",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "08b422675096dac2fbc339ec5a82d9e7",
-      "Requirements": [
-        "dplyr",
-        "magrittr"
-      ]
-    },
     "rpart": {
       "Package": "rpart",
       "Version": "4.1-15",
