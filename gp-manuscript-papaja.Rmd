@@ -2357,7 +2357,9 @@ for (i in 1:length(outcomes)){
     # built an if/else condition here, because:
     # different 'control' settings for one of the models that would not converge otherwise
     # https://stackoverflow.com/questions/68122117/nlminb-problem-convergence-error-code-1-message-iteration-limit-reached-wit
-    if (outcome=="open" & dataset=="lissanalysis_parents"){
+    # -> added "lissanalysis_nonparents", too, because it would not converge on Windows machine
+    # -> does not alter model results!
+    if (outcome=="open" & dataset %in% c("lissanalysis_parents", "lissanalysis_nonparents")){
       after_mod_hetvar_slopes <- 
         nlme::lme(fixed = dummyfixed,
                   random=list(pid = nlme::pdBlocked(list(nlme::pdSymm(~ 0 + dummy(grandparent,"0") +
