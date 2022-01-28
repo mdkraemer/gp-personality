@@ -1033,6 +1033,10 @@ hrsfam <- hrsfam %>% mutate(has_ch1 = 1,
 
 #### HRS data: merge datasets ####
 
+# to save memory and avoid "cannot allocate vector of size X" error:
+rm(h96data, h98data, h00data, h02data, h04data, h06data,
+   h08data, h10data, h12data, h14data, h16data, h18data)
+
 # merge together
 allcov <- h96cov %>%
   full_join(h98cov) %>%
