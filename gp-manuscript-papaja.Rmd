@@ -1,5 +1,5 @@
 ---
-title             : "The Transition to Grandparenthood: No Consistent Evidence for Change in the Big Five Personality Traits and Life Satisfaction" # The Transition to Grandparenthood and its Impact on the Big Five Personality Traits and Life Satisfaction
+title             : "The Transition to Grandparenthood: No Consistent Evidence for Change in the Big Five Personality Traits and Life Satisfaction"
 shorttitle        : "Grandparenthood, Big Five, and Life Satisfaction"
 
 
@@ -108,6 +108,7 @@ library("psych") # for 'describe' demographics
 library("GPArotation") # needed for omega function in psych
 library("lme4")
 library("lmerTest")
+library("nlme")
 library("cowplot") # for plot grid
 library("scales")
 library("car") # for linearHypothesis
