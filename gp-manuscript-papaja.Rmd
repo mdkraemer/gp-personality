@@ -162,8 +162,8 @@ Becoming a grandparent is an important life event for many people in midlife or 
 ## Personality Development in Middle Adulthood and Old Age
 
 The life span perspective conceptualizes aging as a lifelong process of development and adaptation [@baltesLifeSpanTheory2006]. Research embedded in this perspective has found personality traits to be subject to change across the entire life span [@spechtWhatDrivesAdult2014; @spechtPersonalityDevelopmentAdulthood2017; @costaPersonalityLifeSpan2019; @grahamTrajectoriesBigFive2020; for recent reviews, see @bleidornPersonalityTraitStability2021; @robertsPersonalityPsychology2021]. Although a majority of personality development takes place in adolescence and emerging adulthood [@schwabaIndividualDifferencesPersonality2018; @bleidornPersonalityDevelopmentEmerging2017; @puschPersonalityDevelopmentEmerging2019], evidence has accumulated that personality traits also undergo changes in middle and old adulthood [e.g., @allemandLongtermCorrelatedChange2008a; @damianSixteenGoingSixtysix2019; @kandlerPatternsSourcesPersonality2015a; @lucasPersonalityDevelopmentLife2011; @mottusPersonalityTraitsOld2012; @muellerPersonalityDevelopmentOld2016; @seifertDevelopmentRankOrderStability2021; @wagnerPersonalityTraitDevelopment2016; for a review, see @spechtPersonalityDevelopmentAdulthood2017].  
-Here, we examine the Big Five personality traits---agreeableness, conscientiousness, extraversion, neuroticism, and openness to experience---which constitute a broad categorization of universal patterns of thought, affect, and behavior [@johnParadigmShiftIntegrative2008; @johnBigFiveTrait1999].<!-- While the policy relevance of the Big Five personality traits has recently been emphasized [@bleidornPolicyRelevancePersonality2019]---especially because of their predictive power regarding many important life outcomes [@ozerPersonalityPredictionConsequential2005; @robertsPowerPersonalityComparative2007; @sotoHowReplicableAre2019; @sotoLinksPersonalityLife2021; @turianoHealthyNeuroticismAssociated2020], we acknowledge that there are other viable taxonomies of personality [@ashtonEmpiricalTheoreticalPractical2007; @ashtonObjectionsHEXACOModel2020] and other levels of breadth and scope that could add valuable insights to personality development in middle adulthood and old age [@mottusDevelopmentDetailsAge2021; @mottusPersonalityTraitsFacets2017].  --> Changes over time in the Big Five occur both in mean trait levels [i.e., mean-level change; @robertsPatternsMeanlevelChange2006a] and in the ordering of people relative to each other on trait dimensions [i.e., rank-order stability; @anusicStabilityChangePersonality2016; @robertsRankorderConsistencyPersonality2000]. A lack of observed changes in mean trait levels does not necessarily mean that individual trait levels are stable over time, and perfect rank-order stability does not preclude mean-level changes. Mean-level changes in early to middle adulthood [circa 30--60 years old; @huttemanDevelopmentalTasksFramework2014] are typically characterized by greater maturity, as evidenced by increased agreeableness and conscientiousness and decreased neuroticism [@robertsPatternsMeanlevelChange2006a; @damianSixteenGoingSixtysix2019]. In old age [circa 60 years and older; @huttemanDevelopmentalTasksFramework2014], research is generally more sparse, but there is some evidence of a *reversal* of the maturity effect following retirement [sometimes termed *la dolce vita* effect; @asselmannPersonalityMaturationPersonality2021; @marshMeasurementInvarianceBigfive2013; cf. @schwabaPersonalityTraitDevelopment2019] and at the end of life when health problems arise [@wagnerPersonalityTraitDevelopment2016].  
-In terms of rank-order stability, most prior studies have shown support for an inverted U-shape trajectory [@ardeltStillStableAll2000; @lucasPersonalityDevelopmentLife2011; @spechtStabilityChangePersonality2011; @wortmanStabilityChangeBig2012; @seifertDevelopmentRankOrderStability2021]: Rank-order stability rises until it reaches a plateau in midlife, and decreases in old age. However, evidence is mixed on whether rank-order stability actually decreases again in old age [see @costaPersonalityLifeSpan2019; @wagnerDoesPersonalityBecome2019]. Nonetheless, the previously held view that personality is stable or "set like plaster" [@spechtPersonalityDevelopmentAdulthood2017, p. 64] after one reaches adulthood [or leaves emerging adulthood behind; @bleidornPersonalityDevelopmentEmerging2017] has been largely abandoned [@spechtWhatDrivesAdult2014].  
+Here, we examine the Big Five personality traits---agreeableness, conscientiousness, extraversion, neuroticism, and openness to experience---which constitute a broad categorization of universal patterns of thought, affect, and behavior [@johnParadigmShiftIntegrative2008; @johnBigFiveTrait1999]. Changes over time in the Big Five occur both in mean trait levels [i.e., mean-level change; @robertsPatternsMeanlevelChange2006a] and in the ordering of people relative to each other on trait dimensions [i.e., rank-order stability; @anusicStabilityChangePersonality2016; @robertsRankorderConsistencyPersonality2000]. A lack of observed changes in mean trait levels does not necessarily mean that individual trait levels are stable over time, and perfect rank-order stability does not preclude mean-level changes. Mean-level changes in early to middle adulthood [circa 30--60 years old; @huttemanDevelopmentalTasksFramework2014] are typically characterized by greater maturity, as evidenced by increased agreeableness and conscientiousness and decreased neuroticism [@robertsPatternsMeanlevelChange2006a; @damianSixteenGoingSixtysix2019]. In old age [circa 60 years and older; @huttemanDevelopmentalTasksFramework2014], research is generally more sparse, but there is some evidence of a *reversal* of the maturity effect following retirement [sometimes termed *la dolce vita* effect; @asselmannPersonalityMaturationPersonality2021; @marshMeasurementInvarianceBigfive2013; cf. @schwabaPersonalityTraitDevelopment2019] and at the end of life when health problems arise [@wagnerPersonalityTraitDevelopment2016].  
+In terms of rank-order stability, most prior studies have shown support for an inverted U-shape trajectory [@ardeltStillStableAll2000; @lucasPersonalityDevelopmentLife2011; @spechtStabilityChangePersonality2011; @wortmanStabilityChangeBig2012; @seifertDevelopmentRankOrderStability2021]: Rank-order stability rises until it reaches a plateau in midlife, and decreases in old age. However, evidence is mixed on whether rank-order stability actually decreases again in old age [see @costaPersonalityLifeSpan2019; @wagnerDoesPersonalityBecome2019]. We are not aware of any study investigating trait rank-order stability over the transition to grandparenthood. Other life events are associated with rank-order stability of personality and well-being, although only certain events and traits [e.g., @denissenTransactionsLifeEvents2019; @hentschelInfluenceMajorLife2017; @spechtStabilityChangePersonality2011]. Still, the previously held view that personality is stable or "set like plaster" [@spechtPersonalityDevelopmentAdulthood2017, p. 64] after one reaches adulthood [or leaves emerging adulthood behind; @bleidornPersonalityDevelopmentEmerging2017] has been largely abandoned [@spechtWhatDrivesAdult2014].  
 Theories explaining the mechanisms of personality development in middle adulthood and old age emphasize genetic influences and life experiences as interdependent sources of stability and change [@wagnerIntegrativeModelSources2020; @spechtWhatDrivesAdult2014; @bleidornPersonalityTraitStability2021]. We conceptualize the transition to grandparenthood as a life experience involving the adoption of a new social role according to the social investment principle of neo-socioanalytic theory [@robertsPersonalityDevelopmentContext2006; @lodi-smithSocialInvestmentPersonality2007]. The social investment principle states that normative life events or transitions such as entering the work force or becoming a parent lead to personality maturation through the adoption of new social roles [@robertsEvaluatingFiveFactor2005]. These new roles encourage or compel people to act in a more agreeable, conscientious, and emotionally stable (i.e., less neurotic) way, and people's experiences in these roles as well as societal expectations towards them are hypothesized to drive long-term personality development [@lodi-smithSocialInvestmentPersonality2007; @wrzusProcessesPersonalityDevelopment2017]. Conversely, consistent social roles foster personality stability.  
 The paradoxical theory of personality coherence [@caspiWhenIndividualDifferences1993] offers a complimentary perspective on personality development through role transitions: It assumes that trait change is more likely whenever people transition into unknown environments where pre-existing behavioral responses are no longer appropriate and social expectations give clear indications how to behave instead. Environments that provide no clear guidance on how to behave favor stability. The finding that age-graded, normative life experiences, such as the transition to grandparenthood, drive personality development would therefore also be in line with the paradoxical theory of personality coherence [see @spechtWhatDrivesAdult2014].  
 Empirically, certain life events such as the first romantic relationship [@wagnerFirstPartnershipExperience2015], the transition from high school to university, or the first job [@ludtkeRandomWalkUniversity2011; @asselmannPersonalityMaturationPersonality2021; @golleSchoolWorkChoice2019] have been found to co-occur with mean-level changes that are (partly) consistent with the social investment principle [for a review, see @bleidornLifeEventsPersonality2018]. However, recent findings on the transition to parenthood fail to support the social investment principle [@asselmannTestingSocialInvestment2020; @vanscheppingenPersonalityTraitDevelopment2016]. An analysis of trajectories of the Big Five before and after eight life events produced limited support for the social investment principle: Small increases in emotional stability occurred following the transition to employment but not in the other traits or following the other life events theoretically linked to social investment [@denissenTransactionsLifeEvents2019].  
@@ -174,9 +174,12 @@ Overall, much remains unknown about the environmental factors that underlie pers
 The transition to grandparenthood can be described as a time-discrete life event marking the beginning of one's status as a grandparent [@luhmannSubjectiveWellbeingAdaptation2012]. In terms of characteristics of major life events [@luhmannDimensionalTaxonomyPerceived2020], the transition to grandparenthood stands out in that it is externally caused [by one's children; see also @arpinoFamilyHistoriesDemography2018; @margolisCohortPerspectiveDemography2019], but also predictable as soon as children reveal their family planning or pregnancy. The transition to grandparenthood has been labeled a countertransition due to this lack of direct control over its timing [@hagestadAgeLifeCourse1985; as cited in @arpinoFamilyHistoriesDemography2018]. Grandparenthood is also generally positive in valence and emotionally significant if the grandparent maintains a good relationship with their child.  
 Grandparenthood can be characterized as a developmental task [@huttemanDevelopmentalTasksFramework2014] that generally takes place in (early) old age, although this varies considerably both within and between cultures [@leopoldDemographyGrandparenthoodInternational2015; @skopekWhoBecomesGrandparent2017]. Still, the period in which parents experience the birth of their first grandchild coincides with the end of (relative) personality stability in midlife [@spechtPersonalityDevelopmentAdulthood2017], when retirement, shifting social roles, and initial cognitive and health declines can disrupt life circumstances, setting processes of personality development in motion [e.g., @muellerPersonalityDevelopmentOld2016; @stephanPhysicalActivityPersonality2014]. As a developmental task, grandparenthood is considered part of a normative sequence of aging that is subject to societal expectations and values that differ across cultures and historical time [@huttemanDevelopmentalTasksFramework2014; @baltesLifeSpanTheory2006]. Mastering developmental tasks (i.e., fulfilling roles and expectations) is hypothesized to drive personality development towards maturation similarly to propositions of the social investment principle, that is, leading to higher levels of agreeableness and conscientiousness, and lower levels of neuroticism [@robertsEvaluatingFiveFactor2005; @robertsPersonalityDevelopmentContext2006]. Grandparent's investments in their grandchildren have been discussed as beneficial in terms of the evolutionary, economic, and sociological advantages they provide for the intergenerational family structure [@coallGrandparentalInvestmentRelic2011; @coallInterdisciplinaryPerspectivesGrandparental2018].  
 In comparison to the transition to parenthood, which has been found to be ambivalent in terms of both personality maturation and life satisfaction [@kramerImpactHavingChildren2020; @vanscheppingenPersonalityTraitDevelopment2016; @aassveFirstGlanceBlack2021; @johnsonImpactHavingChildren2006], Hutteman et al. [-@huttemanDevelopmentalTasksFramework2014] hypothesize that the transition to grandparenthood is positive because it (usually) does not impose the stressful demands of daily childcare on grandparents. However, societal expectations about how grandparents should behave are less clearly defined than expectations around parenthood, and depend heavily on the degree of possible grandparental investment [@lodi-smithSocialInvestmentPersonality2007]---how close grandparents live to their children, the quality of their relationship, and sociodemographic factors that create conflicting role demands [@bordonePatternsGrandparentalChild2017; @lumsdaineRetirementTimingWomen2015; @silversteinHowAmericansEnact2001; cf. @mullerGrandparentingWellbeingHow2011]. In the entire population of first-time grandparents, this diversity of role investments might generate pronounced interindividual differences in intraindividual personality change.  
-While we could not find prior studies investigating the development of the Big Five over the transition to grandparenthood, there is some evidence of changes in life satisfaction across the transition to grandparenthood. In cross-sectional studies, grandparents who provide grandchild care or have close relationships with their older grandchildren often have higher life satisfaction [e.g., @mahneGrandparenthoodSubjectiveWellBeing2014; @triadoGrandparentsWhoProvide2014]. There are a few longitudinal studies but they have produced conflicting conclusions: Studies using data from the Survey of Health, Ageing and Retirement in Europe (SHARE) showed that the birth of a grandchild was followed by improvements in quality of life and life satisfaction, but only among women [@tanskanenTransitionGrandparenthoodSubjective2019] and only in first-time grandmothers via their daughters [@digessaBecomingGrandparentIts2019]. Several studies demonstrated that grandparents who were actively involved in childcare experienced larger increases in life satisfaction [@arpinoGrandparentingEducationSubjective2018; @danielsbackaAssociationGrandparentalInvestment2016; @danielsbackaGrandparentalChildcareHealth2019]. On the other hand, fixed effects regression models[^f2] using SHARE data did not find any effects of first-time grandparenthood on life satisfaction regardless of grandparental investment and only minor decreases in depressive symptoms in grandmothers [@sheppardBecomingFirstTimeGrandparent2019].  
+
+### Life Satisfaction and Grandparenthood 
+
+While we could not find prior studies investigating the development of the Big Five over the transition to grandparenthood, there is some evidence of changes in life satisfaction. Life satisfaction is generally considered less stable than the Big Five and more prone to changes due to environmental influences but still displays trait-like characteristics [@anusicStabilityChangePersonality2016; @kandlerCoreSurfaceCharacteristics2014; @luhmannSubjectiveWellbeingAdaptation2012], and has a strong relation with the Big Five [@anglimPredictingPsychologicalSubjective2020]. In cross-sectional studies, grandparents who provide grandchild care or have close relationships with their older grandchildren often have higher life satisfaction [e.g., @mahneGrandparenthoodSubjectiveWellBeing2014; @triadoGrandparentsWhoProvide2014]. There are a few longitudinal studies but they have produced conflicting conclusions: Studies using data from the Survey of Health, Ageing and Retirement in Europe (SHARE) showed that the birth of a grandchild was followed by improvements in quality of life and life satisfaction, but only among women [@tanskanenTransitionGrandparenthoodSubjective2019] and only in first-time grandmothers via their daughters [@digessaBecomingGrandparentIts2019]. Several studies demonstrated that grandparents who were actively involved in childcare experienced larger increases in life satisfaction [@arpinoGrandparentingEducationSubjective2018; @danielsbackaAssociationGrandparentalInvestment2016; @danielsbackaGrandparentalChildcareHealth2019]. On the other hand, fixed effects regression models[^f2] using SHARE data did not find any effects of first-time grandparenthood on life satisfaction regardless of grandparental investment and only minor decreases in depressive symptoms in grandmothers [@sheppardBecomingFirstTimeGrandparent2019].  
 In a similar vein, some prospective studies have reported beneficial effects of the transition to grandparenthood and of grandparental childcare investment on various health measures, especially in women  [@chungLongitudinalEffectsGrandchild2018; @condonTransitionGrandparenthoodProspective2018; @digessaHealthImpactIntensive2016; @digessaImpactCaringGrandchildren2016]. Again, the beneficial effects of grandparenthood on self-rated health did not persist in fixed effects analyses, such as Ates's [-@atesDoesGrandchildCare2017] analysis of longitudinal data from the German Aging Survey (DEAS).  
-We are not aware of any study investigating trait rank-order stability over the transition to grandparenthood. Other life events are associated with rank-order stability of personality and well-being, although only certain events and traits [e.g., @denissenTransactionsLifeEvents2019; @hentschelInfluenceMajorLife2017; @spechtStabilityChangePersonality2011]. Altogether, evidence is lacking on the Big Five and inconclusive on life satisfaction (and related measures) which might be due to different methodological approaches that do not always account for confounding (i.e., selection effects).  
+Altogether, evidence is lacking on the Big Five and inconclusive on life satisfaction (and related measures) which might be due to different methodological approaches that do not always account for confounding (i.e., selection effects).  
 
 [^f2]: Fixed effects regression models rely exclusively on within-person variance [see @bruderlFixedEffectsPanelRegression2015; @mcneishFixedEffectsModels2019].  
 
@@ -568,6 +571,22 @@ hrsanalysis_care_parents <- hrsanalysis_care_parents %>%
 hrsanalysis_care_nonparents <- hrsanalysis_care_nonparents %>% 
   mutate(caring = ifelse(grandkids100h %in% c(1,5), ifelse(grandkids100h==1, 1, 0), NA)) %>% 
   filter(!is.na(caring))
+
+# race as moderator (Reviewer suggestion)
+
+# only in the HRS (=US) sample based on 'RARACEM' variable:
+# 1 = White/Caucasian
+# 2 = Black/African American
+# 3 = Other
+
+# code contrasts
+hrsanalysis_race_parents <- hrsanalysis_parents %>% mutate(
+  black = ifelse(race %in% c(1,2), ifelse(race==2, 1, 0), NA)
+) %>% filter(!is.na(black)) # only white vs. black contrast
+
+hrsanalysis_race_nonparents <- hrsanalysis_nonparents %>% mutate(
+  black = ifelse(race %in% c(1,2), ifelse(race==2, 1, 0), NA)
+) %>%   filter(!is.na(black))
 
 outcomes <- c("agree", "con", "extra", "neur", "open", "swls")
 
@@ -996,79 +1015,79 @@ for (i in 1:length(outcomes)){
     }
 }
 
-#### moderation by paid work ####
-
-mod_summaries_work <- list()
-mod_summaries_work_test <- list()
-
-for (i in 1:length(outcomes)){
-  outcome = outcomes[i]
-  pos = seq(from = -2, to = 8, by = 2)[i] # changed this because we now only have the 2 HRS datasets
-  for (j in 3:4){
-    dataset = datasets[j]
-    ### moderator: paid work (only HRS)
-    if (icc_list[hid_icc_tbl[j], outcome] < 0.05){ # nesting in hid leads to singular fit for some models
-      model_1 <- lme4::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
-                             grandparent:before + grandparent:after + grandparent:shift)*working + 
-                              (1 | pid), REML = FALSE, data = get(dataset))
-      model_2 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
-                                  grandparent:before + grandparent:after + grandparent:shift)*working + 
-                                  (1 | pid), REML = FALSE, data = get(dataset))
-    } else { # cross-nesting in pid & hid for all other models
-      model_1 <- lme4::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
-                              grandparent:before + grandparent:after + grandparent:shift)*working + 
-                              (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
-      model_2 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
-                                 grandparent:before + grandparent:after + grandparent:shift)*working + 
-                                  (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
-    }      
-    mod_summaries_work[[pos + j]] <- model_1
-    names(mod_summaries_work)[[pos + j]] <- paste0(outcome, "_", dataset)
-    mod_summaries_work_test[[pos + j]] <- model_2
-    names(mod_summaries_work_test)[[pos + j]] <- paste0(outcome, "_", dataset)
+  #### moderation by paid work ####
+  
+  mod_summaries_work <- list()
+  mod_summaries_work_test <- list()
+  
+  for (i in 1:length(outcomes)){
+    outcome = outcomes[i]
+    pos = seq(from = -2, to = 8, by = 2)[i] # changed this because we now only have the 2 HRS datasets
+    for (j in 3:4){
+      dataset = datasets[j]
+      ### moderator: paid work (only HRS)
+      if (icc_list[hid_icc_tbl[j], outcome] < 0.05){ # nesting in hid leads to singular fit for some models
+        model_1 <- lme4::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
+                               grandparent:before + grandparent:after + grandparent:shift)*working + 
+                                (1 | pid), REML = FALSE, data = get(dataset))
+        model_2 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
+                                    grandparent:before + grandparent:after + grandparent:shift)*working + 
+                                    (1 | pid), REML = FALSE, data = get(dataset))
+      } else { # cross-nesting in pid & hid for all other models
+        model_1 <- lme4::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
+                                grandparent:before + grandparent:after + grandparent:shift)*working + 
+                                (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+        model_2 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
+                                   grandparent:before + grandparent:after + grandparent:shift)*working + 
+                                    (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+      }      
+      mod_summaries_work[[pos + j]] <- model_1
+      names(mod_summaries_work)[[pos + j]] <- paste0(outcome, "_", dataset)
+      mod_summaries_work_test[[pos + j]] <- model_2
+      names(mod_summaries_work_test)[[pos + j]] <- paste0(outcome, "_", dataset)
+    }
   }
-}
-
-coefs_work <- c("Intercept", "pscore", "before", "after", "shift", "grandparent", 
-                  "working", "before_grandparent", "after_grandparent", "shift_grandparent",
-                  "before_working", "after_working", "shift_working", "grandparent_working", 
-                  "before_grandparent_working", "after_grandparent_working", "shift_grandparent_working")
-gammas_work <- c("gamma}_{00", "gamma}_{02", "gamma}_{20", "gamma}_{40", "gamma}_{60", "gamma}_{01", 
-                   "gamma}_{10", "gamma}_{21", "gamma}_{41", "gamma}_{61",
-                   "gamma}_{30", "gamma}_{50", "gamma}_{70", "gamma}_{11", 
-                   "gamma}_{31", "gamma}_{51", "gamma}_{71")
-
-for (i in 1:length(outcomes)){
-  outcome = outcomes[i]
-  pos = seq(from = -2, to = 8, by = 2)[i] # changed this because we now only have the 2 HRS datasets
-  for (j in 3:4){
-    dataset = datasets_short[j]
-    ### moderation by paid work models
-    obj_work = apa_print(mod_summaries_work[[pos + j]]) # unfold list objects
-    obj_work_test = mod_summaries_work_test[[pos + j]] # unfold list objects (lmerTest)
-    # reformatting: change beta^hat to gamma^hat (plus subscripts)
-    for (k in 1:length(coefs_work)){ 
-      coef <- coefs_work[k] # 17 coefficients for each model (object)
-      gamma <- gammas_work[k]
-      obj_work$estimate[coef] <- lapply(obj_work$estimate[coef], gsub, 
-                                          pattern="beta", replacement=gamma)
-      obj_work$full_result[coef] <- lapply(obj_work$full_result[coef], gsub, 
-                                             pattern="beta", replacement=gamma)
-    }
-    obj_work_name <- paste0(outcome, "_", dataset, "_work_summary")
-    eval(call("<-", as.name(obj_work_name), obj_work)) # save object
-    obj_work_test_name <- paste0(outcome, "_", dataset, "_work_test")
-    eval(call("<-", as.name(obj_work_test_name), obj_work_test)) # save object
-    # for better formatting in text: p-values
-    obj_work_p <- as.data.frame(summary(mod_summaries_work_test[[pos + j]])$coefficients) %>% # unfold
-      rownames_to_column() %>% dplyr::select(rowname, "Pr(>|t|)") %>% rename(p = "Pr(>|t|)") %>% 
-      mutate(p = scales::pvalue(p, prefix = c("$p$ < ", "$p$ = ", "$p$ > "))) %>% column_to_rownames()
-    obj_work_p["p"] <- # remove "0" from the chr's 
-      lapply(obj_work_p["p"], gsub, pattern="0\\.", replacement="\\.")
-    obj_work_name_p <- paste0(outcome, "_", dataset, "_work_p")
-    eval(call("<-", as.name(obj_work_name_p), obj_work_p)) # save objects  
-    }
-}
+  
+  coefs_work <- c("Intercept", "pscore", "before", "after", "shift", "grandparent", 
+                    "working", "before_grandparent", "after_grandparent", "shift_grandparent",
+                    "before_working", "after_working", "shift_working", "grandparent_working", 
+                    "before_grandparent_working", "after_grandparent_working", "shift_grandparent_working")
+  gammas_work <- c("gamma}_{00", "gamma}_{02", "gamma}_{20", "gamma}_{40", "gamma}_{60", "gamma}_{01", 
+                     "gamma}_{10", "gamma}_{21", "gamma}_{41", "gamma}_{61",
+                     "gamma}_{30", "gamma}_{50", "gamma}_{70", "gamma}_{11", 
+                     "gamma}_{31", "gamma}_{51", "gamma}_{71")
+  
+  for (i in 1:length(outcomes)){
+    outcome = outcomes[i]
+    pos = seq(from = -2, to = 8, by = 2)[i] # changed this because we now only have the 2 HRS datasets
+    for (j in 3:4){
+      dataset = datasets_short[j]
+      ### moderation by paid work models
+      obj_work = apa_print(mod_summaries_work[[pos + j]]) # unfold list objects
+      obj_work_test = mod_summaries_work_test[[pos + j]] # unfold list objects (lmerTest)
+      # reformatting: change beta^hat to gamma^hat (plus subscripts)
+      for (k in 1:length(coefs_work)){ 
+        coef <- coefs_work[k] # 17 coefficients for each model (object)
+        gamma <- gammas_work[k]
+        obj_work$estimate[coef] <- lapply(obj_work$estimate[coef], gsub, 
+                                            pattern="beta", replacement=gamma)
+        obj_work$full_result[coef] <- lapply(obj_work$full_result[coef], gsub, 
+                                               pattern="beta", replacement=gamma)
+      }
+      obj_work_name <- paste0(outcome, "_", dataset, "_work_summary")
+      eval(call("<-", as.name(obj_work_name), obj_work)) # save object
+      obj_work_test_name <- paste0(outcome, "_", dataset, "_work_test")
+      eval(call("<-", as.name(obj_work_test_name), obj_work_test)) # save object
+      # for better formatting in text: p-values
+      obj_work_p <- as.data.frame(summary(mod_summaries_work_test[[pos + j]])$coefficients) %>% # unfold
+        rownames_to_column() %>% dplyr::select(rowname, "Pr(>|t|)") %>% rename(p = "Pr(>|t|)") %>% 
+        mutate(p = scales::pvalue(p, prefix = c("$p$ < ", "$p$ = ", "$p$ > "))) %>% column_to_rownames()
+      obj_work_p["p"] <- # remove "0" from the chr's 
+        lapply(obj_work_p["p"], gsub, pattern="0\\.", replacement="\\.")
+      obj_work_name_p <- paste0(outcome, "_", dataset, "_work_p")
+      eval(call("<-", as.name(obj_work_name_p), obj_work_p)) # save objects  
+      }
+  }
 
 #### moderation by grandchild care ####
 
@@ -1083,7 +1102,7 @@ for (i in 1:length(outcomes)){
   for (j in 1:length(datasets_care)){
     dataset = datasets_care[j]
     ### moderator: grandchild care (only HRS)
-    if (icc_list[hid_icc_tbl[j], outcome] < 0.05){ # nesting in hid leads to singular fit for some models
+    if (icc_list[hid_icc_tbl[2 + j], outcome] < 0.05){ # nesting in hid leads to singular fit for some models
       model_1 <- lme4::lmer(get(outcome) ~ 1 + pscore + (after + grandparent + 
                                                            grandparent:after)*caring + 
                               (1 | pid), REML = FALSE, data = get(dataset))
@@ -1342,6 +1361,82 @@ for (i in 1:length(outcomes)){
     obj_gender_name_p <- paste0(outcome, "_", dataset, "_restr_gender_p")
     eval(call("<-", as.name(obj_gender_name_p), obj_gender_p)) # save objects  
   }
+}
+
+#### moderation by race (Reviewer suggestion) ####
+
+mod_summaries_race <- list()
+mod_summaries_race_test <- list()
+
+datasets_race <- c("hrsanalysis_race_parents", "hrsanalysis_race_nonparents")
+
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  pos = seq(from = 0, to = 10, by = 2)[i] 
+  for (j in 1:length(datasets_race)){
+    dataset = datasets_race[j]
+    ### moderator: Black/African American (only HRS)
+    if (icc_list[hid_icc_tbl[2 + j], outcome] < 0.05){ # nesting in hid leads to singular fit for some models
+      model_1 <- lme4::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
+                             grandparent:before + grandparent:after + grandparent:shift)*black + 
+                              (1 | pid), REML = FALSE, data = get(dataset))
+      model_2 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
+                                  grandparent:before + grandparent:after + grandparent:shift)*black + 
+                                  (1 | pid), REML = FALSE, data = get(dataset))
+    } else { # cross-nesting in pid & hid for all other models
+      model_1 <- lme4::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
+                              grandparent:before + grandparent:after + grandparent:shift)*black + 
+                              (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+      model_2 <- lmerTest::lmer(get(outcome) ~ 1 + pscore + (before + after + shift + grandparent + 
+                                 grandparent:before + grandparent:after + grandparent:shift)*black + 
+                                  (1 | pid) + (1 | hid), REML = FALSE, data = get(dataset))
+    }      
+    mod_summaries_race[[pos + j]] <- model_1
+    names(mod_summaries_race)[[pos + j]] <- paste0(outcome, "_", dataset)
+    mod_summaries_race_test[[pos + j]] <- model_2
+    names(mod_summaries_race_test)[[pos + j]] <- paste0(outcome, "_", dataset)
+  }
+}
+
+coefs_race <- c("Intercept", "pscore", "before", "after", "shift", "grandparent", 
+                  "black", "before_grandparent", "after_grandparent", "shift_grandparent",
+                  "before_black", "after_black", "shift_black", "grandparent_black", 
+                  "before_grandparent_black", "after_grandparent_black", "shift_grandparent_black")
+gammas_race <- c("gamma}_{00", "gamma}_{02", "gamma}_{20", "gamma}_{40", "gamma}_{60", "gamma}_{01", 
+                   "gamma}_{10", "gamma}_{21", "gamma}_{41", "gamma}_{61",
+                   "gamma}_{30", "gamma}_{50", "gamma}_{70", "gamma}_{11", 
+                   "gamma}_{31", "gamma}_{51", "gamma}_{71")
+
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  pos = seq(from = -2, to = 8, by = 2)[i] # changed this because we now only have the 2 HRS datasets
+  for (j in 3:4){
+    dataset = datasets_short[j]
+    ### moderation by paid race models
+    obj_race = apa_print(mod_summaries_race[[pos + j]]) # unfold list objects
+    obj_race_test = mod_summaries_race_test[[pos + j]] # unfold list objects (lmerTest)
+    # reformatting: change beta^hat to gamma^hat (plus subscripts)
+    for (k in 1:length(coefs_race)){ 
+      coef <- coefs_race[k] # 17 coefficients for each model (object)
+      gamma <- gammas_race[k]
+      obj_race$estimate[coef] <- lapply(obj_race$estimate[coef], gsub, 
+                                          pattern="beta", replacement=gamma)
+      obj_race$full_result[coef] <- lapply(obj_race$full_result[coef], gsub, 
+                                             pattern="beta", replacement=gamma)
+    }
+    obj_race_name <- paste0(outcome, "_", dataset, "_race_summary")
+    eval(call("<-", as.name(obj_race_name), obj_race)) # save object
+    obj_race_test_name <- paste0(outcome, "_", dataset, "_race_test")
+    eval(call("<-", as.name(obj_race_test_name), obj_race_test)) # save object
+    # for better formatting in text: p-values
+    obj_race_p <- as.data.frame(summary(mod_summaries_race_test[[pos + j]])$coefficients) %>% # unfold
+      rownames_to_column() %>% dplyr::select(rowname, "Pr(>|t|)") %>% rename(p = "Pr(>|t|)") %>% 
+      mutate(p = scales::pvalue(p, prefix = c("$p$ < ", "$p$ = ", "$p$ > "))) %>% column_to_rownames()
+    obj_race_p["p"] <- # remove "0" from the chr's 
+      lapply(obj_race_p["p"], gsub, pattern="0\\.", replacement="\\.")
+    obj_race_name_p <- paste0(outcome, "_", dataset, "_race_p")
+    eval(call("<-", as.name(obj_race_name_p), obj_race_p)) # save objects  
+    }
 }
 ```
 
@@ -1643,9 +1738,101 @@ for (i in 1:length(outcomes)){
   eval(call("<-", as.name(listed_care_name), listed_contrasts_care))
 }
 
+
+#### moderation by race (Reviewer suggestion) ####
+
+to_be_tested_race <- c("shift_control_white", # shift of white controls vs. 0
+                       "shift_control_black", # shift of black controls vs. 0
+                       "shift_gp_white", # shift of white GPs vs. 0
+                       "shift_gp_black", # shift of black GPs vs. 0
+                       "shift_gp_vs_control_white", # shift of white GPs vs. white controls
+                       "before_gp_vs_control_black", # before-slope of black GPs vs. black controls
+                       "after_gp_vs_control_black", # after-slope of black GPs vs. black controls
+                       "shift_gp_vs_control_black", # shift of black GPs vs. black controls
+                       "shift_white_vs_black_control", # shift of white vs. black controls
+                       "before_white_vs_black_gp", # before-slope of white vs. black GP
+                       "after_white_vs_black_gp", # after-slope of white vs. black GPs
+                       "shift_white_vs_black_gp") # shift of white vs. black GPs
+contrasts_race <- list(c("shift", "after"),
+                       c("shift", "after", "shift:black", "after:black"),
+                       c("shift", "after", "shift:grandparent", "after:grandparent"),
+                       c("shift", "after", "shift:black", "after:black", "shift:grandparent", 
+                         "after:grandparent", "shift:grandparent:black", "after:grandparent:black"),
+                       c("shift:grandparent", "after:grandparent"), 
+                       c("before:grandparent", "before:grandparent:black"), 
+                       c("after:grandparent", "after:grandparent:black"), 
+                       c("shift:grandparent", "after:grandparent", 
+                         "shift:grandparent:black", "after:grandparent:black"), 
+                       c("shift:black", "after:black"),
+                       c("before:black", "before:grandparent:black"),
+                       c("after:black", "after:grandparent:black"),
+                       c("shift:black", "after:black", 
+                         "shift:grandparent:black", "after:grandparent:black"))
+
+gamma_comb_race <- c("[$\\hat{\\gamma}_{40}$ + $\\hat{\\gamma}_{60}$]", 
+                     "[$\\hat{\\gamma}_{40}$ + $\\hat{\\gamma}_{60}$ + $\\hat{\\gamma}_{50}$ + $\\hat{\\gamma}_{70}$]",
+                     "[$\\hat{\\gamma}_{40}$ + $\\hat{\\gamma}_{60}$ + $\\hat{\\gamma}_{41}$ + $\\hat{\\gamma}_{61}$]",
+                     "[$\\hat{\\gamma}_{40}$ + $\\hat{\\gamma}_{60}$ + $\\hat{\\gamma}_{41}$ + $\\hat{\\gamma}_{61}$ + $\\hat{\\gamma}_{50}$ + $\\hat{\\gamma}_{70}$ + $\\hat{\\gamma}_{51}$ + $\\hat{\\gamma}_{71}$]",
+                     "[$\\hat{\\gamma}_{41}$ + $\\hat{\\gamma}_{61}$]",
+                     "[$\\hat{\\gamma}_{21}$ + $\\hat{\\gamma}_{31}$]",
+                     "[$\\hat{\\gamma}_{41}$ + $\\hat{\\gamma}_{51}$]",
+                     "[$\\hat{\\gamma}_{41}$ + $\\hat{\\gamma}_{61}$ + $\\hat{\\gamma}_{51}$ + $\\hat{\\gamma}_{71}$]",
+                     "[$\\hat{\\gamma}_{50}$ + $\\hat{\\gamma}_{70}$]",
+                     "[$\\hat{\\gamma}_{30}$ + $\\hat{\\gamma}_{31}$]",
+                     "[$\\hat{\\gamma}_{50}$ + $\\hat{\\gamma}_{51}$]",
+                     "[$\\hat{\\gamma}_{50}$ + $\\hat{\\gamma}_{70}$ + $\\hat{\\gamma}_{51}$ + $\\hat{\\gamma}_{71}$]")
+
+datasets_short_hrs <- datasets_short[3:4]
+
+for (i in 1:length(outcomes)){
+  for (j in 1:length(datasets_short_hrs)){ # now only for the 2 HRS datasets
+    ### moderation by race (Reviewer suggestion)
+    model_race <- get(paste0(outcomes[i], "_", datasets_short_hrs[j], "_race_test"))
+    for (k in 1:length(to_be_tested_race)){
+      contrast_race <- as.data.frame(
+        cbind(est = sum(fixef(model_race)[contrasts_race[[k]]]), 
+              chi = linearHypothesis(model_race, paste(contrasts_race[[k]], 
+                                                         collapse = " + "))[2, "Chisq"], 
+              df = linearHypothesis(model_race, paste(contrasts_race[[k]], 
+                                                        collapse = " + "))[2, "Df"], 
+              p = linearHypothesis(model_race, paste(contrasts_race[[k]], 
+                                                       collapse = " + "))[2, "Pr(>Chisq)"])
+      )
+      conf_itvl_race <- confint(summary(multcomp::glht(model_race, # confidence intervals
+                           linfct = paste(paste(contrasts_race[[k]], collapse = " + "), "= 0"))))
+      contrast_race <- cbind(contrast_race, 
+                        lwr = conf_itvl_race$confint[, "lwr"], 
+                        upr = conf_itvl_race$confint[, "upr"])
+      contrast_race <- contrast_race %>% mutate( # reformat for reporting in text
+        est_num = paste(gamma_comb_race[k], "=", printnum(est)),
+        chi_print = paste0("$\\chi^2$", " (", contrast_race$df, ") = ", printnum(contrast_race$chi)),
+        p_print = scales::pvalue(p, prefix = c("$p$ < ", "$p$ = ", "$p$ > ")),
+        conf = paste0("95% CI [", printnum(contrast_race$lwr), ", ", printnum(contrast_race$upr), "]")
+      )
+      contrast_race["p_print"] <- # remove "0" from the chr
+        lapply(contrast_race["p_print"], gsub, pattern="0\\.", replacement="\\.")
+      contrast_race <- contrast_race %>% 
+        unite(all, c(est_num, conf, p_print), sep = ", ", remove = F) # combined string
+      contrast_race_name <- paste0(to_be_tested_race[k], "_", outcomes[i], "_", datasets_short_hrs[j])
+      eval(call("<-", as.name(contrast_race_name), contrast_race))
+  }
+    collect_contrasts_race <- do.call(rbind, lapply(paste0(to_be_tested_race, "_", 
+                                        outcomes[i], "_", datasets_short_hrs[j]), get)) #all k's
+    rownames(collect_contrasts_race) <- to_be_tested_race
+    collected_race_name <- paste0("contrasts_", outcomes[i], "_", datasets_short_hrs[j], "_race")
+    eval(call("<-", as.name(collected_race_name), collect_contrasts_race))
+}
+  listed_contrasts_race <- do.call(list, lapply(paste0("contrasts_", outcomes[i], "_", 
+                                                         datasets_short_hrs, "_race"), get)) # all j's
+  names(listed_contrasts_race) <- datasets_short_hrs
+  listed_race_name <- paste0("contrasts_race_", outcomes[i])
+  eval(call("<-", as.name(listed_race_name), listed_contrasts_race))
+}
+
 # remove unnecessary objects
 rm(list = ls(pattern = paste0(c(to_be_tested, to_be_tested_gender, 
-                                to_be_tested_work, to_be_tested_care), collapse="|")))
+                                to_be_tested_work, to_be_tested_care,
+                                to_be_tested_race), collapse="|")))
 #rm(list = ls(pattern = paste0("contrasts_", outcomes, "_", collapse = "|"))) # needed for plots
 ```
 
@@ -1979,6 +2166,58 @@ for (i in 1:length(outcomes)){
   }
 }
 
+#### moderation by race (Reviewer suggestion) ####
+
+for (i in 1:length(outcomes)){
+  outcome = outcomes[i]
+  pos = seq(from = 0, to = 10, by = 2)[i] 
+  for (j in 1:length(datasets_race)){
+    dataset = datasets_race[j]
+    dataset_short = datasets_short[2 + j] # (select only HRS)
+    ### moderation by race models
+    obj_test_race = mod_summaries_race_test[[pos + j]] # unfold list objects (lmerTest)
+    # create data.frame (with all predictors)
+    ps_mean_race <- as.data.frame(subset(get(dataset), !is.na(get(outcome)) & 
+                                           !is.na(black) & time==0) %>% 
+                               group_by(grandparent, black) %>% summarise(pscore = mean(pscore)))
+    # only HRS
+      dframe_race <- data.frame(
+        pscore = c(rep(ps_mean_race[1,3], 7),  # white controls
+                   rep(ps_mean_race[2,3], 7),  # black controls
+                   rep(ps_mean_race[3,3], 7),  # white grandparents
+                   rep(ps_mean_race[4,3], 7)), # black grandparents
+        before = rep(c(0:2, rep(2, 4)), 4),
+        after = rep(c(rep(0, 3), 1:4), 4),
+        shift = rep(c(rep(0, 3), rep(1, 4)), 4),
+        grandparent = c(rep(0, 14), rep(1, 14)),
+        black = rep(c(rep(0, 7), rep(1, 7)), 2),
+        x = rep(seq(-6, 6, by=2), 4)
+      )
+    # predict response (again, same procedure for LISS & HRS)
+    dframe_race$pred <- predict(obj_test_race, newdata = dframe_race, re.form=NA)
+    # create design matrix
+    designmat_race <- model.matrix(as.formula(lme4::nobars(formula(obj_test_race))[-2]), 
+                              dframe_race) # [-2] drops response from formula
+    # compute standard error
+    predvar_race <- diag(designmat_race %*% vcov(obj_test_race) %*% t(designmat_race)) 
+    dframe_race$SE <- sqrt(predvar_race) # for confidence intervals
+    # add grandparent variable as a factor
+    if (dataset_short=="hrs_parents"){ 
+      dframe_race$gpgroup <- factor(dframe_race$grandparent, 
+                                      labels=c("Parent\nControls","Grandparents"))
+    } else { # for nonparent controls
+      dframe_race$gpgroup <- factor(dframe_race$grandparent, 
+                                      labels=c("Nonparent\nControls","Grandparents"))
+    }      
+    dframe_race$gpgroup <- fct_rev(dframe_race$gpgroup)
+    # add race (White / Black) as a factor
+    dframe_race$race <- factor(dframe_race$black, labels=c("White","Black"))
+    dframe_race$race <- fct_rev(dframe_race$race)
+    dframe_name_race <- paste0("dframe_", outcome, "_", dataset_short, "_race")
+    eval(call("<-", as.name(dframe_name_race), dframe_race)) # save data.frame for later ggplot use
+  }
+}
+
 # remove list objects from environment (needed for plots later)
 #rm(mod_summaries_test, mod_summaries_gender, mod_summaries_gender_test, #mod_summaries
 #   mod_summaries_work, mod_summaries_work_test, mod_summaries_care, mod_summaries_care_test)
@@ -1996,17 +2235,17 @@ rownames(limits) <- outcomes_plots
 #### basic models & moderation by gender ####
 
 # collect data frames in correct order (ACENO+LS -> LISS-p, LISS-np, HRS-p, HRS-np)
-dframes <- c(sort(ls()[grep("^(?=.*dframe_agree)(?!.*gender)(?!.*work)(?!.*care)(?!.*restr)", 
+dframes <- c(sort(ls()[grep("^(?=.*dframe_agree)(?!.*gender)(?!.*work)(?!.*care)(?!.*restr)(?!.*race)", 
                             ls(), perl=T)], decreasing=T),
-             sort(ls()[grep("^(?=.*dframe_con)(?!.*gender)(?!.*work)(?!.*care)(?!.*restr)", 
+             sort(ls()[grep("^(?=.*dframe_con)(?!.*gender)(?!.*work)(?!.*care)(?!.*restr)(?!.*race)", 
                             ls(), perl=T)], decreasing=T),
-             sort(ls()[grep("^(?=.*dframe_extra)(?!.*gender)(?!.*work)(?!.*care)(?!.*restr)", 
+             sort(ls()[grep("^(?=.*dframe_extra)(?!.*gender)(?!.*work)(?!.*care)(?!.*restr)(?!.*race)", 
                             ls(), perl=T)], decreasing=T),
-             sort(ls()[grep("^(?=.*dframe_neur)(?!.*gender)(?!.*work)(?!.*care)(?!.*restr)", 
+             sort(ls()[grep("^(?=.*dframe_neur)(?!.*gender)(?!.*work)(?!.*care)(?!.*restr)(?!.*race)", 
                             ls(), perl=T)], decreasing=T),
-             sort(ls()[grep("^(?=.*dframe_open)(?!.*gender)(?!.*work)(?!.*care)(?!.*restr)", 
+             sort(ls()[grep("^(?=.*dframe_open)(?!.*gender)(?!.*work)(?!.*care)(?!.*restr)(?!.*race)", 
                             ls(), perl=T)], decreasing=T),
-             sort(ls()[grep("^(?=.*dframe_swls)(?!.*gender)(?!.*work)(?!.*care)(?!.*restr)", 
+             sort(ls()[grep("^(?=.*dframe_swls)(?!.*gender)(?!.*work)(?!.*care)(?!.*restr)(?!.*race)", 
                             ls(), perl=T)], decreasing=T))
 dframes_gender <- c(sort(ls()[grep("^(?=.*dframe_agree)(?=.*gender)(?!.*restr)", 
                                    ls(), perl=T)], decreasing=T),
@@ -2267,6 +2506,46 @@ for (i in 1:length(dframes_restr)){
   plot_name_gender <- gsub("dframe", "plot", dframes_restr_gender[i])
   eval(call("<-", as.name(plot_name_gender), plot_gender)) # save plots for later assembly
 }
+
+#### moderation by race (Reviewer suggestion) ####
+
+dframes_race <- c(sort(ls()[grep("^(?=.*dframe_agree)(?=.*race)", ls(), perl=T)], decreasing=T),
+                    sort(ls()[grep("^(?=.*dframe_con)(?=.*race)", ls(), perl=T)], decreasing=T),
+                    sort(ls()[grep("^(?=.*dframe_extra)(?=.*race)", ls(), perl=T)], decreasing=T),
+                    sort(ls()[grep("^(?=.*dframe_neur)(?=.*race)", ls(), perl=T)], decreasing=T),    
+                    sort(ls()[grep("^(?=.*dframe_open)(?=.*race)", ls(), perl=T)], decreasing=T),
+                    sort(ls()[grep("^(?=.*dframe_swls)(?=.*race)", ls(), perl=T)], decreasing=T))
+
+for (i in 1:length(dframes_race)){
+  ### moderation by race
+  plot_race <- ggplot(get(dframes_race[i]), aes(x=x,y=pred,colour=gpgroup,linetype=race))+
+    geom_line(position=position_dodge(width=0.2),size=1)+
+    geom_point(position=position_dodge(width=0.2),size=1.5)+
+    scale_colour_brewer(palette = "Set1", name="Group")+ 
+    scale_linetype_discrete(name="Race")+
+    geom_errorbar(aes(ymin=pred-1.96*SE,ymax=pred+1.96*SE),width=0.6,position=position_dodge(width=0.2))+
+    coord_cartesian(ylim=c(limits[i*2, 1], limits[i*2, 2]))+ # loop over limits (but *2 because of length)
+    scale_x_continuous(name="Time (in Years)",breaks=seq(-6,6,2))+ 
+    geom_vline(xintercept=-1, colour="darkgrey")+
+    theme(#axis.text = element_text(face="bold"), #, size=14
+          #axis.title = element_text(size=18),
+          #legend.background = element_rect(fill="gray90", size=.5, linetype="dotted"),
+          #legend.text=element_text(size=14),
+          #legend.title=element_text(size=14),
+          panel.border=element_rect(colour="darkgrey", fill=NA, size=1),
+          axis.title.y=element_blank())+
+    guides(colour = guide_legend(order = 1), linetype = guide_legend(order = 2))+ # legend element order
+    scale_y_continuous() # name=outcomes_plots[i]
+  if (dframes_race[i] %in% dframes_race[grep("^(?=.*_parents_)", dframes_race, perl=T)]){ 
+    plot_race <- plot_race + theme(axis.title.x=element_blank()) # omit x-axis title for parent plots
+  } 
+  plot_name_race <- gsub("dframe", "plot", dframes_race[i])
+  eval(call("<-", as.name(plot_name_race), plot_race)) # save plots for later assembly
+}
+
+# need wider y-axis limits for LS & moderation by race
+plot_swls_hrs_parents_race <- plot_swls_hrs_parents_race + coord_cartesian(ylim=c(3.25, 5.75))
+plot_swls_hrs_nonparents_race <- plot_swls_hrs_nonparents_race + coord_cartesian(ylim=c(3.25, 5.75))
 ```
 
 ```{r H2-test-random-slopes, include=FALSE, cache=T}
@@ -3348,7 +3627,7 @@ Overall, evidence has accumulated that there is an association between having gr
 ## Interindividual Differences in Change
 
 Analyzing how grandparents differed interindividually in their trajectories of change provided additional insight beyond the analysis of mean-level change. All parameters of change exhibited considerable interindividual differences. Similar to Denissen et al. [-@denissenTransactionsLifeEvents2019], who found significant model fit improvements of random slopes in most models [see also @dorePopulationIndividuallevelChanges2018], this pattern indicates that respondents---both grandparents and matched controls---deviated to a considerable extent from the average trajectories that we reported on previously.  
-We expected larger interindividual differences in grandparents because life events differ in their impact on daily life and in the degree to which they are perceived as meaningful or emotionally significant [@luhmannDimensionalTaxonomyPerceived2020; @dorePopulationIndividuallevelChanges2018]. Our results, however, indicated that interindividual differences were larger in the controls than the grandparents for many models, or not significantly different between groups. Only in a small minority of tests were interindividual differences significantly larger in grandparents (concerning the linear slope in anticipation of grandparenthood for neuroticism, openness, and life satisfaction). Overall, we did not find evidence supporting the hypothesis that interindividual differences in change would be larger in the grandparents than the controls (H2).  
+We expected larger interindividual differences in grandparents because life events differ in their impact on daily life and in the degree to which they are perceived as meaningful or emotionally significant [@luhmannDimensionalTaxonomyPerceived2020; @dorePopulationIndividuallevelChanges2018]. Our results, however, indicated that interindividual differences were larger in the controls than the grandparents for many models, or not significantly different between groups. Only in a small minority of tests were interindividual differences significantly larger in grandparents (concerning the linear slope in anticipation of grandparenthood for openness and life satisfaction). Overall, we did not find evidence supporting the hypothesis that interindividual differences in change would be larger in the grandparents than the controls (H2).  
 When integrating this result into the literature, it is important to keep in mind that most previous studies did not compare interindividual differences in personality change between the event group and a comparison group [even if they did use comparison groups for the main analyses; @denissenTransactionsLifeEvents2019; @schwabaPersonalityTraitDevelopment2019; cf. @jacksonPersonalityDevelopmentMean2021]. As demonstrated by an analysis across the entire life span [i.e., irrespective of life events; @schwabaIndividualDifferencesPersonality2018], interindividual differences in personality change---although largest in emerging adulthood---were substantial up until around 70 years of age in most domains. Regarding the substantive question of how the transition to grandparenthood affects interindividual differences in change, we therefore propose that it is more informative to test grandparents' degree of variability in change against well-matched control groups than against no groups as often done previously.  
 Recently, Jackson and Beck [-@jacksonPersonalityDevelopmentMean2021] presented evidence that the experience of sixteen commonly analyzed life events was mostly associated with decreases in interindividual variation in the Big Five compared to those not experiencing the respective event. They used a comparable approach to ours but in a SEM latent growth curve framework and not accounting for covariates related to pre-existing group differences (i.e., without matching). Their results based on the German SOEP data suggested---contrary to their expectations---that most life events made people *more* similar to each other [@jacksonPersonalityDevelopmentMean2021]. Thus, taken together with our results, it seems that the assumption that life events and transitions ostensibly produce increased heterogeneity between people needs to be scrutinized in future studies.  
 
@@ -3364,7 +3643,7 @@ Still, a number of limitations need to be addressed: First, there remains some d
 Second, we relied on self-report personality data and did not include other-reports by family members or close friends [@luanYouSeeMy2017; @mccraeMethodBiasesSinglesource2018; @mccraeWhatPersonalityScales2019; @mottusSelfReportsInformantRatingsMeasure2019; @schwabaRefiningMaturityPrinciple2022]. Thus, our results might be influenced by common method bias [@podsakoffCommonMethodBiases2003]. Large-scale panel data incorporating both self- and other-reports of personality over time would be needed to address this issue [e.g., @oltmannsPersonalityChangeLongitudinal2020].  
 Third, a causal interpretation of our results rests on a number of assumptions that are not directly testable with the data [@liUsingPropensityScore2013; @stuartMatchingMethodsCausal2010]: Most importantly, we assumed that we picked the right sets of covariates, that our model to estimate the propensity score was correctly specified, and that there was no substantial remaining bias due to unmeasured confounding. Working with archival data meant that we had no influence on data collection, and we also aimed for roughly equivalent sets of covariates across both data sets. Therefore, we had to make some compromises on covariate choice. Still, we believe that our procedure to select covariates following state-of-the-art recommendations [see *Methods*; @vanderweeleOutcomeWideLongitudinalDesigns2020], and to substantiate each covariate's selection explicitly within our preregistration improved upon previously applied practices. Regarding the propensity score estimation, we opted to estimate the grandparents' propensity scores at a specific time point at least two years before the transition to grandparenthood, which had the advantages that (*1*) the covariates were uncontaminated by anticipation of the transition, and (*2*) the matched controls had a clear counterfactual timeline of transition [for similar recent approaches analyzing life events, see @balboRoleFamilyOrientations2016; @kramerImpactHavingChildren2020; @vanscheppingenTrajectoriesLifeSatisfaction2020]. Regarding the timing of measurements and the transition to grandparenthood, it also has to be emphasized that we might have missed more short-term effects playing out over months instead of years.  
 Fourth, our results only pertain to the countries for which our data are representative on a population level: the Netherlands and the United States. Personality development, and more specifically personality maturation, have been examined cross-culturally [e.g., @bleidornPersonalityMaturationWorld2013; @chopikPersonalityChangeLife2018]. On the one hand, these studies showed universal average patterns of change towards greater maturity over the life span. On the other hand, they emphasized cultural differences regarding norms and values and the temporal onset of social roles. For grandparenthood, there are substantial demographic differences between countries [@leopoldDemographyGrandparenthoodInternational2015], as well as differences in public child care systems that may demand different levels of grandparental involvement [@bordonePatternsGrandparentalChild2017; @hankGrandparentsCaringTheir2009]. In the Netherlands, people become grandparents six years later on average than in the United States [@leopoldDemographyGrandparenthoodInternational2015]. Furthermore, although both countries have largely market-based systems for early child care, parents in the Netherlands on average have access to more extensive childcare services through (capped) governmental benefits [@oecdChildcareAffordablePolicy2020]. Despite these differences, our results from the Dutch and US samples did not indicate systematic discrepancies.  
-Finally, while we assessed our dependent variables using highly reliable scales, there was a conceptual difference in the Big Five measures [see @johnBigFiveTrait1999] in the two studies: The IPIP Big Five inventory used in the LISS [@goldbergDevelopmentMarkersBigFive1992] presented statements as items, and asked respondents to indicate how accurately these statements described them (using a bipolar response scale). However, the Midlife Development Inventory used in the HRS [@lachmanMidlifeDevelopmentInventory1997] presented adjectives as items, and asked respondents how well these adjectives described them (using a unipolar response scale). This discrepancy hindered the between-sample comparison somewhat and also resulted in different distributions of the Big Five across samples (see Figures \@ref(fig:loess-agree)-\@ref(fig:loess-swls)). The possibility should also be pointed out that our analyses on the domain-level of the Big Five could be too conceptually broad to identify patterns of personality development over the transition to grandparenthood that are discernible on the level of facets or nuances [@mottusDevelopmentDetailsAge2021; @schwabaRefiningMaturityPrinciple2022].  
+Finally, while we assessed our dependent variables using reliable scales, there was a conceptual difference in the Big Five measures [see @johnBigFiveTrait1999] in the two studies: The IPIP Big Five inventory used in the LISS [@goldbergDevelopmentMarkersBigFive1992] presented statements as items, and asked respondents to indicate how accurately these statements described them (using a bipolar response scale). However, the Midlife Development Inventory used in the HRS [@lachmanMidlifeDevelopmentInventory1997] presented adjectives as items, and asked respondents how well these adjectives described them (using a unipolar response scale). This discrepancy hindered the between-sample comparison somewhat and also resulted in different distributions of the Big Five across samples (see Figures \@ref(fig:loess-agree)-\@ref(fig:loess-swls)). The possibility should also be pointed out that our analyses on the domain-level of the Big Five could be too conceptually broad to identify patterns of personality development over the transition to grandparenthood that are discernible on the level of facets or nuances [@mottusDevelopmentDetailsAge2021; @schwabaRefiningMaturityPrinciple2022].  
 
 ## Conclusion
 Do personality traits change over the transition to grandparenthood? Using data from two nationally representative panel studies in a preregistered propensity score matching design, the current study revealed that trajectories of the Big Five personality traits and life satisfaction remained predominantly stable in first-time grandparents over this transition compared to matched parents and nonparents. We found slight post-transition increases to grandparents' agreeableness and conscientiousness in line with our hypothesis of personality development based on the social investment principle. However, these effects were minuscule and inconsistent across analysis samples. In addition, our analyses revealed (*1*) a lack of consistent moderation of personality development by grandparents providing substantial grandchild care, (*2*) interindividual differences in change that were mostly smaller in grandparents than in matched respondents, and (*3*) comparable rank-order stability in grandparents and matched respondents. Thus, we conclude that the transition to grandparenthood did not act as a straightforwardly important developmental task driving personality development in middle adulthood and old age [as previously proposed, see @huttemanDevelopmentalTasksFramework2014]. With more detailed assessment of the grandparent role, future research could investigate whether personality development occurs in a subset of grandparents who are highly socially invested.   
