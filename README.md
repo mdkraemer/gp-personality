@@ -47,13 +47,13 @@ To bolster future reproducibility, we used the *renv* package ([*link here*](htt
     + *references-zotero.bib*: Contains all the references used in the manuscript
     + *references-r.bib*: Contains additional references on the R-packages used here
     + *renv.lock*: Contains information on all package and dependency versions
-3. Open *gp-personality.Rproj* first in RStudio and then open *gp-manuscript-papaja.Rmd*.  
+3. Open *gp-personality.Rproj* in RStudio. 
 4. Install *renv* via the R console:  
 `install.packages("renv")`  
 4. Execute the following commands in the R console to 'import' all R packages as the correct versions from the *renv.lock* file:  
 `renv::activate()`  
 `renv::restore()`  
-When prompted, answer affirmatively in the console ("y" / "Y"). At this stage, I encountered an error on a Windows machine that the package *nloptr* could not be installed. This can be fixed by running `renv::equip()` and then `renv::restore()` again (as explained [here](https://stackoverflow.com/questions/60779096/error-installing-packages-using-renvrestore); Rtools required!).  
+When prompted, answer affirmatively in the console ("y" / "Y"). This may take 15-30 minutes. At this stage, I encountered an error on Windows machines that the package *nloptr* could not be installed. This can be fixed by running `renv::equip()`, answering "y" in the console, and then running `renv::restore()` again (as explained [here](https://stackoverflow.com/questions/60779096/error-installing-packages-using-renvrestore); Rtools required!).  
 You can check that the package management was successful, by executing `renv::restore()` again which should now say "The library is already synchronized with the lockfile." (or by running `renv::diagnostics()`). 
 
 ### Generating the Analysis Samples
@@ -76,8 +76,7 @@ Please follow these steps to reproduce the manuscript. If you run into errors yo
 
 ### Approach Without the *renv* Package  
 
-1. If you attempted the *renv* approach first, run `renv::deactivate()` and delete all files in the superordinate folder (where the R-Project is).  
-2. Download the following files to the superordinate folder:  
+1. If you attempted the *renv* approach first, run `renv::deactivate()` and delete all files in the superordinate folder (where the R-Project is) except for the one listed below and the subfolders *data* and *scripts*. If not, download the following files:  
     + *gp-personality.Rproj*: All paths are defined in relation to the R-Project
     + *gp-manuscript-papaja.Rmd*: The main R markdown script that renders the final PDF manuscript
     + *gp-manuscript-papaja-appendix.Rmd*: Additional R markdown script that renders the supplemental materials (executed from the main script)

@@ -8,6 +8,8 @@
 
 ## Model Equations
 
+### Mean-Level Changes (RQ1)
+
 Model equation for the basic (i.e., unmoderated) models (ignoring the additional nesting in households applied to the majority of models):
 \begin{equation}
 \begin{split}
@@ -82,6 +84,40 @@ y_{ti} =& \beta_{0i} + \beta_{1i}caring_{ti} + \beta_{2i}after_{ti} + \beta_{3i}
 \end{equation}
 where $e_{ti} \sim N(0, \sigma_e^2)$ and $\upsilon_{0i} \sim N(0, \tau_{00})$. Restricted to the HRS post-transition period, we estimated separate models for each comparison group (parents, nonparents).  
 
+### Interindividual Differences in Change (RQ2)
+
+The equations for the models testing interindividual differences in change differ only in the random effects from those in \@ref(eq:mlm1). For models with a homogeneous (single) random slope (but heterogeneous random intercept variances for the grandparent and the control group, respectively), the random effects are now represented by $e_{ti} \sim N(0, \sigma_e^2)$ and $\begin{bmatrix}
+\upsilon_{0i}\\
+\upsilon_{1i}
+\end{bmatrix}\sim MVN\begin{pmatrix}\begin{bmatrix}
+ 0\\0
+\end{bmatrix} &,\begin{bmatrix}
+T_{00g} & \\
+0 & \tau_{11}
+\end{bmatrix}\end{pmatrix}\ ,$
+with $T_{00g}=\begin{bmatrix}
+\tau_{00g=0} & 0\\
+0 & \tau_{00g=1}\end{bmatrix}$,  
+\noindent where $g$ represents the grouping variable. $\tau_{00g=0}$ refers to the random intercept variance of the control group and $\tau_{00g=1}$ to that of the grandparents.
+This type of baseline model is compared via likelihood ratio test with one that features both heterogeneous random intercept variances and heterogeneous random slope variances. For models with heterogeneous random slopes for the grandparent and control groups, the random effects are represented by $e_{ti} \sim N(0, \sigma_e^2)$ and $\begin{bmatrix}
+\upsilon_{0i}\\
+\upsilon_{1i}
+\end{bmatrix}\sim MVN\begin{pmatrix}\begin{bmatrix}
+ 0\\0
+\end{bmatrix} &,\begin{bmatrix}
+T_{00g} & \\
+T_{10g} & T_{11g}
+\end{bmatrix}\end{pmatrix}\ ,$
+with $T_{00g}=\begin{bmatrix}
+\tau_{00g=0} & 0\\
+0 & \tau_{00g=1}\end{bmatrix}$, 
+$T_{11g}=\begin{bmatrix}
+\tau_{11g=0} & 0\\
+0 & \tau_{11g=1}\end{bmatrix}$, 
+and $T_{10g}=\begin{bmatrix}
+\tau_{10g=0} & 0\\
+0 & \tau_{10g=1}\end{bmatrix}$, 
+where $g$ represents the grouping variable. $\tau_{00g=0}$, $\tau_{11g=0}$ and $\tau_{10g=0}$ refer to the random intercept variance, random slope variance, and random intercept/slope covariance of the control group, respectively, and $\tau_{00g=1}$, $\tau_{11g=1}$, and $\tau_{10g=1}$ to those of the grandparents. In addition to the two random slope variances (instead of one, $\tau_{11}$), the heterogeneous variance models estimate two random intercept/slope covariances. In Tables \@ref(tab:H2-hetvar-tab-agree)-\@ref(tab:H2-hetvar-tab-swls) we report $\tau_{11}$, $\tau_{11g=0}$, and $\tau_{11g=0}$ for each change parameter as well as the results of the likelihood ratio tests. Please note that the notation for heterogeneous models used here is not found in standard multilevel modeling textbooks and is partly based on [*this tutorial*](https://quantdev.ssri.psu.edu/sites/qdev/files/ILD_Ch06_2017_MLMwithHeterogeneousVariance.html) by Nilam Ram. See also [*this blogpost*](http://jonaslang.info/index.php?y=1548295404) by Jonas Lang for syntax examples in *nlme* and *lme4* syntax.  
 \newpage
 
 ## Supplemental Tables
@@ -395,6 +431,69 @@ apa_table(
   , longtable = T
   , placement = "t"
   , font_size = "footnotesize"
+)
+```
+
+(ref:H1-agree-tab-cap) Fixed Effects of `r df_outcomes["agree", "maj"]` Over the Transition to Grandparenthood.
+(ref:H1-agree-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.
+
+```{r H1-agree-tab, results="asis"}
+agree_liss_df <- 
+  cbind(printnum(agree_liss_parents_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(agree_liss_parents_test)$coefficients[, 5], # parents: p-value
+        printnum(agree_liss_nonparents_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(agree_liss_nonparents_test)$coefficients[, 5])  # nonparents: p-value
+
+agree_hrs_df <- 
+  cbind(printnum(agree_hrs_parents_summary$table)[, -1],   # parents: estimate, CI, t-value
+        summary(agree_hrs_parents_test)$coefficients[, 5], # parents: p-value
+        printnum(agree_hrs_nonparents_summary$table)[, -1],    # nonparents: estimate, CI, t-value
+        summary(agree_hrs_nonparents_test)$coefficients[, 5])  # nonparents: p-value
+
+# make one large table
+colnames(agree_liss_df)[c(4,8)] <- c("p", "p")
+colnames(agree_hrs_df)[c(4,8)] <- c("p", "p")
+agree_df <- rbind(agree_liss_df, agree_hrs_df)
+
+# duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
+rownames_agree_df <- c("Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{L}", 
+                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{L}", 
+                      "Before-slope, $\\hat{\\gamma}_{10}$ \\textcolor{white}{L}", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{L}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{L}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{L}", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$ \\textcolor{white}{L}", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{L}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{L}", 
+                      "Intercept, $\\hat{\\gamma}_{00}$ \\textcolor{white}{H}", 
+                      "Propensity score, $\\hat{\\gamma}_{02}$ \\textcolor{white}{H}", 
+                      "Before-slope, $\\hat{\\gamma}_{10}$ \\textcolor{white}{H}", 
+                      "After-slope, $\\hat{\\gamma}_{20}$ \\textcolor{white}{H}", 
+                      "Shift, $\\hat{\\gamma}_{30}$ \\textcolor{white}{H}",
+                      "Grandparent, $\\hat{\\gamma}_{01}$ \\textcolor{white}{H}", 
+                      "Before-slope * Grandparent, $\\hat{\\gamma}_{11}$ \\textcolor{white}{H}", 
+                      "After-slope * Grandparent, $\\hat{\\gamma}_{21}$ \\textcolor{white}{H}", 
+                      "Shift * Grandparent, $\\hat{\\gamma}_{31}$ \\textcolor{white}{H}")
+rownames(agree_df) <- rownames_agree_df
+
+apa_table(
+  agree_df
+  , caption = "(ref:H1-agree-tab-cap)"
+  , note = "(ref:H1-agree-tab-note)"
+  , col.names = c("Parameter", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$", 
+                  "$\\hat{\\gamma}$", "95\\% CI", "$t$", "$p$")
+  , align = c("l", "r", "c", "r", "r", "r", "c", "r", "r")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE),
+                       digits = c(2,2,2,2,3,2,2,2,3),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE))
+  , col_spanners = list("Parent controls" = c(2,5), "Nonparent controls" = c(6,9))
+  #, stub_indents = list("Fixed effects" = 1:12)
+  , escape = F
+  , landscape = T
+  , font_size = "footnotesize"
+  , stub_indents = list("LISS" = 1:9, "HRS" = 10:18)
+  , placement = "H"
 )
 ```
 
