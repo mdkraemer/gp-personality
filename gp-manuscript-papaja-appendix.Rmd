@@ -162,37 +162,62 @@ apa_table(
 )
 ```
 
-```{r icc-table, results="asis"}
-# object 'icc_list' is now generated in the main .Rmd together with the other models
+(ref:stddiffmeans-balance-liss-cap) Standardized Difference in Means for Covariates Used in Propensity Score Matching and the Propensity Score in the LISS.
 
-rownames(icc_list) <- c("$ICC_{pid}$ \\textcolor{white}{LP}", "$ICC_{hid}$ \\textcolor{white}{LP}", 
-                        "$ICC_{pid/hid}$ \\textcolor{white}{LP}", 
-                        "$ICC_{pid}$ \\textcolor{white}{LN}", "$ICC_{hid}$ \\textcolor{white}{LN}", 
-                        "$ICC_{pid/hid}$ \\textcolor{white}{LN}", 
-                        "$ICC_{pid}$ \\textcolor{white}{HP}", "$ICC_{hid}$ \\textcolor{white}{HP}", 
-                        "$ICC_{pid/hid}$ \\textcolor{white}{HP}", 
-                        "$ICC_{pid}$ \\textcolor{white}{HN}", "$ICC_{hid}$ \\textcolor{white}{HN}", 
-                        "$ICC_{pid/hid}$ \\textcolor{white}{HN}")
-colnames(icc_list) <- c("\\textcolor{white}{xxx}A\\textcolor{white}{xxx}",
-                        "\\textcolor{white}{xxx}C\\textcolor{white}{xxx}",
-                        "\\textcolor{white}{xxx}E\\textcolor{white}{xxx}",
-                        "\\textcolor{white}{xxx}N\\textcolor{white}{xxx}",
-                        "\\textcolor{white}{xxx}O\\textcolor{white}{xxx}", 
-                        "\\textcolor{white}{xxx}LS\\textcolor{white}{xxx}") # added some whitespace to adjust table width
+(ref:stddiffmeans-balance-note) PSM = propensity score matching, ref. = reference category, f. = female, m. = male, NA = covariate not used in this sample. The standardized difference in means between the grandparent and the two control groups (parent and nonparent) was computed by $(\bar{x}_{gp}-\bar{x}_{c})/ (\hat\sigma_{gp})$. Rules of thumb say that this measure should ideally be below $.25$ [@stuartMatchingMethodsCausal2010] or below $.10$ [@austinIntroductionPropensityScore2011].  
+
+```{r stddiffmeans-balance-liss, results="asis"}
+# Standardized differences between means
+liss_balance_df_rownames <- liss_balance_df$Covariate
+liss_balance_df <- liss_balance_df[-c(1)]
+rownames(liss_balance_df) <- liss_balance_df_rownames
 
 apa_table(
-  icc_list
-  , caption = "Intra-Class Correlations of Grandparents and Matched Controls in the Four Analysis Samples."
-  , note = "A = agreeableness, C = conscientiousness, E = extraversion, N = neuroticism, O = openness, LS = life satisfaction. Intra-class correlations are the proportion of total variation that is explained by the respective nesting factor. $ICC_{pid}$ is the proportion of total variance explained by nesting in respondents which corresponds to the correlation between two randomly selected observations from the same respondent. $ICC_{hid}$ is the proportion of total variance explained by nesting in households which corresponds to the correlation between two randomly selected observations from the same household. $ICC_{pid/hid}$ is the proportion of total variance explained by nesting in respondents and in households which corresponds to the correlation between two randomly selected observations from the same respondent and the same household." 
-  , align = c("l", "c", "c", "c", "c", "c", "c")
+  liss_balance_df
+  , caption = "(ref:stddiffmeans-balance-liss-cap)"
+  , note = "(ref:stddiffmeans-balance-note)"
+  , align = c("l", "l", "l", "r", "r", "r", "r")
+  , col.names = c("Covariate", "Description", "Raw variables", 
+                  "Before PSM", "After PSM", "Before PSM", "After PSM")
+  , col_spanners = list("Parent control group" = c(4,5), "Nonparent control group" = c(6,7))
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
                        digits = c(2,2,2,2,2,2,2),
                        zero = c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE))
-  , stub_indents = list("LISS: Parent controls" = 1:3, "LISS: Nonparent controls" = 4:6,
-                        "HRS: Parent controls" = 7:9, "HRS: Nonparent controls" = 10:12)
-  , escape = F
-  , landscape = F
-  , placement = "h"
+  , escape = T
+  , landscape = T
+  , longtable = T
+  , placement = "t"
+  , font_size = "footnotesize"
+)
+```
+
+(ref:stddiffmeans-balance-hrs-cap) Standardized Difference in Means for Covariates Used in Propensity Score Matching and the Propensity Score in the HRS.
+
+```{r stddiffmeans-balance-hrs, results="asis"}
+# Standardized differences between means
+hrs_balance_df_rownames <- hrs_balance_df$Covariate
+hrs_balance_df <- hrs_balance_df[-c(1)]
+rownames(hrs_balance_df) <- hrs_balance_df_rownames
+
+apa_table(
+  hrs_balance_df
+  , caption = "(ref:stddiffmeans-balance-hrs-cap)"
+  , note = "(ref:stddiffmeans-balance-note)"
+  , align = c("l", "l", "l", "r", "r", "r", "r")
+  , col.names = c("Covariate", "Description", "Raw variables", 
+                  "Before PSM", "After PSM", "Before PSM", "After PSM")
+  , col_spanners = list("Parent control group" = c(4,5), "Nonparent control group" = c(6,7))
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
+                       digits = c(2,2,2,2,2,2,2),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE))
+  #, stub_indents = list("Basic demographics)" = 2:14, "Economic situation" = 15:22, "Health" = 23:30,
+  #                      "Family and fertility" = 31:36, "Outcomes at the time of matching" = 37:42,
+  #                      "Panel status" = 43:44)
+  , escape = T
+  , landscape = T
+  , longtable = T
+  , placement = "t"
+  , font_size = "footnotesize"
 )
 ```
 
@@ -375,67 +400,42 @@ apa_table(
 )
 ```
 
-(ref:stddiffmeans-balance-liss-cap) Standardized Difference in Means for Covariates Used in Propensity Score Matching and the Propensity Score in the LISS.
-
-(ref:stddiffmeans-balance-note) PSM = propensity score matching, ref. = reference category, f. = female, m. = male, NA = covariate not used in this sample. The standardized difference in means between the grandparent and the two control groups (parent and nonparent) was computed by $(\bar{x}_{gp}-\bar{x}_{c})/ (\hat\sigma_{gp})$. Rules of thumb say that this measure should ideally be below $.25$ [@stuartMatchingMethodsCausal2010] or below $.10$ [@austinIntroductionPropensityScore2011].  
-
-```{r stddiffmeans-balance-liss, results="asis"}
-# Standardized differences between means
-liss_balance_df_rownames <- liss_balance_df$Covariate
-liss_balance_df <- liss_balance_df[-c(1)]
-rownames(liss_balance_df) <- liss_balance_df_rownames
-
-apa_table(
-  liss_balance_df
-  , caption = "(ref:stddiffmeans-balance-liss-cap)"
-  , note = "(ref:stddiffmeans-balance-note)"
-  , align = c("l", "l", "l", "r", "r", "r", "r")
-  , col.names = c("Covariate", "Description", "Raw variables", 
-                  "Before PSM", "After PSM", "Before PSM", "After PSM")
-  , col_spanners = list("Parent control group" = c(4,5), "Nonparent control group" = c(6,7))
-  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
-                       digits = c(2,2,2,2,2,2,2),
-                       zero = c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE))
-  , escape = T
-  , landscape = T
-  , longtable = T
-  , placement = "t"
-  , font_size = "footnotesize"
-)
-```
-
-(ref:stddiffmeans-balance-hrs-cap) Standardized Difference in Means for Covariates Used in Propensity Score Matching and the Propensity Score in the HRS.
-
-```{r stddiffmeans-balance-hrs, results="asis"}
-# Standardized differences between means
-hrs_balance_df_rownames <- hrs_balance_df$Covariate
-hrs_balance_df <- hrs_balance_df[-c(1)]
-rownames(hrs_balance_df) <- hrs_balance_df_rownames
-
-apa_table(
-  hrs_balance_df
-  , caption = "(ref:stddiffmeans-balance-hrs-cap)"
-  , note = "(ref:stddiffmeans-balance-note)"
-  , align = c("l", "l", "l", "r", "r", "r", "r")
-  , col.names = c("Covariate", "Description", "Raw variables", 
-                  "Before PSM", "After PSM", "Before PSM", "After PSM")
-  , col_spanners = list("Parent control group" = c(4,5), "Nonparent control group" = c(6,7))
-  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
-                       digits = c(2,2,2,2,2,2,2),
-                       zero = c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE))
-  #, stub_indents = list("Basic demographics)" = 2:14, "Economic situation" = 15:22, "Health" = 23:30,
-  #                      "Family and fertility" = 31:36, "Outcomes at the time of matching" = 37:42,
-  #                      "Panel status" = 43:44)
-  , escape = T
-  , landscape = T
-  , longtable = T
-  , placement = "t"
-  , font_size = "footnotesize"
-)
-```
-
 (ref:H1-agree-tab-cap) Fixed Effects of `r df_outcomes["agree", "maj"]` Over the Transition to Grandparenthood.
 (ref:H1-agree-tab-note) Two models were computed for each of the two samples (LISS, HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval.
+
+```{r icc-table, results="asis"}
+# object 'icc_list' is now generated in the main .Rmd together with the other models
+
+rownames(icc_list) <- c("$ICC_{pid}$ \\textcolor{white}{LP}", "$ICC_{hid}$ \\textcolor{white}{LP}", 
+                        "$ICC_{pid/hid}$ \\textcolor{white}{LP}", 
+                        "$ICC_{pid}$ \\textcolor{white}{LN}", "$ICC_{hid}$ \\textcolor{white}{LN}", 
+                        "$ICC_{pid/hid}$ \\textcolor{white}{LN}", 
+                        "$ICC_{pid}$ \\textcolor{white}{HP}", "$ICC_{hid}$ \\textcolor{white}{HP}", 
+                        "$ICC_{pid/hid}$ \\textcolor{white}{HP}", 
+                        "$ICC_{pid}$ \\textcolor{white}{HN}", "$ICC_{hid}$ \\textcolor{white}{HN}", 
+                        "$ICC_{pid/hid}$ \\textcolor{white}{HN}")
+colnames(icc_list) <- c("\\textcolor{white}{xxx}A\\textcolor{white}{xxx}",
+                        "\\textcolor{white}{xxx}C\\textcolor{white}{xxx}",
+                        "\\textcolor{white}{xxx}E\\textcolor{white}{xxx}",
+                        "\\textcolor{white}{xxx}N\\textcolor{white}{xxx}",
+                        "\\textcolor{white}{xxx}O\\textcolor{white}{xxx}", 
+                        "\\textcolor{white}{xxx}LS\\textcolor{white}{xxx}") # added some whitespace to adjust table width
+
+apa_table(
+  icc_list
+  , caption = "Intra-Class Correlations of Grandparents and Matched Controls in the Four Analysis Samples."
+  , note = "A = agreeableness, C = conscientiousness, E = extraversion, N = neuroticism, O = openness, LS = life satisfaction. Intra-class correlations are the proportion of total variation that is explained by the respective nesting factor. $ICC_{pid}$ is the proportion of total variance explained by nesting in respondents which corresponds to the correlation between two randomly selected observations from the same respondent. $ICC_{hid}$ is the proportion of total variance explained by nesting in households which corresponds to the correlation between two randomly selected observations from the same household. $ICC_{pid/hid}$ is the proportion of total variance explained by nesting in respondents and in households which corresponds to the correlation between two randomly selected observations from the same respondent and the same household." 
+  , align = c("l", "c", "c", "c", "c", "c", "c")
+  , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
+                       digits = c(2,2,2,2,2,2,2),
+                       zero = c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE))
+  , stub_indents = list("LISS: Parent controls" = 1:3, "LISS: Nonparent controls" = 4:6,
+                        "HRS: Parent controls" = 7:9, "HRS: Nonparent controls" = 10:12)
+  , escape = F
+  , landscape = F
+  , placement = "h"
+)
+```
 
 ```{r H1-agree-tab, results="asis"}
 agree_liss_df <- 
