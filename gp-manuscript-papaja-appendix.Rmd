@@ -838,8 +838,8 @@ apa_table(
 ```
 
 
-(ref:H1-agree-race-tab-cap) Fixed Effects of `r df_outcomes["agree", "maj"]` Over the Transition to Grandparenthood Moderated by Race/Ethnicity.
-(ref:H1-agree-race-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $black=0$ indicates White/Caucasian race/ethnicity, $black=1$ indicates Black/African American race/ethnicity.
+(ref:H1-agree-race-tab-cap) Fixed Effects of `r df_outcomes["agree", "maj"]` Over the Transition to Grandparenthood Moderated by Ethnicity.
+(ref:H1-agree-race-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $black=0$ indicates White/Caucasian ethnicity, $black=1$ indicates Black/African American ethnicity.
 
 ```{r H1-agree-race-tab, results="asis"}
 agree_race_df <- 
@@ -889,7 +889,7 @@ apa_table(
 )
 ```
 
-(ref:H1-agree-race-contrasts-cap) Linear Contrasts for `r df_outcomes["agree", "maj"]` (Moderated by Race/Ethnicity; only HRS).
+(ref:H1-agree-race-contrasts-cap) Linear Contrasts for `r df_outcomes["agree", "maj"]` (Moderated by Ethnicity; only HRS).
 
 (ref:H1-agree-race-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-agree-race-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
@@ -1304,8 +1304,8 @@ apa_table(
 ```
 
 
-(ref:H1-con-race-tab-cap) Fixed Effects of `r df_outcomes["con", "maj"]` Over the Transition to Grandparenthood Moderated by Race/Ethnicity.
-(ref:H1-con-race-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $black=0$ indicates White/Caucasian race/ethnicity, $black=1$ indicates Black/African American race/ethnicity.
+(ref:H1-con-race-tab-cap) Fixed Effects of `r df_outcomes["con", "maj"]` Over the Transition to Grandparenthood Moderated by Ethnicity.
+(ref:H1-con-race-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $black=0$ indicates White/Caucasian ethnicity, $black=1$ indicates Black/African American ethnicity.
 
 ```{r H1-con-race-tab, results="asis"}
 con_race_df <- 
@@ -1338,7 +1338,7 @@ apa_table(
 )
 ```
 
-(ref:H1-con-race-contrasts-cap) Linear Contrasts for `r df_outcomes["con", "maj"]` (Moderated by Race/Ethnicity; only HRS).
+(ref:H1-con-race-contrasts-cap) Linear Contrasts for `r df_outcomes["con", "maj"]` (Moderated by Ethnicity; only HRS).
 
 (ref:H1-con-race-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-con-race-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
@@ -1790,8 +1790,8 @@ apa_table(
 ```
 
 
-(ref:H1-extra-race-tab-cap) Fixed Effects of `r df_outcomes["extra", "maj"]` Over the Transition to Grandparenthood Moderated by Race/Ethnicity.
-(ref:H1-extra-race-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $black=0$ indicates White/Caucasian race/ethnicity, $black=1$ indicates Black/African American race/ethnicity.
+(ref:H1-extra-race-tab-cap) Fixed Effects of `r df_outcomes["extra", "maj"]` Over the Transition to Grandparenthood Moderated by Ethnicity.
+(ref:H1-extra-race-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $black=0$ indicates White/Caucasian ethnicity, $black=1$ indicates Black/African American ethnicity.
 
 ```{r H1-extra-race-tab, results="asis"}
 extra_race_df <- 
@@ -1824,7 +1824,7 @@ apa_table(
 )
 ```
 
-(ref:H1-extra-race-contrasts-cap) Linear Contrasts for `r df_outcomes["extra", "maj"]` (Moderated by Race/Ethnicity; only HRS).
+(ref:H1-extra-race-contrasts-cap) Linear Contrasts for `r df_outcomes["extra", "maj"]` (Moderated by Ethnicity; only HRS).
 
 (ref:H1-extra-race-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-extra-race-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
@@ -2275,8 +2275,8 @@ apa_table(
 ```
 
 
-(ref:H1-neur-race-tab-cap) Fixed Effects of `r df_outcomes["neur", "maj"]` Over the Transition to Grandparenthood Moderated by Race/Ethnicity.
-(ref:H1-neur-race-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $black=0$ indicates White/Caucasian race/ethnicity, $black=1$ indicates Black/African American race/ethnicity.
+(ref:H1-neur-race-tab-cap) Fixed Effects of `r df_outcomes["neur", "maj"]` Over the Transition to Grandparenthood Moderated by Ethnicity.
+(ref:H1-neur-race-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $black=0$ indicates White/Caucasian ethnicity, $black=1$ indicates Black/African American ethnicity.
 
 ```{r H1-neur-race-tab, results="asis"}
 neur_race_df <- 
@@ -2309,7 +2309,7 @@ apa_table(
 )
 ```
 
-(ref:H1-neur-race-contrasts-cap) Linear Contrasts for `r df_outcomes["neur", "maj"]` (Moderated by Race/Ethnicity; only HRS).
+(ref:H1-neur-race-contrasts-cap) Linear Contrasts for `r df_outcomes["neur", "maj"]` (Moderated by Ethnicity; only HRS).
 
 (ref:H1-neur-race-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-neur-race-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
@@ -2761,8 +2761,8 @@ apa_table(
 ```
 
 
-(ref:H1-open-race-tab-cap) Fixed Effects of `r df_outcomes["open", "maj"]` Over the Transition to Grandparenthood Moderated by Race/Ethnicity.
-(ref:H1-open-race-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $black=0$ indicates White/Caucasian race/ethnicity, $black=1$ indicates Black/African American race/ethnicity.
+(ref:H1-open-race-tab-cap) Fixed Effects of `r df_outcomes["open", "maj"]` Over the Transition to Grandparenthood Moderated by Ethnicity.
+(ref:H1-open-race-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $black=0$ indicates White/Caucasian ethnicity, $black=1$ indicates Black/African American ethnicity.
 
 ```{r H1-open-race-tab, results="asis"}
 open_race_df <- 
@@ -2795,7 +2795,7 @@ apa_table(
 )
 ```
 
-(ref:H1-open-race-contrasts-cap) Linear Contrasts for `r df_outcomes["open", "maj"]` (Moderated by Race/Ethnicity; only HRS).
+(ref:H1-open-race-contrasts-cap) Linear Contrasts for `r df_outcomes["open", "maj"]` (Moderated by Ethnicity; only HRS).
 
 (ref:H1-open-race-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-open-race-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
@@ -3247,8 +3247,8 @@ apa_table(
 ```
 
 
-(ref:H1-swls-race-tab-cap) Fixed Effects of `r df_outcomes["swls", "maj"]` Over the Transition to Grandparenthood Moderated by Race/Ethnicity.
-(ref:H1-swls-race-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $black=0$ indicates White/Caucasian race/ethnicity, $black=1$ indicates Black/African American race/ethnicity.
+(ref:H1-swls-race-tab-cap) Fixed Effects of `r df_outcomes["swls", "maj"]` Over the Transition to Grandparenthood Moderated by Ethnicity.
+(ref:H1-swls-race-tab-note) Two models were computed (only HRS): grandparents matched with parent controls and with nonparent controls. CI = confidence interval. $black=0$ indicates White/Caucasian ethnicity, $black=1$ indicates Black/African American ethnicity.
 
 ```{r H1-swls-race-tab, results="asis"}
 swls_race_df <- 
@@ -3281,7 +3281,7 @@ apa_table(
 )
 ```
 
-(ref:H1-swls-race-contrasts-cap) Linear Contrasts for `r df_outcomes["swls", "maj"]` (Moderated by Race/Ethnicity; only HRS).
+(ref:H1-swls-race-contrasts-cap) Linear Contrasts for `r df_outcomes["swls", "maj"]` (Moderated by Ethnicity; only HRS).
 
 (ref:H1-swls-race-contrasts-note) The linear contrasts are based on the models from Table \@ref(tab:H1-swls-race-tab). $\hat{\gamma}_{c}$ = combined fixed-effects estimate.
 
@@ -3327,7 +3327,7 @@ hetvar_agree_df[c(4,9)] <- lapply(hetvar_agree_df[c(4,9)], gsub, pattern="\\=", 
 hetvar_agree_df[c(1:2, 4:5, 7:8, 10:11, 13:14, 16:17), c(3:5, 8:10)] <- ""
 
 # make one large table
-colnames(hetvar_agree_df) <- rep(c("Var.", "SD", "LR", "p", "GP greater"), 2)
+colnames(hetvar_agree_df) <- rep(c("$Var.$", "$SD$", "$LR$", "$p$", "GP greater"), 2)
 
 # duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
 rownames_hetvar_agree_df <- c("Before-slope: uniform \\textcolor{white}{L}", 
@@ -3355,8 +3355,8 @@ apa_table(
   , caption = "(ref:H2-hetvar-tab-agree-cap)"
   , note = "(ref:H2-hetvar-tab-note)"
   , col.names = c("", 
-                  "Var.", "SD", "LR", "p", "GP greater", 
-                  "Var.", "SD", "LR", "p", "GP greater")
+                  "$Var.$", "$SD$", "$LR$", "$p$", "GP greater", 
+                  "$Var.$", "$SD$", "$LR$", "$p$", "GP greater")
   , align = c("l", "r", "r", "r", "r", "c", "r", "r", "r", "r", "c")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE),
                        digits = c(2,2,2,2,3,2,2,2,2,3,2),
@@ -3385,7 +3385,7 @@ hetvar_con_df[c(4,9)] <- lapply(hetvar_con_df[c(4,9)], gsub, pattern="\\=", repl
 hetvar_con_df[c(1:2, 4:5, 7:8, 10:11, 13:14, 16:17), c(3:5, 8:10)] <- ""
 
 # make one large table
-colnames(hetvar_con_df) <- rep(c("Var.", "SD", "LR", "p", "GP greater"), 2)
+colnames(hetvar_con_df) <- rep(c("$Var.$", "$SD$", "$LR$", "$p$", "GP greater"), 2)
 
 # duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
 rownames_hetvar_con_df <- c("Before-slope: uniform \\textcolor{white}{L}", 
@@ -3413,8 +3413,8 @@ apa_table(
   , caption = "(ref:H2-hetvar-tab-con-cap)"
   , note = "(ref:H2-hetvar-tab-note)"
   , col.names = c("", 
-                  "Var.", "SD", "LR", "p", "GP greater", 
-                  "Var.", "SD", "LR", "p", "GP greater")
+                  "$Var.$", "$SD$", "$LR$", "$p$", "GP greater", 
+                  "$Var.$", "$SD$", "$LR$", "$p$", "GP greater")
   , align = c("l", "r", "r", "r", "r", "c", "r", "r", "r", "r", "c")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE),
                        digits = c(2,2,2,2,3,2,2,2,2,3,2),
@@ -3443,7 +3443,7 @@ hetvar_extra_df[c(4,9)] <- lapply(hetvar_extra_df[c(4,9)], gsub, pattern="\\=", 
 hetvar_extra_df[c(1:2, 4:5, 7:8, 10:11, 13:14, 16:17), c(3:5, 8:10)] <- ""
 
 # make one large table
-colnames(hetvar_extra_df) <- rep(c("Var.", "SD", "LR", "p", "GP greater"), 2)
+colnames(hetvar_extra_df) <- rep(c("$Var.$", "$SD$", "$LR$", "$p$", "GP greater"), 2)
 
 # duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
 rownames_hetvar_extra_df <- c("Before-slope: uniform \\textcolor{white}{L}", 
@@ -3471,8 +3471,8 @@ apa_table(
   , caption = "(ref:H2-hetvar-tab-extra-cap)"
   , note = "(ref:H2-hetvar-tab-note)"
   , col.names = c("", 
-                  "Var.", "SD", "LR", "p", "GP greater", 
-                  "Var.", "SD", "LR", "p", "GP greater")
+                  "$Var.$", "$SD$", "$LR$", "$p$", "GP greater", 
+                  "$Var.$", "$SD$", "$LR$", "$p$", "GP greater")
   , align = c("l", "r", "r", "r", "r", "c", "r", "r", "r", "r", "c")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE),
                        digits = c(2,2,2,2,3,2,2,2,2,3,2),
@@ -3501,7 +3501,7 @@ hetvar_neur_df[c(4,9)] <- lapply(hetvar_neur_df[c(4,9)], gsub, pattern="\\=", re
 hetvar_neur_df[c(1:2, 4:5, 7:8, 10:11, 13:14, 16:17), c(3:5, 8:10)] <- ""
 
 # make one large table
-colnames(hetvar_neur_df) <- rep(c("Var.", "SD", "LR", "p", "GP greater"), 2)
+colnames(hetvar_neur_df) <- rep(c("$Var.$", "$SD$", "$LR$", "$p$", "GP greater"), 2)
 
 # duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
 rownames_hetvar_neur_df <- c("Before-slope: uniform \\textcolor{white}{L}", 
@@ -3529,8 +3529,8 @@ apa_table(
   , caption = "(ref:H2-hetvar-tab-neur-cap)"
   , note = "(ref:H2-hetvar-tab-note)"
   , col.names = c("", 
-                  "Var.", "SD", "LR", "p", "GP greater", 
-                  "Var.", "SD", "LR", "p", "GP greater")
+                  "$Var.$", "$SD$", "$LR$", "$p$", "GP greater", 
+                  "$Var.$", "$SD$", "$LR$", "$p$", "GP greater")
   , align = c("l", "r", "r", "r", "r", "c", "r", "r", "r", "r", "c")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE),
                        digits = c(2,2,2,2,3,2,2,2,2,3,2),
@@ -3559,7 +3559,7 @@ hetvar_open_df[c(4,9)] <- lapply(hetvar_open_df[c(4,9)], gsub, pattern="\\=", re
 hetvar_open_df[c(1:2, 4:5, 7:8, 10:11, 13:14, 16:17), c(3:5, 8:10)] <- ""
 
 # make one large table
-colnames(hetvar_open_df) <- rep(c("Var.", "SD", "LR", "p", "GP greater"), 2)
+colnames(hetvar_open_df) <- rep(c("$Var.$", "$SD$", "$LR$", "$p$", "GP greater"), 2)
 
 # duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
 rownames_hetvar_open_df <- c("Before-slope: uniform \\textcolor{white}{L}", 
@@ -3587,8 +3587,8 @@ apa_table(
   , caption = "(ref:H2-hetvar-tab-open-cap)"
   , note = "(ref:H2-hetvar-tab-note)"
   , col.names = c("", 
-                  "Var.", "SD", "LR", "p", "GP greater", 
-                  "Var.", "SD", "LR", "p", "GP greater")
+                  "$Var.$", "$SD$", "$LR$", "$p$", "GP greater", 
+                  "$Var.$", "$SD$", "$LR$", "$p$", "GP greater")
   , align = c("l", "r", "r", "r", "r", "c", "r", "r", "r", "r", "c")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE),
                        digits = c(2,2,2,2,3,2,2,2,2,3,2),
@@ -3617,7 +3617,7 @@ hetvar_swls_df[c(4,9)] <- lapply(hetvar_swls_df[c(4,9)], gsub, pattern="\\=", re
 hetvar_swls_df[c(1:2, 4:5, 7:8, 10:11, 13:14, 16:17), c(3:5, 8:10)] <- ""
 
 # make one large table
-colnames(hetvar_swls_df) <- rep(c("Var.", "SD", "LR", "p", "GP greater"), 2)
+colnames(hetvar_swls_df) <- rep(c("$Var.$", "$SD$", "$LR$", "$p$", "GP greater"), 2)
 
 # duplicate rownames are apparently forbidden - I circumvent this by adding a white letter to duplicates
 rownames_hetvar_swls_df <- c("Before-slope: uniform \\textcolor{white}{L}", 
@@ -3645,8 +3645,8 @@ apa_table(
   , caption = "(ref:H2-hetvar-tab-swls-cap)"
   , note = "(ref:H2-hetvar-tab-note)"
   , col.names = c("", 
-                  "Var.", "SD", "LR", "p", "GP greater", 
-                  "Var.", "SD", "LR", "p", "GP greater")
+                  "$Var.$", "$SD$", "$LR$", "$p$", "GP greater", 
+                  "$Var.$", "$SD$", "$LR$", "$p$", "GP greater")
   , align = c("l", "r", "r", "r", "r", "c", "r", "r", "r", "r", "c")
   , format.args = list(gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE),
                        digits = c(2,2,2,2,3,2,2,2,2,3,2),
@@ -4650,12 +4650,27 @@ legend_work_nonparents <- get_legend(plot_agree_hrs_nonparents_work +
                                   theme(legend.box.margin = margin(0, 0, 0, 20)))
 
 # add the legend to the row we made earlier - adjust width via rel_widths
-grid_agree_work <- cowplot::plot_grid(
+title_parents <- ggdraw() + 
+  draw_label("Grandparents vs. Parent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_nonparents <- ggdraw() + 
+  draw_label("Grandparents vs. Nonparent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+grid_agree_work1 <- cowplot::plot_grid(
   plot_agree_hrs_parents, 
   plot_agree_hrs_parents_work + theme(legend.position="none"),
+  align = "vh", ncol = 2)
+grid_agree_work2 <- cowplot::plot_grid(
   plot_agree_hrs_nonparents, 
   plot_agree_hrs_nonparents_work + theme(legend.position="none"), 
   align = "vh", ncol = 2)
+grid_agree_work <- cowplot::plot_grid(
+  title_parents,
+  grid_agree_work1, 
+  title_nonparents,
+  grid_agree_work2, 
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
 grid_agree_work <- cowplot::plot_grid(
   grid_agree_work, 
   cowplot::plot_grid(legend_work_parents, legend_work_nonparents, ncol = 1),
@@ -4682,16 +4697,31 @@ legend_care_nonparents <- get_legend(plot_agree_hrs_nonparents_care +
                                   theme(legend.box.margin = margin(0, 0, 0, 20)))
 
 # add the legend to the row we made earlier - adjust width via rel_widths
-grid_agree_care <- cowplot::plot_grid(
+title_parents <- ggdraw() + 
+  draw_label("Grandparents vs. Parent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_nonparents <- ggdraw() + 
+  draw_label("Grandparents vs. Nonparent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+grid_agree_care1 <- cowplot::plot_grid(
   plot_agree_hrs_parents_short + theme(legend.position="none"), 
   plot_agree_hrs_parents_care + theme(legend.position="none"),
+  align = "vh", ncol = 2)
+grid_agree_care2 <- cowplot::plot_grid(
   plot_agree_hrs_nonparents_short + theme(legend.position="none"), 
   plot_agree_hrs_nonparents_care + theme(legend.position="none"), 
   align = "vh", ncol = 2)
 grid_agree_care <- cowplot::plot_grid(
+  title_parents,
+  grid_agree_care1, 
+  title_nonparents,
+  grid_agree_care2, 
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
+grid_agree_care <- cowplot::plot_grid(
   grid_agree_care, 
   cowplot::plot_grid(legend_care_parents, legend_care_nonparents, ncol = 1),
-  rel_widths = c(3, .80), ncol = 2)
+  rel_widths = c(3, .75), ncol = 2)
 
 # now add the title
 title_HRS <- ggdraw() + 
@@ -4704,7 +4734,7 @@ plot_grid(title_HRS, grid_agree_care,
 ```
 
 
-(ref:H1-agree-race-fig-cap) Change trajectories of `r df_outcomes["agree", "min"]` based on the models of moderation by race/ethnicity (see Table \@ref(tab:H1-agree-race-tab)). $black=0$ indicates White/Caucasian race/ethnicity, $black=1$ indicates Black/African American race/ethnicity. The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-agree-fig) (basic models) and added here for better comparability.
+(ref:H1-agree-race-fig-cap) Change trajectories of `r df_outcomes["agree", "min"]` based on the models of moderation by ethnicity (see Table \@ref(tab:H1-agree-race-tab)). $black=0$ indicates White/Caucasian ethnicity, $black=1$ indicates Black/African American ethnicity. The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-agree-fig) (basic models) and added here for better comparability.
 
 ```{r H1-agree-race-fig, fig.cap = "(ref:H1-agree-race-fig-cap)", fig.height=6, fig.width=7, cache=T}
 # extract the legends
@@ -4714,12 +4744,27 @@ legend_race_nonparents <- get_legend(plot_agree_hrs_nonparents_race +
                                   theme(legend.box.margin = margin(0, 0, 0, 20)))
 
 # add the legend to the row we made earlier - adjust width via rel_widths
-grid_agree_race <- cowplot::plot_grid(
+title_parents <- ggdraw() + 
+  draw_label("Grandparents vs. Parent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_nonparents <- ggdraw() + 
+  draw_label("Grandparents vs. Nonparent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+grid_agree_race1 <- cowplot::plot_grid(
   plot_agree_hrs_parents, 
   plot_agree_hrs_parents_race + theme(legend.position="none"),
+  align = "vh", ncol = 2)
+grid_agree_race2 <- cowplot::plot_grid(
   plot_agree_hrs_nonparents, 
   plot_agree_hrs_nonparents_race + theme(legend.position="none"), 
   align = "vh", ncol = 2)
+grid_agree_race <- cowplot::plot_grid(
+  title_parents,
+  grid_agree_race1, 
+  title_nonparents,
+  grid_agree_race2, 
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
 grid_agree_race <- cowplot::plot_grid(
   grid_agree_race, 
   cowplot::plot_grid(legend_race_parents, legend_race_nonparents, ncol = 1),
@@ -4746,23 +4791,44 @@ legend_nonparents <- get_legend(plot_con_liss_nonparents_gender +
                                   theme(legend.box.margin = margin(0, 0, 0, 20)))
 
 # add the legend to the row we made earlier - adjust width via rel_widths
-grid_con_liss <- cowplot::plot_grid(
+title_parents <- ggdraw() + 
+  draw_label("Grandparents vs. Parent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_nonparents <- ggdraw() + 
+  draw_label("Grandparents vs. Nonparent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+grid_con_liss1 <- cowplot::plot_grid(
   plot_con_liss_parents, 
-  plot_con_liss_parents_gender + theme(legend.position="none"),
-  plot_con_liss_nonparents, 
+  plot_con_liss_parents_gender + theme(legend.position="none"), 
+  align = "vh", ncol = 2)
+grid_con_liss2 <- cowplot::plot_grid(plot_con_liss_nonparents, 
   plot_con_liss_nonparents_gender + theme(legend.position="none"), 
   align = "vh", ncol = 2)
+grid_con_liss <- cowplot::plot_grid(
+  title_parents,
+  grid_con_liss1, 
+  title_nonparents,
+  grid_con_liss2,
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
 grid_con_liss <- cowplot::plot_grid(
   grid_con_liss, 
   cowplot::plot_grid(legend_parents, legend_nonparents, ncol = 1),
   rel_widths = c(3, .75), ncol = 2)
 
-grid_con_hrs <- cowplot::plot_grid(
+grid_con_hrs1 <- cowplot::plot_grid(
   plot_con_hrs_parents, 
-  plot_con_hrs_parents_gender + theme(legend.position="none"),
-  plot_con_hrs_nonparents, 
+  plot_con_hrs_parents_gender + theme(legend.position="none"), 
+  align = "vh", ncol = 2)
+grid_con_hrs2 <- cowplot::plot_grid(plot_con_hrs_nonparents, 
   plot_con_hrs_nonparents_gender + theme(legend.position="none"), 
   align = "vh", ncol = 2)
+grid_con_hrs <- cowplot::plot_grid(
+  title_parents,
+  grid_con_hrs1, 
+  title_nonparents,
+  grid_con_hrs2,
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
 grid_con_hrs <- cowplot::plot_grid(
   grid_con_hrs, 
   cowplot::plot_grid(legend_parents, legend_nonparents, ncol = 1),
@@ -4782,7 +4848,7 @@ plot_grid(title_liss, grid_con_liss, title_HRS, grid_con_hrs,
 ```
 
 
-(ref:H1-con-race-fig-cap) Change trajectories of `r df_outcomes["con", "min"]` based on the models of moderation by race/ethnicity (see Table \@ref(tab:H1-con-race-tab)). $black=0$ indicates White/Caucasian race/ethnicity, $black=1$ indicates Black/African American race/ethnicity. The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-con-fig) (basic models) and added here for better comparability.
+(ref:H1-con-race-fig-cap) Change trajectories of `r df_outcomes["con", "min"]` based on the models of moderation by ethnicity (see Table \@ref(tab:H1-con-race-tab)). $black=0$ indicates White/Caucasian ethnicity, $black=1$ indicates Black/African American ethnicity. The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-con-fig) (basic models) and added here for better comparability.
 
 ```{r H1-con-race-fig, fig.cap = "(ref:H1-con-race-fig-cap)", fig.height=6, fig.width=7, cache=T}
 # extract the legends
@@ -4792,12 +4858,27 @@ legend_race_nonparents <- get_legend(plot_con_hrs_nonparents_race +
                                   theme(legend.box.margin = margin(0, 0, 0, 20)))
 
 # add the legend to the row we made earlier - adjust width via rel_widths
-grid_con_race <- cowplot::plot_grid(
+title_parents <- ggdraw() + 
+  draw_label("Grandparents vs. Parent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_nonparents <- ggdraw() + 
+  draw_label("Grandparents vs. Nonparent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+grid_con_race1 <- cowplot::plot_grid(
   plot_con_hrs_parents, 
   plot_con_hrs_parents_race + theme(legend.position="none"),
+  align = "vh", ncol = 2)
+grid_con_race2 <- cowplot::plot_grid(
   plot_con_hrs_nonparents, 
   plot_con_hrs_nonparents_race + theme(legend.position="none"), 
   align = "vh", ncol = 2)
+grid_con_race <- cowplot::plot_grid(
+  title_parents,
+  grid_con_race1, 
+  title_nonparents,
+  grid_con_race2, 
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
 grid_con_race <- cowplot::plot_grid(
   grid_con_race, 
   cowplot::plot_grid(legend_race_parents, legend_race_nonparents, ncol = 1),
@@ -4824,23 +4905,44 @@ legend_nonparents <- get_legend(plot_extra_liss_nonparents_gender +
                                   theme(legend.box.margin = margin(0, 0, 0, 20)))
 
 # add the legend to the row we made earlier - adjust width via rel_widths
-grid_extra_liss <- cowplot::plot_grid(
+title_parents <- ggdraw() + 
+  draw_label("Grandparents vs. Parent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_nonparents <- ggdraw() + 
+  draw_label("Grandparents vs. Nonparent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+grid_extra_liss1 <- cowplot::plot_grid(
   plot_extra_liss_parents, 
-  plot_extra_liss_parents_gender + theme(legend.position="none"),
-  plot_extra_liss_nonparents, 
+  plot_extra_liss_parents_gender + theme(legend.position="none"), 
+  align = "vh", ncol = 2)
+grid_extra_liss2 <- cowplot::plot_grid(plot_extra_liss_nonparents, 
   plot_extra_liss_nonparents_gender + theme(legend.position="none"), 
   align = "vh", ncol = 2)
+grid_extra_liss <- cowplot::plot_grid(
+  title_parents,
+  grid_extra_liss1, 
+  title_nonparents,
+  grid_extra_liss2,
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
 grid_extra_liss <- cowplot::plot_grid(
   grid_extra_liss, 
   cowplot::plot_grid(legend_parents, legend_nonparents, ncol = 1),
   rel_widths = c(3, .75), ncol = 2)
 
-grid_extra_hrs <- cowplot::plot_grid(
+grid_extra_hrs1 <- cowplot::plot_grid(
   plot_extra_hrs_parents, 
-  plot_extra_hrs_parents_gender + theme(legend.position="none"),
-  plot_extra_hrs_nonparents, 
+  plot_extra_hrs_parents_gender + theme(legend.position="none"), 
+  align = "vh", ncol = 2)
+grid_extra_hrs2 <- cowplot::plot_grid(plot_extra_hrs_nonparents, 
   plot_extra_hrs_nonparents_gender + theme(legend.position="none"), 
   align = "vh", ncol = 2)
+grid_extra_hrs <- cowplot::plot_grid(
+  title_parents,
+  grid_extra_hrs1, 
+  title_nonparents,
+  grid_extra_hrs2,
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
 grid_extra_hrs <- cowplot::plot_grid(
   grid_extra_hrs, 
   cowplot::plot_grid(legend_parents, legend_nonparents, ncol = 1),
@@ -4869,12 +4971,27 @@ legend_work_nonparents <- get_legend(plot_extra_hrs_nonparents_work +
                                   theme(legend.box.margin = margin(0, 0, 0, 20)))
 
 # add the legend to the row we made earlier - adjust width via rel_widths
-grid_extra_work <- cowplot::plot_grid(
+title_parents <- ggdraw() + 
+  draw_label("Grandparents vs. Parent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_nonparents <- ggdraw() + 
+  draw_label("Grandparents vs. Nonparent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+grid_extra_work1 <- cowplot::plot_grid(
   plot_extra_hrs_parents, 
   plot_extra_hrs_parents_work + theme(legend.position="none"),
+  align = "vh", ncol = 2)
+grid_extra_work2 <- cowplot::plot_grid(
   plot_extra_hrs_nonparents, 
   plot_extra_hrs_nonparents_work + theme(legend.position="none"), 
   align = "vh", ncol = 2)
+grid_extra_work <- cowplot::plot_grid(
+  title_parents,
+  grid_extra_work1, 
+  title_nonparents,
+  grid_extra_work2, 
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
 grid_extra_work <- cowplot::plot_grid(
   grid_extra_work, 
   cowplot::plot_grid(legend_work_parents, legend_work_nonparents, ncol = 1),
@@ -4900,16 +5017,31 @@ legend_care_nonparents <- get_legend(plot_extra_hrs_nonparents_care +
                                   theme(legend.box.margin = margin(0, 0, 0, 20)))
 
 # add the legend to the row we made earlier - adjust width via rel_widths
-grid_extra_care <- cowplot::plot_grid(
+title_parents <- ggdraw() + 
+  draw_label("Grandparents vs. Parent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_nonparents <- ggdraw() + 
+  draw_label("Grandparents vs. Nonparent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+grid_extra_care1 <- cowplot::plot_grid(
   plot_extra_hrs_parents_short + theme(legend.position="none"), 
   plot_extra_hrs_parents_care + theme(legend.position="none"),
+  align = "vh", ncol = 2)
+grid_extra_care2 <- cowplot::plot_grid(
   plot_extra_hrs_nonparents_short + theme(legend.position="none"), 
   plot_extra_hrs_nonparents_care + theme(legend.position="none"), 
   align = "vh", ncol = 2)
 grid_extra_care <- cowplot::plot_grid(
+  title_parents,
+  grid_extra_care1, 
+  title_nonparents,
+  grid_extra_care2, 
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
+grid_extra_care <- cowplot::plot_grid(
   grid_extra_care, 
   cowplot::plot_grid(legend_care_parents, legend_care_nonparents, ncol = 1),
-  rel_widths = c(3, .80), ncol = 2)
+  rel_widths = c(3, .75), ncol = 2)
 
 # now add the title
 title_HRS <- ggdraw() + 
@@ -4922,7 +5054,7 @@ plot_grid(title_HRS, grid_extra_care,
 ```
 
 
-(ref:H1-extra-race-fig-cap) Change trajectories of `r df_outcomes["extra", "min"]` based on the models of moderation by race/ethnicity (see Table \@ref(tab:H1-extra-race-tab)). $black=0$ indicates White/Caucasian race/ethnicity, $black=1$ indicates Black/African American race/ethnicity. The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-extra-fig) (basic models) and added here for better comparability.
+(ref:H1-extra-race-fig-cap) Change trajectories of `r df_outcomes["extra", "min"]` based on the models of moderation by ethnicity (see Table \@ref(tab:H1-extra-race-tab)). $black=0$ indicates White/Caucasian ethnicity, $black=1$ indicates Black/African American ethnicity. The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-extra-fig) (basic models) and added here for better comparability.
 
 ```{r H1-extra-race-fig, fig.cap = "(ref:H1-extra-race-fig-cap)", fig.height=6, fig.width=7, cache=T}
 # extract the legends
@@ -4932,12 +5064,27 @@ legend_race_nonparents <- get_legend(plot_extra_hrs_nonparents_race +
                                   theme(legend.box.margin = margin(0, 0, 0, 20)))
 
 # add the legend to the row we made earlier - adjust width via rel_widths
-grid_extra_race <- cowplot::plot_grid(
+title_parents <- ggdraw() + 
+  draw_label("Grandparents vs. Parent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_nonparents <- ggdraw() + 
+  draw_label("Grandparents vs. Nonparent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+grid_extra_race1 <- cowplot::plot_grid(
   plot_extra_hrs_parents, 
   plot_extra_hrs_parents_race + theme(legend.position="none"),
+  align = "vh", ncol = 2)
+grid_extra_race2 <- cowplot::plot_grid(
   plot_extra_hrs_nonparents, 
   plot_extra_hrs_nonparents_race + theme(legend.position="none"), 
   align = "vh", ncol = 2)
+grid_extra_race <- cowplot::plot_grid(
+  title_parents,
+  grid_extra_race1, 
+  title_nonparents,
+  grid_extra_race2, 
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
 grid_extra_race <- cowplot::plot_grid(
   grid_extra_race, 
   cowplot::plot_grid(legend_race_parents, legend_race_nonparents, ncol = 1),
@@ -4964,23 +5111,44 @@ legend_nonparents <- get_legend(plot_neur_liss_nonparents_gender +
                                   theme(legend.box.margin = margin(0, 0, 0, 20)))
 
 # add the legend to the row we made earlier - adjust width via rel_widths
-grid_neur_liss <- cowplot::plot_grid(
+title_parents <- ggdraw() + 
+  draw_label("Grandparents vs. Parent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_nonparents <- ggdraw() + 
+  draw_label("Grandparents vs. Nonparent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+grid_neur_liss1 <- cowplot::plot_grid(
   plot_neur_liss_parents, 
-  plot_neur_liss_parents_gender + theme(legend.position="none"),
-  plot_neur_liss_nonparents, 
+  plot_neur_liss_parents_gender + theme(legend.position="none"), 
+  align = "vh", ncol = 2)
+grid_neur_liss2 <- cowplot::plot_grid(plot_neur_liss_nonparents, 
   plot_neur_liss_nonparents_gender + theme(legend.position="none"), 
   align = "vh", ncol = 2)
+grid_neur_liss <- cowplot::plot_grid(
+  title_parents,
+  grid_neur_liss1, 
+  title_nonparents,
+  grid_neur_liss2,
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
 grid_neur_liss <- cowplot::plot_grid(
   grid_neur_liss, 
   cowplot::plot_grid(legend_parents, legend_nonparents, ncol = 1),
   rel_widths = c(3, .75), ncol = 2)
 
-grid_neur_hrs <- cowplot::plot_grid(
+grid_neur_hrs1 <- cowplot::plot_grid(
   plot_neur_hrs_parents, 
-  plot_neur_hrs_parents_gender + theme(legend.position="none"),
-  plot_neur_hrs_nonparents, 
+  plot_neur_hrs_parents_gender + theme(legend.position="none"), 
+  align = "vh", ncol = 2)
+grid_neur_hrs2 <- cowplot::plot_grid(plot_neur_hrs_nonparents, 
   plot_neur_hrs_nonparents_gender + theme(legend.position="none"), 
   align = "vh", ncol = 2)
+grid_neur_hrs <- cowplot::plot_grid(
+  title_parents,
+  grid_neur_hrs1, 
+  title_nonparents,
+  grid_neur_hrs2,
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
 grid_neur_hrs <- cowplot::plot_grid(
   grid_neur_hrs, 
   cowplot::plot_grid(legend_parents, legend_nonparents, ncol = 1),
@@ -5009,12 +5177,27 @@ legend_work_nonparents <- get_legend(plot_neur_hrs_nonparents_work +
                                   theme(legend.box.margin = margin(0, 0, 0, 20)))
 
 # add the legend to the row we made earlier - adjust width via rel_widths
-grid_neur_work <- cowplot::plot_grid(
+title_parents <- ggdraw() + 
+  draw_label("Grandparents vs. Parent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_nonparents <- ggdraw() + 
+  draw_label("Grandparents vs. Nonparent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+grid_neur_work1 <- cowplot::plot_grid(
   plot_neur_hrs_parents, 
   plot_neur_hrs_parents_work + theme(legend.position="none"),
+  align = "vh", ncol = 2)
+grid_neur_work2 <- cowplot::plot_grid(
   plot_neur_hrs_nonparents, 
   plot_neur_hrs_nonparents_work + theme(legend.position="none"), 
   align = "vh", ncol = 2)
+grid_neur_work <- cowplot::plot_grid(
+  title_parents,
+  grid_neur_work1, 
+  title_nonparents,
+  grid_neur_work2, 
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
 grid_neur_work <- cowplot::plot_grid(
   grid_neur_work, 
   cowplot::plot_grid(legend_work_parents, legend_work_nonparents, ncol = 1),
@@ -5040,16 +5223,31 @@ legend_care_nonparents <- get_legend(plot_neur_hrs_nonparents_care +
                                   theme(legend.box.margin = margin(0, 0, 0, 20)))
 
 # add the legend to the row we made earlier - adjust width via rel_widths
-grid_neur_care <- cowplot::plot_grid(
+title_parents <- ggdraw() + 
+  draw_label("Grandparents vs. Parent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_nonparents <- ggdraw() + 
+  draw_label("Grandparents vs. Nonparent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+grid_neur_care1 <- cowplot::plot_grid(
   plot_neur_hrs_parents_short + theme(legend.position="none"), 
   plot_neur_hrs_parents_care + theme(legend.position="none"),
+  align = "vh", ncol = 2)
+grid_neur_care2 <- cowplot::plot_grid(
   plot_neur_hrs_nonparents_short + theme(legend.position="none"), 
   plot_neur_hrs_nonparents_care + theme(legend.position="none"), 
   align = "vh", ncol = 2)
 grid_neur_care <- cowplot::plot_grid(
+  title_parents,
+  grid_neur_care1, 
+  title_nonparents,
+  grid_neur_care2, 
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
+grid_neur_care <- cowplot::plot_grid(
   grid_neur_care, 
   cowplot::plot_grid(legend_care_parents, legend_care_nonparents, ncol = 1),
-  rel_widths = c(3, .80), ncol = 2)
+  rel_widths = c(3, .75), ncol = 2)
 
 # now add the title
 title_HRS <- ggdraw() + 
@@ -5062,7 +5260,7 @@ plot_grid(title_HRS, grid_neur_care,
 ```
 
 
-(ref:H1-neur-race-fig-cap) Change trajectories of `r df_outcomes["neur", "min"]` based on the models of moderation by race/ethnicity (see Table \@ref(tab:H1-neur-race-tab)). $black=0$ indicates White/Caucasian race/ethnicity, $black=1$ indicates Black/African American race/ethnicity. The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-neur-fig) (basic models) and added here for better comparability.
+(ref:H1-neur-race-fig-cap) Change trajectories of `r df_outcomes["neur", "min"]` based on the models of moderation by ethnicity (see Table \@ref(tab:H1-neur-race-tab)). $black=0$ indicates White/Caucasian ethnicity, $black=1$ indicates Black/African American ethnicity. The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-neur-fig) (basic models) and added here for better comparability.
 
 ```{r H1-neur-race-fig, fig.cap = "(ref:H1-neur-race-fig-cap)", fig.height=6, fig.width=7, cache=T}
 # extract the legends
@@ -5072,12 +5270,27 @@ legend_race_nonparents <- get_legend(plot_neur_hrs_nonparents_race +
                                   theme(legend.box.margin = margin(0, 0, 0, 20)))
 
 # add the legend to the row we made earlier - adjust width via rel_widths
-grid_neur_race <- cowplot::plot_grid(
+title_parents <- ggdraw() + 
+  draw_label("Grandparents vs. Parent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_nonparents <- ggdraw() + 
+  draw_label("Grandparents vs. Nonparent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+grid_neur_race1 <- cowplot::plot_grid(
   plot_neur_hrs_parents, 
   plot_neur_hrs_parents_race + theme(legend.position="none"),
+  align = "vh", ncol = 2)
+grid_neur_race2 <- cowplot::plot_grid(
   plot_neur_hrs_nonparents, 
   plot_neur_hrs_nonparents_race + theme(legend.position="none"), 
   align = "vh", ncol = 2)
+grid_neur_race <- cowplot::plot_grid(
+  title_parents,
+  grid_neur_race1, 
+  title_nonparents,
+  grid_neur_race2, 
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
 grid_neur_race <- cowplot::plot_grid(
   grid_neur_race, 
   cowplot::plot_grid(legend_race_parents, legend_race_nonparents, ncol = 1),
@@ -5104,23 +5317,44 @@ legend_nonparents <- get_legend(plot_open_liss_nonparents_gender +
                                   theme(legend.box.margin = margin(0, 0, 0, 20)))
 
 # add the legend to the row we made earlier - adjust width via rel_widths
-grid_open_liss <- cowplot::plot_grid(
+title_parents <- ggdraw() + 
+  draw_label("Grandparents vs. Parent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_nonparents <- ggdraw() + 
+  draw_label("Grandparents vs. Nonparent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+grid_open_liss1 <- cowplot::plot_grid(
   plot_open_liss_parents, 
-  plot_open_liss_parents_gender + theme(legend.position="none"),
-  plot_open_liss_nonparents, 
+  plot_open_liss_parents_gender + theme(legend.position="none"), 
+  align = "vh", ncol = 2)
+grid_open_liss2 <- cowplot::plot_grid(plot_open_liss_nonparents, 
   plot_open_liss_nonparents_gender + theme(legend.position="none"), 
   align = "vh", ncol = 2)
+grid_open_liss <- cowplot::plot_grid(
+  title_parents,
+  grid_open_liss1, 
+  title_nonparents,
+  grid_open_liss2,
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
 grid_open_liss <- cowplot::plot_grid(
   grid_open_liss, 
   cowplot::plot_grid(legend_parents, legend_nonparents, ncol = 1),
   rel_widths = c(3, .75), ncol = 2)
 
-grid_open_hrs <- cowplot::plot_grid(
+grid_open_hrs1 <- cowplot::plot_grid(
   plot_open_hrs_parents, 
-  plot_open_hrs_parents_gender + theme(legend.position="none"),
-  plot_open_hrs_nonparents, 
+  plot_open_hrs_parents_gender + theme(legend.position="none"), 
+  align = "vh", ncol = 2)
+grid_open_hrs2 <- cowplot::plot_grid(plot_open_hrs_nonparents, 
   plot_open_hrs_nonparents_gender + theme(legend.position="none"), 
   align = "vh", ncol = 2)
+grid_open_hrs <- cowplot::plot_grid(
+  title_parents,
+  grid_open_hrs1, 
+  title_nonparents,
+  grid_open_hrs2,
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
 grid_open_hrs <- cowplot::plot_grid(
   grid_open_hrs, 
   cowplot::plot_grid(legend_parents, legend_nonparents, ncol = 1),
@@ -5149,12 +5383,27 @@ legend_work_nonparents <- get_legend(plot_open_hrs_nonparents_work +
                                   theme(legend.box.margin = margin(0, 0, 0, 20)))
 
 # add the legend to the row we made earlier - adjust width via rel_widths
-grid_open_work <- cowplot::plot_grid(
+title_parents <- ggdraw() + 
+  draw_label("Grandparents vs. Parent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_nonparents <- ggdraw() + 
+  draw_label("Grandparents vs. Nonparent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+grid_open_work1 <- cowplot::plot_grid(
   plot_open_hrs_parents, 
   plot_open_hrs_parents_work + theme(legend.position="none"),
+  align = "vh", ncol = 2)
+grid_open_work2 <- cowplot::plot_grid(
   plot_open_hrs_nonparents, 
   plot_open_hrs_nonparents_work + theme(legend.position="none"), 
   align = "vh", ncol = 2)
+grid_open_work <- cowplot::plot_grid(
+  title_parents,
+  grid_open_work1, 
+  title_nonparents,
+  grid_open_work2, 
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
 grid_open_work <- cowplot::plot_grid(
   grid_open_work, 
   cowplot::plot_grid(legend_work_parents, legend_work_nonparents, ncol = 1),
@@ -5180,16 +5429,31 @@ legend_care_nonparents <- get_legend(plot_open_hrs_nonparents_care +
                                   theme(legend.box.margin = margin(0, 0, 0, 20)))
 
 # add the legend to the row we made earlier - adjust width via rel_widths
-grid_open_care <- cowplot::plot_grid(
+title_parents <- ggdraw() + 
+  draw_label("Grandparents vs. Parent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_nonparents <- ggdraw() + 
+  draw_label("Grandparents vs. Nonparent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+grid_open_care1 <- cowplot::plot_grid(
   plot_open_hrs_parents_short + theme(legend.position="none"), 
   plot_open_hrs_parents_care + theme(legend.position="none"),
+  align = "vh", ncol = 2)
+grid_open_care2 <- cowplot::plot_grid(
   plot_open_hrs_nonparents_short + theme(legend.position="none"), 
   plot_open_hrs_nonparents_care + theme(legend.position="none"), 
   align = "vh", ncol = 2)
 grid_open_care <- cowplot::plot_grid(
+  title_parents,
+  grid_open_care1, 
+  title_nonparents,
+  grid_open_care2, 
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
+grid_open_care <- cowplot::plot_grid(
   grid_open_care, 
   cowplot::plot_grid(legend_care_parents, legend_care_nonparents, ncol = 1),
-  rel_widths = c(3, .80), ncol = 2)
+  rel_widths = c(3, .75), ncol = 2)
 
 # now add the title
 title_HRS <- ggdraw() + 
@@ -5202,7 +5466,7 @@ plot_grid(title_HRS, grid_open_care,
 ```
 
 
-(ref:H1-open-race-fig-cap) Change trajectories of `r df_outcomes["open", "min"]` based on the models of moderation by race/ethnicity (see Table \@ref(tab:H1-open-race-tab)). $black=0$ indicates White/Caucasian race/ethnicity, $black=1$ indicates Black/African American race/ethnicity. The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-open-fig) (basic models) and added here for better comparability.
+(ref:H1-open-race-fig-cap) Change trajectories of `r df_outcomes["open", "min"]` based on the models of moderation by ethnicity (see Table \@ref(tab:H1-open-race-tab)). $black=0$ indicates White/Caucasian ethnicity, $black=1$ indicates Black/African American ethnicity. The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-open-fig) (basic models) and added here for better comparability.
 
 ```{r H1-open-race-fig, fig.cap = "(ref:H1-open-race-fig-cap)", fig.height=6, fig.width=7, cache=T}
 # extract the legends
@@ -5212,12 +5476,27 @@ legend_race_nonparents <- get_legend(plot_open_hrs_nonparents_race +
                                   theme(legend.box.margin = margin(0, 0, 0, 20)))
 
 # add the legend to the row we made earlier - adjust width via rel_widths
-grid_open_race <- cowplot::plot_grid(
+title_parents <- ggdraw() + 
+  draw_label("Grandparents vs. Parent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_nonparents <- ggdraw() + 
+  draw_label("Grandparents vs. Nonparent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+grid_open_race1 <- cowplot::plot_grid(
   plot_open_hrs_parents, 
   plot_open_hrs_parents_race + theme(legend.position="none"),
+  align = "vh", ncol = 2)
+grid_open_race2 <- cowplot::plot_grid(
   plot_open_hrs_nonparents, 
   plot_open_hrs_nonparents_race + theme(legend.position="none"), 
   align = "vh", ncol = 2)
+grid_open_race <- cowplot::plot_grid(
+  title_parents,
+  grid_open_race1, 
+  title_nonparents,
+  grid_open_race2, 
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
 grid_open_race <- cowplot::plot_grid(
   grid_open_race, 
   cowplot::plot_grid(legend_race_parents, legend_race_nonparents, ncol = 1),
@@ -5244,23 +5523,44 @@ legend_nonparents <- get_legend(plot_swls_liss_nonparents_gender +
                                   theme(legend.box.margin = margin(0, 0, 0, 20)))
 
 # add the legend to the row we made earlier - adjust width via rel_widths
-grid_swls_liss <- cowplot::plot_grid(
+title_parents <- ggdraw() + 
+  draw_label("Grandparents vs. Parent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_nonparents <- ggdraw() + 
+  draw_label("Grandparents vs. Nonparent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+grid_swls_liss1 <- cowplot::plot_grid(
   plot_swls_liss_parents, 
-  plot_swls_liss_parents_gender + theme(legend.position="none"),
-  plot_swls_liss_nonparents, 
+  plot_swls_liss_parents_gender + theme(legend.position="none"), 
+  align = "vh", ncol = 2)
+grid_swls_liss2 <- cowplot::plot_grid(plot_swls_liss_nonparents, 
   plot_swls_liss_nonparents_gender + theme(legend.position="none"), 
   align = "vh", ncol = 2)
+grid_swls_liss <- cowplot::plot_grid(
+  title_parents,
+  grid_swls_liss1, 
+  title_nonparents,
+  grid_swls_liss2,
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
 grid_swls_liss <- cowplot::plot_grid(
   grid_swls_liss, 
   cowplot::plot_grid(legend_parents, legend_nonparents, ncol = 1),
   rel_widths = c(3, .75), ncol = 2)
 
-grid_swls_hrs <- cowplot::plot_grid(
+grid_swls_hrs1 <- cowplot::plot_grid(
   plot_swls_hrs_parents, 
-  plot_swls_hrs_parents_gender + theme(legend.position="none"),
-  plot_swls_hrs_nonparents, 
+  plot_swls_hrs_parents_gender + theme(legend.position="none"), 
+  align = "vh", ncol = 2)
+grid_swls_hrs2 <- cowplot::plot_grid(plot_swls_hrs_nonparents, 
   plot_swls_hrs_nonparents_gender + theme(legend.position="none"), 
   align = "vh", ncol = 2)
+grid_swls_hrs <- cowplot::plot_grid(
+  title_parents,
+  grid_swls_hrs1, 
+  title_nonparents,
+  grid_swls_hrs2,
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
 grid_swls_hrs <- cowplot::plot_grid(
   grid_swls_hrs, 
   cowplot::plot_grid(legend_parents, legend_nonparents, ncol = 1),
@@ -5289,12 +5589,27 @@ legend_work_nonparents <- get_legend(plot_swls_hrs_nonparents_work +
                                   theme(legend.box.margin = margin(0, 0, 0, 20)))
 
 # add the legend to the row we made earlier - adjust width via rel_widths
-grid_swls_work <- cowplot::plot_grid(
+title_parents <- ggdraw() + 
+  draw_label("Grandparents vs. Parent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_nonparents <- ggdraw() + 
+  draw_label("Grandparents vs. Nonparent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+grid_swls_work1 <- cowplot::plot_grid(
   plot_swls_hrs_parents, 
   plot_swls_hrs_parents_work + theme(legend.position="none"),
+  align = "vh", ncol = 2)
+grid_swls_work2 <- cowplot::plot_grid(
   plot_swls_hrs_nonparents, 
   plot_swls_hrs_nonparents_work + theme(legend.position="none"), 
   align = "vh", ncol = 2)
+grid_swls_work <- cowplot::plot_grid(
+  title_parents,
+  grid_swls_work1, 
+  title_nonparents,
+  grid_swls_work2, 
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
 grid_swls_work <- cowplot::plot_grid(
   grid_swls_work, 
   cowplot::plot_grid(legend_work_parents, legend_work_nonparents, ncol = 1),
@@ -5320,16 +5635,31 @@ legend_care_nonparents <- get_legend(plot_swls_hrs_nonparents_care +
                                   theme(legend.box.margin = margin(0, 0, 0, 20)))
 
 # add the legend to the row we made earlier - adjust width via rel_widths
-grid_swls_care <- cowplot::plot_grid(
+title_parents <- ggdraw() + 
+  draw_label("Grandparents vs. Parent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_nonparents <- ggdraw() + 
+  draw_label("Grandparents vs. Nonparent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+grid_swls_care1 <- cowplot::plot_grid(
   plot_swls_hrs_parents_short + theme(legend.position="none"), 
   plot_swls_hrs_parents_care + theme(legend.position="none"),
+  align = "vh", ncol = 2)
+grid_swls_care2 <- cowplot::plot_grid(
   plot_swls_hrs_nonparents_short + theme(legend.position="none"), 
   plot_swls_hrs_nonparents_care + theme(legend.position="none"), 
   align = "vh", ncol = 2)
 grid_swls_care <- cowplot::plot_grid(
+  title_parents,
+  grid_swls_care1, 
+  title_nonparents,
+  grid_swls_care2, 
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
+grid_swls_care <- cowplot::plot_grid(
   grid_swls_care, 
   cowplot::plot_grid(legend_care_parents, legend_care_nonparents, ncol = 1),
-  rel_widths = c(3, .80), ncol = 2)
+  rel_widths = c(3, .75), ncol = 2)
 
 # now add the title
 title_HRS <- ggdraw() + 
@@ -5342,7 +5672,7 @@ plot_grid(title_HRS, grid_swls_care,
 ```
 
 
-(ref:H1-swls-race-fig-cap) Change trajectories of `r df_outcomes["swls", "min"]` based on the models of moderation by race/ethnicity (see Table \@ref(tab:H1-swls-race-tab)). $black=0$ indicates White/Caucasian race/ethnicity, $black=1$ indicates Black/African American race/ethnicity. The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-swls-fig) (basic models) and added here for better comparability.
+(ref:H1-swls-race-fig-cap) Change trajectories of `r df_outcomes["swls", "min"]` based on the models of moderation by ethnicity (see Table \@ref(tab:H1-swls-race-tab)). $black=0$ indicates White/Caucasian ethnicity, $black=1$ indicates Black/African American ethnicity. The error bars are 95% confidence intervals of the predicted values, which only account for the fixed-effects portion of the model. The vertical line indicates the approximate time of the transition to grandparenthood. The plots in the left column are the same as in Figure \@ref(fig:H1-swls-fig) (basic models) and added here for better comparability.
 
 ```{r H1-swls-race-fig, fig.cap = "(ref:H1-swls-race-fig-cap)", fig.height=6, fig.width=7, cache=T}
 # extract the legends
@@ -5352,12 +5682,27 @@ legend_race_nonparents <- get_legend(plot_swls_hrs_nonparents_race +
                                   theme(legend.box.margin = margin(0, 0, 0, 20)))
 
 # add the legend to the row we made earlier - adjust width via rel_widths
-grid_swls_race <- cowplot::plot_grid(
+title_parents <- ggdraw() + 
+  draw_label("Grandparents vs. Parent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+title_nonparents <- ggdraw() + 
+  draw_label("Grandparents vs. Nonparent Controls", fontface = 'plain', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+grid_swls_race1 <- cowplot::plot_grid(
   plot_swls_hrs_parents + coord_cartesian(ylim=c(3.25, 5.75)), # need wider y-axis limits for LS & moderation by race
   plot_swls_hrs_parents_race + theme(legend.position="none"),
+  align = "vh", ncol = 2)
+grid_swls_race2 <- cowplot::plot_grid(
   plot_swls_hrs_nonparents + coord_cartesian(ylim=c(3.25, 5.75)), 
   plot_swls_hrs_nonparents_race + theme(legend.position="none"), 
   align = "vh", ncol = 2)
+grid_swls_race <- cowplot::plot_grid(
+  title_parents,
+  grid_swls_race1, 
+  title_nonparents,
+  grid_swls_race2, 
+  rel_heights = c(0.1, 1, 0.1, 1), ncol = 1)
 grid_swls_race <- cowplot::plot_grid(
   grid_swls_race, 
   cowplot::plot_grid(legend_race_parents, legend_race_nonparents, ncol = 1),
@@ -5565,7 +5910,7 @@ plot_grid(title_liss, grid_restr_swls_liss, title_HRS, grid_restr_swls_hrs,
 
 ## Complete Software and Session Information
 
-We used `r cite_r("references-r.bib")` for data wrangling, analyses, and plots. We used *renv* to create a reproducible environment for this R-project [Version 0.15.2; @R-renv].  
+We used `r cite_r("references-r.bib")` for data wrangling, analyses, and plots. We used *renv* to create a reproducible environment for this R-project [Version 0.15.2, @R-renv].  
 The following is the output of R's *sessionInfo()* command, which shows information to aid analytic reproducibility of the analyses.
 
 ```{r session, results='asis'}
