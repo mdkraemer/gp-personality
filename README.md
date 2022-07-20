@@ -2,7 +2,7 @@
 Changes in Big Five personality traits and life satisfaction over the transition to grandparenthood.
 
 For the complete preprint including the supplemental materials, see *gp-manuscript-papaja.pdf*.
-For the OSF project page, see [*link here*](https://osf.io/75a4r/?view_only=ac929a2c41fb4afd9d1a64a3909848d0).  
+For the OSF project page, see [*link here*](https://osf.io/75a4r/).  
 
 ## Instructions to Reproduce
 
