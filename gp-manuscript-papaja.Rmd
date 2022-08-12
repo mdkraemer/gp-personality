@@ -166,7 +166,7 @@ Here, we examine the Big Five personality traits---agreeableness, conscientiousn
 In terms of rank-order stability, most prior studies have shown support for an inverted U-shape trajectory [@ardeltStillStableAll2000; @lucasPersonalityDevelopmentLife2011; @spechtStabilityChangePersonality2011; @wortmanStabilityChangeBig2012; @seifertDevelopmentRankOrderStability2021]: Rank-order stability rises until it reaches a plateau in midlife, and decreases in old age. However, evidence is mixed on whether rank-order stability decreases again in old age [see @costaPersonalityLifeSpan2019; @wagnerDoesPersonalityBecome2019]. We are not aware of any study investigating trait rank-order stability over the transition to grandparenthood. Other life events are associated with rank-order stability of personality and well-being, although only certain events and traits [e.g., @denissenTransactionsLifeEvents2019; @hentschelInfluenceMajorLife2017; @spechtStabilityChangePersonality2011]. Still, the previously held view that personality is stable or "set like plaster" [@spechtPersonalityDevelopmentAdulthood2017, p. 64] after one reaches adulthood [or leaves emerging adulthood behind, @bleidornPersonalityDevelopmentEmerging2017] has been largely abandoned [@spechtWhatDrivesAdult2014].  
 Theories explaining the mechanisms of personality development in middle and older adulthood emphasize genetic influences and life experiences as interdependent sources of stability and change [@wagnerIntegrativeModelSources2020; @spechtWhatDrivesAdult2014; @bleidornPersonalityTraitStability2021]. We conceptualize the transition to grandparenthood as adopting a new social role according to the social investment principle of neo-socioanalytic theory [@robertsPersonalityDevelopmentContext2006; @lodi-smithSocialInvestmentPersonality2007]. The social investment principle states that normative life events or transitions such as entering the work force or becoming a parent lead to personality maturation through adopting new social roles [@robertsEvaluatingFiveFactor2005]. These new roles encourage or compel people to act in a more agreeable, conscientious, and emotionally stable (i.e., less neurotic) way. People's experiences in these roles as well as societal expectations towards them are hypothesized to drive long-term personality development [@lodi-smithSocialInvestmentPersonality2007; @wrzusProcessesPersonalityDevelopment2017].  
 Empirical research on life events entailing new social roles has focused on young adulthood: A first romantic relationship [@wagnerFirstPartnershipExperience2015], the transition from high school to university, or a first job [@ludtkeRandomWalkUniversity2011; @asselmannPersonalityMaturationPersonality2021; @golleSchoolWorkChoice2019] co-occur with mean-level changes that are (partly) consistent with the social investment principle [for a review, see @bleidornLifeEventsPersonality2018]. However, recent findings on the transition to parenthood fail to support the social investment principle [@asselmannTestingSocialInvestment2020; @vanscheppingenPersonalityTraitDevelopment2016]. An analysis of trajectories of the Big Five before and after different life events produced limited support for the social investment principle: Small increases in emotional stability occurred following the transition to employment but not in the other traits or following marriage or childbirth [@denissenTransactionsLifeEvents2019].  
-Age-graded, normative role transitions may drive personality development across the entire lifespan but they are understudied in middle and older adulthood. Recent research indicates that retirement contributes to personality change following a period of relative stability in midlife [@bleidornRetirementAssociatedChange2018; @schwabaPersonalityTraitDevelopment2019]. These results are only partly in line with the social investment principle regarding mean-level changes and display substantial interindividual differences in change trajectories. Schwaba and Bleidorn described retirement as a "divestment" of social roles [-@schwabaPersonalityTraitDevelopment2019, p. 660; *personality relaxation*, see @asselmannPersonalityMaturationPersonality2021] that functions differently than *social investment*, which adds a role. The grandparent role is one of only a few new normative roles available in middle and older adulthood. It is perceived as highly important and represents a psychologically meaningful role investment [@mahneImportanceGrandparentRole2012; @thieleNatureDimensionsGrandparent2006a]---given that grandparents have regular contact with grandchildren and take part in childcare [@lodi-smithSocialInvestmentPersonality2007]. Mechanisms of grandparents' personality change remain unexplored. However, grandparental role investment may not be linearly related to changes in well-being and health (see section *Life Satisfaction and Grandparenthood*). Instead, moderate levels of grandchild care and contact appear most beneficial. At the same time, even if grandparents do not provide substantial grandchild care, grandparenthood might alter their everyday lives and activities considerably by changing the social structure imposed by kinship bonds [@muellerFamilyContingenciesGenerations2003; @tanskanenIntergenerationalRelationsOffspring2017]. For example, grandchildren might bring about frequent family gatherings, which eventually contribute to grandparents' personality development in a bottom-up fashion.  
+Age-graded, normative role transitions may drive personality development across the entire lifespan but they are understudied in middle and older adulthood. Recent research indicates that retirement contributes to personality change following a period of relative stability in midlife [@bleidornRetirementAssociatedChange2018; @schwabaPersonalityTraitDevelopment2019]. These results are only partly in line with the social investment principle regarding mean-level changes and display substantial interindividual differences in change trajectories. Schwaba and Bleidorn described retirement as a "divestment" of social roles [-@schwabaPersonalityTraitDevelopment2019, p. 660; for *personality relaxation*, see @asselmannPersonalityMaturationPersonality2021] that functions differently than *social investment*, which adds a role. The grandparent role is one of only a few new normative roles available in middle and older adulthood. It is perceived as highly important and represents a psychologically meaningful role investment [@mahneImportanceGrandparentRole2012; @thieleNatureDimensionsGrandparent2006a]---given that grandparents have regular contact with grandchildren and take part in childcare [@lodi-smithSocialInvestmentPersonality2007]. Mechanisms of grandparents' personality change remain unexplored. However, grandparental role investment may not be linearly related to changes in well-being and health (see section *Life Satisfaction and Grandparenthood*). Instead, moderate levels of grandchild care and contact appear most beneficial. At the same time, even if grandparents do not provide substantial grandchild care, grandparenthood might alter their everyday lives and activities considerably by changing the social structure imposed by kinship bonds [@muellerFamilyContingenciesGenerations2003; @tanskanenIntergenerationalRelationsOffspring2017]. For example, grandchildren might bring about frequent family gatherings, which eventually contribute to grandparents' personality development in a bottom-up fashion.  
 
 ## Grandparenthood
 
@@ -178,7 +178,7 @@ In comparison to the transition to parenthood, which is ambivalent in terms of b
 
 Although few studies on the Big Five and grandparenthood exist, there is some evidence for life satisfaction, which we define as the general, cognitive appraisal of one's well-being in life based on subjective criteria [@eidScienceSubjectiveWellbeing2008]. Life satisfaction is generally considered less stable than the Big Five and more prone to changes due to environmental influences but still trait-like in its characteristics [@anusicStabilityChangePersonality2016; @kandlerCoreSurfaceCharacteristics2014; @luhmannSubjectiveWellbeingAdaptation2012], and robustly related to the Big Five [@anglimPredictingPsychologicalSubjective2020].  
 Longitudinal studies on grandparents' life satisfaction have produced conflicting conclusions: Studies using data from the Survey of Health, Ageing and Retirement in Europe (SHARE) showed that the birth of a grandchild was followed by improvements in quality of life and life satisfaction, but only among women [@tanskanenTransitionGrandparenthoodSubjective2019] and only in first-time grandmothers via their daughters [@digessaBecomingGrandparentIts2019]. Several studies demonstrated that grandparents who were actively involved in childcare experienced larger increases in life satisfaction [@arpinoGrandparentingEducationSubjective2018; @danielsbackaAssociationGrandparentalInvestment2016; @danielsbackaGrandparentalChildcareHealth2019]. On the other hand, fixed effects regression models[^f2] using SHARE data did not find any effects of first-time grandparenthood on life satisfaction regardless of grandparental investment and only minor decreases in depressive symptoms in grandmothers [@sheppardBecomingFirstTimeGrandparent2019, see also @atesDoesGrandchildCare2017, who came to a similar conclusion for self-rated health using data from the German Aging Survey].  
-Studies of grandparents' life satisfaction, and well-being and health more generally, have often contrasted role strain theory and role enhancement theory [e.g., @digessaHealthImpactIntensive2016; @xuGrandparentCaregivingPsychological2017; see also @kimPsychologicalWellbeingGrandparents2017]. Role strain theory [@goodeTheoryRoleStrain1960] predicts that investing in grandparenthood alongside other existing roles can produce role conflicts and psychological demands exceeding one's resources. Altogether, these factors prevent adaptive development and lower life satisfaction. Role enhancement theory [@sieberTheoryRoleAccumulation1974], conversely, anticipates adaptive development and well-being benefits because the added social role provides grandparents with status security, social support, and psychological meaning. Empirically, providing grandchild care is, on the one hand, associated with decreased marital satisfaction [@wangImplicationsProvidingGrandchild2020] and increased depressive symptoms if grandparents perceive caregiving as burdensome [@xuGrandparentCaregivingPsychological2017]. On the other hand, it is associated with increased social contact [@quirkeWhatAreSocial2021; @tanskanenIntergenerationalRelationsOffspring2017; cf. @arpinoRegularProvisionGrandchild2017] and a higher quantity (but not quality) of leisure activities [@atesDoesGrandparentalChildcare2021], whereby social engagement serves as a buffer for mental health decreases [@notterGrandchildCareWellBeing2021].  
+Studies of grandparents' life satisfaction, and well-being and health more generally, have often contrasted role strain theory and role enhancement theory [e.g., @digessaHealthImpactIntensive2016; @xuGrandparentCaregivingPsychological2017; see also @kimPsychologicalWellbeingGrandparents2017]. Role strain theory [@goodeTheoryRoleStrain1960] predicts that investing in grandparenthood alongside other existing roles can produce role conflicts and psychological demands exceeding one's resources. Altogether, these factors prevent adaptive development and lower life satisfaction. Role enhancement theory [@sieberTheoryRoleAccumulation1974], conversely, anticipates adaptive development and well-being benefits because the added social role provides grandparents with status security, social support, and psychological meaning. Empirically, providing grandchild care is, on the one hand, associated with decreased marital satisfaction [@wangImplicationsProvidingGrandchild2020] and increased depressive symptoms if grandparents perceive caregiving as burdensome [@xuGrandparentCaregivingPsychological2017]. On the other hand, it is associated with increased social contact [@quirkeWhatAreSocial2021; @tanskanenIntergenerationalRelationsOffspring2017; cf. @arpinoRegularProvisionGrandchild2017] and a higher quantity (but not quality) of leisure activities [@atesDoesGrandparentalChildcare2021], whereby social engagement serves as a buffer for mental health decreases [@notterGrandchildCareWellBeing2022].  
 Research on well-being and health has found evidence for both role strain theory and role enhancement theory depending on the degree of grandparental role investment [@danielsbackaGrandparentingHealthWellbeing2022; @kimPsychologicalWellbeingGrandparents2017]. Whereas no investment or being a grandchild's primary caregiver are associated with adverse effects in most studies, there is evidence that moderate levels of grandchild care have beneficial life satisfaction and health effects for non-coresiding grandparents. This provides preliminary support for the inverted U-shape between investment and utility proposed by Coall and Hertwig [-@coallGrandparentalInvestmentRelic2011]. However, multiple authors have recently emphasized that the literature is still at an early stage and that prior studies often lack representativeness, longitudinal data, and appropriate control for selection effects [@coallInterdisciplinaryPerspectivesGrandparental2018; @danielsbackaGrandparentingHealthWellbeing2022; @kimPsychologicalWellbeingGrandparents2017].  
 In summary, evidence is lacking on the Big Five and inconclusive on life satisfaction (and related measures) which is partly due to different methodological approaches that do not account for confounding (i.e., selection effects).  
 
@@ -186,7 +186,7 @@ In summary, evidence is lacking on the Big Five and inconclusive on life satisfa
 
 ## Methodological Considerations
 
-Effects of life events on psychological traits tend to be small and need to be analyzed using robust, prospective designs and appropriate control groups [@bleidornLifeEventsPersonality2018; @luhmannStudyingChangesLife2014]. This is necessary because pre-existing differences between prospective grandparents and non-grandparents in variables related to the development of the Big Five or life satisfaction introduce confounding bias when estimating the effects of the transition to grandparenthood [@vanderweeleOutcomeWideLongitudinalDesigns2020]. The impact of adjusting for pre-existing differences was recently emphasized in predicting life outcomes from personality [@beckMegaAnalysisPersonalityPrediction2021]. Propensity score matching is one technique to account for confounding bias by equating groups in their estimated propensity to experience the event [@thoemmesSystematicReviewPropensity2011]. This propensity is calculated from regressing the so-called treatment variable (whether someone experienced the event) on covariates related to the likelihood of experiencing the event and to the outcomes. This approach addresses confounding bias by creating balance between groups in the covariates used to calculate the propensity score [@stuartMatchingMethodsCausal2010].  
+Effects of life events on psychological traits tend to be small and need to be analyzed using robust, prospective designs and appropriate control groups [@bleidornLifeEventsPersonality2018; @luhmannStudyingChangesLife2014]. This is necessary because pre-existing differences between prospective grandparents and non-grandparents in variables related to the development of the Big Five or life satisfaction introduce confounding bias when estimating the effects of the transition to grandparenthood [@vanderweeleOutcomeWideLongitudinalDesigns2020]. The impact of adjusting for pre-existing differences was recently emphasized in predicting life outcomes from personality [@beckMegaanalysisPersonalityPrediction2022]. Propensity score matching is one technique to account for confounding bias by equating groups in their estimated propensity to experience the event [@thoemmesSystematicReviewPropensity2011]. This propensity is calculated from regressing the so-called treatment variable (whether someone experienced the event) on covariates related to the likelihood of experiencing the event and to the outcomes. This approach addresses confounding bias by creating balance between groups in the covariates used to calculate the propensity score [@stuartMatchingMethodsCausal2010].  
 We adopt a prospective design that tests the effects of becoming first-time grandparents against two propensity-score-matched control groups separately: first, parents (but not grandparents) with at least one child, and, second, nonparents. This allows us to disentangle potential effects of becoming a grandparent from effects of already being a parent (i.e., parents who eventually become grandparents might share additional similarities with parents who do not). Thus, we can address selection effects into grandparenthood more comprehensively than previous research. We cover the first two of three causal pathways to not experiencing grandparenthood pointed out in demographic research [@margolisCohortPerspectiveDemography2019]: childlessness, childlessness of one's children, and not living long enough to become a grandparent. Our comparative design controls for average age-related and historical trends in the Big Five traits and life satisfaction [@luhmannStudyingChangesLife2014]. The design also enables us to report effects of the transition to grandparenthood unconfounded by instrumentation effects, which describe the tendency of reporting lower well-being scores with each repeated measurement [@bairdLifeSatisfactionLifespan2010].  
 We match at a specific time point before the transition to grandparenthood (i.e., at least two years beforehand) and not based on individual survey years. This design choice ensures that the covariates involved in the matching procedure are not already influenced by the event or anticipation of it [@greenlandQuantifyingBiasesCausal2003; @rosenbaumConsquencesAdjustmentConcomitant1984; @vanderweeleOutcomeWideLongitudinalDesigns2020; @vanderweelePrinciplesConfounderSelection2019], thereby reducing the risk of introducing confounding through collider bias [@elwertEndogenousSelectionBias2014]. Similar approaches in the study of life events have been adopted recently [@balboRoleFamilyOrientations2016; @vanscheppingenTrajectoriesLifeSatisfaction2020; @kramerImpactHavingChildren2020].  
 
@@ -2293,9 +2293,9 @@ for (i in 1:length(dframes)){
     plot <- plot + scale_x_continuous(name="Time (in Years)",breaks=seq(-6,6,2)) + 
     geom_vline(xintercept=-1, colour="darkgrey") # HRS
   }      
-  if (dframes[i] %in% dframes[grep("^(?=.*_parents)", dframes, perl=T)]){ # filter parent df's
-    plot <- plot + theme(axis.title.x=element_blank())
-  } 
+  #if (dframes[i] %in% dframes[grep("^(?=.*_parents)", dframes, perl=T)]){ # filter parent df's
+  #  plot <- plot + theme(axis.title.x=element_blank())
+  #} 
   plot_name <- gsub("dframe", "plot", dframes[i])
   eval(call("<-", as.name(plot_name), plot)) # save plots for later assembly
   ### moderation by gender
@@ -2322,9 +2322,9 @@ for (i in 1:length(dframes)){
     plot_gender <- plot_gender + scale_x_continuous(name="Time (in Years)",breaks=seq(-6,6,2)) + 
       geom_vline(xintercept=-1, colour="darkgrey") # HRS
   }      
-  if (dframes_gender[i] %in% dframes_gender[grep("^(?=.*_parents_)", dframes_gender, perl=T)]){ 
-    plot_gender <- plot_gender + theme(axis.title.x=element_blank()) # omit x-axis title for parent plots
-  } 
+  #if (dframes_gender[i] %in% dframes_gender[grep("^(?=.*_parents_)", dframes_gender, perl=T)]){ 
+  #  plot_gender <- plot_gender + theme(axis.title.x=element_blank()) # omit x-axis title for parent plots
+  #} 
   plot_name_gender <- gsub("dframe", "plot", dframes_gender[i])
   eval(call("<-", as.name(plot_name_gender), plot_gender)) # save plots for later assembly
 }
@@ -2358,9 +2358,9 @@ for (i in 1:length(dframes_work)){
           axis.title.y=element_blank())+
     guides(colour = guide_legend(order = 1), linetype = guide_legend(order = 2))+ # legend element order
     scale_y_continuous() # name=outcomes_plots[i]
-  if (dframes_work[i] %in% dframes_work[grep("^(?=.*_parents_)", dframes_work, perl=T)]){ 
-    plot_work <- plot_work + theme(axis.title.x=element_blank()) # omit x-axis title for parent plots
-  } 
+  #if (dframes_work[i] %in% dframes_work[grep("^(?=.*_parents_)", dframes_work, perl=T)]){ 
+  #  plot_work <- plot_work + theme(axis.title.x=element_blank()) # omit x-axis title for parent plots
+  #} 
   plot_name_work <- gsub("dframe", "plot", dframes_work[i])
   eval(call("<-", as.name(plot_name_work), plot_work)) # save plots for later assembly
 }
@@ -2395,9 +2395,9 @@ for (i in 1:length(dframes_hrs)){
           #axis.title.y=element_blank()
           )+
     scale_y_continuous(name=outcomes_plots[i*2])
-  if (dframes_hrs[i] %in% dframes_hrs[grep("^(?=.*_parents)", dframes_hrs, perl=T)]){ 
-    plot_short <- plot_short + theme(axis.title.x=element_blank()) # omit x-axis title for parent plots
-  } 
+  #if (dframes_hrs[i] %in% dframes_hrs[grep("^(?=.*_parents)", dframes_hrs, perl=T)]){ 
+  #  plot_short <- plot_short + theme(axis.title.x=element_blank()) # omit x-axis title for parent plots
+  #} 
   plot_name_short <- paste0(gsub("dframe", "plot", dframes_hrs[i]), "_short")
   eval(call("<-", as.name(plot_name_short), plot_short)) # save plots for later assembly
 }
@@ -2420,9 +2420,9 @@ for (i in 1:length(dframes_care)){
           axis.title.y=element_blank())+
     guides(colour = guide_legend(order = 1), linetype = guide_legend(order = 2)) # legend element order
     #scale_y_continuous(name=outcomes_plots[i*2])
-  if (dframes_care[i] %in% dframes_care[grep("^(?=.*_parents_)", dframes_care, perl=T)]){ 
-    plot_care <- plot_care + theme(axis.title.x=element_blank()) # omit x-axis title for parent plots
-  } 
+  #if (dframes_care[i] %in% dframes_care[grep("^(?=.*_parents_)", dframes_care, perl=T)]){ 
+  #  plot_care <- plot_care + theme(axis.title.x=element_blank()) # omit x-axis title for parent plots
+  #} 
   plot_name_care <- gsub("dframe", "plot", dframes_care[i])
   eval(call("<-", as.name(plot_name_care), plot_care)) # save plots for later assembly
 }
@@ -2478,10 +2478,10 @@ for (i in 1:length(dframes_restr)){
     plot <- plot + scale_x_continuous(name="Time (in Years)",breaks=seq(-2,6,2)) + 
       geom_vline(xintercept=-1, colour="darkgrey") # HRS
   }      
-  if (dframes_restr[i] %in% dframes_restr[grep("^(?=.*_parents)", 
-                                               dframes_restr, perl=T)]){ # filter parent df's
-    plot <- plot + theme(axis.title.x=element_blank())
-  } 
+  #if (dframes_restr[i] %in% dframes_restr[grep("^(?=.*_parents)", 
+  #                                             dframes_restr, perl=T)]){ # filter parent df's
+  #  plot <- plot + theme(axis.title.x=element_blank())
+  #} 
   plot_name <- gsub("dframe", "plot", dframes_restr[i])
   eval(call("<-", as.name(plot_name), plot)) # save plots for later assembly
   ### moderation by gender
@@ -2509,10 +2509,10 @@ for (i in 1:length(dframes_restr)){
     plot_gender <- plot_gender + scale_x_continuous(name="Time (in Years)",breaks=seq(-2,6,2)) + 
       geom_vline(xintercept=-1, colour="darkgrey") # HRS
   }      
-  if (dframes_restr_gender[i] %in% 
-      dframes_restr_gender[grep("^(?=.*_parents_)", dframes_restr_gender, perl=T)]){ 
-    plot_gender <- plot_gender + theme(axis.title.x=element_blank()) # omit x-axis title for parent plots
-  } 
+  #if (dframes_restr_gender[i] %in% 
+  #    dframes_restr_gender[grep("^(?=.*_parents_)", dframes_restr_gender, perl=T)]){ 
+  #  plot_gender <- plot_gender + theme(axis.title.x=element_blank()) # omit x-axis title for parent plots
+  #} 
   plot_name_gender <- gsub("dframe", "plot", dframes_restr_gender[i])
   eval(call("<-", as.name(plot_name_gender), plot_gender)) # save plots for later assembly
 }
@@ -2546,9 +2546,9 @@ for (i in 1:length(dframes_race)){
           axis.title.y=element_blank())+
     guides(colour = guide_legend(order = 1), linetype = guide_legend(order = 2))+ # legend element order
     scale_y_continuous() # name=outcomes_plots[i]
-  if (dframes_race[i] %in% dframes_race[grep("^(?=.*_parents_)", dframes_race, perl=T)]){ 
-    plot_race <- plot_race + theme(axis.title.x=element_blank()) # omit x-axis title for parent plots
-  } 
+  #if (dframes_race[i] %in% dframes_race[grep("^(?=.*_parents_)", dframes_race, perl=T)]){ 
+  #  plot_race <- plot_race + theme(axis.title.x=element_blank()) # omit x-axis title for parent plots
+  #} 
   plot_name_race <- gsub("dframe", "plot", dframes_race[i])
   eval(call("<-", as.name(plot_name_race), plot_race)) # save plots for later assembly
 }
@@ -3217,7 +3217,8 @@ grid_agree_liss1 <- cowplot::plot_grid(
   plot_agree_liss_parents, 
   plot_agree_liss_parents_gender + theme(legend.position="none"), 
   align = "vh", ncol = 2)
-grid_agree_liss2 <- cowplot::plot_grid(plot_agree_liss_nonparents, 
+grid_agree_liss2 <- cowplot::plot_grid(
+  plot_agree_liss_nonparents, 
   plot_agree_liss_nonparents_gender + theme(legend.position="none"), 
   align = "vh", ncol = 2)
 grid_agree_liss <- cowplot::plot_grid(
@@ -3235,7 +3236,8 @@ grid_agree_hrs1 <- cowplot::plot_grid(
   plot_agree_hrs_parents, 
   plot_agree_hrs_parents_gender + theme(legend.position="none"), 
   align = "vh", ncol = 2)
-grid_agree_hrs2 <- cowplot::plot_grid(plot_agree_hrs_nonparents, 
+grid_agree_hrs2 <- cowplot::plot_grid(
+  plot_agree_hrs_nonparents, 
   plot_agree_hrs_nonparents_gender + theme(legend.position="none"), 
   align = "vh", ncol = 2)
 grid_agree_hrs <- cowplot::plot_grid(
